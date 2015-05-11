@@ -1,4 +1,4 @@
-# Ruby Warrior
+# Gem Warrior
 
 Welcome to the land of Jool, where randomized mayhem and fortune are just as likely as the other.
 
@@ -11,7 +11,7 @@ Start in your poor, super lame cottage, where you live alone, subsisting off the
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rubywarrior'
+gem 'gemwarrior'
 ```
 
 And then execute:
@@ -20,11 +20,11 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rubywarrior
+    $ gem install gemwarrior
 
 ## Usage
 
-Just type `rubywarrior` and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will return to Queen Ruby (or will you...?).
+Just type `gemwarrior` and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will return to Queen Ruby (or will you...?).
 
 ## Development
 
@@ -34,7 +34,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/rubywarrior/fork )
+1. Fork it ( https://github.com/[my-github-username]/gemwarrior/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
