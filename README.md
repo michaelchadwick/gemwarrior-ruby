@@ -8,7 +8,7 @@ Start in your poor, super lame cottage, where you live alone, subsisting off the
 
 ## How to Get to Jool
 
-`gem install gemwarrior`
+`gem install gemwarrior`  
 `gemwarrior`
 
 Run the two commands above and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will bring back to Queen Ruby (or will you...?).
