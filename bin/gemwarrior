@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require_relative '../lib/gemwarrior'
+require_relative '../lib/gemwarrior/version'
+
+def parse_options
+  opts.on('-v', '--version', 'Display version number and exit') do
+    puts "#{$PROGRAM_NAME} #{Gemwarrior::VERSION}"
+    exit
+  end
+end
+
+def print_error(error)
+  case error
+  when OptionParser::InvalidOption
+    puts "#{$PROGRAM_NAME}: illegal option #{error.args.join(' ')}"
+  else
+    puts "An unexpected error occurred while running #{$PROGRAM_NAME}:"
+    puts "  #{error}\n"
+  end
+end
+
+begin
+  Gemwarrior::Base.new
+rescue => error
+  print_error(error)
+  exit(false)
+end
