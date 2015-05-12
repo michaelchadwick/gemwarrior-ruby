@@ -2,15 +2,27 @@
 
 module Gemwarrior
   class Location
-    def initialize(locationID, short_desc, long_desc)
-      @locationID = locationID
-      @short_desc = short_desc
-      @long_desc = long_desc
+  
+    @id = nil
+    @name = 'Location'
+    @description = 'A place, formless, nameless.'
+    @locToNorth = nil
+    @locToEast = nil
+    @locToSouth = nil
+    @locToWest = nil
+    @monsters = []
+    @items = []
+  
+    def initialize(id, name, description)
+      @id = id
+      @name = name
+      @description = description
     end
     
     def describe
-      puts @short_desc
-      puts @long_desc
+      puts @name
+      puts @description
     end
+
   end
 end
