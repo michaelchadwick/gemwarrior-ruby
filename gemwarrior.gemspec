@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rubywarrior/version'
+require 'gemwarrior/version'
 
 Gem::Specification.new do |spec|
-  spec.name            = 'rubywarrior'
-  spec.version         = RubyWarrior::VERSION
+  spec.name            = 'gemwarrior'
+  spec.version         = Gemwarrior::VERSION
   spec.platform        = Gem::Platform::RUBY
   spec.authors         = ['Michael Chadwick']
   spec.email           = 'mike@codana.me'
@@ -21,9 +21,9 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'cli-console', '~> 0.1.4'
   spec.add_runtime_dependency 'feep', '~> 0.0.9'
-  spec.add_runtime_dependency 'matrext', '~> 0.2'
+  #spec.add_runtime_dependency 'matrext', '~> 0.2'
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
-  spec.add_runtime_dependency 'wordnik', '~> 4.12'
+  #spec.add_runtime_dependency 'wordnik', '~> 4.12'
 
   spec.add_development_dependency 'pry-byebug', '~> 3.0'
   spec.add_development_dependency 'bundler', '~> 1.8'
