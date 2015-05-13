@@ -17,12 +17,14 @@ module Gemwarrior
     @cur_loc = nil
     
     def generate_name
-      c1 = CHARUPPER_POOL[rand(0..25)]
-      c2 = CHARLOWER_POOL[rand(0..25)]
-      c3 = CHARLOWER_POOL[rand(0..25)]
-      c4 = CHARLOWER_POOL[rand(0..25)]
-      c5 = CHARLOWER_POOL[rand(0..25)]
-      return "#{c1}#{c2}#{c3}#{c4}#{c5}"
+      name = []
+      letter_max = rand(5..10)
+      name[0] = CHAR_UPPER_POOL[rand(0..25)]
+      name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
+      2.upto(letter_max) do |i|
+        name[i] = CHAR_LOWER_POOL[rand(0..5)]
+      end
+      return name.join
     end
     
     def generate_desc
