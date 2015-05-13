@@ -11,6 +11,7 @@ module Gemwarrior
   MOOD_DESC  = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
   
   # player defaults
+  PLYR_DESC_DEFAULT = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes, you\'re actually fairly able, as long as you\'ve had breakfast first.'
   PLYR_LEVEL_DEFAULT = 1
   PLYR_XP_DEFAULT = 0
   PLYR_HP_CUR_DEFAULT = 10

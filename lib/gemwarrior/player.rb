@@ -28,7 +28,7 @@ module Gemwarrior
     end
     
     def generate_desc
-      desc = "Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes, you're actually fairly able, as long as you've had breakfast first."
+      PLYR_DESC_DEFAULT
     end
     
     def generate_face
@@ -43,7 +43,7 @@ module Gemwarrior
       MOOD_DESC[rand(0..MOOD_DESC.length-1)]
     end
     
-    def generate_PLYR_identity
+    def generate_player_identity
       @name = generate_name
       @description = generate_desc
       @face = generate_face
@@ -53,7 +53,7 @@ module Gemwarrior
     
     public
 
-    attr_reader :name, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
+    attr_reader :name, :description, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
     
     def initialize(
       level = PLYR_LEVEL_DEFAULT, 
@@ -65,12 +65,12 @@ module Gemwarrior
       atk_lo = PLYR_ATK_LO_DEFAULT, 
       atk_hi = PLYR_ATK_HI_DEFAULT, 
       inventory = Inventory.new, 
-      rox = 0, 
+      rox = PLYR_ROX_DEFAULT, 
       world, 
       cur_loc
     )
       # generates name, desc, face, hands, mood text
-      generate_PLYR_identity
+      generate_player_identity
       
       @level = level
       @xp = xp
@@ -91,7 +91,8 @@ module Gemwarrior
     end
 
     def check_self
-      puts "  Your face is #{@face}, hands are #{@hands}, and general mood is #{@mood}. Regardless, you know your name, which is *#{@name}*, so you've got that going for ya.\n"
+      puts "Your face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+      puts "Something someone once said about you is written on the inside of your shirt: #{@description}"
     end
 
     def inventory

@@ -69,7 +69,6 @@ module Gemwarrior
       init_shell_commands(shell, console)
       init_shell_aliases(console)
 
-      # enter Jool!
       prompt_template =  "*#{Gemwarrior::PROGRAM_NAME} v%s* [Name:%s][Location:%s]\n"
       prompt_template += "[HP:%s|%s][STM:%s|%s]\n> "
       prompt_vars_arr = [
@@ -81,6 +80,8 @@ module Gemwarrior
         @player.stam_cur,
         @player.stam_max
       ]
+
+      # enter Jool!
       console.start(prompt_template, prompt_vars_arr)
     end
 
