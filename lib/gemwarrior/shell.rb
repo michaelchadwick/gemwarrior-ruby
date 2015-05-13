@@ -3,6 +3,8 @@
 
 require 'highline'
 require 'cli-console'
+
+require_relative 'common'
 require_relative 'player'
 require_relative 'inventory'
 
@@ -38,7 +40,11 @@ module Gemwarrior
       minutes = rand(1..59)
       seconds = rand(1..59)
       
-      puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} hours, #{minutes} minutes, and #{seconds} seconds later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
+      hours_text = hours == 1 ? "hour" : "hours"
+      mins_text = minutes == 1 ? "minute" : "minutes"
+      secs_text = seconds == 1 ? "second" : "seconds"
+      
+      puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
     end
     
     usage 'Usage: look'

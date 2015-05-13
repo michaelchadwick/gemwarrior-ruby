@@ -26,8 +26,8 @@ module Gemwarrior
   LOC_ID_HOME = 0
   LOC_NAME_HOME = 'Home'
   LOC_DESC_HOME = 'The little, unimportant, decrepit hut that you live in.'
-  LOC_NORTH_HOME_ID = 3
-  LOC_EAST_HOME_ID = 1
+  LOC_NORTH_HOME = 3
+  LOC_EAST_HOME = 1
   LOC_SOUTH_HOME = nil
   LOC_WEST_HOME = 2
   

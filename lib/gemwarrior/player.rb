@@ -1,8 +1,6 @@
 # lib/gemwarrior/player.rb
 # Player creature
 
-require 'matrext'
-
 require_relative 'constants'
 require_relative 'inventory'
 require_relative 'creature'
@@ -98,7 +96,7 @@ module Gemwarrior
     end    
     
     def inventory_add(id)
-    
+      
     end
 
     def move(direction)
