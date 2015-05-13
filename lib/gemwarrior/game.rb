@@ -2,6 +2,7 @@
 # Main launching point for Gem Warrior
 
 require 'highline'
+require 'highline/import'
 require 'cli-console'
 
 require_relative 'constants'
@@ -26,7 +27,9 @@ module Gemwarrior
       
       console.addHelpCommand('help', 'Help')
       console.addExitCommand('exit', 'Exit from program')
-
+    end
+    
+    def init_shell_aliases(console)
       console.addAlias('c', 'character')
       console.addAlias('i', 'inventory')
       console.addAlias('r', 'rest')
@@ -44,16 +47,41 @@ module Gemwarrior
     def initialize
       # create new world and player
       @world = World.new
-      @player = Player.new(1, 0, 10, 10, 1, 2, Inventory.new, 0, @world, @world.loc_by_id(1))
+      @player = Player.new(
+        PLAYER_LEVEL_DEFAULT, 
+        PLAYER_XP_DEFAULT, 
+        PLAYER_HP_CUR_DEFAULT, 
+        PLAYER_HP_MAX_DEFAULT, 
+        PLAYER_STAM_CUR_DEFAULT, 
+        PLAYER_STAM_MAX_DEFAULT, 
+        PLAYER_ATK_LO_DEFAULT, 
+        PLAYER_ATK_HI_DEFAULT, 
+        Inventory.new, 
+        PLAYER_ROX_DEFAULT, 
+        @world, 
+        @world.loc_by_id(0)
+      )
 
       # create the console
       io = HighLine.new
       shell = GWShell.new(@world, @player)
       console = CLI::Console.new(io)
       init_shell_commands(shell, console)
+      init_shell_aliases(console)
 
       # enter Jool!
-      console.start("*#{Gemwarrior::PROGRAM_NAME}* [%s]\n> ", [Gemwarrior::VERSION])
+      prompt_template =  "*#{Gemwarrior::PROGRAM_NAME} v%s* [Name:%s][Location:%s]\n"
+      prompt_template += "[HP:%s|%s][STM:%s|%s]\n> "
+      prompt_vars_arr = [
+        Gemwarrior::VERSION, 
+        @player.name,
+        @player.cur_loc.name,
+        @player.hp_cur, 
+        @player.hp_max,
+        @player.stam_cur,
+        @player.stam_max
+      ]
+      console.start(prompt_template, prompt_vars_arr)
     end
 
   end

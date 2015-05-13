@@ -7,11 +7,14 @@ require_relative 'creature'
 
 module Gemwarrior
   class Player < Creature
+  
     private
 
+    @stam_cur = 0
+    @stam_max = 0
     @world = nil
     @xp = 0
-    @current_location = nil
+    @cur_loc = nil
     
     def generate_name
       c1 = CHARUPPER_POOL[rand(0..25)]
@@ -48,9 +51,22 @@ module Gemwarrior
     
     public
 
-    attr_reader :current_location
+    attr_reader :name, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
     
-    def initialize(level = 1, xp = 0, hp_cur = 10, hp_max = 10, atk_lo = 1, atk_hi = 2, inventory = Inventory.new, rox = 0, world, current_location)
+    def initialize(
+      level = PLAYER_LEVEL_DEFAULT, 
+      xp = PLAYER_XP_DEFAULT, 
+      hp_cur = PLAYER_HP_CUR_DEFAULT, 
+      hp_max = PLAYER_HP_MAX_DEFAULT, 
+      stam_cur = PLAYER_STAM_CUR_DEFAULT, 
+      stam_max = PLAYER_STAM_MAX_DEFAULT, 
+      atk_lo = PLAYER_ATK_LO_DEFAULT, 
+      atk_hi = PLAYER_ATK_HI_DEFAULT, 
+      inventory = Inventory.new, 
+      rox = 0, 
+      world, 
+      cur_loc
+    )
       # generates name, desc, face, hands, mood text
       generate_player_identity
       
@@ -59,6 +75,8 @@ module Gemwarrior
       
       @hp_cur = hp_cur
       @hp_max = hp_max
+      @stam_cur = stam_cur
+      @stam_max = stam_max
       
       @atk_lo = atk_lo
       @atk_hi = atk_hi
@@ -67,7 +85,7 @@ module Gemwarrior
       @rox = rox
       
       @world = world
-      @current_location = current_location
+      @cur_loc = cur_loc
     end
 
     def check_self
@@ -77,6 +95,10 @@ module Gemwarrior
     def inventory
       @inventory.list
     end
+    
+    def stamina_dec
+      @stam_cur = @stam_cur - 1
+    end    
     
     def inventory_add(id)
     

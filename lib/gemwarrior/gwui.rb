@@ -45,7 +45,7 @@ module Gemwarrior
     usage 'Usage: look'
     desc 'Get a description of the surroundings'
     def look(params)
-      @player.current_location.describe
+      @player.cur_loc.describe
     end
     
     usage 'Usage: world'

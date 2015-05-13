@@ -8,6 +8,17 @@ module Gemwarrior
   FACE_DESC  = ['smooth', 'tired', 'ruddy', 'moist', 'shocked']
   HANDS_DESC = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
   MOOD_DESC  = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
+  
+  # player defaults
+  PLAYER_LEVEL_DEFAULT = 1
+  PLAYER_XP_DEFAULT = 0
+  PLAYER_HP_CUR_DEFAULT = 10
+  PLAYER_HP_MAX_DEFAULT = 10
+  PLAYER_STAM_CUR_DEFAULT = 20
+  PLAYER_STAM_MAX_DEFAULT = 20
+  PLAYER_ATK_LO_DEFAULT = 1
+  PLAYER_ATK_HI_DEFAULT = 2
+  PLAYER_ROX_DEFAULT = 0
 
   # locations
   LOCATION_ID_HOME = 0
