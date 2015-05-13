@@ -1,4 +1,5 @@
-# lib/inventory.rb
+# lib/gemwarrior/inventory.rb
+# Collection of items a creature possesses
 
 module Gemwarrior
   class Inventory

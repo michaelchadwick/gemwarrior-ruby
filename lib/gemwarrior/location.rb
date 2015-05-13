@@ -1,4 +1,5 @@
-# lib/location.rb
+# lib/gemwarrior/location.rb
+# Place in the game
 
 module Gemwarrior
   class Location
@@ -13,6 +14,8 @@ module Gemwarrior
     @monsters = []
     @items = []
   
+    attr_reader :id, :name
+  
     def initialize(id, name, description)
       @id = id
       @name = name
@@ -20,7 +23,7 @@ module Gemwarrior
     end
     
     def describe
-      puts @name
+      puts "/[#{@name}]\\"
       puts @description
     end
 

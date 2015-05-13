@@ -1,4 +1,5 @@
-# lib/player.rb
+# lib/gemwarrior/player.rb
+# Player creature
 
 require_relative 'constants'
 require_relative 'inventory'
@@ -47,6 +48,8 @@ module Gemwarrior
     
     public
 
+    attr_reader :current_location
+    
     def initialize(level = 1, xp = 0, hp_cur = 10, hp_max = 10, atk_lo = 1, atk_hi = 2, inventory = Inventory.new, rox = 0, world, current_location)
       # generates name, desc, face, hands, mood text
       generate_player_identity
@@ -73,6 +76,10 @@ module Gemwarrior
 
     def inventory
       @inventory.list
+    end
+    
+    def inventory_add(id)
+    
     end
 
     def move(direction)

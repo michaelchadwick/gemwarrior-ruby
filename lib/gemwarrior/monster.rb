@@ -1,4 +1,5 @@
-# lib/monster.rb
+# lib/gemwarrior/monster.rb
+# Monster creature
 
 require_relative 'constants'
 require_relative 'inventory'

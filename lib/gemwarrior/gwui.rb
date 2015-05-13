@@ -1,4 +1,4 @@
-# lib/console.rb
+# lib/gemwarrior/gwui.rb
 # Runs the command line interface for Gem Warrior
 
 require 'highline'
@@ -13,7 +13,8 @@ module Gemwarrior
         
     public
 
-    def initialize(player)
+    def initialize(world, player)
+      @world = world
       @player = player
     end
     
@@ -44,7 +45,13 @@ module Gemwarrior
     usage 'Usage: look'
     desc 'Get a description of the surroundings'
     def look(params)
-      
+      @player.current_location.describe
+    end
+    
+    usage 'Usage: world'
+    desc 'List all of the locations in the world'
+    def world(params)
+      @world.locations
     end
   end
 end

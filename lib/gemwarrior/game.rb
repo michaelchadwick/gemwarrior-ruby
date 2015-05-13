@@ -1,4 +1,5 @@
-# lib/game.rb
+# lib/gemwarrior/game.rb
+# Main launching point for Gem Warrior
 
 require 'highline'
 require 'cli-console'
@@ -20,6 +21,7 @@ module Gemwarrior
       console.addCommand('inventory', shell.method(:inventory), 'Look in inventory')
       console.addCommand('rest', shell.method(:rest), 'Take a rest')
       console.addCommand('look', shell.method(:look), 'Look around')
+      console.addCommand('world', shell.method(:world), 'List locations in world')
       
       console.addHelpCommand('help', 'Help')
       console.addExitCommand('exit', 'Exit from program')
@@ -28,6 +30,7 @@ module Gemwarrior
       console.addAlias('i', 'inventory')
       console.addAlias('r', 'rest')
       console.addAlias('l', 'look')
+      console.addAlias('w', 'world')
       console.addAlias('quit', 'exit')
     end
 
@@ -39,13 +42,11 @@ module Gemwarrior
     def initialize
       # create new world and player
       @world = World.new
-      @player = Player.new(1, 0, 10, 10, 1, 2, Inventory.new, 0, @world, @world.loc_by_id(0))
-
-      #@player.current_location = @locations[0] if @player.current_location.nil?
+      @player = Player.new(1, 0, 10, 10, 1, 2, Inventory.new, 0, @world, @world.loc_by_id(1))
 
       # create the console
       io = HighLine.new
-      shell = GWShell.new(@player)
+      shell = GWShell.new(@world, @player)
       console = CLI::Console.new(io)
       init_shell_commands(shell, console)
 

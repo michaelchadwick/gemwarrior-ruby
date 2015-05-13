@@ -1,4 +1,5 @@
-# lib/world.rb
+# lib/gemwarrior/world.rb
+# World where the locations, monsters, items, etc. exist
 
 require 'highline'
 require 'cli-console'
@@ -50,10 +51,18 @@ module Gemwarrior
       @monsters.push(Monster.new(MONSTER_ID_AMETHYSTLE, "Amethystle", "Sober and contemplative, it moves with purplish tentacles swaying in the breeze."))
       @monsters.push(Monster.new(MONSTER_ID_AQUAMARINE, "Aquamarine", "It is but one of the few, proud, and underwater assassins."))
     end
+    
+    def locations
+      world_locations = []
+      @locations.each do |loc|
+        world_locations.push(loc.name)
+      end
+      puts "The world consists of #{world_locations.join(', ')}"
+    end
   
-    def loc_by_id(locations, id)
-      locations.each do |loc|
-        if loc.get_id.to_i.equal? id
+    def loc_by_id(id)
+      @locations.each do |loc|
+        if loc.id.to_i.equal? id
           return loc
         end
       end

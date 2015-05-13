@@ -1,4 +1,5 @@
-# lib/creature.rb
+# lib/gemwarrior/creature.rb
+# Creature base class
 
 require_relative 'constants'
 require_relative 'inventory'

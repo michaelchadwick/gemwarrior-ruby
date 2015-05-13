@@ -1,4 +1,5 @@
-# lib/constants.rb
+# lib/gemwarrior/constants.rb
+# List of constant values
 
 module Gemwarrior
   PROGRAM_NAME = "Gem Warrior"
