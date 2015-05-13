@@ -26,15 +26,34 @@ module Gemwarrior
   LOC_ID_HOME = 0
   LOC_NAME_HOME = 'Home'
   LOC_DESC_HOME = 'The little, unimportant, decrepit hut that you live in.'
+  LOC_NORTH_HOME_ID = 3
+  LOC_EAST_HOME_ID = 1
+  LOC_SOUTH_HOME = nil
+  LOC_WEST_HOME = 2
+  
   LOC_ID_CAVE = 1
   LOC_NAME_CAVE = 'Cave'
   LOC_DESC_CAVE = 'A nearby, dank cavern, filled with stacktites, stonemites, and rocksites.'
+  LOC_NORTH_CAVE = nil
+  LOC_EAST_CAVE = nil
+  LOC_SOUTH_CAVE = nil
+  LOC_WEST_CAVE = 0
+  
   LOC_ID_FOREST = 2
   LOC_NAME_FOREST = 'Forest'
   LOC_DESC_FOREST = 'Trees exist here, in droves.'
+  LOC_NORTH_FOREST = nil
+  LOC_EAST_FOREST = 0
+  LOC_SOUTH_FOREST = nil
+  LOC_WEST_FOREST = nil
+  
   LOC_ID_SKYTOWER = 3
   LOC_NAME_SKYTOWER = 'Emerald\'s Sky Tower'
   LOC_DESC_SKYTOWER = 'The craziest guy that ever existed is around here somewhere amongst the cloud floors, snow walls, and ethereal vibe.'
+  LOC_NORTH_SKYTOWER = nil
+  LOC_EAST_SKYTOWER = nil
+  LOC_SOUTH_SKYTOWER = 0
+  LOC_WEST_SKYTOWER = nil
 
   # monsters
   MOB_ID_ALEXANDRAT = 0

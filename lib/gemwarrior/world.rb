@@ -7,7 +7,6 @@ require 'cli-console'
 require_relative 'constants'
 require_relative 'location'
 require_relative 'monster'
-require_relative 'gwui'
 
 module Gemwarrior
   class World
@@ -19,10 +18,46 @@ module Gemwarrior
 
     def init_locations
       @locations = []
-      @locations.push(Location.new(LOC_ID_HOME, LOC_NAME_HOME, LOC_DESC_HOME))
-      @locations.push(Location.new(LOC_ID_CAVE, LOC_NAME_CAVE, LOC_DESC_CAVE))
-      @locations.push(Location.new(LOC_ID_FOREST, LOC_NAME_FOREST, LOC_DESC_FOREST))
-      @locations.push(Location.new(LOC_ID_SKYTOWER, LOC_NAME_SKYTOWER, LOC_DESC_SKYTOWER))
+      @locations.push(Location.new(
+          LOC_ID_HOME, 
+          LOC_NAME_HOME, 
+          LOC_DESC_HOME, 
+          LOC_NORTH_HOME,
+          LOC_EAST_HOME,
+          LOC_SOUTH_HOME,
+          LOC_WEST_HOME
+        )
+      )
+      @locations.push(Location.new(
+          LOC_ID_CAVE, 
+          LOC_NAME_CAVE, 
+          LOC_DESC_CAVE,
+          LOC_NORTH_CAVE,
+          LOC_EAST_CAVE,
+          LOC_SOUTH_CAVE,
+          LOC_WEST_CAVE
+        )
+      )
+      @locations.push(Location.new(
+          LOC_ID_FOREST, 
+          LOC_NAME_FOREST, 
+          LOC_DESC_FOREST,
+          LOC_NORTH_FOREST,
+          LOC_EAST_FOREST,
+          LOC_SOUTH_FOREST,
+          LOC_WEST_FOREST
+        )
+      )
+      @locations.push(Location.new(
+          LOC_ID_SKYTOWER, 
+          LOC_NAME_SKYTOWER, 
+          LOC_DESC_SKYTOWER,
+          LOC_NORTH_SKYTOWER,
+          LOC_EAST_SKYTOWER,
+          LOC_SOUTH_SKYTOWER,
+          LOC_WEST_SKYTOWER
+        )
+      )
     end
     
     def init_monsters

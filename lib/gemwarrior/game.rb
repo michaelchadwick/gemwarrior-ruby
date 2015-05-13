@@ -8,7 +8,7 @@ require 'cli-console'
 require_relative 'constants'
 require_relative 'version'
 require_relative 'world'
-require_relative 'gwui'
+require_relative 'shell'
 require_relative 'player'
 require_relative 'location'
 
@@ -60,7 +60,7 @@ module Gemwarrior
 
       # create the console
       io = HighLine.new
-      shell = GWShell.new(@world, @player)
+      shell = Shell.new(@world, @player)
       console = CLI::Console.new(io)
       init_shell_commands(shell, console)
       init_shell_aliases(console)

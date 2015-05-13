@@ -1,4 +1,4 @@
-# lib/gemwarrior/gwui.rb
+# lib/gemwarrior/shell.rb
 # Runs the command line interface for Gem Warrior
 
 require 'highline'
@@ -7,7 +7,7 @@ require_relative 'player'
 require_relative 'inventory'
 
 module Gemwarrior
-  class GWShell
+  class Shell
     private
     extend CLI::Task
         
