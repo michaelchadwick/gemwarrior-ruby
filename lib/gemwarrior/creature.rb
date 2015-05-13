@@ -23,8 +23,10 @@ module Gemwarrior
     
     @rox = 1
     @inventory = []
-
+  
     public
+
+    attr_reader :name
     
     def initialize(id, name, face, hands, mood, level = 1, hp_cur = 10, hp_max = 10, atk_lo = 1, atk_hi = 3, inventory = Inventory.new, rox = 1)
       @id = id

@@ -53,5 +53,11 @@ module Gemwarrior
     def world(params)
       @world.locations
     end
+    
+    usage 'Usage: monsters'
+    desc 'List all of the monsters in the world'
+    def monsters(params)
+      @world.monsters
+    end
   end
 end

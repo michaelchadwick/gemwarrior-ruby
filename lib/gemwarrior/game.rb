@@ -22,6 +22,7 @@ module Gemwarrior
       console.addCommand('rest', shell.method(:rest), 'Take a rest')
       console.addCommand('look', shell.method(:look), 'Look around')
       console.addCommand('world', shell.method(:world), 'List locations in world')
+      console.addCommand('monsters', shell.method(:monsters), 'List monsters in world')
       
       console.addHelpCommand('help', 'Help')
       console.addExitCommand('exit', 'Exit from program')
@@ -31,6 +32,7 @@ module Gemwarrior
       console.addAlias('r', 'rest')
       console.addAlias('l', 'look')
       console.addAlias('w', 'world')
+      console.addAlias('m', 'monsters')
       console.addAlias('quit', 'exit')
     end
 
