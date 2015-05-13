@@ -1,6 +1,8 @@
 # lib/gemwarrior/player.rb
 # Player creature
 
+require 'matrext'
+
 require_relative 'constants'
 require_relative 'inventory'
 require_relative 'creature'
@@ -84,7 +86,7 @@ module Gemwarrior
     end
 
     def check_self
-      puts "Your face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+      puts "You check yourself: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
     end
 
     def inventory

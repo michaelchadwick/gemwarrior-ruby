@@ -21,7 +21,6 @@ module Gemwarrior
     usage 'Usage: character'
     desc 'How am I doing?'
     def character(params)
-      puts "You check yourself:\n"
       @player.check_self
     end
     
