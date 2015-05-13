@@ -17,7 +17,7 @@ module Gemwarrior
       name[0] = CHAR_UPPER_POOL[rand(0..25)]
       name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
       2.upto(letter_max) do |i|
-        name[i] = CHAR_LOWER_POOL[rand(0..5)]
+        name[i] = CHAR_LOWER_POOL[rand(0..25)]
       end
       return name.join
     end
