@@ -3,23 +3,18 @@
 
 module Gemwarrior
   class Location
-  
-    @id = nil
-    @name = 'Location'
-    @description = 'A place, formless, nameless.'
-    @locToNorth = nil
-    @locToEast = nil
-    @locToSouth = nil
-    @locToWest = nil
-    @monsters = []
-    @items = []
-  
     attr_reader :id, :name
   
-    def initialize(id, name, description)
+    def initialize(id, name, description, locToNorth = nil, locToEast = nil, locToSouth = nil, locToWest = nil)
       @id = id
       @name = name
       @description = description
+      @locToNorth = locToNorth
+      @locToEast = locToEast
+      @locToSouth = locToSouth
+      @locToWest = locToWest
+      @monsters = []
+      @items = []
     end
     
     def describe

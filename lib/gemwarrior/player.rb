@@ -7,14 +7,7 @@ require_relative 'creature'
 
 module Gemwarrior
   class Player < Creature
-  
     private
-
-    @stam_cur = 0
-    @stam_max = 0
-    @world = nil
-    @xp = 0
-    @cur_loc = nil
     
     def generate_name
       name = []
@@ -92,7 +85,6 @@ module Gemwarrior
 
     def check_self
       puts "Your face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
-      puts "Something someone once said about you is written on the inside of your shirt: #{@description}"
     end
 
     def inventory

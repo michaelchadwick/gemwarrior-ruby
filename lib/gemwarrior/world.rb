@@ -11,14 +11,10 @@ require_relative 'gwui'
 
 module Gemwarrior
   class World
-
-    @locations = []
-    @monsters = []
-    @items = []
-
     def initialize
       @locations = init_locations
       @monsters = init_monsters
+      @items = []
     end
 
     def init_locations

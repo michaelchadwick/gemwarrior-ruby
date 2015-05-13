@@ -14,7 +14,6 @@ require_relative 'location'
 
 module Gemwarrior
   class Game
-
     private
 
     def init_shell_commands(shell, console)
@@ -40,9 +39,6 @@ module Gemwarrior
     end
 
     public
-
-    @world = nil
-    @player = nil
 
     def initialize
       # create new world and player
