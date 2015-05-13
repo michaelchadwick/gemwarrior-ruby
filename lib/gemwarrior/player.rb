@@ -43,7 +43,7 @@ module Gemwarrior
       MOOD_DESC[rand(0..MOOD_DESC.length-1)]
     end
     
-    def generate_player_identity
+    def generate_PLYR_identity
       @name = generate_name
       @description = generate_desc
       @face = generate_face
@@ -56,21 +56,21 @@ module Gemwarrior
     attr_reader :name, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
     
     def initialize(
-      level = PLAYER_LEVEL_DEFAULT, 
-      xp = PLAYER_XP_DEFAULT, 
-      hp_cur = PLAYER_HP_CUR_DEFAULT, 
-      hp_max = PLAYER_HP_MAX_DEFAULT, 
-      stam_cur = PLAYER_STAM_CUR_DEFAULT, 
-      stam_max = PLAYER_STAM_MAX_DEFAULT, 
-      atk_lo = PLAYER_ATK_LO_DEFAULT, 
-      atk_hi = PLAYER_ATK_HI_DEFAULT, 
+      level = PLYR_LEVEL_DEFAULT, 
+      xp = PLYR_XP_DEFAULT, 
+      hp_cur = PLYR_HP_CUR_DEFAULT, 
+      hp_max = PLYR_HP_MAX_DEFAULT, 
+      stam_cur = PLYR_STAM_CUR_DEFAULT, 
+      stam_max = PLYR_STAM_MAX_DEFAULT, 
+      atk_lo = PLYR_ATK_LO_DEFAULT, 
+      atk_hi = PLYR_ATK_HI_DEFAULT, 
       inventory = Inventory.new, 
       rox = 0, 
       world, 
       cur_loc
     )
       # generates name, desc, face, hands, mood text
-      generate_player_identity
+      generate_PLYR_identity
       
       @level = level
       @xp = xp

@@ -23,18 +23,18 @@ module Gemwarrior
 
     def init_locations
       @locations = []
-      @locations.push(Location.new(LOCATION_ID_HOME, LOCATION_NAME_HOME, LOCATION_DESC_HOME))
-      @locations.push(Location.new(LOCATION_ID_CAVE, LOCATION_NAME_CAVE, LOCATION_DESC_CAVE))
-      @locations.push(Location.new(LOCATION_ID_FOREST, LOCATION_NAME_FOREST, LOCATION_DESC_FOREST))
-      @locations.push(Location.new(LOCATION_ID_SKYTOWER, LOCATION_NAME_SKYTOWER, LOCATION_DESC_SKYTOWER))
+      @locations.push(Location.new(LOC_ID_HOME, LOC_NAME_HOME, LOC_DESC_HOME))
+      @locations.push(Location.new(LOC_ID_CAVE, LOC_NAME_CAVE, LOC_DESC_CAVE))
+      @locations.push(Location.new(LOC_ID_FOREST, LOC_NAME_FOREST, LOC_DESC_FOREST))
+      @locations.push(Location.new(LOC_ID_SKYTOWER, LOC_NAME_SKYTOWER, LOC_DESC_SKYTOWER))
     end
     
     def init_monsters
       @monsters = []
-      @monsters.push(Monster.new(MONSTER_ID_ALEXANDRAT, MONSTER_NAME_ALEXANDRAT, MONSTER_DESC_ALEXANDRAT))
-      @monsters.push(Monster.new(MONSTER_ID_AMBEROO, MONSTER_NAME_AMBEROO, MONSTER_DESC_AMBEROO))
-      @monsters.push(Monster.new(MONSTER_ID_AMETHYSTLE, MONSTER_NAME_AMETHYSTLE, MONSTER_DESC_AMETHYSTLE))
-      @monsters.push(Monster.new(MONSTER_ID_AQUAMARINE, MONSTER_NAME_AQUAMARINE, MONSTER_DESC_AQUAMARINE))
+      @monsters.push(Monster.new(MOB_ID_ALEXANDRAT, MOB_NAME_ALEXANDRAT, MOB_DESC_ALEXANDRAT))
+      @monsters.push(Monster.new(MOB_ID_AMBEROO, MOB_NAME_AMBEROO, MOB_DESC_AMBEROO))
+      @monsters.push(Monster.new(MOB_ID_AMETHYSTLE, MOB_NAME_AMETHYSTLE, MOB_DESC_AMETHYSTLE))
+      @monsters.push(Monster.new(MOB_ID_AQUAMARINE, MOB_NAME_AQUAMARINE, MOB_DESC_AQUAMARINE))
     end
     
     def locations

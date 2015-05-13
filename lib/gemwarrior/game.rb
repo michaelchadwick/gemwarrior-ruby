@@ -48,16 +48,16 @@ module Gemwarrior
       # create new world and player
       @world = World.new
       @player = Player.new(
-        PLAYER_LEVEL_DEFAULT, 
-        PLAYER_XP_DEFAULT, 
-        PLAYER_HP_CUR_DEFAULT, 
-        PLAYER_HP_MAX_DEFAULT, 
-        PLAYER_STAM_CUR_DEFAULT, 
-        PLAYER_STAM_MAX_DEFAULT, 
-        PLAYER_ATK_LO_DEFAULT, 
-        PLAYER_ATK_HI_DEFAULT, 
+        PLYR_LEVEL_DEFAULT, 
+        PLYR_XP_DEFAULT, 
+        PLYR_HP_CUR_DEFAULT, 
+        PLYR_HP_MAX_DEFAULT, 
+        PLYR_STAM_CUR_DEFAULT, 
+        PLYR_STAM_MAX_DEFAULT, 
+        PLYR_ATK_LO_DEFAULT, 
+        PLYR_ATK_HI_DEFAULT, 
         Inventory.new, 
-        PLAYER_ROX_DEFAULT, 
+        PLYR_ROX_DEFAULT, 
         @world, 
         @world.loc_by_id(0)
       )
