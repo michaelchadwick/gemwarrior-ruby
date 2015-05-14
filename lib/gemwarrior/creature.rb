@@ -6,7 +6,7 @@ require_relative 'inventory'
 
 module Gemwarrior
   class Creature
-    attr_reader :name
+    attr_reader :name, :description
     
     def initialize(id, name = 'Creature', face = 'calm', hands = 'smooth', mood = 'happy', level = 1, hp_cur = 10, hp_max = 10, atk_lo = 1, atk_hi = 3, inventory = Inventory.new, rox = 1)
       @id = id
@@ -25,5 +25,10 @@ module Gemwarrior
       @inventory = inventory
       @rox = rox
     end
+    
+    def status
+      puts "The #{name}'s face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+    end
+    
   end
 end

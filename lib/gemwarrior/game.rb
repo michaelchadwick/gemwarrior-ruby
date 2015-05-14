@@ -4,6 +4,7 @@
 require 'highline'
 require 'highline/import'
 require 'cli-console'
+require 'pry'
 
 require_relative 'constants'
 require_relative 'version'
@@ -21,8 +22,10 @@ module Gemwarrior
       console.addCommand('inventory', shell.method(:inventory), 'Look in inventory')
       console.addCommand('rest', shell.method(:rest), 'Take a rest')
       console.addCommand('look', shell.method(:look), 'Look around')
+      console.addCommand('go', shell.method(:go), 'Go in a direction')
       console.addCommand('world', shell.method(:world), 'List locations in world')
       console.addCommand('monsters', shell.method(:monsters), 'List monsters in world')
+      console.addCommand('change name', shell.method(:change_name), 'Change hero\'s name')
       
       console.addHelpCommand('help', 'Help')
       console.addExitCommand('exit', 'Exit from program')
@@ -33,6 +36,7 @@ module Gemwarrior
       console.addAlias('i', 'inventory')
       console.addAlias('r', 'rest')
       console.addAlias('l', 'look')
+      console.addAlias('g', 'go')
       console.addAlias('w', 'world')
       console.addAlias('m', 'monsters')
       console.addAlias('quit', 'exit')
@@ -44,37 +48,39 @@ module Gemwarrior
       # create new world and player
       @world = World.new
       @player = Player.new(
-        PLYR_LEVEL_DEFAULT, 
-        PLYR_XP_DEFAULT, 
-        PLYR_HP_CUR_DEFAULT, 
-        PLYR_HP_MAX_DEFAULT, 
-        PLYR_STAM_CUR_DEFAULT, 
-        PLYR_STAM_MAX_DEFAULT, 
-        PLYR_ATK_LO_DEFAULT, 
-        PLYR_ATK_HI_DEFAULT, 
-        Inventory.new, 
-        PLYR_ROX_DEFAULT, 
-        @world, 
+        PLYR_LEVEL_DEFAULT,
+        PLYR_XP_DEFAULT,
+        PLYR_HP_CUR_DEFAULT,
+        PLYR_HP_MAX_DEFAULT,
+        PLYR_STAM_CUR_DEFAULT,
+        PLYR_STAM_MAX_DEFAULT,
+        PLYR_ATK_LO_DEFAULT,
+        PLYR_ATK_HI_DEFAULT,
+        Inventory.new,
+        PLYR_ROX_DEFAULT,
         @world.loc_by_id(0)
       )
+      @world.player = @player
 
       # create the console
       io = HighLine.new
-      shell = Shell.new(@world, @player)
+      shell = Shell.new(@world)
       console = CLI::Console.new(io)
       init_shell_commands(shell, console)
       init_shell_aliases(console)
 
-      prompt_template =  "*#{Gemwarrior::PROGRAM_NAME} v%s* [Name:%s][Location:%s]\n"
-      prompt_template += "[HP:%s|%s][STM:%s|%s]\n> "
+      prompt_template =  "*****#{Gemwarrior::PROGRAM_NAME} v%s*****\n"
+      prompt_template += "[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s] -- [%s@%s]\n> "
       prompt_vars_arr = [
-        Gemwarrior::VERSION, 
-        @player.name,
-        @player.cur_loc.name,
-        @player.hp_cur, 
-        @player.hp_max,
-        @player.stam_cur,
-        @player.stam_max
+        Gemwarrior::VERSION,
+        @world.player.level,
+        @world.player.xp,
+        @world.player.hp_cur, 
+        @world.player.hp_max,
+        @world.player.stam_cur,
+        @world.player.stam_max,
+        @world.player.name,
+        @world.player.cur_loc.name
       ]
 
       # enter Jool!

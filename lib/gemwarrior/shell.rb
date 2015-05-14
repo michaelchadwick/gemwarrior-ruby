@@ -3,6 +3,7 @@
 
 require 'highline'
 require 'cli-console'
+require 'pry'
 
 require_relative 'common'
 require_relative 'player'
@@ -11,26 +12,26 @@ require_relative 'inventory'
 module Gemwarrior
   class Shell
     private
+    
     extend CLI::Task
         
     public
 
-    def initialize(world, player)
+    def initialize(world)
       @world = world
-      @player = player
     end
     
     usage 'Usage: character'
     desc 'How am I doing?'
     def character(params)
-      @player.check_self
+      @world.player.check_self
     end
     
     usage 'Usage: inventory'
     desc 'What stuff do I got?'
     def inventory(params)
       print "You check your inventory"
-      @player.inventory
+      @world.player.list_inventory
     end
     
     usage 'Usage: rest'
@@ -50,19 +51,32 @@ module Gemwarrior
     usage 'Usage: look'
     desc 'Get a description of the surroundings'
     def look(params)
-      @player.cur_loc.describe
+      @world.player.cur_loc.describe
     end
     
     usage 'Usage: world'
     desc 'List all of the locations in the world'
     def world(params)
-      @world.locations
+      @world.list_locations
     end
     
     usage 'Usage: monsters'
     desc 'List all of the monsters in the world'
     def monsters(params)
-      @world.monsters
+      @world.list_monsters
+    end
+
+    usage 'Usage: go'
+    desc 'Go in a direction'
+    def go(params)
+      @world.player.go(@world.locations, params[0])
+    end
+
+    usage 'Usage: change name'
+    desc 'Change hero\'s name'
+    def change_name(params)
+      new_name = ask "Enter new name: "
+      @world.player.modify_name(new_name)
     end
   end
 end

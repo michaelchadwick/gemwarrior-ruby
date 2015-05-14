@@ -1,35 +1,37 @@
 # lib/gemwarrior/location.rb
 # Place in the game
 
+require 'pry'
+
 module Gemwarrior
   class Location
-    attr_reader :id, :name, :locToNorth, :locToEast, :locToSouth, :locToWest
+    attr_reader :id, :name, :description, :locs_connected, :items
   
-    def initialize(id, name, description, locToNorth = nil, locToEast = nil, locToSouth = nil, locToWest = nil)
+    def initialize(id, name, description, locs_connected, items)
       @id = id
       @name = name
       @description = description
-      @locToNorth = locToNorth
-      @locToEast = locToEast
-      @locToSouth = locToSouth
-      @locToWest = locToWest
+      @locs_connected = locs_connected
+      @items = items
       @monsters = []
-      @items = []
     end
     
     def describe
       puts "/[#{@name}]\\"
       puts @description
+      list_items
     end
     
-    def is_valid?(locations, loc_id)
-      is_valid = false
-      locations.each do |loc|
-        if loc.id.equal? loc_id
-          is_valid = true
-        end
+    def list_items
+      loc_items = []
+      @items.each do |i|
+        loc_items.push(i.name)
       end
-      return is_valid
+      puts ">> Shiny object(s): #{loc_items.join(', ')}"
+    end
+    
+    def has_loc_to_the?(direction)
+      @locs_connected[direction.to_sym]
     end
 
   end

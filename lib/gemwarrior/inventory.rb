@@ -7,7 +7,7 @@ module Gemwarrior
       @inventory = []
     end
     
-    def list
+    def list_contents
       if @inventory.empty?
         puts "...and find you currently have diddly-squat, which is nothing.\n"
       else

@@ -1,6 +1,8 @@
 # lib/gemwarrior/player.rb
 # Player creature
 
+require 'pry'
+
 require_relative 'constants'
 require_relative 'inventory'
 require_relative 'creature'
@@ -8,7 +10,7 @@ require_relative 'creature'
 module Gemwarrior
   class Player < Creature
     private
-    
+
     def generate_name
       name = []
       letter_max = rand(5..10)
@@ -46,7 +48,8 @@ module Gemwarrior
     
     public
 
-    attr_reader :name, :description, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
+    attr_reader   :level, :xp, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
+    attr_accessor :name
     
     def initialize(
       level = PLYR_LEVEL_DEFAULT, 
@@ -59,7 +62,6 @@ module Gemwarrior
       atk_hi = PLYR_ATK_HI_DEFAULT, 
       inventory = Inventory.new, 
       rox = PLYR_ROX_DEFAULT, 
-      world, 
       cur_loc
     )
       # generates name, desc, face, hands, mood text
@@ -79,7 +81,6 @@ module Gemwarrior
       @inventory = inventory
       @rox = rox
       
-      @world = world
       @cur_loc = cur_loc
     end
 
@@ -87,20 +88,51 @@ module Gemwarrior
       puts "You check yourself: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
     end
 
-    def inventory
-      @inventory.list
-    end
-    
     def stamina_dec
       @stam_cur = @stam_cur - 1
-    end    
+    end
+
+    def modify_name(name)
+      if name.length < 3 || name.length > 10
+        puts "Name is an invalid length. Make it between 3 and 10 characters, please."
+      else
+        name.downcase!
+        name[0].upcase!
+        puts "New name accepted."
+        return name
+      end
+      return nil
+    end
+    
+    def list_inventory
+      @inventory.list_contents
+    end 
     
     def inventory_add(id)
       
     end
 
-    def move(direction)
+    def loc_by_id(locations, id)
+      locations.each do |loc|
+        if loc.id.to_i.equal? id
+          return loc
+        end
+      end
+      return nil
+    end
     
+    def can_move?(direction)
+      @cur_loc.has_loc_to_the?(direction)
+    end
+    
+    def go(locations, direction)
+      if can_move?(direction)
+        new_loc_id = @cur_loc.locs_connected[direction.to_sym]
+        @cur_loc = loc_by_id(locations, new_loc_id)
+        print @cur_loc.describe
+      else
+        puts LOC_GO_NADA
+      end
     end
   end
 end

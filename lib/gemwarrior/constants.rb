@@ -26,34 +26,24 @@ module Gemwarrior
   LOC_ID_HOME = 0
   LOC_NAME_HOME = 'Home'
   LOC_DESC_HOME = 'The little, unimportant, decrepit hut that you live in.'
-  LOC_NORTH_HOME = 3
-  LOC_EAST_HOME = 1
-  LOC_SOUTH_HOME = nil
-  LOC_WEST_HOME = 2
-  
+  LOC_CONNECTIONS_HOME = {:north => 3, :east => 1, :south => nil, :west => 2}
+    
   LOC_ID_CAVE = 1
   LOC_NAME_CAVE = 'Cave'
   LOC_DESC_CAVE = 'A nearby, dank cavern, filled with stacktites, stonemites, and rocksites.'
-  LOC_NORTH_CAVE = nil
-  LOC_EAST_CAVE = nil
-  LOC_SOUTH_CAVE = nil
-  LOC_WEST_CAVE = 0
+  LOC_CONNECTIONS_CAVE = {:north => nil, :east => nil, :south => nil, :west => 0}
   
   LOC_ID_FOREST = 2
   LOC_NAME_FOREST = 'Forest'
   LOC_DESC_FOREST = 'Trees exist here, in droves.'
-  LOC_NORTH_FOREST = nil
-  LOC_EAST_FOREST = 0
-  LOC_SOUTH_FOREST = nil
-  LOC_WEST_FOREST = nil
+  LOC_CONNECTIONS_FOREST = {:north => nil, :east => 0, :south => nil, :west => nil}
   
   LOC_ID_SKYTOWER = 3
   LOC_NAME_SKYTOWER = 'Emerald\'s Sky Tower'
   LOC_DESC_SKYTOWER = 'The craziest guy that ever existed is around here somewhere amongst the cloud floors, snow walls, and ethereal vibe.'
-  LOC_NORTH_SKYTOWER = nil
-  LOC_EAST_SKYTOWER = nil
-  LOC_SOUTH_SKYTOWER = 0
-  LOC_WEST_SKYTOWER = nil
+  LOC_CONNECTIONS_SKYTOWER = {:north => nil, :east => nil, :south => 0, :west => nil}
+  
+  LOC_GO_NADA = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
 
   # monsters
   MOB_ID_ALEXANDRAT = 0
@@ -68,10 +58,27 @@ module Gemwarrior
   MOB_ID_AQUAMARINE = 3
   MOB_NAME_AQUAMARINE = 'Aquamarine'
   MOB_DESC_AQUAMARINE = 'It is but one of the few, proud, and underwater assassins.'
+  
+  MOB_NAME_DEFAULT = 'Rocky'
+  MOB_DESC_DEFAULT = 'It\'s a monster, and it\'s not happy.'
 
   # items
-  ITEM_ID_BED = 0
-  ITEM_ID_STALACTITE = 1
-  ITEM_ID_TREE = 2
-  ITEM_ID_CLOUD = 3
+  ITEM_ID_STONE = 0
+  ITEM_NAME_STONE = 'stone'
+  ITEM_DESC_STONE = 'A small, sharp mega pebble, suitable for tossing in amusement, and perhaps combat.'
+  ITEM_ID_BED = 1
+  ITEM_NAME_BED = 'bed'
+  ITEM_DESC_BED = 'The place where you sleep when you\'re not adventuring.'
+  ITEM_ID_STALACTITE = 2
+  ITEM_NAME_STALACTITE = 'stalactite'
+  ITEM_DESC_STALACTITE = 'Long protrusion of cave adornment, broken off and fallen to the ground, where the stalagmites sneer at it from.'
+  ITEM_ID_FEATHER = 3
+  ITEM_NAME_FEATHER = 'feather'
+  ITEM_DESC_FEATHER = 'Soft and tender, unlike the craven bird that probably shed it.'
+  ITEM_ID_GUN = 4
+  ITEM_NAME_GUN = 'gun'
+  ITEM_DESC_GUN = 'Pew pew goes this firearm you wield, ifn\'t it weren\'t unloaded.'
+  
+  ITEM_NAME_DEFAULT = 'thing'
+  ITEM_DESC_DEFAULt = 'Something truly interesting and worth your time to look at and possess.'
 end
