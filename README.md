@@ -1,6 +1,8 @@
-`/-+-+-+ +-+-+-+-+-+-+-\`
-`|G|E|M| |W|A|R|R|I|O|R|`
-`\-+-+-+ +-+-+-+-+-+-+-/`
+```
+/-+-+-+ +-+-+-+-+-+-+-\
+|G|E|M| |W|A|R|R|I|O|R|
+\-+-+-+ +-+-+-+-+-+-+-/
+```
 <small>logo courtesy of [ascii generator](http://www.network-science.de/ascii/)</small>
 
 **Gem Warrior** is a text adventure that takes place in the land of **Jool**, where randomized fortune is just as likely as *mayhem*.
