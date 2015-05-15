@@ -24,14 +24,14 @@ Run the two commands above and you'll be whisked away to Jool, ready to start or
 
 This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working console prompt, some commands (type `h` for a list), and a few locations exist already. Each time you start the game a new hero will be created with a randomized name, but you can change that with `> change name`.
 
-`> c` - character check for visual identity
-`> i` - check your inventory
-`> r` - take a load off
-`> l` - look around the current location and see items
-`> g` - go in a direction, if possible
-`> w` - list all the locations available in the world
-`> m` - list all the monsters available in the world
-`> q` - quit this nonsense
+`> c` - character check for visual identity  
+`> i` - check your inventory  
+`> r` - take a load off  
+`> l` - look around the current location and see items  
+`> g` - go in a direction, if possible  
+`> w` - list all the locations available in the world  
+`> m` - list all the monsters available in the world  
+`> q` - quit this nonsense  
 
 To come:
 
