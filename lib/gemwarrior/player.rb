@@ -85,7 +85,7 @@ module Gemwarrior
     end
 
     def check_self
-      puts "You check yourself: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+      puts "You check yourself. Currently breathing, wearing clothing, and with a few specific characteristics: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
     end
 
     def stamina_dec
@@ -94,12 +94,13 @@ module Gemwarrior
 
     def modify_name(name)
       if name.length < 3 || name.length > 10
-        puts "Name is an invalid length. Make it between 3 and 10 characters, please."
+        puts "'#{name.chomp}' is an invalid length. Make it between 3 and 10 characters, please."
       else
         name.downcase!
         name[0].upcase!
-        puts "New name accepted."
-        return name
+        name.chomp!
+        puts "New name, '#{name}', accepted."
+        @name = name.chomp
       end
       return nil
     end
@@ -126,12 +127,14 @@ module Gemwarrior
     end
     
     def go(locations, direction)
-      if can_move?(direction)
-        new_loc_id = @cur_loc.locs_connected[direction.to_sym]
-        @cur_loc = loc_by_id(locations, new_loc_id)
-        print @cur_loc.describe
-      else
-        puts LOC_GO_NADA
+      unless direction.nil?
+        if can_move?(direction)
+          new_loc_id = @cur_loc.locs_connected[direction.to_sym]
+          @cur_loc = loc_by_id(locations, new_loc_id)
+          print @cur_loc.describe
+        else
+          puts LOC_GO_NADA
+        end
       end
     end
   end

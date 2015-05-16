@@ -3,6 +3,13 @@
 
 module Gemwarrior
   PROGRAM_NAME = 'Gem Warrior'
+  
+  SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
+  ERROR_INVALID_COMMAND = 'That\'s not something the game yet understands.'
+  ERROR_GO_NODIR = 'Just wander aimlessly? A direction would be nice.'
+  SEPARATOR = '====================================================='
+  
+  # character pools
   CHAR_UPPER_POOL = (65..90).map{ |i| i.chr }
   CHAR_LOWER_POOL = (97..122).map{ |i| i.chr }
   CHAR_LOWER_VOWEL_POOL = ['a','e','i','o','u','y']
