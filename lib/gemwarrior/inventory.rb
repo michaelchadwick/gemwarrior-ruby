@@ -3,15 +3,16 @@
 
 module Gemwarrior
   class Inventory
-    def initialize
-      @inventory = []
+    def initialize(inventory = [])
+      @inventory = inventory
     end
     
     def list_contents
+      print 'You check your inventory'
       if @inventory.empty?
-        puts "...and find you currently have diddly-squat, which is nothing.\n"
+        print '...and find you currently have diddly-squat, which is nothing.\n'
       else
-        puts ": #{@inventory.join ', '}"
+        print ": #{@inventory.join ', '}"
       end
     end
     

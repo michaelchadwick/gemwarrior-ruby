@@ -8,7 +8,20 @@ module Gemwarrior
   class Creature
     attr_reader :name, :description
     
-    def initialize(id, name = 'Creature', face = 'calm', hands = 'smooth', mood = 'happy', level = 1, hp_cur = 10, hp_max = 10, atk_lo = 1, atk_hi = 3, inventory = Inventory.new, rox = 1)
+    def initialize(
+      id, 
+      name = 'Creature', 
+      face = 'calm', 
+      hands = 'smooth', 
+      mood = 'happy', 
+      level = 1, 
+      hp_cur = 10, 
+      hp_max = 10, 
+      atk_lo = 1, 
+      atk_hi = 3, 
+      inventory = Inventory.new, 
+      rox = 1
+    )
       @id = id
       @name = name
       @face = face

@@ -2,13 +2,17 @@
 # World where the locations, monsters, items, etc. exist
 
 require_relative 'constants'
-require_relative 'location'
 require_relative 'monster'
 require_relative 'item'
+require_relative 'location'
 
 module Gemwarrior
   class World
     private
+
+    include Entities::Monsters
+    include Entities::Items
+    include Entities::Locations
     
     def init_monsters
       @monsters = []

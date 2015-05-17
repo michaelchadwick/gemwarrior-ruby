@@ -7,6 +7,8 @@ require_relative 'creature'
 
 module Gemwarrior
   class Monster < Creature
+    include Entities::Monsters
+    
     def initialize(
       id, 
       name = MOB_NAME_DEFAULT, 

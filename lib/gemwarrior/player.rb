@@ -1,8 +1,6 @@
 # lib/gemwarrior/player.rb
 # Player creature
 
-require 'pry'
-
 require_relative 'constants'
 require_relative 'inventory'
 require_relative 'creature'
@@ -10,6 +8,9 @@ require_relative 'creature'
 module Gemwarrior
   class Player < Creature
     private
+
+    include AttributePools
+    include Errors
 
     def generate_name
       name = []
@@ -85,7 +86,26 @@ module Gemwarrior
     end
 
     def check_self
+      puts '**********'
+      puts '*   ()   *'
+      puts '* \-||-/ *'
+      puts '*   --   *'
+      puts '*   ||   *'
+      puts '*  _||_  *'
+      puts '**********'
       puts "You check yourself. Currently breathing, wearing clothing, and with a few specific characteristics: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+    end
+    
+    def rest
+      hours = rand(1..23)
+      minutes = rand(1..59)
+      seconds = rand(1..59)
+    
+      hours_text = hours == 1 ? "hour" : "hours"
+      mins_text = minutes == 1 ? "minute" : "minutes"
+      secs_text = seconds == 1 ? "second" : "seconds"
+    
+      puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
     end
 
     def stamina_dec
@@ -127,13 +147,27 @@ module Gemwarrior
     end
     
     def go(locations, direction)
+      case direction
+      when "n"
+        direction = "north"
+      when "e"
+        direction = "east"
+      when "s"
+        direction = "south"
+      when "w"
+        direction = "west"
+      end
       unless direction.nil?
         if can_move?(direction)
+#binding.pry
           new_loc_id = @cur_loc.locs_connected[direction.to_sym]
           @cur_loc = loc_by_id(locations, new_loc_id)
+          puts '******************'
+          puts '   Traveling...   '
+          puts '******************'
           print @cur_loc.describe
         else
-          puts LOC_GO_NADA
+          puts ERROR_GO_DIR_INVALID
         end
       end
     end

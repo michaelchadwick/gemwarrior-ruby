@@ -1,8 +1,6 @@
 # lib/gemwarrior/location.rb
 # Place in the game
 
-require 'pry'
-
 module Gemwarrior
   class Location
     attr_reader :id, :name, :description, :locs_connected, :items
@@ -17,7 +15,7 @@ module Gemwarrior
     end
     
     def describe
-      puts "/[#{@name}]\\"
+      puts "[[[ #{@name} ]]]"
       puts @description
       list_items
     end

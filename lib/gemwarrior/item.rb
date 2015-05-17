@@ -5,6 +5,8 @@ require_relative 'constants'
 
 module Gemwarrior
   class Item
+    include Entities::Items
+    
     attr_reader :id, :name, :description
     
     def initialize(

@@ -1,20 +1,16 @@
 # lib/gemwarrior/game.rb
 # Main launching point for Gem Warrior
 
-require 'pry'
-
 require_relative 'constants'
-require_relative 'version'
 require_relative 'world'
-require_relative 'evaluator'
-require_relative 'repl'
 require_relative 'player'
+
+require_relative 'repl'
+require_relative 'evaluator'
 
 module Gemwarrior
   class Game
-    private
-
-    public
+    include AttributePools
 
     def initialize
       # create new world and player
