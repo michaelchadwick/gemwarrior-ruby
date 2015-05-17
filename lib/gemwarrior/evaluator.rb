@@ -64,7 +64,11 @@ module Gemwarrior
       when @commands[2], @aliases[2] # rest
         @world.player.rest
       when @commands[3], @aliases[3] # look
-        @world.player.cur_loc.describe
+        if param
+          @world.player.cur_loc.describe_item(param)
+        else
+          @world.player.cur_loc.describe
+        end
       when @commands[4], @aliases[4] # world
         @world.list_locations
       when @commands[5], @aliases[5] # monsters

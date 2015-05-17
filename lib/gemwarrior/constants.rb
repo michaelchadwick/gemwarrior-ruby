@@ -9,6 +9,7 @@ module Gemwarrior
       
   module Errors
     ERROR_COMMAND_INVALID = 'That\'s not something the game yet understands.'
+    ERROR_ITEM_INVALID = 'You don\'t see that anywhere.'
     ERROR_GO_DIR_MISSING = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_DIR_INVALID = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     ERROR_CHANGE_PARAM_MISSING = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
