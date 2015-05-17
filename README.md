@@ -31,7 +31,7 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 `> g` - go in a direction, if possible  
 `> w` - list all the locations available in the world  
 `> m` - list all the monsters available in the world 
-`> ch` - change some things about yourself 
+`> ch` - change some things about yourself  
 `> q` - quit this nonsense  
 
 To come:
