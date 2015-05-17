@@ -14,8 +14,8 @@ module Gemwarrior
     def initialize(world)
       @world = world
       @cur_msg = nil
-      @commands = %w(character inventory rest look world monsters go change help quit exit)
-      @aliases = %w(c i r l w m g ch h q x)
+      @commands = %w(character inventory rest look take world monsters go change help quit exit)
+      @aliases = %w(c i r l t w m g ch h q x)
       @descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -60,7 +60,11 @@ module Gemwarrior
       when @commands[0], @aliases[0] # character
         @world.player.check_self
       when @commands[1], @aliases[1] # inventory
-        @world.player.list_inventory
+        if param
+          @world.player.inventory.describe_item(param)
+        else
+          @world.player.list_inventory
+        end
       when @commands[2], @aliases[2] # rest
         @world.player.rest
       when @commands[3], @aliases[3] # look
@@ -69,17 +73,26 @@ module Gemwarrior
         else
           @world.player.cur_loc.describe
         end
-      when @commands[4], @aliases[4] # world
+      when @commands[4], @aliases[4] # take
+        unless param.nil?
+          success = @world.player.inventory.add_item(@world.player.cur_loc.items, param)
+          if success
+            @world.player.cur_loc.remove_item_from_location(param)
+          end
+        else
+          puts ERROR_TAKE_PARAM_MISSING
+        end
+      when @commands[5], @aliases[5] # world
         @world.list_locations
-      when @commands[5], @aliases[5] # monsters
+      when @commands[6], @aliases[6] # monsters
         @world.list_monsters
-      when @commands[6], @aliases[6] # go
+      when @commands[7], @aliases[8] # go
         if param.nil?
           puts ERROR_GO_DIR_MISSING
         else
           @world.player.go(@world.locations, param)
         end
-      when @commands[7], @aliases[7] # change
+      when @commands[8], @aliases[8] # change
         if param.nil?
           puts ERROR_CHANGE_PARAM_MISSING
           puts 'Options: name'
@@ -93,9 +106,9 @@ module Gemwarrior
             puts ERROR_CHANGE_PARAM_INVALID
           end
         end
-      when @commands[8], @aliases[8] # help
+      when @commands[9], @aliases[9] # help
         list_commands
-      when @commands[9..10], @aliases[9] # quit/exit
+      when @commands[10..11], @aliases[10] # quit/exit
         puts QUIT_MESSAGE
         exit(0)
       end

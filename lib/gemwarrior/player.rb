@@ -49,7 +49,7 @@ module Gemwarrior
     
     public
 
-    attr_reader   :level, :xp, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max
+    attr_reader   :level, :xp, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max, :inventory
     attr_accessor :name
     
     def initialize(
@@ -129,10 +129,6 @@ module Gemwarrior
       @inventory.list_contents
     end 
     
-    def inventory_add(id)
-      
-    end
-
     def loc_by_id(locations, id)
       locations.each do |loc|
         if loc.id.to_i.equal? id
@@ -159,7 +155,6 @@ module Gemwarrior
       end
       unless direction.nil?
         if can_move?(direction)
-#binding.pry
           new_loc_id = @cur_loc.locs_connected[direction.to_sym]
           @cur_loc = loc_by_id(locations, new_loc_id)
           puts '******************'

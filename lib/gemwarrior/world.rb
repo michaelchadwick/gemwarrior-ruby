@@ -47,31 +47,36 @@ module Gemwarrior
       @items.push(Item.new(
           ITEM_ID_STONE, 
           ITEM_NAME_STONE, 
-          ITEM_DESC_STONE
+          ITEM_DESC_STONE,
+          true
         )
       )
       @items.push(Item.new(
           ITEM_ID_BED, 
           ITEM_NAME_BED, 
-          ITEM_DESC_BED
+          ITEM_DESC_BED,
+          false
         )
       )
       @items.push(Item.new(
           ITEM_ID_STALACTITE, 
           ITEM_NAME_STALACTITE, 
-          ITEM_DESC_STALACTITE
+          ITEM_DESC_STALACTITE,
+          true
         )
       )
       @items.push(Item.new(
           ITEM_ID_FEATHER, 
           ITEM_NAME_FEATHER, 
-          ITEM_DESC_FEATHER
+          ITEM_DESC_FEATHER,
+          true
         )
       )
       @items.push(Item.new(
           ITEM_ID_GUN, 
           ITEM_NAME_GUN, 
-          ITEM_DESC_GUN
+          ITEM_DESC_GUN,
+          true
         )
       )
     end

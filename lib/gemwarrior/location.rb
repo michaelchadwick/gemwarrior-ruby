@@ -31,11 +31,9 @@ module Gemwarrior
       end
 
       if @item_names.include?(item_name)
-        item_found = false
         @items.each do |i|
           if i.name.eql?(item_name)
             puts "#{i.description}"
-            item_found = true
             return
           end
         end
@@ -45,11 +43,21 @@ module Gemwarrior
     end
     
     def list_items
-      loc_items = []
-      @items.each do |i|
-        loc_items.push(i.name)
+      if @items.length > 0
+        loc_items = []
+        @items.each do |i|
+          loc_items.push(i.name)
+        end
+        puts ">> Shiny object(s): #{loc_items.join(', ')}"
       end
-      puts ">> Shiny object(s): #{loc_items.join(', ')}"
+    end
+    
+    def remove_item_from_location(item_name)
+      @items.each do |i|
+        if i.name.eql?(item_name)
+          @items.delete_at(@items.find_index(item_name).to_i)
+        end
+      end
     end
     
     def has_loc_to_the?(direction)
