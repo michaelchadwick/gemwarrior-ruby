@@ -41,7 +41,7 @@ To come:
 * More locations to move between!
 * Monsters!
 * Ability to fight those monsters!
-* Items you can pick up!
+* ~~Items you can pick up!~~
 * Quests!
 * Towns!
 * Merchants!
