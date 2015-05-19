@@ -10,10 +10,7 @@ module Gemwarrior
     private
     
     def print_traveling_text
-      traveling_text =  "******************\n"
-      traveling_text << "   Traveling...   \n"
-      traveling_text << "******************\n"
-      puts traveling_text
+      puts "*** Traveling to the... ***\n"
     end
     
     def print_char_pic

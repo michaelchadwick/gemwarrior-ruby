@@ -20,13 +20,22 @@ module Gemwarrior
       end
     end
     
-    public
-    
-    def initialize(world, evaluator)
-      @world = world
-      @eval = evaluator
+    def print_splash_message
+      0.upto(SPLASH_MESSAGE.length-1) do print "=" end
+      print "\n"
+      puts SPLASH_MESSAGE
+      0.upto(SPLASH_MESSAGE.length-1) do print "=" end
+      print "\n"
     end
     
+    def print_fortune
+      noun1_vals = ["abutments", "bains", "crocuses", "chapes", "civility", "fingering", "gabardines", "nooks", "scalawags", "squiggles"]
+      noun2_vals = ["asterisms", "deniers", "diastoles", "extremities", "payments", "specters", "splats", "thalamuses", "wallets", "xylophones"]
+      noun3_vals = ["blebs", "blowholes", "dancers", "dinges", "dualism", "ebullitions", "gullets", "knops", "phaetons", "snickers"]
+      
+      puts "* Remember: #{noun1_vals[rand(0..9)]} and #{noun2_vals[rand(0..9)]} are the key to #{noun3_vals[rand(0..9)]} *\n"
+    end
+
     def prompt
       prompt_template =  "\n*****#{Gemwarrior::PROGRAM_NAME} v%s*****\n"
       prompt_template += "[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s] -- [%s @ %s]"
@@ -48,11 +57,19 @@ module Gemwarrior
       Readline.readline(' > ', true).to_s
     end
     
+    public
+    
+    def initialize(world, evaluator)
+      @world = world
+      @eval = evaluator
+    end
+
     def start(initialCommand = nil)
       # welcome player to game
       clear_screen
-      puts SPLASH_MESSAGE
-      puts
+      print_splash_message
+      print_fortune 
+
       # hook to do something right off the bat
       puts @eval.evaluate(initialCommand) unless initialCommand.nil?
       

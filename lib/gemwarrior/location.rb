@@ -21,11 +21,16 @@ module Gemwarrior
     end
     
     def describe
-      puts "[[[ #{@name} ]]]"
-      puts @description
-      list_items
-      find_monsters
-      list_monsters
+      description = "[[[ #{@name} ]]]\n"
+      description << @description
+      populate_monsters
+      unless list_items.nil?
+        description << list_items
+      end
+      unless list_monsters.nil?
+        description << list_monsters
+      end
+      return description
     end
     
     def describe_item(item_name)
@@ -47,11 +52,11 @@ module Gemwarrior
     end
     
     def list_items
-      puts " >> Shiny object(s): #{@items.map(&:name).join(', ')}" if @items.length > 0
+      return "\n >> Shiny object(s): #{@items.map(&:name).join(', ')}" if @items.length > 0
     end
     
     def list_monsters
-      puts " >> Monster(s) abound: #{@monsters_abounding.map(&:name).join(', ')}" if @monsters_abounding.length > 0
+      return "\n >> Monster(s) abound: #{@monsters_abounding.map(&:name).join(', ')}" if @monsters_abounding.length > 0
     end
     
     def remove_item_from_location(item_name)
@@ -76,10 +81,12 @@ module Gemwarrior
       return found
     end
     
-    def find_monsters
+    def populate_monsters
       if has_monster?
         @monsters_abounding = []
         return @monsters_abounding.push(@monsters_available[rand(0..@monsters_available.length-1)])
+      else
+        return nil
       end
     end
     
