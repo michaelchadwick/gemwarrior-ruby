@@ -1,6 +1,8 @@
 # lib/gemwarrior/location.rb
 # Place in the game
 
+require 'matrext'
+
 require_relative 'constants'
 
 module Gemwarrior
@@ -18,20 +20,20 @@ module Gemwarrior
       @items = items
       @monsters_available = monsters_available
       @monsters_abounding = []
-      self.describe
     end
     
     def describe
-      description = "[[[ #{@name} ]]]\n"
-      description << @description
+      desc_text = ""
+      desc_text << "[ #{@name} ]\n"
+      desc_text << @description
       populate_monsters
       unless list_items.nil?
-        description << list_items
+        desc_text << list_items
       end
       unless list_monsters.nil?
-        description << list_monsters
+        desc_text << list_monsters
       end
-      return description
+      return desc_text
     end
     
     def describe_item(item_name)

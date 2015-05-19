@@ -10,7 +10,12 @@ module Gemwarrior
     private
     
     def print_traveling_text
-      puts "*** Traveling to the... ***\n"
+      loc = Thread.new do
+        print "*** "
+        print "#{Matrext::process({ :phrase => "traveling...", :sl => true, :speed => :fast })}"
+        print " ***\n"
+      end
+      loc.join
     end
     
     def print_char_pic
