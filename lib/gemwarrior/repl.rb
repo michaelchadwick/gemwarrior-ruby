@@ -54,7 +54,7 @@ module Gemwarrior
       puts SPLASH_MESSAGE
       puts
       # hook to do something right off the bat
-      @eval.evaluate(initialCommand) unless initialCommand.nil?
+      puts @eval.evaluate(initialCommand) unless initialCommand.nil?
       
       # main loop
       loop do
@@ -62,7 +62,7 @@ module Gemwarrior
         prompt
         begin
           input = read_line
-          @eval.evaluate(input)
+          puts @eval.evaluate(input)
         rescue Interrupt
           puts
           puts QUIT_MESSAGE

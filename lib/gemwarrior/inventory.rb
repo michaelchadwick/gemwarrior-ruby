@@ -10,52 +10,43 @@ module Gemwarrior
     end
     
     def list_contents
-      print 'You check your inventory'
+      contents_text = "You check your inventory"
       if @inventory.empty?
-        print ERROR_INVENTORY_EMPTY
+        return contents_text << ERROR_INVENTORY_EMPTY
       else
         @item_names = []
         @inventory.each do |i|
           @item_names.push(i.name)
         end
-        print ": #{@item_names.join ', '}"
+        return contents_text << ": #{@inventory.map(&:name).join ', '}"
       end
     end
     
     def describe_item(item_name)
-      @item_names = []
-      @inventory.each do |i|
-        @item_names.push(i.name)
-      end
-
-      if @item_names.include?(item_name)
+      if @inventory.map(&:name).include?(item_name)
         @inventory.each do |i|
           if i.name.eql?(item_name)
-            puts "#{i.description}"
-            return
+            return "#{i.description}"
           end
         end
       else
-        puts ERROR_ITEM_INVALID
+        ERROR_ITEM_INVENTORY_INVALID
       end
     end
         
-    def add_item(items, item_name)
-      item_added = false
-      items.each do |i|
+    def add_item(cur_loc, item_name)
+      cur_loc.items.each do |i|
         if i.name.eql?(item_name)
           if i.takeable
             @inventory.push(i)
-            item_added = true
-            puts "Added #{item_name} to your increasing collection of bits of tid.\n"
-            return item_added
+            cur_loc.remove_item_from_location(item_name)
+            return "Added #{item_name} to your increasing collection of bits of tid.\n"
           else
-            puts ERROR_TAKE_ITEM_UNTAKEABLE
-            return
+            ERROR_TAKE_ITEM_UNTAKEABLE
           end
         end
       end
-      puts ERROR_TAKE_ITEM_INVALID
+      ERROR_TAKE_ITEM_INVALID
     end
     
     def remove_item(item_name)

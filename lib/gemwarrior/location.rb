@@ -42,7 +42,7 @@ module Gemwarrior
           end
         end
       else
-        puts ERROR_ITEM_INVALID
+        puts ERROR_ITEM_LOC_INVALID
       end
     end
     
@@ -68,7 +68,7 @@ module Gemwarrior
         max = DANGER_LEVEL[@danger_level]
         trigger_values = 0..max
         actual_value = rand(1..100)
-        binding.pry
+        
         if trigger_values.include?(actual_value)
           found = true
         end

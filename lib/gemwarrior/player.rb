@@ -8,6 +8,25 @@ require_relative 'creature'
 module Gemwarrior
   class Player < Creature
     private
+    
+    def print_traveling_text
+      traveling_text =  "******************\n"
+      traveling_text << "   Traveling...   \n"
+      traveling_text << "******************\n"
+      puts traveling_text
+    end
+    
+    def print_char_pic
+      char_pic = ""
+      char_pic << "**********\n"
+      char_pic << "*   ()   *\n"
+      char_pic << "* \\-||-/ *\n"
+      char_pic << "*   --   *\n"
+      char_pic << "*   ||   *\n"
+      char_pic << "*  _||_  *\n"
+      char_pic << "**********\n"
+      puts char_pic
+    end
 
     include AttributePools
     include Errors
@@ -86,14 +105,8 @@ module Gemwarrior
     end
 
     def check_self
-      puts '**********'
-      puts '*   ()   *'
-      puts '* \-||-/ *'
-      puts '*   --   *'
-      puts '*   ||   *'
-      puts '*  _||_  *'
-      puts '**********'
-      puts "You check yourself. Currently breathing, wearing clothing, and with a few specific characteristics: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+      print_char_pic
+      return "You check yourself. Currently breathing, wearing clothing, and with a few specific characteristics: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}.\n"
     end
     
     def rest
@@ -105,22 +118,24 @@ module Gemwarrior
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
     
-      puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
+      return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
     end
 
     def stamina_dec
       @stam_cur = @stam_cur - 1
     end
 
-    def modify_name(name)
+    def modify_name
+      print "Enter new name: "
+      name = gets.chomp!
       if name.length < 3 || name.length > 10
-        puts "'#{name.chomp}' is an invalid length. Make it between 3 and 10 characters, please."
+        return "'#{name}' is an invalid length. Make it between 3 and 10 characters, please."
       else
-        name.downcase!
-        name[0].upcase!
-        name.chomp!
-        puts "New name, '#{name}', accepted."
-        @name = name.chomp
+        new_name = ""
+        new_name << name[0].upcase
+        new_name << name[1..name.length-1].downcase
+        @name = new_name
+        return "New name, '#{new_name}', accepted."
       end
       return nil
     end
@@ -157,12 +172,10 @@ module Gemwarrior
         if can_move?(direction)
           new_loc_id = @cur_loc.locs_connected[direction.to_sym]
           @cur_loc = loc_by_id(locations, new_loc_id)
-          puts '******************'
-          puts '   Traveling...   '
-          puts '******************'
-          print @cur_loc.describe
+          print_traveling_text
+          @cur_loc.describe
         else
-          puts ERROR_GO_DIR_INVALID
+          ERROR_GO_DIR_INVALID
         end
       end
     end

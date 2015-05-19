@@ -237,7 +237,7 @@ module Gemwarrior
       @locations.each do |loc|
         world_locations.push(loc.name)
       end
-      puts "The world consists of #{world_locations.join(', ')}"
+      return"The world consists of #{world_locations.join(', ')}"
     end
   
     def loc_by_id(id)
@@ -254,7 +254,7 @@ module Gemwarrior
       @monsters.each do |mob|
         world_monsters.push(mob.name)
       end
-      puts "The world's monsters consist of #{world_monsters.join(', ')}"
+      return "The world's monsters consist of #{world_monsters.join(', ')}"
     end
     
     def mob_by_id(id)

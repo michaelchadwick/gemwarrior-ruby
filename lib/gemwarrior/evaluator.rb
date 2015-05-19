@@ -32,7 +32,7 @@ module Gemwarrior
     end
     
     def print_separator
-      puts SEPARATOR
+      SEPARATOR
     end
     
     def list_commands
@@ -75,35 +75,30 @@ module Gemwarrior
         end
       when @commands[4], @aliases[4] # take
         unless param.nil?
-          success = @world.player.inventory.add_item(@world.player.cur_loc.items, param)
-          if success
-            @world.player.cur_loc.remove_item_from_location(param)
-          end
+          @world.player.inventory.add_item(@world.player.cur_loc, param)
         else
-          puts ERROR_TAKE_PARAM_MISSING
+          ERROR_TAKE_PARAM_MISSING
         end
       when @commands[5], @aliases[5] # world
         @world.list_locations
       when @commands[6], @aliases[6] # monsters
         @world.list_monsters
-      when @commands[7], @aliases[8] # go
+      when @commands[7], @aliases[7] # go
         if param.nil?
-          puts ERROR_GO_DIR_MISSING
+          ERROR_GO_DIR_MISSING
         else
           @world.player.go(@world.locations, param)
         end
       when @commands[8], @aliases[8] # change
         if param.nil?
           puts ERROR_CHANGE_PARAM_MISSING
-          puts 'Options: name'
+          puts CHANGE_PARAMS
         else
           case param
           when 'name'
-            print "Enter new name: "
-            new_name = gets
-            @world.player.modify_name(new_name)
+            @world.player.modify_name
           else
-            puts ERROR_CHANGE_PARAM_INVALID
+            ERROR_CHANGE_PARAM_INVALID
           end
         end
       when @commands[9], @aliases[9] # help

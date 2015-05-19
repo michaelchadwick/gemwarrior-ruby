@@ -6,13 +6,15 @@ module Gemwarrior
   SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
   QUIT_MESSAGE = 'Thanks for playing the game. Until next time...'
   SEPARATOR = '====================================================='
+  CHANGE_PARAMS = 'Options: name'
   
   DANGER_LEVEL = {:none => 0, :low => 15, :moderate => 30, :high => 55, :assured => 100}
       
   module Errors
     ERROR_COMMAND_INVALID = 'That\'s not something the game yet understands.'
     ERROR_INVENTORY_EMPTY = '...and find you currently have diddly-squat, which is nothing.'
-    ERROR_ITEM_INVALID = 'You don\'t see that there.'
+    ERROR_ITEM_LOC_INVALID = 'You don\'t see that there.'
+    ERROR_ITEM_INVENTORY_INVALID = 'You don\'t possess that.'
     ERROR_TAKE_PARAM_MISSING = 'You can\'t just take. You gotta choose something.'
     ERROR_TAKE_ITEM_UNTAKEABLE = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
     ERROR_TAKE_ITEM_INVALID = 'That item doesn\'t exist here.'
