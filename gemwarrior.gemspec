@@ -19,11 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths   = ['lib']
   spec.license         = 'MIT'
 
-  spec.add_runtime_dependency 'cli-console', '~> 0.1.4'
-  spec.add_runtime_dependency 'feep', '~> 0.0.9'
-  spec.add_runtime_dependency 'highline', '~> 1.7', '>= 1.7.2'
-  #spec.add_runtime_dependency 'matrext', '~> 0.2'
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
+
+  #spec.add_runtime_dependency 'feep', '~> 0.0.9'  
+  #spec.add_runtime_dependency 'matrext', '~> 0.2'
   #spec.add_runtime_dependency 'wordnik', '~> 4.12'
 
   spec.add_development_dependency 'pry-byebug', '~> 3.0'
