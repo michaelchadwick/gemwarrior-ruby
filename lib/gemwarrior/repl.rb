@@ -2,6 +2,7 @@
 # My own, simple, Read Evaluate Print Loop module
 
 require 'readline'
+require 'os'
 
 require_relative 'constants'
 require_relative 'version'
@@ -9,6 +10,18 @@ require_relative 'evaluator'
 
 module Gemwarrior  
   class Repl
+    private
+    
+    def clear_screen
+      if OS.windows?
+        system('cls')
+      else
+        system('clear')
+      end
+    end
+    
+    public
+    
     def initialize(world, evaluator)
       @world = world
       @eval = evaluator
@@ -37,7 +50,7 @@ module Gemwarrior
     
     def start(initialCommand = nil)
       # welcome player to game
-      system('clear')
+      clear_screen
       puts SPLASH_MESSAGE
       puts
       # hook to do something right off the bat
