@@ -8,12 +8,9 @@ require_relative 'constants'
 module Gemwarrior  
   class Evaluator
     include Errors
-    
-    attr_reader :cur_msg
-    
+
     def initialize(world)
       @world = world
-      @cur_msg = nil
       @commands = %w(character inventory rest look take world monsters go change help quit exit)
       @aliases = %w(c i r l t w m g ch h q x)
       @descriptions = [
@@ -46,11 +43,14 @@ module Gemwarrior
     end
     
     def evaluate(input)
+      if input.nil?
+        return
+      end
+    
       tokens = input.split
       
       unless valid?(input)
-        puts ERROR_COMMAND_INVALID
-        return
+        return ERROR_COMMAND_INVALID
       end
       
       command = tokens.first
@@ -106,12 +106,13 @@ module Gemwarrior
       when @commands[10..11], @aliases[10] # quit/exit
         puts QUIT_MESSAGE
         exit(0)
+      else
+        return
       end
     end
     
     def valid?(input)
       tokens = input.split
-      result = false
       commands_and_aliases = @commands | @aliases
       if commands_and_aliases.include?(tokens.first)
         if tokens.size.between?(1,2)
@@ -120,7 +121,7 @@ module Gemwarrior
       elsif tokens.empty?
         return true
       end
-      result
+      return false
     end
     
   end

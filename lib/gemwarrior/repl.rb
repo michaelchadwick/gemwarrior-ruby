@@ -33,14 +33,22 @@ module Gemwarrior
       noun2_vals = ["asterisms", "deniers", "diastoles", "extremities", "payments", "specters", "splats", "thalamuses", "wallets", "xylophones"]
       noun3_vals = ["blebs", "blowholes", "dancers", "dinges", "dualism", "ebullitions", "gullets", "knops", "phaetons", "snickers"]
       
-      puts "* Remember: #{noun1_vals[rand(0..9)]} and #{noun2_vals[rand(0..9)]} are the key to #{noun3_vals[rand(0..9)]} *\n"
+      puts "* Remember: #{noun1_vals[rand(0..9)]} and #{noun2_vals[rand(0..9)]} are the key to #{noun3_vals[rand(0..9)]} *\n\n"
     end
 
+    def setup_screen(initialCommand = nil)
+      # welcome player to game
+      clear_screen
+      print_splash_message
+      print_fortune 
+
+      # hook to do something right off the bat
+      puts @eval.evaluate(initialCommand) unless initialCommand.nil?
+    end
+    
     def prompt
-      prompt_template =  "\n*****#{Gemwarrior::PROGRAM_NAME} v%s*****\n"
-      prompt_template += "[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s] -- [%s @ %s]"
+      prompt_template = "\n[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s] -- [%s @ %s]"
       prompt_vars_arr = [
-        Gemwarrior::VERSION,
         @world.player.level,
         @world.player.xp,
         @world.player.hp_cur, 
@@ -54,7 +62,7 @@ module Gemwarrior
     end
     
     def read_line
-      Readline.readline(' > ', true).to_s
+      Readline.readline(' GW> ', true).to_s
     end
     
     public
@@ -65,17 +73,10 @@ module Gemwarrior
     end
 
     def start(initialCommand = nil)
-      # welcome player to game
-      clear_screen
-      print_splash_message
-      print_fortune 
-
-      # hook to do something right off the bat
-      puts @eval.evaluate(initialCommand) unless initialCommand.nil?
-      
+      setup_screen(initialCommand)
+            
       # main loop
       loop do
-        puts @eval.cur_msg unless @eval.cur_msg.nil?
         prompt
         begin
           input = read_line

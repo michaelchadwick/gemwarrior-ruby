@@ -18,6 +18,7 @@ module Gemwarrior
       @items = items
       @monsters_available = monsters_available
       @monsters_abounding = []
+      self.describe
     end
     
     def describe
