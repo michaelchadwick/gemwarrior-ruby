@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require_relative '../lib/gemwarrior'
+
 require_relative '../lib/gemwarrior/version'
+require_relative '../lib/gemwarrior/game'
 
 def parse_options
   opts.on('-v', '--version', 'Display version number and exit') do
@@ -22,7 +23,7 @@ def print_error(error)
 end
 
 begin
-  Gemwarrior::Base.new
+  Gemwarrior::Game.new
 rescue => error
   print_error(error)
   exit(false)

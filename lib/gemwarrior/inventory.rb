@@ -50,9 +50,9 @@ module Gemwarrior
     end
     
     def remove_item(item_name)
-      if inventory.include?(item_name)
-        @inventory.delete(item_name)
-        puts "#{item} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone.\n"
+      if @inventory.map(&:name).include?(item_name)
+        @inventory.reject! { |item| item.name == item_name }
+        puts "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone.\n"
       else
         puts ERROR_INVENTORY_REMOVE_INVALID
       end

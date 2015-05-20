@@ -5,7 +5,8 @@ module Gemwarrior
   PROGRAM_NAME = 'Gem Warrior'
   SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
   QUIT_MESSAGE = 'Thanks for playing the game. Until next time...'
-  SEPARATOR = '====================================================='
+  RESUME_MESSAGE = 'Back to adventuring!'
+  SEPARATOR = '==========================================================='
   CHANGE_PARAMS = 'Options: name'
   
   DANGER_LEVEL = {:none => 0, :low => 15, :moderate => 30, :high => 55, :assured => 100}
@@ -13,11 +14,13 @@ module Gemwarrior
   module Errors
     ERROR_COMMAND_INVALID = 'That\'s not something the game yet understands.'
     ERROR_INVENTORY_EMPTY = '...and find you currently have diddly-squat, which is nothing.'
+    ERROR_INVENTORY_REMOVE_INVALID = 'Your inventory does not contain that item, so you can\'t drop it.'
     ERROR_ITEM_LOC_INVALID = 'You don\'t see that there.'
     ERROR_ITEM_INVENTORY_INVALID = 'You don\'t possess that.'
     ERROR_TAKE_PARAM_MISSING = 'You can\'t just take. You gotta choose something.'
     ERROR_TAKE_ITEM_UNTAKEABLE = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
     ERROR_TAKE_ITEM_INVALID = 'That item doesn\'t exist here.'
+    ERROR_DROP_PARAM_MISSING = 'You can\'t just drop indiscriminately. You gotta choose something.'
     ERROR_GO_DIR_MISSING = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_DIR_INVALID = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     ERROR_CHANGE_PARAM_MISSING = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
