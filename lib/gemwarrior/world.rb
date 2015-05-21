@@ -204,7 +204,7 @@ module Gemwarrior
           LOC_NAME_SKYTOWER, 
           LOC_DESC_SKYTOWER,
           LOC_CONNECTIONS_SKYTOWER,
-          :high,
+          :assured,
           [item_by_id(4)],
           @monsters
         )
