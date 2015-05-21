@@ -11,26 +11,24 @@ module Gemwarrior
     ERROR_ITEM_ADD_INVALID      = 'That item doesn\'t exist here.'
     ERROR_ITEM_DESCRIBE_INVALID = 'You don\'t possess that.'
     
+    attr_accessor :inventory
+    
     def initialize(inventory = [])
-      @inventory = inventory
+      self.inventory = inventory
     end
     
     def list_contents
       contents_text = "You check your inventory"
-      if @inventory.empty?
+      if inventory.empty?
         return contents_text << ERROR_INVENTORY_EMPTY
       else
-        @item_names = []
-        @inventory.each do |i|
-          @item_names.push(i.name)
-        end
-        return contents_text << ": #{@inventory.map(&:name).join ', '}"
+        return contents_text << ": #{inventory.map(&:name).join ', '}"
       end
     end
     
     def describe_item(item_name)
-      if @inventory.map(&:name).include?(item_name)
-        @inventory.each do |i|
+      if inventory.map(&:name).include?(item_name)
+        inventory.each do |i|
           if i.name.eql?(item_name)
             return "#{i.description}"
           end
@@ -44,7 +42,7 @@ module Gemwarrior
       cur_loc.items.each do |i|
         if i.name.eql?(item_name)
           if i.takeable
-            @inventory.push(i)
+            inventory.push(i)
             cur_loc.remove_item(item_name)
             return "Added #{item_name} to your increasing collection of bits of tid.\n"
           else
@@ -56,8 +54,8 @@ module Gemwarrior
     end
     
     def remove_item(item_name)
-      if @inventory.map(&:name).include?(item_name)
-        @inventory.reject! { |item| item.name == item_name }
+      if inventory.map(&:name).include?(item_name)
+        inventory.reject! { |item| item.name == item_name }
         puts "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone.\n"
       else
         ERROR_ITEM_REMOVE_INVALID

@@ -11,10 +11,10 @@ module Gemwarrior
       description,
       takeable
     )
-      @id = id
-      @name = name
-      @description = description
-      @takeable = takeable
+      self.id = id
+      self.name = name
+      self.description = description
+      self.takeable = takeable
     end
     
     def is_takeable?
