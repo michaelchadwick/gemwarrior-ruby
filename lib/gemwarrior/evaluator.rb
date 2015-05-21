@@ -22,11 +22,13 @@ module Gemwarrior
     ERROR_TAKE_PARAM_MISSING   = 'You can\'t just "take". You gotta choose something to take.'
     ERROR_DROP_PARAM_MISSING   = 'You can\'t just "drop". You gotta choose something to drop.'
     
+    attr_accessor :world, :commands, :aliases, :descriptions
+    
     def initialize(world)
-      @world = world
-      @commands = %w(character inventory list rest look take drop go change help quit exit quit! exit!)
-      @aliases = %w(c i ls r l t d g ch h q x qq xx)
-      @descriptions = [
+      self.world = world
+      self.commands = %w(character inventory list rest look take drop go change help quit exit quit! exit!)
+      self.aliases = %w(c i ls r l t d g ch h q x qq xx)
+      self.descriptions = [
         'Display character information',
         'Look in your inventory',
         'List all the objects of a type that exist in the world',

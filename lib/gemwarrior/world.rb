@@ -20,10 +20,10 @@ module Gemwarrior
     attr_accessor :monsters, :items, :locations, :player
   
     def initialize
-      @monsters = init_monsters
-      @items = init_items
-      @locations = init_locations
-      @player = nil
+      self.monsters = init_monsters
+      self.items = init_items
+      self.locations = init_locations
+      self.player = nil
     end
 
     def list(param)
@@ -40,7 +40,7 @@ module Gemwarrior
     end
     
     def mob_by_id(id)
-      @monsters.each do |mob|
+      monsters.each do |mob|
         if mob.id.to_i.equal? id
           return mob
         end
@@ -49,7 +49,7 @@ module Gemwarrior
     end
     
     def item_by_id(id)
-      @items.each do |item|
+      items.each do |item|
         if item.id.to_i.equal? id
           return item
         end
@@ -58,7 +58,7 @@ module Gemwarrior
     end
 
     def loc_by_id(id)
-      @locations.each do |loc|
+      locations.each do |loc|
         if loc.id.to_i.equal? id
           return loc
         end
@@ -69,8 +69,8 @@ module Gemwarrior
     private
     
     def init_monsters
-      @monsters = []
-      @monsters.push(Monster.new(
+      monsters = []
+      monsters.push(Monster.new(
           MOB_ID_ALEXANDRAT, 
           MOB_NAME_ALEXANDRAT, 
           MOB_DESC_ALEXANDRAT,
@@ -86,7 +86,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_AMBEROO, 
           MOB_NAME_AMBEROO, 
           MOB_DESC_AMBEROO,
@@ -102,7 +102,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_AMETHYSTLE, 
           MOB_NAME_AMETHYSTLE, 
           MOB_DESC_AMETHYSTLE,
@@ -118,7 +118,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_AQUAMARINE, 
           MOB_NAME_AQUAMARINE, 
           MOB_DESC_AQUAMARINE,
@@ -134,7 +134,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_APATIGER, 
           MOB_NAME_APATIGER, 
           MOB_DESC_APATIGER,
@@ -150,7 +150,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_BLOODSTORM, 
           MOB_NAME_BLOODSTORM, 
           MOB_DESC_BLOODSTORM,
@@ -166,7 +166,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_CITRINAGA, 
           MOB_NAME_CITRINAGA, 
           MOB_DESC_CITRINAGA,
@@ -182,7 +182,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_CORALIZ, 
           MOB_NAME_CORALIZ, 
           MOB_DESC_CORALIZ,
@@ -198,7 +198,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_CUBICAT, 
           MOB_NAME_CUBICAT, 
           MOB_DESC_CUBICAT,
@@ -214,7 +214,7 @@ module Gemwarrior
           rand(0..10)
         )
       )
-      @monsters.push(Monster.new(
+      monsters.push(Monster.new(
           MOB_ID_DIAMAN, 
           MOB_NAME_DIAMAN, 
           MOB_DESC_DIAMAN,
@@ -233,36 +233,36 @@ module Gemwarrior
     end
     
     def init_items
-      @items = []
-      @items.push(Item.new(
+      items = []
+      items.push(Item.new(
           ITEM_ID_STONE, 
           ITEM_NAME_STONE, 
           ITEM_DESC_STONE,
           true
         )
       )
-      @items.push(Item.new(
+      items.push(Item.new(
           ITEM_ID_BED, 
           ITEM_NAME_BED, 
           ITEM_DESC_BED,
           false
         )
       )
-      @items.push(Item.new(
+      items.push(Item.new(
           ITEM_ID_STALACTITE, 
           ITEM_NAME_STALACTITE, 
           ITEM_DESC_STALACTITE,
           true
         )
       )
-      @items.push(Item.new(
+      items.push(Item.new(
           ITEM_ID_FEATHER, 
           ITEM_NAME_FEATHER, 
           ITEM_DESC_FEATHER,
           true
         )
       )
-      @items.push(Item.new(
+      items.push(Item.new(
           ITEM_ID_GUN, 
           ITEM_NAME_GUN, 
           ITEM_DESC_GUN,
@@ -272,55 +272,55 @@ module Gemwarrior
     end
   
     def init_locations
-      @locations = []
-      @locations.push(Location.new(
+      locations = []
+      locations.push(Location.new(
           LOC_ID_HOME, 
           LOC_NAME_HOME, 
           LOC_DESC_HOME, 
           LOC_CONNECTIONS_HOME,
           :none,
           [item_by_id(0), item_by_id(1)],
-          @monsters
+          monsters
         )
       )
-      @locations.push(Location.new(
+      locations.push(Location.new(
           LOC_ID_CAVE_ENTRANCE, 
           LOC_NAME_CAVE_ENTRANCE, 
           LOC_DESC_CAVE_ENTRANCE,
           LOC_CONNECTIONS_CAVE_ENTRANCE,
           :low,
           [],
-          @monsters
+          monsters
         )
       )
-      @locations.push(Location.new(
+      locations.push(Location.new(
           LOC_ID_CAVE_ROOM1, 
           LOC_NAME_CAVE_ROOM1, 
           LOC_DESC_CAVE_ROOM1,
           LOC_CONNECTIONS_CAVE_ROOM1,
           :moderate,
           [item_by_id(2)],
-          @monsters
+          monsters
         )
       )
-      @locations.push(Location.new(
+      locations.push(Location.new(
           LOC_ID_FOREST, 
           LOC_NAME_FOREST, 
           LOC_DESC_FOREST,
           LOC_CONNECTIONS_FOREST,
           :low,
           [item_by_id(3)],
-          @monsters
+          monsters
         )
       )
-      @locations.push(Location.new(
+      locations.push(Location.new(
           LOC_ID_SKYTOWER, 
           LOC_NAME_SKYTOWER, 
           LOC_DESC_SKYTOWER,
           LOC_CONNECTIONS_SKYTOWER,
           :assured,
           [item_by_id(4)],
-          @monsters
+          monsters
         )
       )
     end
