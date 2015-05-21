@@ -95,10 +95,6 @@ module Gemwarrior
         else
           @world.player.inventory.remove_item(param)
         end  
-      when 'world', 'world'
-        @world.list_locations
-      when 'monsters', 'm'
-        @world.list_monsters
       when 'go', 'g'
         if param.nil?
           ERROR_GO_PARAM_MISSING

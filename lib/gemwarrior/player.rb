@@ -38,21 +38,21 @@ module Gemwarrior
     )
       generate_player_identity
       
-      @level = level
-      @xp = xp
+      self.level = level
+      self.xp = xp
       
-      @hp_cur = hp_cur
-      @hp_max = hp_max
-      @stam_cur = stam_cur
-      @stam_max = stam_max
+      self.hp_cur = hp_cur
+      self.hp_max = hp_max
+      self.stam_cur = stam_cur
+      self.stam_max = stam_max
       
-      @atk_lo = atk_lo
-      @atk_hi = atk_hi
+      self.atk_lo = atk_lo
+      self.atk_hi = atk_hi
       
-      @inventory = inventory
-      @rox = rox
+      self.inventory = inventory
+      self.rox = rox
       
-      @cur_loc = cur_loc
+      self.cur_loc = cur_loc
     end
 
     def check_self
@@ -73,26 +73,26 @@ module Gemwarrior
     end
 
     def stamina_dec
-      @stam_cur = @stam_cur - 1
+      stam_cur = stam_cur - 1
     end
 
     def modify_name
       print "Enter new name: "
-      name = gets.chomp!
-      if name.length < 3 || name.length > 10
-        return "'#{name}' is an invalid length. Make it between 3 and 10 characters, please."
+      new_name = gets.chomp!
+      if new_name.length < 3 || new_name.length > 10
+        return "'#{new_name}' is an invalid length. Make it between 3 and 10 characters, please."
       else
-        new_name = ""
-        new_name << name[0].upcase
-        new_name << name[1..name.length-1].downcase
-        @name = new_name
-        return "New name, '#{new_name}', accepted."
+        name_to_add = ""
+        name_to_add << new_name[0].upcase
+        name_to_add << new_name[1..new_name.length-1].downcase
+        self.name = name_to_add
+        return "New name, '#{name}', accepted."
       end
       return nil
     end
     
     def list_inventory
-      @inventory.list_contents
+      inventory.list_contents
     end 
     
     def loc_by_id(locations, id)
@@ -105,7 +105,7 @@ module Gemwarrior
     end
     
     def can_move?(direction)
-      @cur_loc.has_loc_to_the?(direction)
+      cur_loc.has_loc_to_the?(direction)
     end
     
     def go(locations, direction)
@@ -121,11 +121,11 @@ module Gemwarrior
       end
       unless direction.nil?
         if can_move?(direction)
-          new_loc_id = @cur_loc.locs_connected[direction.to_sym]
-          @cur_loc = loc_by_id(locations, new_loc_id)
+          new_loc_id = cur_loc.locs_connected[direction.to_sym]
+          cur_loc = loc_by_id(locations, new_loc_id)
           print_traveling_text
-          @cur_loc.checked_for_monsters = false
-          @cur_loc.describe
+          cur_loc.checked_for_monsters = false
+          cur_loc.describe
         else
           ERROR_GO_PARAM_INVALID
         end
@@ -183,11 +183,11 @@ module Gemwarrior
     end
     
     def generate_player_identity
-      @name = generate_name
-      @description = generate_desc
-      @face = generate_face
-      @hands = generate_hands
-      @mood = generate_mood
+      self.name = generate_name
+      self.description = generate_desc
+      self.face = generate_face
+      self.hands = generate_hands
+      self.mood = generate_mood
     end
   end
 end

@@ -22,22 +22,22 @@ module Gemwarrior
       inventory, 
       rox
     )
-      @id = id
-      @name = name
-      @description = description
-      @face = face
-      @hands = hands
-      @mood = mood
+      self.id = id
+      self.name = name
+      self.description = description
+      self.face = face
+      self.hands = hands
+      self.mood = mood
       
-      @level = level
-      @hp_cur = hp_cur
-      @hp_max = hp_max
+      self.level = level
+      self.hp_cur = hp_cur
+      self.hp_max = hp_max
       
-      @atk_lo = atk_lo
-      @atk_hi = atk_hi
+      self.atk_lo = atk_lo
+      self.atk_hi = atk_hi
       
-      @inventory = inventory
-      @rox = rox
+      self.inventory = inventory
+      self.rox = rox
     end
 
   end
