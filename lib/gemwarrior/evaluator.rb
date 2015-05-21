@@ -126,7 +126,7 @@ module Gemwarrior
         else
           puts RESUME_MESSAGE
         end
-      when 'qq', 'xx'
+      when 'quit!', 'exit!', 'qq', 'xx'
         puts QUIT_MESSAGE
         exit(0)
       else
