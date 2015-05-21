@@ -41,8 +41,8 @@ module Gemwarrior
       )
 
       # create the console
-      self.eval = Evaluator.new(@world)
-      self.repl = Repl.new(@world, @eval)
+      self.eval = Evaluator.new(world)
+      self.repl = Repl.new(world, eval)
 
       # enter Jool!
       repl.start('look')
