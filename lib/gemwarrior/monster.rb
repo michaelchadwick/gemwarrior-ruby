@@ -1,30 +1,26 @@
 # lib/gemwarrior/monster.rb
 # Monster creature
 
-require_relative 'constants'
-require_relative 'inventory'
 require_relative 'creature'
 
 module Gemwarrior
   class Monster < Creature
-    include Entities::Monsters
-    
-    attr_reader :name
-    
+    attr_accessor :xp, :atk_hi, :atk_lo, :rox
+  
     def initialize(
       id, 
-      name = MOB_NAME_DEFAULT, 
-      description = MOB_DESC_FAULT, 
-      face = '',
-      hands ='', 
-      mood = '', 
-      level = '', 
-      hp_cur = 5, 
-      hp_max = 5, 
-      atk_lo = 1, 
-      atk_hi = 2, 
-      inventory = Inventory.new, 
-      rox = 1
+      name, 
+      description, 
+      face,
+      hands, 
+      mood, 
+      level, 
+      hp_cur, 
+      hp_max, 
+      atk_lo, 
+      atk_hi, 
+      inventory, 
+      rox
     )
       @id = id
       @name = name
@@ -33,7 +29,7 @@ module Gemwarrior
       @hands = hands
       @mood = mood
       
-      @level = rand(level)
+      @level = level
       @hp_cur = hp_cur
       @hp_max = hp_max
       

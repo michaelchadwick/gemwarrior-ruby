@@ -1,92 +1,41 @@
 # lib/gemwarrior/player.rb
 # Player creature
 
-require_relative 'constants'
-require_relative 'inventory'
 require_relative 'creature'
 
 module Gemwarrior
   class Player < Creature
-    private
-    
-    def print_traveling_text
-      loc = Thread.new do
-        print "*** "
-        print "#{Matrext::process({ :phrase => "traveling...", :sl => true, :speed => :fast })}"
-        print " ***\n"
-      end
-      loc.join
-    end
-    
-    def print_char_pic
-      char_pic = ""
-      char_pic << "**********\n"
-      char_pic << "*   ()   *\n"
-      char_pic << "* \\-||-/ *\n"
-      char_pic << "*   --   *\n"
-      char_pic << "*   ||   *\n"
-      char_pic << "*  _||_  *\n"
-      char_pic << "**********\n"
-      puts char_pic
-    end
+    # CONSTANTS
+    ## ATTRIBUTE POOLS
+    CHAR_UPPER_POOL = (65..90).map{ |i| i.chr }
+    CHAR_LOWER_POOL = (97..122).map{ |i| i.chr }
+    CHAR_LOWER_VOWEL_POOL = ['a','e','i','o','u','y']
 
-    include AttributePools
-    include Errors
-
-    def generate_name
-      name = []
-      letter_max = rand(5..10)
-      name[0] = CHAR_UPPER_POOL[rand(0..25)]
-      name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
-      2.upto(letter_max) do |i|
-        name[i] = CHAR_LOWER_POOL[rand(0..25)]
-      end
-      return name.join
-    end
+    FACE_DESC  = ['smooth', 'tired', 'ruddy', 'moist', 'shocked', 'handsome', '5 o\'clock-shadowed']
+    HANDS_DESC = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
+    MOOD_DESC  = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
     
-    def generate_desc
-      PLYR_DESC_DEFAULT
-    end
+    ## PLAYER DEFAULTS
+    PLYR_DESC_DEFAULT = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes, you\'re actually fairly able, as long as you\'ve had breakfast first.'
     
-    def generate_face
-      FACE_DESC[rand(0..FACE_DESC.length-1)]
-    end
+    ## ERRORS
+    ERROR_GO_PARAM_INVALID = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     
-    def generate_hands
-      HANDS_DESC[rand(0..HANDS_DESC.length-1)]
-    end
-    
-    def generate_mood
-      MOOD_DESC[rand(0..MOOD_DESC.length-1)]
-    end
-    
-    def generate_player_identity
-      @name = generate_name
-      @description = generate_desc
-      @face = generate_face
-      @hands = generate_hands
-      @mood = generate_mood
-    end
-    
-    public
-
-    attr_reader   :level, :xp, :cur_loc, :hp_cur, :hp_max, :stam_cur, :stam_max, :inventory
-    attr_accessor :name
+    attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, :rox, :cur_loc
     
     def initialize(
-      level = PLYR_LEVEL_DEFAULT, 
-      xp = PLYR_XP_DEFAULT, 
-      hp_cur = PLYR_HP_CUR_DEFAULT, 
-      hp_max = PLYR_HP_MAX_DEFAULT, 
-      stam_cur = PLYR_STAM_CUR_DEFAULT, 
-      stam_max = PLYR_STAM_MAX_DEFAULT, 
-      atk_lo = PLYR_ATK_LO_DEFAULT, 
-      atk_hi = PLYR_ATK_HI_DEFAULT, 
-      inventory = Inventory.new, 
-      rox = PLYR_ROX_DEFAULT, 
+      level, 
+      xp, 
+      hp_cur, 
+      hp_max, 
+      stam_cur, 
+      stam_max, 
+      atk_lo, 
+      atk_hi, 
+      inventory, 
+      rox, 
       cur_loc
     )
-      # generates name, desc, face, hands, mood text
       generate_player_identity
       
       @level = level
@@ -175,11 +124,70 @@ module Gemwarrior
           new_loc_id = @cur_loc.locs_connected[direction.to_sym]
           @cur_loc = loc_by_id(locations, new_loc_id)
           print_traveling_text
+          @cur_loc.checked_for_monsters = false
           @cur_loc.describe
         else
-          ERROR_GO_DIR_INVALID
+          ERROR_GO_PARAM_INVALID
         end
       end
+    end
+  
+    private
+    
+    def print_traveling_text
+      loc = Thread.new do
+        print "* "
+        print "#{Matrext::process({ :phrase => ">>>", :sl => true })}"
+        print " *\n"
+      end
+      loc.join
+    end
+    
+    def print_char_pic
+      char_pic = ""
+      char_pic << "**********\n"
+      char_pic << "*   ()   *\n"
+      char_pic << "* \\-||-/ *\n"
+      char_pic << "*   --   *\n"
+      char_pic << "*   ||   *\n"
+      char_pic << "*  _||_  *\n"
+      char_pic << "**********\n"
+      puts char_pic
+    end
+
+    def generate_name
+      name = []
+      letter_max = rand(5..10)
+      name[0] = CHAR_UPPER_POOL[rand(0..25)]
+      name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
+      2.upto(letter_max) do |i|
+        name[i] = CHAR_LOWER_POOL[rand(0..25)]
+      end
+      return name.join
+    end
+    
+    def generate_desc
+      PLYR_DESC_DEFAULT
+    end
+    
+    def generate_face
+      FACE_DESC[rand(0..FACE_DESC.length-1)]
+    end
+    
+    def generate_hands
+      HANDS_DESC[rand(0..HANDS_DESC.length-1)]
+    end
+    
+    def generate_mood
+      MOOD_DESC[rand(0..MOOD_DESC.length-1)]
+    end
+    
+    def generate_player_identity
+      @name = generate_name
+      @description = generate_desc
+      @face = generate_face
+      @hands = generate_hands
+      @mood = generate_mood
     end
   end
 end

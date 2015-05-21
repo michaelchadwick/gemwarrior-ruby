@@ -4,12 +4,37 @@
 require 'readline'
 require 'os'
 
-require_relative 'constants'
 require_relative 'version'
 require_relative 'evaluator'
 
 module Gemwarrior  
   class Repl
+    # CONSTANTS
+    ## MESSAGES
+    SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
+    
+    def initialize(world, evaluator)
+      @world = world
+      @eval = evaluator
+    end
+
+    def start(initialCommand = nil)
+      setup_screen(initialCommand)
+            
+      # main loop
+      loop do
+        prompt
+        begin
+          input = read_line
+          puts @eval.evaluate(input)
+        rescue Interrupt
+          puts
+          puts QUIT_MESSAGE
+          exit(0)
+        end
+      end
+    end
+    
     private
     
     def clear_screen
@@ -63,30 +88,6 @@ module Gemwarrior
     
     def read_line
       Readline.readline(' GW> ', true).to_s
-    end
-    
-    public
-    
-    def initialize(world, evaluator)
-      @world = world
-      @eval = evaluator
-    end
-
-    def start(initialCommand = nil)
-      setup_screen(initialCommand)
-            
-      # main loop
-      loop do
-        prompt
-        begin
-          input = read_line
-          puts @eval.evaluate(input)
-        rescue Interrupt
-          puts
-          puts QUIT_MESSAGE
-          exit(0)
-        end
-      end
     end
   end
 end

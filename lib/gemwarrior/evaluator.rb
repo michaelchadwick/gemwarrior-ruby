@@ -3,43 +3,37 @@
 
 require 'pry'
 
-require_relative 'constants'
-
 module Gemwarrior  
   class Evaluator
-    private
+    # CONSTANTS
+    ## MESSAGES
+    PROGRAM_NAME   = 'Gem Warrior'
+    QUIT_MESSAGE   = 'Thanks for playing the game. Until next time...'
+    RESUME_MESSAGE = 'Back to adventuring!'
+    SEPARATOR      = '================================================================'
+    CHANGE_PARAMS  = 'Options: name'
     
-    def print_separator
-      puts SEPARATOR
-    end
+    ## ERRORS
+    ERROR_COMMAND_INVALID      = 'That\'s not something the game yet understands.'
+    ERROR_LIST_PARAM_MISSING   = 'You can\'t just "list". You gotta choose something to list.'
+    ERROR_CHANGE_PARAM_MISSING = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
+    ERROR_CHANGE_PARAM_INVALID = 'You can\'t change that...yet.'
+    ERROR_GO_PARAM_MISSING     = 'Just wander aimlessly? A direction would be nice.'
+    ERROR_TAKE_PARAM_MISSING   = 'You can\'t just "take". You gotta choose something to take.'
+    ERROR_DROP_PARAM_MISSING   = 'You can\'t just "drop". You gotta choose something to drop.'
     
-    def list_commands
-      i = 0
-      print_separator
-      @commands.each do |cmd|
-        puts " #{cmd}, #{@aliases[i]}\n -- #{@descriptions[i]}"
-        i = i + 1
-      end
-      print_separator
-    end
-    
-    public
-  
-    include Errors
-
     def initialize(world)
       @world = world
-      @commands = %w(character inventory rest look take drop world monsters go change help quit exit quit! exit!)
-      @aliases = %w(c i r l t d w m g ch h q x qq xx)
+      @commands = %w(character inventory list rest look take drop go change help quit exit quit! exit!)
+      @aliases = %w(c i ls r l t d g ch h q x qq xx)
       @descriptions = [
         'Display character information',
         'Look in your inventory',
+        'List all the objects of a type that exist in the world',
         'Take a load off and regain stamina',
         'Look around your current location',
         'Take item',
         'Drop item',
-        'List all locations in the world',
-        'List all the monsters in the world',
         'Go in a direction',
         'Change something',
         'This help menu',
@@ -57,7 +51,7 @@ module Gemwarrior
     
       tokens = input.split
       
-      unless valid?(input)
+      unless input_valid?(input)
         return ERROR_COMMAND_INVALID
       end
       
@@ -72,6 +66,12 @@ module Gemwarrior
           @world.player.inventory.describe_item(param)
         else
           @world.player.list_inventory
+        end
+      when 'list', 'ls'
+        if param.nil?
+          ERROR_LIST_PARAM_MISSING
+        else
+          @world.list(param)
         end
       when 'rest', 'r'
         @world.player.rest
@@ -99,7 +99,7 @@ module Gemwarrior
         @world.list_monsters
       when 'go', 'g'
         if param.nil?
-          ERROR_GO_DIR_MISSING
+          ERROR_GO_PARAM_MISSING
         else
           @world.player.go(@world.locations, param)
         end
@@ -133,8 +133,24 @@ module Gemwarrior
         return
       end
     end
+
+    private
     
-    def valid?(input)
+    def print_separator
+      puts SEPARATOR
+    end
+    
+    def list_commands
+      i = 0
+      print_separator
+      @commands.each do |cmd|
+        puts " #{cmd}, #{@aliases[i]}\n -- #{@descriptions[i]}"
+        i = i + 1
+      end
+      print_separator
+    end
+    
+    def input_valid?(input)
       tokens = input.split
       commands_and_aliases = @commands | @aliases
       if commands_and_aliases.include?(tokens.first)

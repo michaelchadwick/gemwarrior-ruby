@@ -1,47 +1,53 @@
 # lib/gemwarrior/creature.rb
 # Creature base class
 
-require_relative 'constants'
 require_relative 'inventory'
 
 module Gemwarrior
   class Creature
-    attr_reader :name, :description
+    # CONSTANTS
+    CREATURE_NAME_DEFAULT          = 'Creature'
+    CREATURE_DESCRIPTION_DEFAULT   = 'A creature of some sort.'
+    CREATURE_FACE_DEFAULT          = 'calm'
+    CREATURE_HANDS_DEFAULT         = 'smooth'
+    CREATURE_MOOD_DEFAULT          = 'happy'
+
+    attr_accessor :id, :name, :description, :face, :hands, :mood, 
+                  :level, :hp_cur, :hp_max, :inventory
     
     def initialize(
       id, 
-      name = 'Creature', 
-      face = 'calm', 
-      hands = 'smooth', 
-      mood = 'happy', 
+      name = CREATURE_NAME_DEFAULT,
+      description = CREATURE_DESCRIPTION_DEFAULT, 
+      face = CREATURE_FACE_DEFAULT, 
+      hands = CREATURE_HANDS_DEFAULT, 
+      mood = CREATURE_MOOD_DEFAULT, 
       level = 1, 
       hp_cur = 10, 
       hp_max = 10, 
-      atk_lo = 1, 
-      atk_hi = 3, 
-      inventory = Inventory.new, 
-      rox = 1
+      inventory = Inventory.new
     )
-      @id = id
-      @name = name
-      @face = face
-      @hands = hands
-      @mood = mood
+      self.id = id
+      self.name = name
+      self.description = description
+      self.face = face
+      self.hands = hands
+      self.mood = mood
 
-      @level = level
-      @hp_cur = hp_cur
-      @hp_max = hp_max
+      self.level = level
+      self.hp_cur = hp_cur
+      self.hp_max = hp_max
 
-      @atk_lo = atk_lo
-      @atk_hi = atk_hi
-
-      @inventory = inventory
-      @rox = rox
+      self.inventory = inventory
+    end
+    
+    def describe
+      self.description
     end
     
     def status
-      puts "The #{name}'s face is #{@face}, hands are #{@hands}, and general mood is #{@mood}."
+      status_text =  "[#{name}][LVL: #{level}][HP:#{hp_cur}|#{hp_max}]\n"
+      status_text << "Its face is #{face}, hands are #{hands}, and general mood is #{mood}."
     end
-    
   end
 end

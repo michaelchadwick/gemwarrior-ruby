@@ -3,7 +3,13 @@
 
 module Gemwarrior
   class Inventory
-    include Errors
+    # CONSTANTS
+    ## ERRORS
+    ERROR_INVENTORY_EMPTY       = '...and find you currently have diddly-squat, which is nothing.'
+    ERROR_ITEM_REMOVE_INVALID   = 'Your inventory does not contain that item, so you can\'t drop it.'
+    ERROR_ITEM_ADD_UNTAKEABLE   = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
+    ERROR_ITEM_ADD_INVALID      = 'That item doesn\'t exist here.'
+    ERROR_ITEM_DESCRIBE_INVALID = 'You don\'t possess that.'
     
     def initialize(inventory = [])
       @inventory = inventory
@@ -30,7 +36,7 @@ module Gemwarrior
           end
         end
       else
-        ERROR_ITEM_INVENTORY_INVALID
+        ERROR_ITEM_DESCRIBE_INVALID
       end
     end
         
@@ -39,14 +45,14 @@ module Gemwarrior
         if i.name.eql?(item_name)
           if i.takeable
             @inventory.push(i)
-            cur_loc.remove_item_from_location(item_name)
+            cur_loc.remove_item(item_name)
             return "Added #{item_name} to your increasing collection of bits of tid.\n"
           else
-            ERROR_TAKE_ITEM_UNTAKEABLE
+            return ERROR_ITEM_ADD_UNTAKEABLE
           end
         end
       end
-      ERROR_TAKE_ITEM_INVALID
+      ERROR_ITEM_ADD_INVALID
     end
     
     def remove_item(item_name)
@@ -54,7 +60,7 @@ module Gemwarrior
         @inventory.reject! { |item| item.name == item_name }
         puts "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone.\n"
       else
-        puts ERROR_INVENTORY_REMOVE_INVALID
+        ERROR_ITEM_REMOVE_INVALID
       end
     end
   end

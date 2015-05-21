@@ -17,12 +17,13 @@ module Gemwarrior
     ## ERRORS
     ERROR_LIST_PARAM_INVALID = 'That isn\'t something that can be listed.'
   
-    attr_accessor :monsters, :items, :locations
+    attr_accessor :monsters, :items, :locations, :player
   
     def initialize
       @monsters = init_monsters
       @items = init_items
       @locations = init_locations
+      @player = nil
     end
 
     def list(param)
