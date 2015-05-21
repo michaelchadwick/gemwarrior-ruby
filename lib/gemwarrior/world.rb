@@ -1,18 +1,71 @@
 # lib/gemwarrior/world.rb
 # World where the locations, monsters, items, etc. exist
 
-require_relative 'constants'
+require_relative 'defaults'
 require_relative 'monster'
 require_relative 'item'
 require_relative 'location'
 
 module Gemwarrior
   class World
-    private
-
+    # CONSTANTS
+    ## DEFAULTS
     include Entities::Monsters
     include Entities::Items
     include Entities::Locations
+    
+    ## ERRORS
+    ERROR_LIST_PARAM_INVALID = 'That isn\'t something that can be listed.'
+  
+    attr_accessor :monsters, :items, :locations
+  
+    def initialize
+      @monsters = init_monsters
+      @items = init_items
+      @locations = init_locations
+    end
+
+    def list(param)
+      case param
+      when "monsters"
+        return "The world's monsters consist of #{@monsters.map(&:name).join(', ')}"
+      when "items"
+        return "The world's items consist of #{@items.map(&:name).join(', ')}"
+      when "locations"
+        return "The world consists of #{@locations.map(&:name).join(', ')}"
+      else
+        ERROR_LIST_PARAM_INVALID
+      end
+    end
+    
+    def mob_by_id(id)
+      @monsters.each do |mob|
+        if mob.id.to_i.equal? id
+          return mob
+        end
+      end
+      return nil
+    end
+    
+    def item_by_id(id)
+      @items.each do |item|
+        if item.id.to_i.equal? id
+          return item
+        end
+      end
+      return nil
+    end
+
+    def loc_by_id(id)
+      @locations.each do |loc|
+        if loc.id.to_i.equal? id
+          return loc
+        end
+      end
+      return nil
+    end
+ 
+    private
     
     def init_monsters
       @monsters = []
@@ -23,7 +76,13 @@ module Gemwarrior
           'ugly', 
           'gnarled', 
           'unsurprisingly unchipper', 
-          MOB_LEVEL_ALEXANDRAT
+          MOB_LEVEL_ALEXANDRAT,
+          MOB_LEVEL_ALEXANDRAT * 5,
+          MOB_LEVEL_ALEXANDRAT * 5,
+          MOB_LEVEL_ALEXANDRAT * 2,
+          MOB_LEVEL_ALEXANDRAT * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -33,7 +92,13 @@ module Gemwarrior
           'punchy', 
           'balled', 
           'jumpy',
-          MOB_LEVEL_AMBEROO
+          MOB_LEVEL_AMBEROO,
+          MOB_LEVEL_AMBEROO * 5,
+          MOB_LEVEL_AMBEROO * 5,
+          MOB_LEVEL_AMBEROO * 2,
+          MOB_LEVEL_AMBEROO * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -43,7 +108,13 @@ module Gemwarrior
           'sharp', 
           'loose', 
           'mesmerizing',
-          MOB_LEVEL_AMETHYSTLE
+          MOB_LEVEL_AMETHYSTLE,
+          MOB_LEVEL_AMETHYSTLE * 5,
+          MOB_LEVEL_AMETHYSTLE * 5,
+          MOB_LEVEL_AMETHYSTLE * 2,
+          MOB_LEVEL_AMETHYSTLE * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -53,7 +124,13 @@ module Gemwarrior
           'strained', 
           'hairy', 
           'tempered',
-          MOB_LEVEL_AQUAMARINE
+          MOB_LEVEL_AQUAMARINE,
+          MOB_LEVEL_AQUAMARINE * 5,
+          MOB_LEVEL_AQUAMARINE * 5,
+          MOB_LEVEL_AQUAMARINE * 2,
+          MOB_LEVEL_AQUAMARINE * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -63,7 +140,13 @@ module Gemwarrior
           'calloused', 
           'soft', 
           'apathetic',
-          MOB_LEVEL_APATIGER
+          MOB_LEVEL_APATIGER,
+          MOB_LEVEL_APATIGER * 5,
+          MOB_LEVEL_APATIGER * 5,
+          MOB_LEVEL_APATIGER * 2,
+          MOB_LEVEL_APATIGER * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -73,7 +156,13 @@ module Gemwarrior
           'bloody', 
           'bloody', 
           'boiling',
-          MOB_LEVEL_BLOODSTORM
+          MOB_LEVEL_BLOODSTORM,
+          MOB_LEVEL_BLOODSTORM * 5,
+          MOB_LEVEL_BLOODSTORM * 5,
+          MOB_LEVEL_BLOODSTORM * 2,
+          MOB_LEVEL_BLOODSTORM * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -83,7 +172,13 @@ module Gemwarrior
           'shiny', 
           'glistening', 
           'staid',
-          MOB_LEVEL_CITRINAGA
+          MOB_LEVEL_CITRINAGA,
+          MOB_LEVEL_CITRINAGA * 5,
+          MOB_LEVEL_CITRINAGA * 5,
+          MOB_LEVEL_CITRINAGA * 2,
+          MOB_LEVEL_CITRINAGA * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -93,7 +188,13 @@ module Gemwarrior
           'spotted', 
           'slippery', 
           'emotionless',
-          MOB_LEVEL_CORALIZ
+          MOB_LEVEL_CORALIZ,
+          MOB_LEVEL_CORALIZ * 5,
+          MOB_LEVEL_CORALIZ * 5,
+          MOB_LEVEL_CORALIZ * 2,
+          MOB_LEVEL_CORALIZ * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -103,7 +204,13 @@ module Gemwarrior
           'striking', 
           'grippy', 
           'salacious',
-          MOB_LEVEL_CUBICAT
+          MOB_LEVEL_CUBICAT,
+          MOB_LEVEL_CUBICAT * 5,
+          MOB_LEVEL_CUBICAT * 5,
+          MOB_LEVEL_CUBICAT * 2,
+          MOB_LEVEL_CUBICAT * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
       @monsters.push(Monster.new(
@@ -113,7 +220,13 @@ module Gemwarrior
           'bright', 
           'jagged', 
           'adamant',
-          MOB_LEVEL_DIAMAN
+          MOB_LEVEL_DIAMAN,
+          MOB_LEVEL_DIAMAN * 5,
+          MOB_LEVEL_DIAMAN * 5,
+          MOB_LEVEL_DIAMAN * 2,
+          MOB_LEVEL_DIAMAN * 2,
+          Inventory.new,
+          rand(0..10)
         )
       )
     end
@@ -209,61 +322,6 @@ module Gemwarrior
           @monsters
         )
       )
-    end
-  
-    public
-  
-    attr_reader   :locations
-    attr_accessor :player
-  
-    def initialize
-      @monsters = init_monsters
-      @items = init_items
-      @locations = init_locations
-      @player = nil
-    end
-
-    def item_by_id(id)
-      @items.each do |item|
-        if item.id.to_i.equal? id
-          return item
-        end
-      end
-      return nil
-    end
-    
-    def list_locations
-      world_locations = []
-      @locations.each do |loc|
-        world_locations.push(loc.name)
-      end
-      return"The world consists of #{world_locations.join(', ')}"
-    end
-  
-    def loc_by_id(id)
-      @locations.each do |loc|
-        if loc.id.to_i.equal? id
-          return loc
-        end
-      end
-      return nil
-    end
-
-    def list_monsters
-      world_monsters = []
-      @monsters.each do |mob|
-        world_monsters.push(mob.name)
-      end
-      return "The world's monsters consist of #{world_monsters.join(', ')}"
-    end
-    
-    def mob_by_id(id)
-      @monsters.each do |mob|
-        if mob.id.to_i.equal? id
-          return mob
-        end
-      end
-      return nil
     end
   end
 end
