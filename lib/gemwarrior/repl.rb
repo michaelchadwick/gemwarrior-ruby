@@ -13,9 +13,11 @@ module Gemwarrior
     ## MESSAGES
     SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
     
+    attr_accessor :world, :eval
+    
     def initialize(world, evaluator)
-      @world = world
-      @eval = evaluator
+      self.world = world
+      self.eval = evaluator
     end
 
     def start(initialCommand = nil)
@@ -26,7 +28,7 @@ module Gemwarrior
         prompt
         begin
           input = read_line
-          puts @eval.evaluate(input)
+          puts eval.evaluate(input)
         rescue Interrupt
           puts
           puts QUIT_MESSAGE
@@ -68,20 +70,20 @@ module Gemwarrior
       print_fortune 
 
       # hook to do something right off the bat
-      puts @eval.evaluate(initialCommand) unless initialCommand.nil?
+      puts eval.evaluate(initialCommand) unless initialCommand.nil?
     end
     
     def prompt
       prompt_template = "\n[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s] -- [%s @ %s]"
       prompt_vars_arr = [
-        @world.player.level,
-        @world.player.xp,
-        @world.player.hp_cur, 
-        @world.player.hp_max,
-        @world.player.stam_cur,
-        @world.player.stam_max,
-        @world.player.name,
-        @world.player.cur_loc.name
+        world.player.level,
+        world.player.xp,
+        world.player.hp_cur, 
+        world.player.hp_max,
+        world.player.stam_cur,
+        world.player.stam_max,
+        world.player.name,
+        world.player.cur_loc.name
       ]
       puts (prompt_template % prompt_vars_arr)
     end
