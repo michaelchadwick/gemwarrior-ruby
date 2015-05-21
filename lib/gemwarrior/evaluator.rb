@@ -62,44 +62,44 @@ module Gemwarrior
 
       case command
       when 'character', 'c'
-        @world.player.check_self
+        world.player.check_self
       when 'inventory', 'i'
         if param
-          @world.player.inventory.describe_item(param)
+          world.player.inventory.describe_item(param)
         else
-          @world.player.list_inventory
+          world.player.list_inventory
         end
       when 'list', 'ls'
         if param.nil?
           ERROR_LIST_PARAM_MISSING
         else
-          @world.list(param)
+          world.list(param)
         end
       when 'rest', 'r'
-        @world.player.rest
+        world.player.rest
       when 'look', 'l'
         if param
-          @world.player.cur_loc.describe_item(param)
+          world.player.cur_loc.describe_item(param)
         else
-          @world.player.cur_loc.describe
+          world.player.cur_loc.describe
         end
       when 'take', 't'
         if param.nil?
           ERROR_TAKE_PARAM_MISSING
         else
-          @world.player.inventory.add_item(@world.player.cur_loc, param)
+          world.player.inventory.add_item(world.player.cur_loc, param)
         end
       when 'drop', 'd'
         if param.nil?
           ERROR_DROP_PARAM_MISSING
         else
-          @world.player.inventory.remove_item(param)
+          world.player.inventory.remove_item(param)
         end  
       when 'go', 'g'
         if param.nil?
           ERROR_GO_PARAM_MISSING
         else
-          @world.player.go(@world.locations, param)
+          world.player.go(world.locations, param)
         end
       when 'change', 'ch'
         if param.nil?
@@ -108,7 +108,7 @@ module Gemwarrior
         else
           case param
           when 'name'
-            @world.player.modify_name
+            world.player.modify_name
           else
             ERROR_CHANGE_PARAM_INVALID
           end
@@ -141,8 +141,8 @@ module Gemwarrior
     def list_commands
       i = 0
       print_separator
-      @commands.each do |cmd|
-        puts " #{cmd}, #{@aliases[i]}\n -- #{@descriptions[i]}"
+      commands.each do |cmd|
+        puts " #{cmd}, #{aliases[i]}\n -- #{descriptions[i]}"
         i = i + 1
       end
       print_separator
@@ -150,7 +150,7 @@ module Gemwarrior
     
     def input_valid?(input)
       tokens = input.split
-      commands_and_aliases = @commands | @aliases
+      commands_and_aliases = commands | aliases
       if commands_and_aliases.include?(tokens.first)
         if tokens.size.between?(1,2)
           return true

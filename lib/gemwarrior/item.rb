@@ -18,7 +18,7 @@ module Gemwarrior
     end
     
     def is_takeable?
-      @takeable
+      takeable
     end
   end
 end
