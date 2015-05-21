@@ -33,7 +33,6 @@ module Gemwarrior
       desc_text << "[ #{name} ]\n"
       desc_text << description
       unless checked_for_monsters?
-        puts "need to populate monsters"
         populate_monsters
       end
       unless list_items.nil?
