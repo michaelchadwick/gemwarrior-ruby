@@ -70,7 +70,7 @@ module Gemwarrior
       ITEM_DESC_FEATHER = 'Soft and tender, unlike the craven bird that probably shed it.'
       ITEM_ID_GUN = 4
       ITEM_NAME_GUN = 'gun'
-      ITEM_DESC_GUN = 'Pew pew goes this firearm you wield, ifn\'t it weren\'t unloaded.'
+      ITEM_DESC_GUN = 'Pew pew goes this firearm, you suspect.'
     end
 
     module Locations
