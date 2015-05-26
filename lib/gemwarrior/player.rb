@@ -132,6 +132,10 @@ module Gemwarrior
       end
     end
   
+    def attack(monster)
+      'You can\'t attack anything yet, because you\'re too weak.'
+    end
+  
     private
     
     def print_traveling_text

@@ -19,6 +19,7 @@ module Gemwarrior
     ERROR_CHANGE_PARAM_MISSING = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
     ERROR_CHANGE_PARAM_INVALID = 'You can\'t change that...yet.'
     ERROR_GO_PARAM_MISSING     = 'Just wander aimlessly? A direction would be nice.'
+    ERROR_ATTACK_PARAM_MISSING = 'You can\'t just "attack". You gotta choose something to attack.'
     ERROR_TAKE_PARAM_MISSING   = 'You can\'t just "take". You gotta choose something to take.'
     ERROR_DROP_PARAM_MISSING   = 'You can\'t just "drop". You gotta choose something to drop.'
     
@@ -26,8 +27,8 @@ module Gemwarrior
     
     def initialize(world)
       self.world = world
-      self.commands = %w(character inventory list rest look take drop go change help quit exit quit! exit!)
-      self.aliases = %w(c i ls r l t d g ch h q x qq xx)
+      self.commands = %w(character inventory list rest look take drop go attack change help quit exit quit! exit!)
+      self.aliases = %w(c i ls r l t d g a ch h q x qq xx)
       self.descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -37,6 +38,7 @@ module Gemwarrior
         'Take item',
         'Drop item',
         'Go in a direction',
+        'Attack a monster',
         'Change something',
         'This help menu',
         'Quit w/ confirmation',
@@ -100,6 +102,12 @@ module Gemwarrior
           ERROR_GO_PARAM_MISSING
         else
           world.player.go(world.locations, param)
+        end
+      when 'attack', 'a'
+        if param.nil?
+          ERROR_ATTACK_PARAM_MISSING
+        else
+          world.player.attack(param)
         end
       when 'change', 'ch'
         if param.nil?
