@@ -12,6 +12,7 @@ module Gemwarrior
   class Repl
     # CONSTANTS
     ## MESSAGES
+    QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'
     SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
     
     attr_accessor :world, :eval

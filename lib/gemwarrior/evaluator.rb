@@ -57,7 +57,7 @@ module Gemwarrior
         return ERROR_COMMAND_INVALID
       end
       
-      command = tokens.first
+      command = tokens.first.downcase
       param = tokens[1]
 
       case command
@@ -117,8 +117,8 @@ module Gemwarrior
         list_commands
       when 'quit', 'exit', 'q', 'x'
         puts "You sure you want to quit? (y/n): "
-        response = gets.chomp
-        if (response.downcase.eql?("y") || response.downcase.eql?("yes"))
+        response = gets.chomp.downcase
+        if (response.eql?("y") || response.eql?("yes"))
           puts QUIT_MESSAGE
           exit(0)
         else
@@ -151,7 +151,7 @@ module Gemwarrior
     def input_valid?(input)
       tokens = input.split
       commands_and_aliases = commands | aliases
-      if commands_and_aliases.include?(tokens.first)
+      if commands_and_aliases.include?(tokens.first.downcase)
         if tokens.size.between?(1,2)
           return true
         end
