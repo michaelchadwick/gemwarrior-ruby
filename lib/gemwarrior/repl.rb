@@ -6,6 +6,7 @@ require 'os'
 
 require_relative 'version'
 require_relative 'evaluator'
+require_relative 'wordlist'
 
 module Gemwarrior  
   class Repl
@@ -56,11 +57,11 @@ module Gemwarrior
     end
     
     def print_fortune
-      noun1_vals = ["abutments", "bains", "crocuses", "chapes", "civility", "fingering", "gabardines", "nooks", "scalawags", "squiggles"]
-      noun2_vals = ["asterisms", "deniers", "diastoles", "extremities", "payments", "specters", "splats", "thalamuses", "wallets", "xylophones"]
-      noun3_vals = ["blebs", "blowholes", "dancers", "dinges", "dualism", "ebullitions", "gullets", "knops", "phaetons", "snickers"]
-      
-      puts "* Remember: #{noun1_vals[rand(0..9)]} and #{noun2_vals[rand(0..9)]} are the key to #{noun3_vals[rand(0..9)]} *\n\n"
+      noun1_values = WordList.new('noun-plural')
+      noun2_values = WordList.new('noun-plural')
+      noun3_values = WordList.new('noun-plural')
+
+      puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
     end
 
     def setup_screen(initialCommand = nil)
