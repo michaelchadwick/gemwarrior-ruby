@@ -31,6 +31,8 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 `> r` - take a load off (future: replenish stamina)  
 `> l [object]` - look at current location and its items and monsters  
 `> t [object]` - take an item from a location  
+`> e [object]` - equip an item in your inventory as a weapon
+`> a [monster]` - attack a monster
 `> g [direction]` - go in a direction, if possible  
 `> w` - list all the locations available in the world  
 `> m` - list all the monsters available in the world  
@@ -42,7 +44,8 @@ To come:
 * ~~Ability to move between locations!~~
 * More locations to move between!
 * ~~Monsters!~~
-* Ability to fight those monsters!
+* ~~Ability to fight those monsters!~~
+* Monsters to fight back!
 * ~~Items you can pick up!~~
 * Quests!
 * Towns!

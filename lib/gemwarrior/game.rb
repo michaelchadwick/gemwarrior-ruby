@@ -11,15 +11,19 @@ module Gemwarrior
   class Game
     # CONSTANTS
     ## PLAYER DEFAULTS
-    PLYR_LEVEL_DEFAULT = 1
-    PLYR_XP_DEFAULT = 0
-    PLYR_HP_CUR_DEFAULT = 10
-    PLYR_HP_MAX_DEFAULT = 10
-    PLYR_STAM_CUR_DEFAULT = 20
-    PLYR_STAM_MAX_DEFAULT = 20
-    PLYR_ATK_LO_DEFAULT = 1
-    PLYR_ATK_HI_DEFAULT = 2
-    PLYR_ROX_DEFAULT = 0
+    PLYR_LEVEL_DEFAULT      = 1
+    PLYR_XP_DEFAULT         = 0
+    PLYR_HP_CUR_DEFAULT     = 10
+    PLYR_HP_MAX_DEFAULT     = 10
+    PLYR_STAM_CUR_DEFAULT   = 20
+    PLYR_STAM_MAX_DEFAULT   = 20
+    PLYR_ATK_LO_DEFAULT     = 1
+    PLYR_ATK_HI_DEFAULT     = 2
+    PLYR_DEFENSE_DEFAULT    = 5
+    PLYR_DEXTERITY_DEFAULT  = 5
+    PLYR_INVENTORY_DEFAULT  = Inventory.new
+    PLYR_ROX_DEFAULT        = 0
+    PLYR_CUR_LOC_ID_DEFAULT = 0
 
     attr_accessor :world, :eval, :repl
     
@@ -35,9 +39,11 @@ module Gemwarrior
         PLYR_STAM_MAX_DEFAULT,
         PLYR_ATK_LO_DEFAULT,
         PLYR_ATK_HI_DEFAULT,
-        Inventory.new,
+        PLYR_DEFENSE_DEFAULT,
+        PLYR_DEXTERITY_DEFAULT,
+        PLYR_INVENTORY_DEFAULT,
         PLYR_ROX_DEFAULT,
-        world.loc_by_id(0)
+        world.loc_by_id(PLYR_CUR_LOC_ID_DEFAULT)
       )
 
       # create the console

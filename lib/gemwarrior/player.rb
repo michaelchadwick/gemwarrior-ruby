@@ -23,7 +23,8 @@ module Gemwarrior
     ERROR_ATTACK_PARAM_INVALID  = 'That monster doesn\'t exist here or can\'t be attacked.'
     ERROR_ATTACK_OPTION_INVALID = 'That won\'t do anything against the monster.'
     
-    attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, :rox, :cur_loc
+    attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, 
+                  :defense, :dexterity, :rox, :cur_loc
     
     def initialize(
       level, 
@@ -34,6 +35,8 @@ module Gemwarrior
       stam_max, 
       atk_lo, 
       atk_hi, 
+      defense,
+      dexterity,  
       inventory, 
       rox, 
       cur_loc
@@ -50,7 +53,9 @@ module Gemwarrior
       
       self.atk_lo = atk_lo
       self.atk_hi = atk_hi
-      
+      self.defense = defense
+      self.dexterity = dexterity
+
       self.inventory = inventory
       self.rox = rox
       
@@ -59,7 +64,25 @@ module Gemwarrior
 
     def check_self
       print_char_pic
-      return "You check yourself. Currently breathing, wearing clothing, and with a few specific characteristics: face is #{@face}, hands are #{@hands}, and general mood is #{@mood}.\n"
+      
+      cur_weapon_name = ''
+      if inventory.weapon.nil?
+        cur_weapon_name = '(unarmed)'
+      else
+        cur_weapon_name = inventory.weapon.name
+        self.atk_lo = inventory.weapon.atk_lo
+        self.atk_hi = inventory.weapon.atk_hi
+      end
+
+      self_text = "You check yourself. Currently breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n\n"
+      self_text << "NAME: #{name}\n"
+      self_text << "WPN : #{cur_weapon_name}\n"
+      self_text << "LVL : #{level}\n"
+      self_text << "XP  : #{xp}\n"
+      self_text << "ATK : #{atk_lo}-#{atk_hi}\n"
+      self_text << "DEF : #{defense}\n"
+      self_text << "DEX : #{dexterity}\n"
+      
     end
     
     def rest
@@ -139,7 +162,7 @@ module Gemwarrior
         puts "You decide to attack the #{monster_name}"
         monster = cur_loc.monster_by_name(monster_name)
         puts "#{monster.name} cries out: #{monster.battlecry}"
-        puts
+
         loop do
           if (monster.hp_cur <= 0)
             puts "You have defeated #{monster.name}!"
@@ -153,33 +176,79 @@ module Gemwarrior
             return
           end
           
-          puts "Your options are 'fight' and 'run'."
-          puts "You have #{hp_cur} hit points."
-          puts "Mob has  #{monster.hp_cur} hit points."
+          puts "\nYour options are 'fight', 'look', and 'run'."
+          puts "P :: #{hp_cur} HP\n"
+          puts "E :: #{monster.hp_cur} HP\n"
+          
+          if ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
+            puts "#{monster.name} is almost dead!\n"
+          end
           
           puts 'What do you do?'
           cmd = gets.chomp
           
           case cmd
           when 'fight', 'f'
-            puts "You attack #{monster.name}!"
-            dmg = rand(atk_lo..atk_hi)
-            puts "You wound it for #{dmg} point(s)!"
-            monster.take_damage(dmg)
+            puts "You attack #{monster.name}#{inventory.weapon}!"
+            dmg = calculate_mob_damage
+            if dmg > 0
+              puts "You wound it for #{dmg} point(s)!"
+              monster.take_damage(dmg)
+            else
+              puts "You miss entirely!"
+            end
+          when 'look', 'l'
+            puts "#{monster.name}: #{monster.description}"
+            puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and its general mood is #{monster.mood}."
           when 'run', 'r'
-            puts "You run away from #{monster.name}!"
-            return
+            escape = calculate_escape(monster)
+            if escape
+              monster.hp_cur = monster.hp_max
+              puts "You successfully elude #{monster.name}!"
+              return
+            else
+              puts "You were not able to run away! :-("
+            end
           else
-            ERROR_ATTACK_OPTION_INVALID
+            puts ERROR_ATTACK_OPTION_INVALID
           end
         end
       else
         ERROR_ATTACK_PARAM_INVALID
       end
     end
+    
+    def cur_weapon_name
+      unless inventory.weapon.nil?
+        return " with your #{inventory.weapon.name}"
+      end
+    end
+    
+    def calculate_mob_damage
+      miss = rand(0..100)
+      if (miss < 15)
+        0
+      else
+        rand(atk_lo..atk_hi)
+      end
+    end
+    
+    def calculate_escape(monster)
+      if (dexterity > monster.dexterity)
+        return true
+      else
+        dex_diff = monster.dexterity - dexterity
+        rand_dex = rand(0..dex_diff)
+        if rand_dex % 2 > 0
+          return true
+        else
+          return false
+        end
+      end
+    end
   
     private
-    
+   
     def update_player_stats(monster)
       self.xp = xp + monster.xp_to_give
       self.rox = rox + monster.rox

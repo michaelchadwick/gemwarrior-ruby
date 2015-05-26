@@ -82,6 +82,7 @@ module Gemwarrior
           MOB_LEVEL_ALEXANDRAT * 5,
           MOB_LEVEL_ALEXANDRAT * 2,
           MOB_LEVEL_ALEXANDRAT * 2,
+          MOB_DEXTERITY_ALEXANDRAT,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_ALEXANDRAT * rand(1..2),
@@ -100,6 +101,7 @@ module Gemwarrior
           MOB_LEVEL_AMBEROO * 5,
           MOB_LEVEL_AMBEROO * 2,
           MOB_LEVEL_AMBEROO * 2,
+          MOB_DEXTERITY_AMBEROO,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_AMBEROO * rand(1..2),
@@ -118,6 +120,7 @@ module Gemwarrior
           MOB_LEVEL_AMETHYSTLE * 5,
           MOB_LEVEL_AMETHYSTLE * 2,
           MOB_LEVEL_AMETHYSTLE * 2,
+          MOB_DEXTERITY_AMETHYSTLE,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_AMETHYSTLE * rand(1..2),
@@ -136,6 +139,7 @@ module Gemwarrior
           MOB_LEVEL_APATIGER * 5,
           MOB_LEVEL_APATIGER * 2,
           MOB_LEVEL_APATIGER * 2,
+          MOB_DEXTERITY_APATIGER,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_APATIGER * rand(1..2),
@@ -154,6 +158,7 @@ module Gemwarrior
           MOB_LEVEL_AQUAMARINE * 5,
           MOB_LEVEL_AQUAMARINE * 2,
           MOB_LEVEL_AQUAMARINE * 2,
+          MOB_DEXTERITY_AQUAMARINE,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_AQUAMARINE * rand(1..2),
@@ -172,6 +177,7 @@ module Gemwarrior
           MOB_LEVEL_BLOODSTORM * 5,
           MOB_LEVEL_BLOODSTORM * 2,
           MOB_LEVEL_BLOODSTORM * 2,
+          MOB_DEXTERITY_BLOODSTORM,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_BLOODSTORM * rand(2..3),
@@ -190,6 +196,7 @@ module Gemwarrior
           MOB_LEVEL_CITRINAGA * 5,
           MOB_LEVEL_CITRINAGA * 2,
           MOB_LEVEL_CITRINAGA * 2,
+          MOB_DEXTERITY_CITRINAGA,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_CITRINAGA * rand(2..3),
@@ -208,6 +215,7 @@ module Gemwarrior
           MOB_LEVEL_CORALIZ * 5,
           MOB_LEVEL_CORALIZ * 2,
           MOB_LEVEL_CORALIZ * 2,
+          MOB_DEXTERITY_CORALIZ,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_CORALIZ * rand(2..3),
@@ -226,6 +234,7 @@ module Gemwarrior
           MOB_LEVEL_CUBICAT * 5,
           MOB_LEVEL_CUBICAT * 2,
           MOB_LEVEL_CUBICAT * 2,
+          MOB_DEXTERITY_CUBICAT,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_CUBICAT * rand(3..4),
@@ -244,6 +253,7 @@ module Gemwarrior
           MOB_LEVEL_DIAMAN * 5,
           MOB_LEVEL_DIAMAN * 2,
           MOB_LEVEL_DIAMAN * 2,
+          MOB_DEXTERITY_DIAMAN,
           Inventory.new,
           rand(0..10),
           MOB_LEVEL_DIAMAN * rand(3..5),
@@ -258,6 +268,9 @@ module Gemwarrior
           ITEM_ID_STONE, 
           ITEM_NAME_STONE, 
           ITEM_DESC_STONE,
+          ITEM_ATK_LO_STONE,
+          ITEM_ATK_HI_STONE,
+          true,
           true
         )
       )
@@ -265,6 +278,9 @@ module Gemwarrior
           ITEM_ID_BED, 
           ITEM_NAME_BED, 
           ITEM_DESC_BED,
+          ITEM_ATK_LO_BED,
+          ITEM_ATK_HI_BED,
+          false,
           false
         )
       )
@@ -272,6 +288,9 @@ module Gemwarrior
           ITEM_ID_STALACTITE, 
           ITEM_NAME_STALACTITE, 
           ITEM_DESC_STALACTITE,
+          ITEM_ATK_LO_STALACTITE,
+          ITEM_ATK_HI_STALACTITE,
+          true,
           true
         )
       )
@@ -279,13 +298,19 @@ module Gemwarrior
           ITEM_ID_FEATHER, 
           ITEM_NAME_FEATHER, 
           ITEM_DESC_FEATHER,
-          true
+          ITEM_ATK_LO_FEATHER,
+          ITEM_ATK_HI_FEATHER,
+          true,
+          false
         )
       )
       items.push(Item.new(
           ITEM_ID_GUN, 
           ITEM_NAME_GUN, 
           ITEM_DESC_GUN,
+          ITEM_ATK_LO_GUN,
+          ITEM_ATK_HI_GUN,
+          true,
           true
         )
       )

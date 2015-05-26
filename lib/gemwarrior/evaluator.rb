@@ -14,21 +14,23 @@ module Gemwarrior
     CHANGE_PARAMS  = 'Options: name'
     
     ## ERRORS
-    ERROR_COMMAND_INVALID      = 'That\'s not something the game yet understands.'
-    ERROR_LIST_PARAM_MISSING   = 'You can\'t just "list". You gotta choose something to list.'
-    ERROR_CHANGE_PARAM_MISSING = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
-    ERROR_CHANGE_PARAM_INVALID = 'You can\'t change that...yet.'
-    ERROR_GO_PARAM_MISSING     = 'Just wander aimlessly? A direction would be nice.'
-    ERROR_ATTACK_PARAM_MISSING = 'You can\'t just "attack". You gotta choose something to attack.'
-    ERROR_TAKE_PARAM_MISSING   = 'You can\'t just "take". You gotta choose something to take.'
-    ERROR_DROP_PARAM_MISSING   = 'You can\'t just "drop". You gotta choose something to drop.'
+    ERROR_COMMAND_INVALID       = 'That\'s not something the game yet understands.'
+    ERROR_LIST_PARAM_MISSING    = 'You can\'t just "list". You gotta choose something to list.'
+    ERROR_CHANGE_PARAM_MISSING  = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
+    ERROR_CHANGE_PARAM_INVALID  = 'You can\'t change that...yet.'
+    ERROR_GO_PARAM_MISSING      = 'Just wander aimlessly? A direction would be nice.'
+    ERROR_ATTACK_PARAM_MISSING  = 'You can\'t just "attack". You gotta choose something to attack.'
+    ERROR_TAKE_PARAM_MISSING    = 'You can\'t just "take". You gotta choose something to take.'
+    ERROR_DROP_PARAM_MISSING    = 'You can\'t just "drop". You gotta choose something to drop.'
+    ERROR_EQUIP_PARAM_MISSING   = 'You can\'t just "equip". You gotta choose something to equip.'
+    ERROR_UNEQUIP_PARAM_MISSING = 'You can\'t just "unequip". You gotta choose something to unequip.'
     
     attr_accessor :world, :commands, :aliases, :descriptions
     
     def initialize(world)
       self.world = world
-      self.commands = %w(character inventory list rest look take drop go attack change help quit exit quit! exit!)
-      self.aliases = %w(c i ls r l t d g a ch h q x qq xx)
+      self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit exit quit! exit!)
+      self.aliases = %w(c i ls r l t d e ue g a ch h q x qq xx)
       self.descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -37,6 +39,8 @@ module Gemwarrior
         'Look around your current location',
         'Take item',
         'Drop item',
+        'Equip item',
+        'Unequip item',
         'Go in a direction',
         'Attack a monster',
         'Change something',
@@ -97,6 +101,18 @@ module Gemwarrior
         else
           world.player.inventory.remove_item(param)
         end  
+      when 'equip', 'e'
+        if param.nil?
+          ERROR_EQUIP_PARAM_MISSING
+        else
+          world.player.inventory.equip_item(param)
+        end
+      when 'unequip', 'ue'
+        if param.nil?
+          ERROR_UNEQUIP_PARAM_MISSING
+        else
+          world.player.inventory.unequip_item(param)
+        end
       when 'go', 'g'
         if param.nil?
           ERROR_GO_PARAM_MISSING
