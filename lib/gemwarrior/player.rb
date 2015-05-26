@@ -122,7 +122,7 @@ module Gemwarrior
       unless direction.nil?
         if can_move?(direction)
           new_loc_id = cur_loc.locs_connected[direction.to_sym]
-          cur_loc = loc_by_id(locations, new_loc_id)
+          self.cur_loc = loc_by_id(locations, new_loc_id)
           print_traveling_text
           cur_loc.checked_for_monsters = false
           cur_loc.describe
