@@ -41,6 +41,7 @@ module Gemwarrior
       unless list_monsters.nil?
         desc_text << list_monsters
       end
+      desc_text << list_paths
 
       return desc_text
     end
@@ -81,6 +82,16 @@ module Gemwarrior
     
     def list_monsters
       return "\n >> Monster(s) abound: #{monsters_abounding.map(&:name).join(', ')}" if monsters_abounding.length > 0
+    end
+    
+    def list_paths
+      valid_paths = []
+      locs_connected.each do |key, value|
+        unless value.nil?
+          valid_paths.push(key.to_s)
+        end
+      end
+      return "\n >> Paths: #{valid_paths.join(', ')}"
     end
     
     def has_monster?
