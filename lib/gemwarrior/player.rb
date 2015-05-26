@@ -19,7 +19,9 @@ module Gemwarrior
     PLYR_DESC_DEFAULT = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes, you\'re actually fairly able, as long as you\'ve had breakfast first.'
     
     ## ERRORS
-    ERROR_GO_PARAM_INVALID = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_GO_PARAM_INVALID      = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_ATTACK_PARAM_INVALID  = 'That monster doesn\'t exist here or can\'t be attacked.'
+    ERROR_ATTACK_OPTION_INVALID = 'That won\'t do anything against the monster.'
     
     attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, :rox, :cur_loc
     
@@ -132,11 +134,56 @@ module Gemwarrior
       end
     end
   
-    def attack(monster)
-      'You can\'t attack anything yet, because you\'re too weak.'
+    def attack(monster_name)
+      if cur_loc.has_monster_to_attack?(monster_name)
+        puts "You decide to attack the #{monster_name}"
+        monster = cur_loc.monster_by_name(monster_name)
+        puts "#{monster.name} cries out: #{monster.battlecry}"
+        puts
+        loop do
+          if (monster.hp_cur <= 0)
+            puts "You have defeated #{monster.name}!"
+            puts "You have received #{monster.xp_to_give} XP!"
+            puts "You have gained #{monster.rox} barterable rox!"
+            update_player_stats(monster)
+            cur_loc.remove_monster(monster.name)
+            return 
+          elsif (hp_cur <= 0)
+            puts "You are dead, slain by the #{monster.name}!"
+            return
+          end
+          
+          puts "Your options are 'fight' and 'run'."
+          puts "You have #{hp_cur} hit points."
+          puts "Mob has  #{monster.hp_cur} hit points."
+          
+          puts 'What do you do?'
+          cmd = gets.chomp
+          
+          case cmd
+          when 'fight', 'f'
+            puts "You attack #{monster.name}!"
+            dmg = rand(atk_lo..atk_hi)
+            puts "You wound it for #{dmg} point(s)!"
+            monster.take_damage(dmg)
+          when 'run', 'r'
+            puts "You run away from #{monster.name}!"
+            return
+          else
+            ERROR_ATTACK_OPTION_INVALID
+          end
+        end
+      else
+        ERROR_ATTACK_PARAM_INVALID
+      end
     end
   
     private
+    
+    def update_player_stats(monster)
+      self.xp = xp + monster.xp_to_give
+      self.rox = rox + monster.rox
+    end
     
     def print_traveling_text
       loc = Thread.new do

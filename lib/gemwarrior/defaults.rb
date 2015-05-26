@@ -4,55 +4,65 @@
 module Gemwarrior
   module Entities
     module Monsters
-      MOB_ID_ALEXANDRAT = 0
-      MOB_NAME_ALEXANDRAT = 'Alexandrat'
-      MOB_DESC_ALEXANDRAT = 'Tiny, but fierce, color-changing rodent.'
-      MOB_LEVEL_ALEXANDRAT = 1
+      MOB_ID_ALEXANDRAT         = 0
+      MOB_NAME_ALEXANDRAT       = 'alexandrat'
+      MOB_DESC_ALEXANDRAT       = 'Tiny, but fierce, color-changing rodent.'
+      MOB_LEVEL_ALEXANDRAT      = 1
+      MOB_BATTLECRY_ALEXANDRAT  = 'Bitey, bitey!'
       
-      MOB_ID_AMBEROO = 1
-      MOB_NAME_AMBEROO = 'Amberoo'
-      MOB_DESC_AMBEROO = 'Fossilized and jumping around like an adorably dangerous threat from the past.'
-      MOB_LEVEL_AMBEROO = 1
+      MOB_ID_AMBEROO            = 1
+      MOB_NAME_AMBEROO          = 'amberoo'
+      MOB_DESC_AMBEROO          = 'Fossilized and jumping around like an adorably dangerous threat from the past.'
+      MOB_LEVEL_AMBEROO         = 1
+      MOB_BATTLECRY_AMBEROO     = 'I\'m hoppin\' mad!'
       
-      MOB_ID_AMETHYSTLE = 2
-      MOB_NAME_AMETHYSTLE = 'Amethystle'
-      MOB_DESC_AMETHYSTLE = 'Sober and contemplative, it moves with purplish tentacles swaying in the breeze.'
-      MOB_LEVEL_AMETHYSTLE = 2
+      MOB_ID_AMETHYSTLE         = 2
+      MOB_NAME_AMETHYSTLE       = 'amethystle'
+      MOB_DESC_AMETHYSTLE       = 'Sober and contemplative, it moves with purplish tentacles swaying in the breeze.'
+      MOB_LEVEL_AMETHYSTLE      = 2
+      MOB_BATTLECRY_AMETHYSTLE  = 'You\'ve found yourself in quite the thorny issue!'
       
-      MOB_ID_AQUAMARINE = 3
-      MOB_NAME_AQUAMARINE = 'Aquamarine'
-      MOB_DESC_AQUAMARINE = 'It is but one of the few, the proud, the underwater.'
-      MOB_LEVEL_AQUAMARINE = 3
+      MOB_ID_AQUAMARINE         = 3
+      MOB_NAME_AQUAMARINE       = 'aquamarine'
+      MOB_DESC_AQUAMARINE       = 'It is but one of the few, the proud, the underwater.'
+      MOB_LEVEL_AQUAMARINE      = 3
+      MOB_BATTLECRY_AQUAMARINE  = 'Attention! You are about to get smashed!'
       
-      MOB_ID_APATIGER = 4
-      MOB_NAME_APATIGER = 'Apatiger'
-      MOB_DESC_APATIGER = 'Apathetic about most everything as it lazes around, save for eating you.'
-      MOB_LEVEL_APATIGER = 4
+      MOB_ID_APATIGER           = 4
+      MOB_NAME_APATIGER         = 'apatiger'
+      MOB_DESC_APATIGER         = 'Apathetic about most everything as it lazes around, save for eating you.'
+      MOB_LEVEL_APATIGER        = 4
+      MOB_BATTLECRY_APATIGER    = 'Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!'
       
-      MOB_ID_BLOODSTORM = 5
-      MOB_NAME_BLOODSTORM = 'Bloodstorm'
-      MOB_DESC_BLOODSTORM = 'A literal swirling, maniacal vortex of human hemoglobin.'
-      MOB_LEVEL_BLOODSTORM = 5
+      MOB_ID_BLOODSTORM         = 5
+      MOB_NAME_BLOODSTORM       = 'bloodstorm'
+      MOB_DESC_BLOODSTORM       = 'A literal swirling, maniacal vortex of human hemoglobin.'
+      MOB_LEVEL_BLOODSTORM      = 5
+      MOB_BATTLECRY_BLOODSTORM  = '/swirls'
       
-      MOB_ID_CITRINAGA = 6
-      MOB_NAME_CITRINAGA = 'Citrinaga'
-      MOB_DESC_CITRINAGA = 'Refreshing in its shiny, gleaming effectiveness at ending your life.'
-      MOB_LEVEL_CITRINAGA = 4
+      MOB_ID_CITRINAGA          = 6
+      MOB_NAME_CITRINAGA        = 'citrinaga'
+      MOB_DESC_CITRINAGA        = 'Refreshing in its shiny, gleaming effectiveness at ending your life.'
+      MOB_LEVEL_CITRINAGA       = 4
+      MOB_BATTLECRY_CITRINAGA   = 'Slice and dice so nice!'
       
-      MOB_ID_CORALIZ = 7
-      MOB_NAME_CORALIZ = 'Coraliz'
-      MOB_DESC_CORALIZ = 'Small blue lizard that slithers around, nipping at your ankles.'
-      MOB_LEVEL_CORALIZ = 3
+      MOB_ID_CORALIZ            = 7
+      MOB_NAME_CORALIZ          = 'coraliz'
+      MOB_DESC_CORALIZ          = 'Small blue lizard that slithers around, nipping at your ankles.'
+      MOB_LEVEL_CORALIZ         = 3
+      MOB_BATTLECRY_CORALIZ     = 'Where am I? You\'ll never guess!'
       
-      MOB_ID_CUBICAT = 8
-      MOB_NAME_CUBICAT = 'Cubicat'
-      MOB_DESC_CUBICAT = 'Perfectly geometrically cubed feline, fresh from its woven enclosure, claws at the ready.'
-      MOB_LEVEL_CUBICAT = 4
+      MOB_ID_CUBICAT            = 8
+      MOB_NAME_CUBICAT          = 'cubicat'
+      MOB_DESC_CUBICAT          = 'Perfectly geometrically cubed feline, fresh from its woven enclosure, claws at the ready.'
+      MOB_LEVEL_CUBICAT         = 4
+      MOB_BATTLECRY_CUBICAT     = 'I don\'t really care, as long as you die!'
       
-      MOB_ID_DIAMAN = 9
-      MOB_NAME_DIAMAN = 'Diaman'
-      MOB_DESC_DIAMAN = 'Crystalline structure in the form of a man, lumbering toward you, with outstretched, edged pincers.'
-      MOB_LEVEL_DIAMAN = 6
+      MOB_ID_DIAMAN             = 9
+      MOB_NAME_DIAMAN           = 'diaman'
+      MOB_DESC_DIAMAN           = 'Crystalline structure in the form of a man, lumbering toward you, with outstretched, edged pincers.'
+      MOB_LEVEL_DIAMAN          = 6
+      MOB_BATTLECRY_DIAMAN      = 'Precious human, prepare to be lost to the annals of time!'
     end
 
     module Items

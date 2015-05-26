@@ -5,7 +5,7 @@ require_relative 'creature'
 
 module Gemwarrior
   class Monster < Creature
-    attr_accessor :xp, :atk_hi, :atk_lo, :rox
+    attr_accessor :xp, :atk_hi, :atk_lo, :rox, :xp_to_give, :battlecry
   
     def initialize(
       id, 
@@ -20,7 +20,9 @@ module Gemwarrior
       atk_lo, 
       atk_hi, 
       inventory, 
-      rox
+      rox,
+      xp_to_give,
+      battlecry
     )
       self.id = id
       self.name = name
@@ -38,6 +40,13 @@ module Gemwarrior
       
       self.inventory = inventory
       self.rox = rox
+      self.xp_to_give = xp_to_give
+      
+      self.battlecry = battlecry
+    end
+    
+    def take_damage(dmg)
+      self.hp_cur = hp_cur.to_i - dmg.to_i
     end
 
   end

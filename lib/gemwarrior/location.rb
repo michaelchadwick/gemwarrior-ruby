@@ -74,10 +74,28 @@ module Gemwarrior
       end
     end
 
+    def remove_monster(name)
+      if has_monster_to_attack?(name)
+        monsters_abounding.reject! { |monster| monster.name == name }
+      end
+    end
+    
     def has_loc_to_the?(direction)
       locs_connected[direction.to_sym]
     end
 
+    def has_monster_to_attack?(name)
+      monsters_abounding.map(&:name).include?(name.downcase)
+    end
+    
+    def monster_by_name(name)
+      monsters_abounding.each do |m|
+        if m.name.eql?(name)
+          return m
+        end
+      end
+    end
+    
     private
     
     def checked_for_monsters?
@@ -117,7 +135,7 @@ module Gemwarrior
     end
   
     def populate_monsters
-      checked_for_monsters = true
+      self.checked_for_monsters = true
       if has_monster?
         self.monsters_abounding = []
         return monsters_abounding.push(monsters_available[rand(0..monsters_available.length-1)])

@@ -83,7 +83,9 @@ module Gemwarrior
           MOB_LEVEL_ALEXANDRAT * 2,
           MOB_LEVEL_ALEXANDRAT * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_ALEXANDRAT * rand(1..2),
+          MOB_BATTLECRY_ALEXANDRAT
         )
       )
       monsters.push(Monster.new(
@@ -99,7 +101,9 @@ module Gemwarrior
           MOB_LEVEL_AMBEROO * 2,
           MOB_LEVEL_AMBEROO * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_AMBEROO * rand(1..2),
+          MOB_BATTLECRY_AMBEROO
         )
       )
       monsters.push(Monster.new(
@@ -115,23 +119,9 @@ module Gemwarrior
           MOB_LEVEL_AMETHYSTLE * 2,
           MOB_LEVEL_AMETHYSTLE * 2,
           Inventory.new,
-          rand(0..10)
-        )
-      )
-      monsters.push(Monster.new(
-          MOB_ID_AQUAMARINE, 
-          MOB_NAME_AQUAMARINE, 
-          MOB_DESC_AQUAMARINE,
-          'strained', 
-          'hairy', 
-          'tempered',
-          MOB_LEVEL_AQUAMARINE,
-          MOB_LEVEL_AQUAMARINE * 5,
-          MOB_LEVEL_AQUAMARINE * 5,
-          MOB_LEVEL_AQUAMARINE * 2,
-          MOB_LEVEL_AQUAMARINE * 2,
-          Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_AMETHYSTLE * rand(1..2),
+          MOB_BATTLECRY_AMETHYSTLE
         )
       )
       monsters.push(Monster.new(
@@ -147,7 +137,27 @@ module Gemwarrior
           MOB_LEVEL_APATIGER * 2,
           MOB_LEVEL_APATIGER * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_APATIGER * rand(1..2),
+          MOB_BATTLECRY_APATIGER
+        )
+      )
+      monsters.push(Monster.new(
+          MOB_ID_AQUAMARINE, 
+          MOB_NAME_AQUAMARINE, 
+          MOB_DESC_AQUAMARINE,
+          'strained', 
+          'hairy', 
+          'tempered',
+          MOB_LEVEL_AQUAMARINE,
+          MOB_LEVEL_AQUAMARINE * 5,
+          MOB_LEVEL_AQUAMARINE * 5,
+          MOB_LEVEL_AQUAMARINE * 2,
+          MOB_LEVEL_AQUAMARINE * 2,
+          Inventory.new,
+          rand(0..10),
+          MOB_LEVEL_AQUAMARINE * rand(1..2),
+          MOB_BATTLECRY_AQUAMARINE
         )
       )
       monsters.push(Monster.new(
@@ -163,7 +173,9 @@ module Gemwarrior
           MOB_LEVEL_BLOODSTORM * 2,
           MOB_LEVEL_BLOODSTORM * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_BLOODSTORM * rand(2..3),
+          MOB_BATTLECRY_BLOODSTORM
         )
       )
       monsters.push(Monster.new(
@@ -179,7 +191,9 @@ module Gemwarrior
           MOB_LEVEL_CITRINAGA * 2,
           MOB_LEVEL_CITRINAGA * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_CITRINAGA * rand(2..3),
+          MOB_BATTLECRY_CITRINAGA
         )
       )
       monsters.push(Monster.new(
@@ -195,7 +209,9 @@ module Gemwarrior
           MOB_LEVEL_CORALIZ * 2,
           MOB_LEVEL_CORALIZ * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_CORALIZ * rand(2..3),
+          MOB_BATTLECRY_CORALIZ
         )
       )
       monsters.push(Monster.new(
@@ -211,7 +227,9 @@ module Gemwarrior
           MOB_LEVEL_CUBICAT * 2,
           MOB_LEVEL_CUBICAT * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_CUBICAT * rand(3..4),
+          MOB_BATTLECRY_CUBICAT
         )
       )
       monsters.push(Monster.new(
@@ -227,7 +245,9 @@ module Gemwarrior
           MOB_LEVEL_DIAMAN * 2,
           MOB_LEVEL_DIAMAN * 2,
           Inventory.new,
-          rand(0..10)
+          rand(0..10),
+          MOB_LEVEL_DIAMAN * rand(3..5),
+          MOB_BATTLECRY_DIAMAN
         )
       )
     end
