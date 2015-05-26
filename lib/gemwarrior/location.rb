@@ -11,7 +11,7 @@ module Gemwarrior
     
     ## ERRORS
     ERROR_LOCATION_ITEM_REMOVE_INVALID   = 'That item cannot be removed as it doesn\'t exist here.'
-    ERROR_LOCATION_DESCRIBE_ITEM_INVALID = 'You don\'t see that here.'
+    ERROR_LOCATION_DESCRIBE_ENTITY_INVALID = 'You don\'t see that here.'
 
     attr_accessor :id, :name, :description, :locs_connected, :danger_level, 
                   :items, :monsters_available, :monsters_abounding, :checked_for_monsters
@@ -46,15 +46,23 @@ module Gemwarrior
       return desc_text
     end
     
-    def describe_item(item_name)
-      if items.map(&:name).include?(item_name)
+    def describe_entity(entity_name)
+      if items.map(&:name).include?(entity_name)
         items.each do |i|
-          if i.name.eql?(item_name)
+          if i.name.eql?(entity_name)
             return "#{i.description}"
           end
         end
+      elsif
+        if monsters_abounding.map(&:name).include?(entity_name)
+          monsters_abounding.each do |m|
+            if m.name.eql?(entity_name)
+              return "#{m.description}"
+            end
+          end
+        end
       else
-        ERROR_LOCATION_DESCRIBE_ITEM_INVALID
+        ERROR_LOCATION_DESCRIBE_ENTITY_INVALID
       end
     end
     

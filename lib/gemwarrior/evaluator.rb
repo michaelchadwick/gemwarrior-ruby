@@ -79,7 +79,7 @@ module Gemwarrior
         world.player.rest
       when 'look', 'l'
         if param
-          world.player.cur_loc.describe_item(param)
+          world.player.cur_loc.describe_entity(param)
         else
           world.player.cur_loc.describe
         end
