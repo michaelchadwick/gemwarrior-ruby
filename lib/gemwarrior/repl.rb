@@ -76,15 +76,15 @@ module Gemwarrior
     end
     
     def prompt
-      prompt_template = "\n[LV:%3s][XP:%3s][HP:%3s|%-3s][STM:%2s|%-2s][ROX:%3s] -- [%s @ %s]"
+      prompt_template = "\n[LV:%3s][XP:%3s][ROX:%3s] -- [HP:%3s|%-3s][STM:%2s|%-2s] -- [%s @ %s]"
       prompt_vars_arr = [
         world.player.level,
         world.player.xp,
+        world.player.rox,
         world.player.hp_cur, 
         world.player.hp_max,
         world.player.stam_cur,
         world.player.stam_max,
-        world.player.rox,
         world.player.name,
         world.player.cur_loc.name
       ]
