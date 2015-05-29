@@ -24,7 +24,8 @@ module Gemwarrior
     ERROR_ATTACK_OPTION_INVALID = 'That won\'t do anything against the monster.'
     
     attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, 
-                  :defense, :dexterity, :rox, :cur_loc
+                  :defense, :dexterity, :rox, :cur_loc,
+                  :god_mode
     
     def initialize(
       level, 
@@ -60,10 +61,14 @@ module Gemwarrior
       self.rox = rox
       
       self.cur_loc = cur_loc
+      
+      self.god_mode = false
     end
 
-    def check_self
-      print_char_pic
+    def check_self(show_pic = true)
+      if show_pic
+        print_char_pic
+      end
       
       cur_weapon_name = ''
       if inventory.weapon.nil?
@@ -74,15 +79,16 @@ module Gemwarrior
         self.atk_hi = inventory.weapon.atk_hi
       end
 
-      self_text = "You check yourself. Currently breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n\n"
-      self_text << "NAME: #{name}\n"
+      self_text =  "NAME: #{name}\n"
       self_text << "WPN : #{cur_weapon_name}\n"
       self_text << "LVL : #{level}\n"
       self_text << "XP  : #{xp}\n"
+      self_text << "HP  : #{hp_cur}|#{hp_max}\n"
       self_text << "ATK : #{atk_lo}-#{atk_hi}\n"
       self_text << "DEF : #{defense}\n"
       self_text << "DEX : #{dexterity}\n"
-      
+      self_text << "GOD : #{god_mode}\n\n"
+      self_text << "You check yourself. Currently breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n"
     end
     
     def rest
@@ -156,7 +162,7 @@ module Gemwarrior
         end
       end
     end
-  
+
     def attack(monster_name)
       if cur_loc.has_monster_to_attack?(monster_name)
         puts "You decide to attack the #{monster_name}"
@@ -171,7 +177,7 @@ module Gemwarrior
             update_player_stats(monster)
             cur_loc.remove_monster(monster.name)
             return 
-          elsif (hp_cur <= 0)
+          elsif (hp_cur <= 0 && !god_mode)
             puts "You are dead, slain by the #{monster.name}!"
             return
           end

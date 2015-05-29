@@ -26,14 +26,42 @@ module Gemwarrior
       self.player = nil
     end
 
-    def list(param)
+    def all_vars
+      puts "======================\n"
+      puts "All Variables in World\n"
+      puts "======================\n"
+      puts "#{list("players", true)}\n"
+      puts "#{list("monsters", true)}\n"
+      puts "#{list("items", true)}\n"
+      puts "#{list("locations", true)}\n"
+    end
+    
+    def list(param, details = false)
       case param
-      when "monsters"
-        return "The world's monsters consist of #{@monsters.map(&:name).join(', ')}"
-      when "items"
-        return "The world's items consist of #{@items.map(&:name).join(', ')}"
-      when "locations"
-        return "The world consists of #{@locations.map(&:name).join(', ')}"
+      when 'players'
+        puts '[PLAYERS]'
+        player.check_self(false)
+      when 'monsters'
+        puts '[MONSTERS]'
+        if details
+          return monsters.map { |m| print m.status }
+        else
+          ">> #{monsters.map(&:name).join(', ')}"
+        end
+      when 'items'
+        puts '[ITEMS]'
+        if details
+          items.map { |i| print i.status }
+        else
+          ">> #{items.map(&:name).join(', ')}"
+        end
+      when 'locations'
+        puts '[LOCATIONS]'
+        if details
+          locations.map { |l| print l.status }
+        else
+          ">> #{locations.map(&:name).join(', ')}"
+        end
       else
         ERROR_LIST_PARAM_INVALID
       end

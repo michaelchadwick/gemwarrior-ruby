@@ -28,6 +28,12 @@ module Gemwarrior
       self.checked_for_monsters = false
     end
     
+    def status
+      status_text =  name.ljust(20).upcase
+      status_text << "#{description}\n"
+      status_text.to_s
+    end
+    
     def describe
       desc_text = ""
       desc_text << "[ #{name} ]\n"

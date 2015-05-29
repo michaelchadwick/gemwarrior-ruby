@@ -25,6 +25,11 @@ module Gemwarrior
       self.equippable = equippable
       self.equipped = equipped
     end
-
+    
+    def status
+      status_text =  name.ljust(20).upcase
+      status_text << "#{description}\n"
+      status_text.to_s
+    end
   end
 end

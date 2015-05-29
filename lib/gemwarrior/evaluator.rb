@@ -25,10 +25,12 @@ module Gemwarrior
     ERROR_EQUIP_PARAM_MISSING   = 'You can\'t just "equip". You gotta choose something to equip.'
     ERROR_UNEQUIP_PARAM_MISSING = 'You can\'t just "unequip". You gotta choose something to unequip.'
     
-    attr_accessor :world, :commands, :aliases, :descriptions
+    attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases
     
     def initialize(world)
       self.world = world
+      self.devcmds = %w(allvars godmode iddqd)
+      self.devaliases = %w(av god)
       self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit exit quit! exit!)
       self.aliases = %w(c i ls r l t d e ue g a ch h q x qq xx)
       self.descriptions = [
@@ -67,6 +69,12 @@ module Gemwarrior
       param = tokens[1]
 
       case command
+      # dev commands
+      when 'allvars', 'av'
+        world.all_vars()
+      when 'iddqd', 'godmode', 'god'
+        world.player.god_mode = !world.player.god_mode
+      # normal commands
       when 'character', 'c'
         world.player.check_self
       when 'inventory', 'i'
@@ -174,7 +182,7 @@ module Gemwarrior
     
     def input_valid?(input)
       tokens = input.split
-      commands_and_aliases = commands | aliases
+      commands_and_aliases = commands | aliases | devcmds | devaliases
       if commands_and_aliases.include?(tokens.first.downcase)
         if tokens.size.between?(1,2)
           return true
