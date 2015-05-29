@@ -17,10 +17,12 @@ As you travel you will discover sights and sounds of the land, all of which are 
 
 ## How to Get to Jool
 
-1. `gem install gemwarrior`  
-2. `gemwarrior`
+1. `ruby -v` should return `ruby 2.`something; else install [Ruby](https://www.ruby-lang.org)
+2. `gem -v` should return `2.`something; else install [RubyGems](https://rubygems.org)
+2. `gem install gemwarrior`  
+3. `gemwarrior`
 
-Run the two commands above and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will bring back to Queen Ruby (or will you...?).
+Run the commands above and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will bring back to Queen Ruby (or will you...?).
 
 ## In Progress, Yanno
 
@@ -30,6 +32,7 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 `> i [object]` - check your inventory (or an individual item within)  
 `> r` - take a load off (future: replenish stamina)  
 `> l [object]` - look at current location and its items and monsters  
+`> ls [entity_type]` - list entities in the game (monsters, items, locations)
 `> t [object]` - take an item from a location  
 `> e [object]` - equip an item in your inventory as a weapon
 `> a [monster]` - attack a monster
@@ -42,13 +45,15 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 To come:
 
 * ~~Ability to move between locations!~~
-* More locations to move between!
 * ~~Monsters!~~
 * ~~Ability to fight those monsters!~~
 * Monsters to fight back!
 * ~~Items you can pick up!~~
-* Quests!
-* Towns!
+* Saving!
+* Loading of said saved state!
+* More locations to move between!
+* Quests (maybe)!
+* Towns (maybe)!
 * Merchants!
 * Sound FX!
 * Music!
