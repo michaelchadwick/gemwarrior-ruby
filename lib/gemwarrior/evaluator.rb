@@ -10,14 +10,16 @@ module Gemwarrior
     PROGRAM_NAME   = 'Gem Warrior'
     QUIT_MESSAGE   = 'Thanks for playing the game. Until next time...'
     RESUME_MESSAGE = 'Back to adventuring!'
-    SEPARATOR      = '================================================================'
+    SEPARATOR      = '=========================================================================='
     CHANGE_PARAMS  = 'Options: name'
+    LIST_PARAMS    = 'Options: monsters, items, locations'
     
     ## ERRORS
     ERROR_COMMAND_INVALID       = 'That\'s not something the game yet understands.'
     ERROR_LIST_PARAM_MISSING    = 'You can\'t just "list". You gotta choose something to list.'
     ERROR_CHANGE_PARAM_MISSING  = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
     ERROR_CHANGE_PARAM_INVALID  = 'You can\'t change that...yet.'
+    ERROR_LIST_PARAM_INVALID    = 'You can\'t list that...yet.'
     ERROR_GO_PARAM_MISSING      = 'Just wander aimlessly? A direction would be nice.'
     ERROR_ATTACK_PARAM_MISSING  = 'You can\'t just "attack". You gotta choose something to attack.'
     ERROR_TAKE_PARAM_MISSING    = 'You can\'t just "take". You gotta choose something to take.'
@@ -31,8 +33,8 @@ module Gemwarrior
       self.world = world
       self.devcmds = %w(allvars godmode iddqd)
       self.devaliases = %w(av god)
-      self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit exit quit! exit!)
-      self.aliases = %w(c i ls r l t d e ue g a ch h q x qq xx)
+      self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit quit!)
+      self.aliases = %w(c i ls r l t d e ue g a ch h q qq)
       self.descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -47,10 +49,8 @@ module Gemwarrior
         'Attack a monster',
         'Change something',
         'This help menu',
-        'Quit w/ confirmation',
-        'Exit w/ confirmation (very different, of course)',
-        'Quit w/o confirmation',
-        'Exit w/o confirmation (very, very different, of course)'
+        'Quit w/ confirmation (also exit/x)',
+        'Quit w/o confirmation (also exit!/xx)'
       ]
     end
     
@@ -85,9 +85,15 @@ module Gemwarrior
         end
       when 'list', 'ls'
         if param.nil?
-          ERROR_LIST_PARAM_MISSING
+          puts ERROR_LIST_PARAM_MISSING
+          puts LIST_PARAMS
         else
-          world.list(param)
+          case param
+          when 'monsters', 'items', 'locations'
+            world.list(param)
+          else
+            ERROR_LIST_PARAM_INVALID
+          end
         end
       when 'rest', 'r'
         world.player.rest
@@ -174,7 +180,7 @@ module Gemwarrior
       i = 0
       print_separator
       commands.each do |cmd|
-        puts " #{cmd}, #{aliases[i]}\n -- #{descriptions[i]}"
+        puts " #{cmd.ljust(10)}, #{aliases[i].ljust(2)} -- #{descriptions[i]}"
         i = i + 1
       end
       print_separator
