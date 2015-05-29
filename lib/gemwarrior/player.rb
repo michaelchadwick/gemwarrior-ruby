@@ -169,19 +169,27 @@ module Gemwarrior
         monster = cur_loc.monster_by_name(monster_name)
         puts "#{monster.name} cries out: #{monster.battlecry}"
 
+        # first strike!
+        if calculate_first_strike(monster)
+          puts "#{monster.name} strikes first!"
+          player_attacked_by(monster)
+        end
+        
+        # main battle loop
         loop do
           if (monster.hp_cur <= 0)
             puts "You have defeated #{monster.name}!"
             puts "You have received #{monster.xp_to_give} XP!"
-            puts "You have gained #{monster.rox} barterable rox!"
+            puts "You have found #{monster.rox} barterable rox on your slain opponent!"
             update_player_stats(monster)
             cur_loc.remove_monster(monster.name)
             return 
           elsif (hp_cur <= 0 && !god_mode)
             puts "You are dead, slain by the #{monster.name}!"
-            return
+            puts "Your adventure ends here. Try again next time!"
+            exit(0)
           end
-          
+
           puts "\nYour options are 'fight', 'look', and 'run'."
           puts "P :: #{hp_cur} HP\n"
           puts "E :: #{monster.hp_cur} HP\n"
@@ -218,9 +226,23 @@ module Gemwarrior
           else
             puts ERROR_ATTACK_OPTION_INVALID
           end
+          
+          # monster attacks
+          player_attacked_by(monster)
         end
       else
         ERROR_ATTACK_PARAM_INVALID
+      end
+    end
+    
+    def player_attacked_by(monster)
+      puts "#{monster.name} attacks you!"
+      dmg = calculate_player_damage(monster)
+      if dmg > 0
+        puts "You are wounded for #{dmg} point(s)!"
+        take_damage(dmg)
+      else
+        puts "#{monster.name} misses entirely!"
       end
     end
     
@@ -239,6 +261,29 @@ module Gemwarrior
       end
     end
     
+    def calculate_player_damage(monster)
+      miss = rand(0..100)
+      if (miss < 15)
+        0
+      else
+        rand(monster.atk_lo..monster.atk_hi)
+      end
+    end
+    
+    def calculate_first_strike(monster)
+      if (monster.dexterity > dexterity)
+        return true
+      else
+        dex_diff = dexterity - monster.dexterity
+        rand_dex = rand(0..dex_diff)
+        if rand_dex % 2 > 0
+          return true
+        else
+          return false
+        end
+      end
+    end
+    
     def calculate_escape(monster)
       if (dexterity > monster.dexterity)
         return true
@@ -252,8 +297,12 @@ module Gemwarrior
         end
       end
     end
-  
+
     private
+   
+    def take_damage(dmg)
+      self.hp_cur = hp_cur.to_i - dmg.to_i
+    end
    
     def update_player_stats(monster)
       self.xp = xp + monster.xp_to_give
