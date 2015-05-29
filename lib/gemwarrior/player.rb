@@ -166,7 +166,7 @@ module Gemwarrior
         # first strike!
         if calculate_first_strike(monster)
           puts "#{monster.name} strikes first!"
-          get_attacked_by(monster)
+          player_attacked_by(monster)
         end
         
         # main battle loop
@@ -222,15 +222,15 @@ module Gemwarrior
           end
           
           # monster attacks
-          puts "#{monster.name} attacks you!"
-          get_attacked_by(monster)
+          player_attacked_by(monster)
         end
       else
         ERROR_ATTACK_PARAM_INVALID
       end
     end
     
-    def get_attacked_by(monster)
+    def player_attacked_by(monster)
+      puts "#{monster.name} attacks you!"
       dmg = calculate_player_damage(monster)
       if dmg > 0
         puts "You are wounded for #{dmg} point(s)!"
