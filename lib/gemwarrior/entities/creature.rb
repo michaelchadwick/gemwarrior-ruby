@@ -1,7 +1,7 @@
 # lib/gemwarrior/creature.rb
 # Creature base class
 
-require_relative 'inventory'
+require_relative '../inventory'
 
 module Gemwarrior
   class Creature

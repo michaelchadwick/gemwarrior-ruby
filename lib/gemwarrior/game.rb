@@ -1,11 +1,10 @@
 # lib/gemwarrior/game.rb
 # Main launching point for Gem Warrior
 
+require_relative 'entities/player'
 require_relative 'world'
-require_relative 'player'
-
-require_relative 'repl'
 require_relative 'evaluator'
+require_relative 'repl'
 
 module Gemwarrior
   class Game

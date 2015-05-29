@@ -4,9 +4,9 @@
 require 'readline'
 require 'os'
 
-require_relative 'version'
+require_relative 'misc/version'
+require_relative 'misc/wordlist'
 require_relative 'evaluator'
-require_relative 'wordlist'
 
 module Gemwarrior  
   class Repl

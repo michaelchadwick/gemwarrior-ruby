@@ -1,8 +1,8 @@
 # lib/gemwarrior/world.rb
 # World where the locations, monsters, items, etc. exist
 
+require_relative 'entities/monster'
 require_relative 'defaults'
-require_relative 'monster'
 require_relative 'item'
 require_relative 'location'
 

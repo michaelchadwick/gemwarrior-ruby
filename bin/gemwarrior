@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-require_relative '../lib/gemwarrior/version'
+require_relative '../lib/gemwarrior/misc/version'
 require_relative '../lib/gemwarrior/game'
 
 def parse_options
