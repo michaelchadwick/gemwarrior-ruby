@@ -97,7 +97,7 @@ module Gemwarrior
     def monster_by_name(name)
       monsters_abounding.each do |m|
         if m.name.eql?(name)
-          return m
+          return m.clone
         end
       end
     end

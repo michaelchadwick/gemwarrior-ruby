@@ -155,8 +155,8 @@ module Gemwarrior
           new_loc_id = cur_loc.locs_connected[direction.to_sym]
           self.cur_loc = loc_by_id(locations, new_loc_id)
           print_traveling_text
-          cur_loc.checked_for_monsters = false
-          cur_loc.describe
+          self.cur_loc.checked_for_monsters = false
+          self.cur_loc.describe
         else
           ERROR_GO_PARAM_INVALID
         end
@@ -181,9 +181,7 @@ module Gemwarrior
             monster_death(monster)
             return
           elsif (hp_cur <= 0 && !god_mode)
-            puts "You are dead, slain by the #{monster.name}!"
-            puts "Your adventure ends here. Try again next time!"
-            exit(0)
+            player_death(monster)
           end
 
           puts "\nYour options are 'fight/attack', 'look', and 'run'."
@@ -197,9 +195,10 @@ module Gemwarrior
           puts 'What do you do?'
           cmd = gets.chomp
           
+          # player action
           case cmd
           when 'fight', 'f', 'attack', 'a'
-            puts "You attack #{monster.name}#{inventory.weapon}!"
+            puts "You attack #{monster.name}#{cur_weapon_name}!"
             dmg = calculate_mob_damage
             if dmg > 0
               puts "You wound it for #{dmg} point(s)!"
@@ -215,8 +214,7 @@ module Gemwarrior
             puts "#{monster.name}: #{monster.description}"
             puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and its general mood is #{monster.mood}."
           when 'run', 'r'
-            escape = calculate_escape(monster)
-            if escape
+            if player_escape?(monster)
               monster.hp_cur = monster.hp_max
               puts "You successfully elude #{monster.name}!"
               return
@@ -227,7 +225,7 @@ module Gemwarrior
             puts ERROR_ATTACK_OPTION_INVALID
           end
           
-          # monster attacks
+          # monster action
           player_attacked_by(monster)
         end
       else
@@ -244,6 +242,12 @@ module Gemwarrior
       puts "You have found #{monster.rox} barterable rox on your slain opponent!"
       update_player_stats(monster)
       cur_loc.remove_monster(monster.name)
+    end
+    
+    def player_death(monster)
+      puts "You are dead, slain by the #{monster.name}!"
+      puts "Your adventure ends here. Try again next time!"
+      exit(0)
     end
     
     def player_attacked_by(monster)
@@ -295,7 +299,7 @@ module Gemwarrior
       end
     end
     
-    def calculate_escape(monster)
+    def player_escape?(monster)
       if (dexterity > monster.dexterity)
         return true
       else
