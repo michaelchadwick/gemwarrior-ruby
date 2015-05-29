@@ -178,19 +178,15 @@ module Gemwarrior
         # main battle loop
         loop do
           if (monster.hp_cur <= 0)
-            puts "You have defeated #{monster.name}!"
-            puts "You have received #{monster.xp_to_give} XP!"
-            puts "You have found #{monster.rox} barterable rox on your slain opponent!"
-            update_player_stats(monster)
-            cur_loc.remove_monster(monster.name)
-            return 
+            monster_death(monster)
+            return
           elsif (hp_cur <= 0 && !god_mode)
             puts "You are dead, slain by the #{monster.name}!"
             puts "Your adventure ends here. Try again next time!"
             exit(0)
           end
 
-          puts "\nYour options are 'fight', 'look', and 'run'."
+          puts "\nYour options are 'fight/attack', 'look', and 'run'."
           puts "P :: #{hp_cur} HP\n"
           puts "E :: #{monster.hp_cur} HP\n"
           
@@ -202,12 +198,16 @@ module Gemwarrior
           cmd = gets.chomp
           
           case cmd
-          when 'fight', 'f'
+          when 'fight', 'f', 'attack', 'a'
             puts "You attack #{monster.name}#{inventory.weapon}!"
             dmg = calculate_mob_damage
             if dmg > 0
               puts "You wound it for #{dmg} point(s)!"
               monster.take_damage(dmg)
+              if (monster.hp_cur <= 0)
+                monster_death(monster)
+                return
+              end
             else
               puts "You miss entirely!"
             end
@@ -233,6 +233,17 @@ module Gemwarrior
       else
         ERROR_ATTACK_PARAM_INVALID
       end
+    end
+
+    private
+    
+    # COMBAT
+    def monster_death(monster)
+      puts "You have defeated #{monster.name}!"
+      puts "You have received #{monster.xp_to_give} XP!"
+      puts "You have found #{monster.rox} barterable rox on your slain opponent!"
+      update_player_stats(monster)
+      cur_loc.remove_monster(monster.name)
     end
     
     def player_attacked_by(monster)
@@ -297,8 +308,6 @@ module Gemwarrior
         end
       end
     end
-
-    private
    
     def take_damage(dmg)
       self.hp_cur = hp_cur.to_i - dmg.to_i
@@ -309,6 +318,7 @@ module Gemwarrior
       self.rox = rox + monster.rox
     end
     
+    # TRAVEL    
     def print_traveling_text
       loc = Thread.new do
         print "* "
@@ -318,6 +328,7 @@ module Gemwarrior
       loc.join
     end
     
+    # CHARACTER
     def print_char_pic
       char_pic = ""
       char_pic << "**********\n"
@@ -330,6 +341,7 @@ module Gemwarrior
       puts char_pic
     end
 
+    # INIT
     def generate_name
       name = []
       letter_max = rand(5..10)
