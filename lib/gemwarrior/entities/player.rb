@@ -151,7 +151,8 @@ module Gemwarrior
 
     def attack(monster_name)
       if cur_loc.has_monster_to_attack?(monster_name)
-        puts "You decide to attack the #{monster_name}"
+        print_battle_line
+        puts "You decide to attack the #{monster_name}!"
         monster = cur_loc.monster_by_name(monster_name)
         puts "#{monster.name} cries out: #{monster.battlecry}"
 
@@ -170,16 +171,17 @@ module Gemwarrior
             player_death(monster)
           end
 
-          puts "\nYour options are 'fight/attack', 'look', and 'run'."
+          puts
+          puts "[Fight/Attack][Look][Run]"
           puts "P :: #{hp_cur} HP\n"
-          puts "E :: #{monster.hp_cur} HP\n"
+          puts "M :: #{monster.hp_cur} HP\n"
           
           if ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
             puts "#{monster.name} is almost dead!\n"
           end
           
           puts 'What do you do?'
-          cmd = gets.chomp
+          cmd = gets.chomp.downcase
           
           # player action
           case cmd
@@ -198,7 +200,7 @@ module Gemwarrior
             end
           when 'look', 'l'
             puts "#{monster.name}: #{monster.description}"
-            puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and its general mood is #{monster.mood}."
+            puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
           when 'run', 'r'
             if player_escape?(monster)
               monster.hp_cur = monster.hp_max
@@ -222,17 +224,24 @@ module Gemwarrior
     private
     
     # COMBAT
+    def update_player_stats(monster)
+      self.xp = xp + monster.xp_to_give
+      self.rox = rox + monster.rox_to_give
+    end
+    
     def monster_death(monster)
       puts "You have defeated #{monster.name}!"
       puts "You have received #{monster.xp_to_give} XP!"
       puts "You have found #{monster.rox_to_give} barterable rox on your slain opponent!"
+      print_battle_line
       update_player_stats(monster)
       cur_loc.remove_monster(monster.name)
     end
     
     def player_death(monster)
       puts "You are dead, slain by the #{monster.name}!"
-      puts "Your adventure ends here. Try again next time!"
+      puts 'Your adventure ends here. Try again next time!'
+      print_battle_line
       exit(0)
     end
     
@@ -302,12 +311,6 @@ module Gemwarrior
     def take_damage(dmg)
       self.hp_cur = hp_cur.to_i - dmg.to_i
     end
-   
-    def update_player_stats(monster)
-binding.pry
-      self.xp = xp + monster.xp_to_give
-      self.rox = rox + monster.rox_to_give
-    end
     
     # TRAVEL    
     def print_traveling_text
@@ -366,6 +369,10 @@ binding.pry
       self.face = generate_face
       self.hands = generate_hands
       self.mood = generate_mood
+    end
+    
+    def print_battle_line
+      puts '**************************************'
     end
   end
 end
