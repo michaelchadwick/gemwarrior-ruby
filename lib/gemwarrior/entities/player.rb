@@ -1,4 +1,4 @@
-# lib/gemwarrior/player.rb
+# lib/gemwarrior/entities/player.rb
 # Player creature
 
 require_relative 'creature'
@@ -27,42 +27,28 @@ module Gemwarrior
                   :defense, :dexterity, :rox, :cur_loc,
                   :god_mode
     
-    def initialize(
-      level, 
-      xp, 
-      hp_cur, 
-      hp_max, 
-      stam_cur, 
-      stam_max, 
-      atk_lo, 
-      atk_hi, 
-      defense,
-      dexterity,  
-      inventory, 
-      rox, 
-      cur_loc
-    )
+    def initialize(options)
       generate_player_identity
       
-      self.level = level
-      self.xp = xp
+      self.level      = options[:level]
+      self.xp         = options[:xp]
       
-      self.hp_cur = hp_cur
-      self.hp_max = hp_max
-      self.stam_cur = stam_cur
-      self.stam_max = stam_max
+      self.hp_cur     = options[:hp_cur]
+      self.hp_max     = options[:hp_max]
+      self.stam_cur   = options[:stam_cur]
+      self.stam_max   = options[:stam_max]
       
-      self.atk_lo = atk_lo
-      self.atk_hi = atk_hi
-      self.defense = defense
-      self.dexterity = dexterity
+      self.atk_lo     = options[:atk_lo]
+      self.atk_hi     = options[:atk_hi]
+      self.defense    = options[:defense]
+      self.dexterity  = options[:dexterity]
 
-      self.inventory = inventory
-      self.rox = rox
+      self.inventory  = options[:inventory]
+      self.rox        = options[:rox]
       
-      self.cur_loc = cur_loc
+      self.cur_loc    = options[:cur_loc]
       
-      self.god_mode = false
+      self.god_mode   = false
     end
 
     def check_self(show_pic = true)
@@ -239,7 +225,7 @@ module Gemwarrior
     def monster_death(monster)
       puts "You have defeated #{monster.name}!"
       puts "You have received #{monster.xp_to_give} XP!"
-      puts "You have found #{monster.rox} barterable rox on your slain opponent!"
+      puts "You have found #{monster.rox_to_give} barterable rox on your slain opponent!"
       update_player_stats(monster)
       cur_loc.remove_monster(monster.name)
     end
@@ -318,8 +304,9 @@ module Gemwarrior
     end
    
     def update_player_stats(monster)
+binding.pry
       self.xp = xp + monster.xp_to_give
-      self.rox = rox + monster.rox
+      self.rox = rox + monster.rox_to_give
     end
     
     # TRAVEL    

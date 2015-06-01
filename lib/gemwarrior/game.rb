@@ -29,21 +29,21 @@ module Gemwarrior
     def initialize
       # create new world and player
       self.world = World.new
-      world.player = Player.new(
-        PLYR_LEVEL_DEFAULT,
-        PLYR_XP_DEFAULT,
-        PLYR_HP_CUR_DEFAULT,
-        PLYR_HP_MAX_DEFAULT,
-        PLYR_STAM_CUR_DEFAULT,
-        PLYR_STAM_MAX_DEFAULT,
-        PLYR_ATK_LO_DEFAULT,
-        PLYR_ATK_HI_DEFAULT,
-        PLYR_DEFENSE_DEFAULT,
-        PLYR_DEXTERITY_DEFAULT,
-        PLYR_INVENTORY_DEFAULT,
-        PLYR_ROX_DEFAULT,
-        world.loc_by_id(PLYR_CUR_LOC_ID_DEFAULT)
-      )
+      world.player = Player.new({
+        :level              => PLYR_LEVEL_DEFAULT,
+        :xp                 => PLYR_XP_DEFAULT,
+        :hp_cur             => PLYR_HP_CUR_DEFAULT,
+        :hp_max             => PLYR_HP_MAX_DEFAULT,
+        :stam_cur           => PLYR_STAM_CUR_DEFAULT,
+        :stam_max           => PLYR_STAM_MAX_DEFAULT,
+        :atk_lo             => PLYR_ATK_LO_DEFAULT,
+        :atk_hi             => PLYR_ATK_HI_DEFAULT,
+        :defense            => PLYR_DEFENSE_DEFAULT,
+        :dexterity          => PLYR_DEXTERITY_DEFAULT,
+        :inventory          => PLYR_INVENTORY_DEFAULT,
+        :rox                => PLYR_ROX_DEFAULT,
+        :cur_loc            => world.loc_by_id(PLYR_CUR_LOC_ID_DEFAULT)
+      })
 
       # create the console
       self.eval = Evaluator.new(world)

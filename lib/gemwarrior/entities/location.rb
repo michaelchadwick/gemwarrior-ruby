@@ -1,10 +1,12 @@
-# lib/gemwarrior/location.rb
+# lib/gemwarrior/entities/location.rb
 # Place in the game
 
 require 'matrext'
 
+require_relative 'entity'
+
 module Gemwarrior
-  class Location
+  class Location < Entity
     # CONSTANTS
     ## HASHES
     DANGER_LEVEL = {:none => 0, :low => 15, :moderate => 30, :high => 55, :assured => 100}
@@ -16,22 +18,16 @@ module Gemwarrior
     attr_accessor :id, :name, :description, :locs_connected, :danger_level, 
                   :items, :monsters_available, :monsters_abounding, :checked_for_monsters
   
-    def initialize(id, name, description, locs_connected, danger_level, items, monsters_available)
-      self.id = id
-      self.name = name
-      self.description = description
-      self.locs_connected = locs_connected
-      self.danger_level = danger_level
-      self.items = items
-      self.monsters_available = monsters_available
-      self.monsters_abounding = []
+    def initialize(options)
+      self.id                   = options[:id]
+      self.name                 = options[:name]
+      self.description          = options[:description]
+      self.locs_connected       = options[:locs_connected]
+      self.danger_level         = options[:danger_level]
+      self.items                = options[:items]
+      self.monsters_available   = options[:monsters_available]
+      self.monsters_abounding   = []
       self.checked_for_monsters = false
-    end
-    
-    def status
-      status_text =  name.ljust(20).upcase
-      status_text << "#{description}\n"
-      status_text.to_s
     end
     
     def describe

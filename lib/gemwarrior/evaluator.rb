@@ -180,7 +180,7 @@ module Gemwarrior
       i = 0
       print_separator
       commands.each do |cmd|
-        puts " #{cmd.ljust(10)}, #{aliases[i].ljust(2)} -- #{descriptions[i]}"
+        puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{descriptions[i]}"
         i = i + 1
       end
       print_separator

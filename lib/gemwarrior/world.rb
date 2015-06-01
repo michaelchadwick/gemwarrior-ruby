@@ -2,9 +2,9 @@
 # World where the locations, monsters, items, etc. exist
 
 require_relative 'entities/monster'
+require_relative 'entities/item'
+require_relative 'entities/location'
 require_relative 'defaults'
-require_relative 'item'
-require_relative 'location'
 
 module Gemwarrior
   class World
@@ -31,8 +31,8 @@ module Gemwarrior
       puts "All Variables in World\n"
       puts "======================\n"
       puts "#{list("players", true)}\n"
-      puts "#{list("monsters", true)}\n"
-      puts "#{list("items", true)}\n"
+      puts "#{list("monsters", true)}\n\n"
+      puts "#{list("items", true)}\n\n"
       puts "#{list("locations", true)}\n"
     end
     
@@ -44,7 +44,7 @@ module Gemwarrior
       when 'monsters'
         puts '[MONSTERS]'
         if details
-          return monsters.map { |m| print m.status }
+          return monsters.map { |m| print m.describe }
         else
           ">> #{monsters.map(&:name).join(', ')}"
         end
@@ -98,303 +98,303 @@ module Gemwarrior
     
     def init_monsters
       monsters = []
-      monsters.push(Monster.new(
-          MOB_ID_ALEXANDRAT, 
-          MOB_NAME_ALEXANDRAT, 
-          MOB_DESC_ALEXANDRAT,
-          'ugly', 
-          'gnarled', 
-          'unsurprisingly unchipper', 
-          (MOB_LEVEL_ALEXANDRAT * 1.5).floor,
-          (MOB_LEVEL_ALEXANDRAT * 4.25).floor,
-          (MOB_LEVEL_ALEXANDRAT * 4.25).floor,
-          (MOB_LEVEL_ALEXANDRAT * 1.25).floor,
-          MOB_LEVEL_ALEXANDRAT * 2,
-          MOB_DEXTERITY_ALEXANDRAT,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_ALEXANDRAT * rand(1..2),
-          MOB_BATTLECRY_ALEXANDRAT
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_ALEXANDRAT, 
+          :name         => MOB_NAME_ALEXANDRAT, 
+          :description  => MOB_DESC_ALEXANDRAT,
+          :face         => 'ugly', 
+          :hands        => 'gnarled', 
+          :mood         => 'unsurprisingly unchipper', 
+          :level        => (MOB_LEVEL_ALEXANDRAT * 1.5).floor,
+          :hp_cur       => (MOB_LEVEL_ALEXANDRAT * 4.25).floor,
+          :hp_max       => (MOB_LEVEL_ALEXANDRAT * 4.25).floor,
+          :atk_lo       => (MOB_LEVEL_ALEXANDRAT * 1.25).floor,
+          :atk_hi       => MOB_LEVEL_ALEXANDRAT * 2,
+          :dexterity    => MOB_DEXTERITY_ALEXANDRAT,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_ALEXANDRAT * rand(1..2),
+          :battlecry    => MOB_BATTLECRY_ALEXANDRAT
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_AMBEROO, 
-          MOB_NAME_AMBEROO, 
-          MOB_DESC_AMBEROO,
-          'punchy', 
-          'balled', 
-          'jumpy',
-          (MOB_LEVEL_AMBEROO * 1.5).floor,
-          (MOB_LEVEL_AMBEROO * 4.5).floor,
-          (MOB_LEVEL_AMBEROO * 4.5).floor,
-          (MOB_LEVEL_AMBEROO * 1.25).floor,
-          MOB_LEVEL_AMBEROO * 2,
-          MOB_DEXTERITY_AMBEROO,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_AMBEROO * rand(1..2),
-          MOB_BATTLECRY_AMBEROO
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_AMBEROO, 
+          :name         => MOB_NAME_AMBEROO, 
+          :description  => MOB_DESC_AMBEROO,
+          :face         => 'punchy', 
+          :hands        => 'balled', 
+          :mood         => 'jumpy',
+          :level        => (MOB_LEVEL_AMBEROO * 1.5).floor,
+          :hp_cur       => (MOB_LEVEL_AMBEROO * 4.5).floor,
+          :hp_max       => (MOB_LEVEL_AMBEROO * 4.5).floor,
+          :atk_lo       => (MOB_LEVEL_AMBEROO * 1.25).floor,
+          :atk_hi       => MOB_LEVEL_AMBEROO * 2,
+          :dexterity    => MOB_DEXTERITY_AMBEROO,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_AMBEROO * rand(1..2),
+          :battlecry    => MOB_BATTLECRY_AMBEROO
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_AMETHYSTLE, 
-          MOB_NAME_AMETHYSTLE, 
-          MOB_DESC_AMETHYSTLE,
-          'sharp', 
-          'loose', 
-          'mesmerizing',
-          MOB_LEVEL_AMETHYSTLE,
-          MOB_LEVEL_AMETHYSTLE * 5,
-          MOB_LEVEL_AMETHYSTLE * 5,
-          (MOB_LEVEL_AMETHYSTLE * 1.25).floor,
-          MOB_LEVEL_AMETHYSTLE * 2,
-          MOB_DEXTERITY_AMETHYSTLE,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_AMETHYSTLE * rand(1..2),
-          MOB_BATTLECRY_AMETHYSTLE
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_AMETHYSTLE, 
+          :name         => MOB_NAME_AMETHYSTLE, 
+          :description  => MOB_DESC_AMETHYSTLE,
+          :face         => 'sharp', 
+          :hands        => 'loose', 
+          :mood         => 'mesmerizing',
+          :level        => MOB_LEVEL_AMETHYSTLE,
+          :hp_cur       => MOB_LEVEL_AMETHYSTLE * 5,
+          :hp_max       => MOB_LEVEL_AMETHYSTLE * 5,
+          :atk_lo       => (MOB_LEVEL_AMETHYSTLE * 1.25).floor,
+          :atk_hi       => MOB_LEVEL_AMETHYSTLE * 2,
+          :dexterity    => MOB_DEXTERITY_AMETHYSTLE,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_AMETHYSTLE * rand(1..2),
+          :battlecry    => MOB_BATTLECRY_AMETHYSTLE
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_APATIGER, 
-          MOB_NAME_APATIGER, 
-          MOB_DESC_APATIGER,
-          'calloused', 
-          'soft', 
-          'apathetic',
-          MOB_LEVEL_APATIGER,
-          MOB_LEVEL_APATIGER * 5,
-          MOB_LEVEL_APATIGER * 5,
-          (MOB_LEVEL_APATIGER * 1.25).floor,
-          MOB_LEVEL_APATIGER * 2,
-          MOB_DEXTERITY_APATIGER,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_APATIGER * rand(1..2),
-          MOB_BATTLECRY_APATIGER
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_APATIGER, 
+          :name         => MOB_NAME_APATIGER, 
+          :description  => MOB_DESC_APATIGER,
+          :face         => 'calloused', 
+          :hands        => 'soft', 
+          :mood         => 'apathetic',
+          :level        => MOB_LEVEL_APATIGER,
+          :hp_cur       => MOB_LEVEL_APATIGER * 5,
+          :hp_max       => MOB_LEVEL_APATIGER * 5,
+          :atk_lo       => (MOB_LEVEL_APATIGER * 1.25).floor,
+          :atk_hi       => MOB_LEVEL_APATIGER * 2,
+          :dexterity    => MOB_DEXTERITY_APATIGER,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_APATIGER * rand(1..2),
+          :battlecry    => MOB_BATTLECRY_APATIGER
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_AQUAMARINE, 
-          MOB_NAME_AQUAMARINE, 
-          MOB_DESC_AQUAMARINE,
-          'strained', 
-          'hairy', 
-          'tempered',
-          MOB_LEVEL_AQUAMARINE,
-          MOB_LEVEL_AQUAMARINE * 5,
-          MOB_LEVEL_AQUAMARINE * 5,
-          (MOB_LEVEL_AQUAMARINE * 1.5).floor,
-          MOB_LEVEL_AQUAMARINE * 2,
-          MOB_DEXTERITY_AQUAMARINE,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_AQUAMARINE * rand(1..2),
-          MOB_BATTLECRY_AQUAMARINE
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_AQUAMARINE, 
+          :name         => MOB_NAME_AQUAMARINE, 
+          :description  => MOB_DESC_AQUAMARINE,
+          :face         => 'strained', 
+          :hands        => 'hairy', 
+          :mood         => 'tempered',
+          :level        => MOB_LEVEL_AQUAMARINE,
+          :hp_cur       => MOB_LEVEL_AQUAMARINE * 5,
+          :hp_max       => MOB_LEVEL_AQUAMARINE * 5,
+          :atk_lo       => (MOB_LEVEL_AQUAMARINE * 1.5).floor,
+          :atk_hi       => MOB_LEVEL_AQUAMARINE * 2,
+          :dexterity    => MOB_DEXTERITY_AQUAMARINE,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_AQUAMARINE * rand(1..2),
+          :battlecry    => MOB_BATTLECRY_AQUAMARINE
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_BLOODSTORM, 
-          MOB_NAME_BLOODSTORM, 
-          MOB_DESC_BLOODSTORM,
-          'bloody', 
-          'bloody', 
-          'boiling',
-          MOB_LEVEL_BLOODSTORM,
-          MOB_LEVEL_BLOODSTORM * 5,
-          MOB_LEVEL_BLOODSTORM * 5,
-          (MOB_LEVEL_BLOODSTORM * 1.5).floor,
-          MOB_LEVEL_BLOODSTORM * 2,
-          MOB_DEXTERITY_BLOODSTORM,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_BLOODSTORM * rand(2..3),
-          MOB_BATTLECRY_BLOODSTORM
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_BLOODSTORM, 
+          :name         => MOB_NAME_BLOODSTORM, 
+          :description  => MOB_DESC_BLOODSTORM,
+          :face         => 'bloody', 
+          :hands        => 'bloody', 
+          :mood         => 'boiling',
+          :level        => MOB_LEVEL_BLOODSTORM,
+          :hp_cur       => MOB_LEVEL_BLOODSTORM * 5,
+          :hp_max       => MOB_LEVEL_BLOODSTORM * 5,
+          :atk_lo       => (MOB_LEVEL_BLOODSTORM * 1.5).floor,
+          :atk_hi       => MOB_LEVEL_BLOODSTORM * 2,
+          :dexterity    => MOB_DEXTERITY_BLOODSTORM,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_BLOODSTORM * rand(2..3),
+          :battlecry    => MOB_BATTLECRY_BLOODSTORM
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_CITRINAGA, 
-          MOB_NAME_CITRINAGA, 
-          MOB_DESC_CITRINAGA,
-          'shiny', 
-          'glistening', 
-          'staid',
-          MOB_LEVEL_CITRINAGA,
-          MOB_LEVEL_CITRINAGA * 5,
-          MOB_LEVEL_CITRINAGA * 5,
-          (MOB_LEVEL_CITRINAGA * 1.3).floor,
-          MOB_LEVEL_CITRINAGA * 2,
-          MOB_DEXTERITY_CITRINAGA,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_CITRINAGA * rand(2..3),
-          MOB_BATTLECRY_CITRINAGA
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_CITRINAGA, 
+          :name         => MOB_NAME_CITRINAGA, 
+          :description  => MOB_DESC_CITRINAGA,
+          :face         => 'shiny', 
+          :hands        => 'glistening', 
+          :mood         => 'staid',
+          :level        => MOB_LEVEL_CITRINAGA,
+          :hp_cur       => MOB_LEVEL_CITRINAGA * 5,
+          :hp_max       => MOB_LEVEL_CITRINAGA * 5,
+          :atk_lo       => (MOB_LEVEL_CITRINAGA * 1.3).floor,
+          :atk_hi       => MOB_LEVEL_CITRINAGA * 2,
+          :dexterity    => MOB_DEXTERITY_CITRINAGA,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_CITRINAGA * rand(2..3),
+          :battlecry    => MOB_BATTLECRY_CITRINAGA
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_CORALIZ, 
-          MOB_NAME_CORALIZ, 
-          MOB_DESC_CORALIZ,
-          'spotted', 
-          'slippery', 
-          'emotionless',
-          MOB_LEVEL_CORALIZ,
-          MOB_LEVEL_CORALIZ * 5,
-          MOB_LEVEL_CORALIZ * 5,
-          (MOB_LEVEL_CORALIZ * 1.5).floor,
-          MOB_LEVEL_CORALIZ * 2,
-          MOB_DEXTERITY_CORALIZ,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_CORALIZ * rand(2..3),
-          MOB_BATTLECRY_CORALIZ
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_CORALIZ, 
+          :name         => MOB_NAME_CORALIZ, 
+          :description  => MOB_DESC_CORALIZ,
+          :face         => 'spotted', 
+          :hands        => 'slippery', 
+          :mood         => 'emotionless',
+          :level        => MOB_LEVEL_CORALIZ,
+          :hp_cur       => MOB_LEVEL_CORALIZ * 5,
+          :hp_max       => MOB_LEVEL_CORALIZ * 5,
+          :atk_lo       => (MOB_LEVEL_CORALIZ * 1.5).floor,
+          :atk_hi       => MOB_LEVEL_CORALIZ * 2,
+          :dexterity    => MOB_DEXTERITY_CORALIZ,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_CORALIZ * rand(2..3),
+          :battlecry    => MOB_BATTLECRY_CORALIZ
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_CUBICAT, 
-          MOB_NAME_CUBICAT, 
-          MOB_DESC_CUBICAT,
-          'striking', 
-          'grippy', 
-          'salacious',
-          MOB_LEVEL_CUBICAT,
-          MOB_LEVEL_CUBICAT * 5,
-          MOB_LEVEL_CUBICAT * 5,
-          (MOB_LEVEL_CUBICAT * 1.75).floor,
-          MOB_LEVEL_CUBICAT * 2,
-          MOB_DEXTERITY_CUBICAT,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_CUBICAT * rand(3..4),
-          MOB_BATTLECRY_CUBICAT
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_CUBICAT, 
+          :name         => MOB_NAME_CUBICAT, 
+          :description  => MOB_DESC_CUBICAT,
+          :face         => 'striking', 
+          :hands        => 'grippy', 
+          :mood         => 'salacious',
+          :level        => MOB_LEVEL_CUBICAT,
+          :hp_cur       => MOB_LEVEL_CUBICAT * 5,
+          :hp_max       => MOB_LEVEL_CUBICAT * 5,
+          :atk_lo       => (MOB_LEVEL_CUBICAT * 1.75).floor,
+          :atk_hi       => MOB_LEVEL_CUBICAT * 2,
+          :dexterity    => MOB_DEXTERITY_CUBICAT,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_CUBICAT * rand(3..4),
+          :battlecry    => MOB_BATTLECRY_CUBICAT
+        })
       )
-      monsters.push(Monster.new(
-          MOB_ID_DIAMAN, 
-          MOB_NAME_DIAMAN, 
-          MOB_DESC_DIAMAN,
-          'bright', 
-          'jagged', 
-          'adamant',
-          MOB_LEVEL_DIAMAN,
-          MOB_LEVEL_DIAMAN * 5,
-          MOB_LEVEL_DIAMAN * 5,
-          (MOB_LEVEL_DIAMAN * 1.75).floor,
-          MOB_LEVEL_DIAMAN * 2,
-          MOB_DEXTERITY_DIAMAN,
-          Inventory.new,
-          rand(0..10),
-          MOB_LEVEL_DIAMAN * rand(3..5),
-          MOB_BATTLECRY_DIAMAN
-        )
+      monsters.push(Monster.new({
+          :id           => MOB_ID_DIAMAN, 
+          :name         => MOB_NAME_DIAMAN, 
+          :description  => MOB_DESC_DIAMAN,
+          :face         => 'bright', 
+          :hands        => 'jagged', 
+          :mood         => 'adamant',
+          :level        => MOB_LEVEL_DIAMAN,
+          :hp_cur       => MOB_LEVEL_DIAMAN * 5,
+          :hp_max       => MOB_LEVEL_DIAMAN * 5,
+          :atk_lo       => (MOB_LEVEL_DIAMAN * 1.75).floor,
+          :atk_hi       => MOB_LEVEL_DIAMAN * 2,
+          :dexterity    => MOB_DEXTERITY_DIAMAN,
+          :inventory    => Inventory.new,
+          :rox_to_give  => rand(0..10),
+          :xp_to_give   => MOB_LEVEL_DIAMAN * rand(3..5),
+          :battlecry    => MOB_BATTLECRY_DIAMAN
+        })
       )
     end
     
     def init_items
       items = []
-      items.push(Item.new(
-          ITEM_ID_STONE, 
-          ITEM_NAME_STONE, 
-          ITEM_DESC_STONE,
-          ITEM_ATK_LO_STONE,
-          ITEM_ATK_HI_STONE,
-          true,
-          true
-        )
+      items.push(Item.new({
+          :id           => ITEM_ID_STONE, 
+          :name         => ITEM_NAME_STONE, 
+          :description  => ITEM_DESC_STONE,
+          :atk_lo       => ITEM_ATK_LO_STONE,
+          :atk_hi       => ITEM_ATK_HI_STONE,
+          :takeable     => true,
+          :equippable   => true
+        })
       )
-      items.push(Item.new(
-          ITEM_ID_BED, 
-          ITEM_NAME_BED, 
-          ITEM_DESC_BED,
-          ITEM_ATK_LO_BED,
-          ITEM_ATK_HI_BED,
-          false,
-          false
-        )
+      items.push(Item.new({
+          :id           => ITEM_ID_BED, 
+          :name         => ITEM_NAME_BED, 
+          :description  => ITEM_DESC_BED,
+          :atk_lo       => ITEM_ATK_LO_BED,
+          :atk_hi       => ITEM_ATK_HI_BED,
+          :takeable     => false,
+          :equippable   => false
+        })
       )
-      items.push(Item.new(
-          ITEM_ID_STALACTITE, 
-          ITEM_NAME_STALACTITE, 
-          ITEM_DESC_STALACTITE,
-          ITEM_ATK_LO_STALACTITE,
-          ITEM_ATK_HI_STALACTITE,
-          true,
-          true
-        )
+      items.push(Item.new({
+          :id           => ITEM_ID_STALACTITE, 
+          :name         => ITEM_NAME_STALACTITE, 
+          :description  => ITEM_DESC_STALACTITE,
+          :atk_lo       => ITEM_ATK_LO_STALACTITE,
+          :atk_hi       => ITEM_ATK_HI_STALACTITE,
+          :takeable     => true,
+          :equippable   => true
+        })
       )
-      items.push(Item.new(
-          ITEM_ID_FEATHER, 
-          ITEM_NAME_FEATHER, 
-          ITEM_DESC_FEATHER,
-          ITEM_ATK_LO_FEATHER,
-          ITEM_ATK_HI_FEATHER,
-          true,
-          false
-        )
+      items.push(Item.new({
+          :id           => ITEM_ID_FEATHER, 
+          :name         => ITEM_NAME_FEATHER, 
+          :description  => ITEM_DESC_FEATHER,
+          :atk_lo       => ITEM_ATK_LO_FEATHER,
+          :atk_hi       => ITEM_ATK_HI_FEATHER,
+          :takeable     => true,
+          :equippable   => false
+        })
       )
-      items.push(Item.new(
-          ITEM_ID_GUN, 
-          ITEM_NAME_GUN, 
-          ITEM_DESC_GUN,
-          ITEM_ATK_LO_GUN,
-          ITEM_ATK_HI_GUN,
-          true,
-          true
-        )
+      items.push(Item.new({
+          :id           => ITEM_ID_GUN, 
+          :name         => ITEM_NAME_GUN, 
+          :description  => ITEM_DESC_GUN,
+          :atk_lo       => ITEM_ATK_LO_GUN,
+          :atk_hi       => ITEM_ATK_HI_GUN,
+          :takeable     => true,
+          :equippable   => true
+        })
       )
     end
   
     def init_locations
       locations = []
-      locations.push(Location.new(
-          LOC_ID_HOME, 
-          LOC_NAME_HOME, 
-          LOC_DESC_HOME, 
-          LOC_CONNECTIONS_HOME,
-          :none,
-          [item_by_id(0), item_by_id(1)],
-          monsters
-        )
+      locations.push(Location.new({
+          :id                 => LOC_ID_HOME, 
+          :name               => LOC_NAME_HOME, 
+          :description        => LOC_DESC_HOME, 
+          :locs_connected     => LOC_CONNECTIONS_HOME,
+          :danger_level       => :none,
+          :items              => [item_by_id(0), item_by_id(1)],
+          :monsters_available => monsters
+        })
       )
-      locations.push(Location.new(
-          LOC_ID_CAVE_ENTRANCE, 
-          LOC_NAME_CAVE_ENTRANCE, 
-          LOC_DESC_CAVE_ENTRANCE,
-          LOC_CONNECTIONS_CAVE_ENTRANCE,
-          :low,
-          [],
-          monsters
-        )
+      locations.push(Location.new({
+          :id                 => LOC_ID_CAVE_ENTRANCE, 
+          :name               => LOC_NAME_CAVE_ENTRANCE, 
+          :description        => LOC_DESC_CAVE_ENTRANCE,
+          :locs_connected     => LOC_CONNECTIONS_CAVE_ENTRANCE,
+          :danger_level       => :low,
+          :items              => [],
+          :monsters_available => monsters
+        })
       )
-      locations.push(Location.new(
-          LOC_ID_CAVE_ROOM1, 
-          LOC_NAME_CAVE_ROOM1, 
-          LOC_DESC_CAVE_ROOM1,
-          LOC_CONNECTIONS_CAVE_ROOM1,
-          :moderate,
-          [item_by_id(2)],
-          monsters
-        )
+      locations.push(Location.new({
+          :id                 => LOC_ID_CAVE_ROOM1, 
+          :name               => LOC_NAME_CAVE_ROOM1, 
+          :description        => LOC_DESC_CAVE_ROOM1,
+          :locs_connected     => LOC_CONNECTIONS_CAVE_ROOM1,
+          :danger_level       => :moderate,
+          :items              => [item_by_id(2)],
+          :monsters_available => monsters
+        })
       )
-      locations.push(Location.new(
-          LOC_ID_FOREST, 
-          LOC_NAME_FOREST, 
-          LOC_DESC_FOREST,
-          LOC_CONNECTIONS_FOREST,
-          :low,
-          [item_by_id(3)],
-          monsters
-        )
+      locations.push(Location.new({
+          :id                 => LOC_ID_FOREST, 
+          :name               => LOC_NAME_FOREST, 
+          :description        => LOC_DESC_FOREST,
+          :locs_connected     => LOC_CONNECTIONS_FOREST,
+          :danger_level       => :low,
+          :items              => [item_by_id(3)],
+          :monsters_available => monsters
+        })
       )
-      locations.push(Location.new(
-          LOC_ID_SKYTOWER, 
-          LOC_NAME_SKYTOWER, 
-          LOC_DESC_SKYTOWER,
-          LOC_CONNECTIONS_SKYTOWER,
-          :assured,
-          [item_by_id(4)],
-          monsters
-        )
+      locations.push(Location.new({
+          :id                 => LOC_ID_SKYTOWER, 
+          :name               => LOC_NAME_SKYTOWER, 
+          :description        => LOC_DESC_SKYTOWER,
+          :locs_connected     => LOC_CONNECTIONS_SKYTOWER,
+          :danger_level       => :assured,
+          :items              => [item_by_id(4)],
+          :monsters_available => monsters
+        })
       )
     end
   end
