@@ -6,53 +6,50 @@ require_relative 'creature'
 module Gemwarrior
   class Player < Creature
     # CONSTANTS
-    ## ATTRIBUTE POOLS
-    CHAR_UPPER_POOL = (65..90).map{ |i| i.chr }
-    CHAR_LOWER_POOL = (97..122).map{ |i| i.chr }
+    ## CHARACTER ATTRIBUTES
+    CHAR_UPPER_POOL       = (65..90).map{ |i| i.chr }
+    CHAR_LOWER_POOL       = (97..122).map{ |i| i.chr }
     CHAR_LOWER_VOWEL_POOL = ['a','e','i','o','u','y']
-
-    FACE_DESC  = ['smooth', 'tired', 'ruddy', 'moist', 'shocked', 'handsome', '5 o\'clock-shadowed']
-    HANDS_DESC = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
-    MOOD_DESC  = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
     
-    ## PLAYER DEFAULTS
-    PLYR_DESC_DEFAULT = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes, you\'re actually fairly able, as long as you\'ve had breakfast first.'
-    
+    FACE_DESC   = ['smooth', 'tired', 'ruddy', 'moist', 'shocked', 'handsome', '5 o\'clock-shadowed']
+    HANDS_DESC  = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
+    MOOD_DESC   = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
+      
     ## ERRORS
-    ERROR_GO_PARAM_INVALID      = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
-    ERROR_ATTACK_PARAM_INVALID  = 'That monster doesn\'t exist here or can\'t be attacked.'
-    ERROR_ATTACK_OPTION_INVALID = 'That won\'t do anything against the monster.'
+    ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     
-    attr_accessor :xp, :stam_cur, :stam_max, :atk_hi, :atk_lo, 
-                  :defense, :dexterity, :rox, :cur_loc,
-                  :god_mode
+    attr_accessor :stam_cur, :stam_max, :cur_coords, :god_mode
     
     def initialize(options)
-      generate_player_identity
+      self.name         = generate_name
+      self.description  = options.fetch(:description)
       
-      self.level      = options[:level]
-      self.xp         = options[:xp]
+      self.face         = generate_face
+      self.hands        = generate_hands
+      self.mood         = generate_mood
       
-      self.hp_cur     = options[:hp_cur]
-      self.hp_max     = options[:hp_max]
-      self.stam_cur   = options[:stam_cur]
-      self.stam_max   = options[:stam_max]
-      
-      self.atk_lo     = options[:atk_lo]
-      self.atk_hi     = options[:atk_hi]
-      self.defense    = options[:defense]
-      self.dexterity  = options[:dexterity]
+      self.level        = options.fetch(:level)
+      self.xp           = options.fetch(:xp)
+      self.hp_cur       = options.fetch(:hp_cur)
+      self.hp_max       = options.fetch(:hp_max)
+      self.atk_lo       = options.fetch(:atk_lo)
+      self.atk_hi       = options.fetch(:atk_hi)
 
-      self.inventory  = options[:inventory]
-      self.rox        = options[:rox]
+      self.defense      = options.fetch(:defense)
+      self.dexterity    = options.fetch(:dexterity)
       
-      self.cur_loc    = options[:cur_loc]
-      
-      self.god_mode   = false
+      self.inventory    = Inventory.new
+      self.rox          = options.fetch(:rox)
+
+      self.stam_cur     = options.fetch(:stam_cur)
+      self.stam_max     = options.fetch(:stam_max)
+      self.cur_coords   = options.fetch(:cur_coords)
+
+      self.god_mode     = false
     end
 
     def check_self(show_pic = true)
-      if show_pic
+      unless show_pic == false
         print_char_pic
       end
       
@@ -71,10 +68,13 @@ module Gemwarrior
       self_text << "XP  : #{xp}\n"
       self_text << "HP  : #{hp_cur}|#{hp_max}\n"
       self_text << "ATK : #{atk_lo}-#{atk_hi}\n"
-      self_text << "DEF : #{defense}\n"
       self_text << "DEX : #{dexterity}\n"
+      self_text << "DEF : #{defense}\n"
       self_text << "GOD : #{god_mode}\n\n"
-      self_text << "You check yourself. Currently breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n"
+      
+      self_text << "#{description}\n\n"
+      
+      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n"
     end
     
     def rest
@@ -86,11 +86,13 @@ module Gemwarrior
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
     
+      self.hp_cur = hp_max
+    
       return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
     end
 
     def stamina_dec
-      stam_cur = stam_cur - 1
+      self.stam_cur = stam_cur - 1
     end
 
     def modify_name
@@ -111,113 +113,86 @@ module Gemwarrior
     def list_inventory
       inventory.list_contents
     end 
-    
-    def loc_by_id(locations, id)
-      locations.each do |loc|
-        if loc.id.to_i.equal? id
-          return loc
-        end
-      end
-      return nil
-    end
-    
-    def can_move?(direction)
-      cur_loc.has_loc_to_the?(direction)
-    end
-    
+
     def go(locations, direction)
       case direction
-      when "n"
-        direction = "north"
-      when "e"
-        direction = "east"
-      when "s"
-        direction = "south"
-      when "w"
-        direction = "west"
+      when 'north', 'n'
+        self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]+1}
+      when 'east', 'e'
+        self.cur_coords = {:x => cur_coords[:x]+1,  :y => cur_coords[:y]}
+      when 'south', 's'
+        self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]-1}
+      when 'west', 'w'
+        self.cur_coords = {:x => cur_coords[:x]-1,  :y => cur_coords[:y]}
       end
-      unless direction.nil?
-        if can_move?(direction)
-          new_loc_id = cur_loc.locs_connected[direction.to_sym]
-          self.cur_loc = loc_by_id(locations, new_loc_id)
-          print_traveling_text
-          self.cur_loc.checked_for_monsters = false
-          self.cur_loc.describe
-        else
-          ERROR_GO_PARAM_INVALID
-        end
-      end
+      print_traveling_text
     end
 
-    def attack(monster_name)
-      if cur_loc.has_monster_to_attack?(monster_name)
-        print_battle_line
-        puts "You decide to attack the #{monster_name}!"
-        monster = cur_loc.monster_by_name(monster_name)
-        puts "#{monster.name} cries out: #{monster.battlecry}"
+    def attack(world, monster)
+      print_battle_line
+      puts "You decide to attack the #{monster.name}!"
+      
+      puts "#{monster.name} cries out: #{monster.battlecry}"
 
-        # first strike!
-        if calculate_first_strike(monster)
-          puts "#{monster.name} strikes first!"
-          player_attacked_by(monster)
+      # first strike!
+      if calculate_first_strike(monster)
+        puts "#{monster.name} strikes first!"
+        player_attacked_by(monster)
+      end
+      
+      # main battle loop
+      loop do
+        if (monster.hp_cur <= 0)
+          monster_death(world, monster)
+          return
+        elsif (hp_cur <= 0 && !god_mode)
+          player_death(monster)
+        end
+
+        puts
+        puts "[Fight/Attack][Look][Run]"
+        puts "P :: #{hp_cur} HP\n"
+        puts "M :: #{monster.hp_cur} HP\n"
+        
+        if ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
+          puts "#{monster.name} is almost dead!\n"
         end
         
-        # main battle loop
-        loop do
-          if (monster.hp_cur <= 0)
-            monster_death(monster)
-            return
-          elsif (hp_cur <= 0 && !god_mode)
-            player_death(monster)
-          end
-
-          puts
-          puts "[Fight/Attack][Look][Run]"
-          puts "P :: #{hp_cur} HP\n"
-          puts "M :: #{monster.hp_cur} HP\n"
-          
-          if ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
-            puts "#{monster.name} is almost dead!\n"
-          end
-          
-          puts 'What do you do?'
-          cmd = gets.chomp.downcase
-          
-          # player action
-          case cmd
-          when 'fight', 'f', 'attack', 'a'
-            puts "You attack #{monster.name}#{cur_weapon_name}!"
-            dmg = calculate_mob_damage
-            if dmg > 0
-              puts "You wound it for #{dmg} point(s)!"
-              monster.take_damage(dmg)
-              if (monster.hp_cur <= 0)
-                monster_death(monster)
-                return
-              end
-            else
-              puts "You miss entirely!"
-            end
-          when 'look', 'l'
-            puts "#{monster.name}: #{monster.description}"
-            puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
-          when 'run', 'r'
-            if player_escape?(monster)
-              monster.hp_cur = monster.hp_max
-              puts "You successfully elude #{monster.name}!"
+        puts 'What do you do?'
+        cmd = gets.chomp.downcase
+        
+        # player action
+        case cmd
+        when 'fight', 'f', 'attack', 'a'
+          puts "You attack #{monster.name}#{cur_weapon_name}!"
+          dmg = calculate_mob_damage
+          if dmg > 0
+            puts "You wound it for #{dmg} point(s)!"
+            monster.take_damage(dmg)
+            if (monster.hp_cur <= 0)
+              monster_death(world, monster)
               return
-            else
-              puts "You were not able to run away! :-("
             end
           else
-            puts ERROR_ATTACK_OPTION_INVALID
+            puts "You miss entirely!"
           end
-          
-          # monster action
-          player_attacked_by(monster)
+        when 'look', 'l'
+          puts "#{monster.name}: #{monster.description}"
+          puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
+        when 'run', 'r'
+          if player_escape?(monster)
+            monster.hp_cur = monster.hp_max
+            puts "You successfully elude #{monster.name}!"
+            return
+          else
+            puts "You were not able to run away! :-("
+          end
+        else
+          puts ERROR_ATTACK_OPTION_INVALID
         end
-      else
-        ERROR_ATTACK_PARAM_INVALID
+        
+        # monster action
+        player_attacked_by(monster)
       end
     end
 
@@ -225,17 +200,17 @@ module Gemwarrior
     
     # COMBAT
     def update_player_stats(monster)
-      self.xp = xp + monster.xp_to_give
-      self.rox = rox + monster.rox_to_give
+      self.xp = xp + monster.xp
+      self.rox = rox + monster.rox
     end
     
-    def monster_death(monster)
+    def monster_death(world, monster)
       puts "You have defeated #{monster.name}!"
-      puts "You have received #{monster.xp_to_give} XP!"
-      puts "You have found #{monster.rox_to_give} barterable rox on your slain opponent!"
+      puts "You have received #{monster.xp} XP!"
+      puts "You have found #{monster.rox} barterable rox on your slain opponent!"
       print_battle_line
       update_player_stats(monster)
-      cur_loc.remove_monster(monster.name)
+      world.location_by_coords(cur_coords).remove_monster(monster.name)
     end
     
     def player_death(monster)
@@ -319,7 +294,7 @@ module Gemwarrior
         print "#{Matrext::process({ :phrase => ">>>", :sl => true })}"
         print " *\n"
       end
-      loc.join
+      return loc.join
     end
     
     # CHARACTER
@@ -335,6 +310,10 @@ module Gemwarrior
       puts char_pic
     end
 
+    def print_battle_line
+      puts '**************************************'
+    end
+
     # INIT
     def generate_name
       name = []
@@ -347,10 +326,6 @@ module Gemwarrior
       return name.join
     end
     
-    def generate_desc
-      PLYR_DESC_DEFAULT
-    end
-    
     def generate_face
       FACE_DESC[rand(0..FACE_DESC.length-1)]
     end
@@ -361,18 +336,6 @@ module Gemwarrior
     
     def generate_mood
       MOOD_DESC[rand(0..MOOD_DESC.length-1)]
-    end
-    
-    def generate_player_identity
-      self.name = generate_name
-      self.description = generate_desc
-      self.face = generate_face
-      self.hands = generate_hands
-      self.mood = generate_mood
-    end
-    
-    def print_battle_line
-      puts '**************************************'
     end
   end
 end

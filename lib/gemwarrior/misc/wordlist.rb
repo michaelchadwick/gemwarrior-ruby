@@ -18,7 +18,13 @@ module Gemwarrior
     end
 
     def get_random_value
-      words[rand(0..limit)]
+      random_value = words[rand(0..limit)]
+
+      if random_value.nil?
+        get_random_value
+      else
+        return random_value
+      end
     end
     
     def list_words

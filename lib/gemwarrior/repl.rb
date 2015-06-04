@@ -24,7 +24,7 @@ module Gemwarrior
 
     def start(initialCommand = nil)
       setup_screen(initialCommand)
-            
+
       # main loop
       loop do
         prompt
@@ -86,7 +86,7 @@ module Gemwarrior
         world.player.stam_cur,
         world.player.stam_max,
         world.player.name,
-        world.player.cur_loc.name
+        world.location_by_coords(world.player.cur_coords).name
       ]
       puts (prompt_template % prompt_vars_arr)
     end

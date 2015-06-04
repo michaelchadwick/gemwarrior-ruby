@@ -15,17 +15,19 @@ module Gemwarrior
     LIST_PARAMS    = 'Options: monsters, items, locations'
     
     ## ERRORS
-    ERROR_COMMAND_INVALID       = 'That\'s not something the game yet understands.'
-    ERROR_LIST_PARAM_MISSING    = 'You can\'t just "list". You gotta choose something to list.'
-    ERROR_CHANGE_PARAM_MISSING  = 'Ch-ch-changes...aren\'t happening because you didn\'t specify what to change.'
-    ERROR_CHANGE_PARAM_INVALID  = 'You can\'t change that...yet.'
-    ERROR_LIST_PARAM_INVALID    = 'You can\'t list that...yet.'
+    ERROR_COMMAND_INVALID       = 'That is not something the game yet understands.'
+    ERROR_LIST_PARAM_MISSING    = 'You cannot just "list". You gotta choose something to list.'
+    ERROR_CHANGE_PARAM_MISSING  = 'Ch-ch-changes...are not happening because you did not specify what to change.'
+    ERROR_CHANGE_PARAM_INVALID  = 'You cannot change that...yet.'
+    ERROR_LIST_PARAM_INVALID    = 'You cannot list that...yet.'
     ERROR_GO_PARAM_MISSING      = 'Just wander aimlessly? A direction would be nice.'
-    ERROR_ATTACK_PARAM_MISSING  = 'You can\'t just "attack". You gotta choose something to attack.'
-    ERROR_TAKE_PARAM_MISSING    = 'You can\'t just "take". You gotta choose something to take.'
-    ERROR_DROP_PARAM_MISSING    = 'You can\'t just "drop". You gotta choose something to drop.'
-    ERROR_EQUIP_PARAM_MISSING   = 'You can\'t just "equip". You gotta choose something to equip.'
-    ERROR_UNEQUIP_PARAM_MISSING = 'You can\'t just "unequip". You gotta choose something to unequip.'
+    ERROR_GO_PARAM_INVALID      = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_ATTACK_PARAM_MISSING  = 'You cannot just "attack". You gotta choose something to attack.'
+    ERROR_ATTACK_PARAM_INVALID  = 'That monster does not exist here or can\'t be attacked.'
+    ERROR_TAKE_PARAM_MISSING    = 'You cannot just "take". You gotta choose something to take.'
+    ERROR_DROP_PARAM_MISSING    = 'You cannot just "drop". You gotta choose something to drop.'
+    ERROR_EQUIP_PARAM_MISSING   = 'You cannot just "equip". You gotta choose something to equip.'
+    ERROR_UNEQUIP_PARAM_MISSING = 'You cannot just "unequip". You gotta choose something to unequip.'
     
     attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases
     
@@ -99,15 +101,15 @@ module Gemwarrior
         world.player.rest
       when 'look', 'l'
         if param
-          world.player.cur_loc.describe_entity(param)
+          world.describe_entity(param)
         else
-          world.player.cur_loc.describe
+          world.describe(world.location_by_coords(world.player.cur_coords))
         end
       when 'take', 't'
         if param.nil?
           ERROR_TAKE_PARAM_MISSING
         else
-          world.player.inventory.add_item(world.player.cur_loc, param)
+          world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param)
         end
       when 'drop', 'd'
         if param.nil?
@@ -131,13 +133,26 @@ module Gemwarrior
         if param.nil?
           ERROR_GO_PARAM_MISSING
         else
-          world.player.go(world.locations, param)
+          direction = param
+          if world.can_move?(direction)
+            world.player.go(world.locations, param)
+            world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
+            world.describe(world.location_by_coords(world.player.cur_coords))
+          else
+            ERROR_GO_PARAM_INVALID
+          end
         end
       when 'attack', 'a'
         if param.nil?
           ERROR_ATTACK_PARAM_MISSING
         else
-          world.player.attack(param)
+          monster_name = param
+          if world.has_monster_to_attack?(monster_name)
+            monster = world.location_by_coords(world.player.cur_coords).monster_by_name(monster_name)
+            world.player.attack(world, monster)
+          else
+            ERROR_ATTACK_PARAM_INVALID
+          end
         end
       when 'change', 'ch'
         if param.nil?
@@ -175,7 +190,7 @@ module Gemwarrior
     def print_separator
       puts SEPARATOR
     end
-    
+
     def list_commands
       i = 0
       print_separator
