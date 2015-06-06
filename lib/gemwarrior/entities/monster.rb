@@ -21,10 +21,5 @@ module Gemwarrior
       status_text << "HANDS: #{hands.ljust(11)} "
       status_text << "MOOD: #{mood.ljust(10)}\n"
     end
-    
-    def take_damage(dmg)
-      self.hp_cur = hp_cur.to_i - dmg.to_i
-    end
-
   end
 end

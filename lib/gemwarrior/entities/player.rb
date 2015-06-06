@@ -2,6 +2,7 @@
 # Player creature
 
 require_relative 'creature'
+require_relative '../battle'
 
 module Gemwarrior
   class Player < Creature
@@ -14,9 +15,6 @@ module Gemwarrior
     FACE_DESC   = ['smooth', 'tired', 'ruddy', 'moist', 'shocked', 'handsome', '5 o\'clock-shadowed']
     HANDS_DESC  = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
     MOOD_DESC   = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
-      
-    ## ERRORS
-    ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     
     attr_accessor :stam_cur, :stam_max, :cur_coords, :god_mode
     
@@ -129,106 +127,8 @@ module Gemwarrior
     end
 
     def attack(world, monster)
-      print_battle_line
-      puts "You decide to attack the #{monster.name}!"
-      
-      puts "#{monster.name} cries out: #{monster.battlecry}"
-
-      # first strike!
-      if calculate_first_strike(monster)
-        puts "#{monster.name} strikes first!"
-        player_attacked_by(monster)
-      end
-      
-      # main battle loop
-      loop do
-        if (monster.hp_cur <= 0)
-          monster_death(world, monster)
-          return
-        elsif (hp_cur <= 0 && !god_mode)
-          player_death(monster)
-        end
-
-        puts
-        puts "[Fight/Attack][Look][Run]"
-        puts "P :: #{hp_cur} HP\n"
-        puts "M :: #{monster.hp_cur} HP\n"
-        
-        if ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
-          puts "#{monster.name} is almost dead!\n"
-        end
-        
-        puts 'What do you do?'
-        cmd = gets.chomp.downcase
-        
-        # player action
-        case cmd
-        when 'fight', 'f', 'attack', 'a'
-          puts "You attack #{monster.name}#{cur_weapon_name}!"
-          dmg = calculate_mob_damage
-          if dmg > 0
-            puts "You wound it for #{dmg} point(s)!"
-            monster.take_damage(dmg)
-            if (monster.hp_cur <= 0)
-              monster_death(world, monster)
-              return
-            end
-          else
-            puts "You miss entirely!"
-          end
-        when 'look', 'l'
-          puts "#{monster.name}: #{monster.description}"
-          puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
-        when 'run', 'r'
-          if player_escape?(monster)
-            monster.hp_cur = monster.hp_max
-            puts "You successfully elude #{monster.name}!"
-            return
-          else
-            puts "You were not able to run away! :-("
-          end
-        else
-          puts ERROR_ATTACK_OPTION_INVALID
-        end
-        
-        # monster action
-        player_attacked_by(monster)
-      end
-    end
-
-    private
-    
-    # COMBAT
-    def update_player_stats(monster)
-      self.xp = xp + monster.xp
-      self.rox = rox + monster.rox
-    end
-    
-    def monster_death(world, monster)
-      puts "You have defeated #{monster.name}!"
-      puts "You have received #{monster.xp} XP!"
-      puts "You have found #{monster.rox} barterable rox on your slain opponent!"
-      print_battle_line
-      update_player_stats(monster)
-      world.location_by_coords(cur_coords).remove_monster(monster.name)
-    end
-    
-    def player_death(monster)
-      puts "You are dead, slain by the #{monster.name}!"
-      puts 'Your adventure ends here. Try again next time!'
-      print_battle_line
-      exit(0)
-    end
-    
-    def player_attacked_by(monster)
-      puts "#{monster.name} attacks you!"
-      dmg = calculate_player_damage(monster)
-      if dmg > 0
-        puts "You are wounded for #{dmg} point(s)!"
-        take_damage(dmg)
-      else
-        puts "#{monster.name} misses entirely!"
-      end
+      battle = Battle.new({:world => world, :player => self, :monster => monster})
+      battle.start
     end
     
     def cur_weapon_name
@@ -236,56 +136,8 @@ module Gemwarrior
         return " with your #{inventory.weapon.name}"
       end
     end
-    
-    def calculate_mob_damage
-      miss = rand(0..100)
-      if (miss < 15)
-        0
-      else
-        rand(atk_lo..atk_hi)
-      end
-    end
-    
-    def calculate_player_damage(monster)
-      miss = rand(0..100)
-      if (miss < 15)
-        0
-      else
-        rand(monster.atk_lo..monster.atk_hi)
-      end
-    end
-    
-    def calculate_first_strike(monster)
-      if (monster.dexterity > dexterity)
-        return true
-      else
-        dex_diff = dexterity - monster.dexterity
-        rand_dex = rand(0..dex_diff)
-        if rand_dex % 2 > 0
-          return true
-        else
-          return false
-        end
-      end
-    end
-    
-    def player_escape?(monster)
-      if (dexterity > monster.dexterity)
-        return true
-      else
-        dex_diff = monster.dexterity - dexterity
-        rand_dex = rand(0..dex_diff)
-        if rand_dex % 2 > 0
-          return true
-        else
-          return false
-        end
-      end
-    end
-   
-    def take_damage(dmg)
-      self.hp_cur = hp_cur.to_i - dmg.to_i
-    end
+
+    private
     
     # TRAVEL    
     def print_traveling_text
