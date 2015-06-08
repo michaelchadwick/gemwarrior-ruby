@@ -30,24 +30,26 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 
 `> c` - character check for visual identity  
 `> i [object]` - check your inventory (or an individual item within)  
-`> r` - take a load off (future: replenish stamina)  
+`> ls [entity_type]` - list entities in the game (monsters, items, locations)  
+`> r` - take a load off and replenish hp  
 `> l [object]` - look at current location and its items and monsters  
-`> ls [entity_type]` - list entities in the game (monsters, items, locations)
 `> t [object]` - take an item from a location  
-`> e [object]` - equip an item in your inventory as a weapon
-`> a [monster]` - attack a monster
+`> d [object]` - drop an item from your inventory  
+`> e [object]` - equip an item in your inventory as a weapon  
+`> ue [object]` - unequip an item in your inventory  
 `> g [direction]` - go in a direction, if possible  
-`> w` - list all the locations available in the world  
-`> m` - list all the monsters available in the world  
+`> a [monster]` - attack a monster  
 `> ch [attribute]` - change some things about yourself  
-`> q` - quit this nonsense  
+`> h` - display available commands  
+`> q` - quit this nonsense w/ prompt  
+`> qq` - quit this nonsense w/o prompt  
 
 To come:
 
 * ~~Ability to move between locations!~~
 * ~~Monsters!~~
 * ~~Ability to fight those monsters!~~
-* Monsters to fight back!
+* ~~Monsters to fight back!~~
 * ~~Items you can pick up!~~
 * Saving!
 * Loading of said saved state!

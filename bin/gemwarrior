@@ -5,11 +5,21 @@ require 'optparse'
 require_relative '../lib/gemwarrior/misc/version'
 require_relative '../lib/gemwarrior/game'
 
+GAME_NAME = "Gem Warrior"
+
 def parse_options
-  opts.on('-v', '--version', 'Display version number and exit') do
-    puts "#{$PROGRAM_NAME} #{Gemwarrior::VERSION}"
-    exit
+  options = {}
+
+  optparse = OptionParser.new do |opts|
+    opts.on('-v', '--version', 'Display version number and exit') do
+      puts "#{GAME_NAME} v#{Gemwarrior::VERSION}"
+      exit
+    end
   end
+  
+  optparse.parse!()
+
+  return options
 end
 
 def print_error(error)
@@ -23,6 +33,8 @@ def print_error(error)
 end
 
 begin
+  options = parse_options
+
   Gemwarrior::Game.new
 rescue => error
   print_error(error)
