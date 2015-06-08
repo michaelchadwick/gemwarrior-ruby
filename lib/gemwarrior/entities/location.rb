@@ -29,7 +29,13 @@ module Gemwarrior
       self.monsters_abounding   = []
       self.checked_for_monsters = false
     end
-
+    
+    def status
+      status_text =  name.ljust(20).upcase
+      status_text << coords.values.to_a
+      status_text << " #{description}\n"
+    end
+    
     def remove_item(item_name)
       if items.map(&:name).include?(item_name)
         items.reject! { |item| item.name == item_name }

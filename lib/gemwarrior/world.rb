@@ -7,6 +7,10 @@ require_relative 'entities/location'
 module Gemwarrior
   class World
     # CONSTANTS
+    ## WORLD DIMENSIONS
+    WORLD_DIM_WIDTH   = 10
+    WORLD_DIM_HEIGHT  = 10
+    
     ## ERRORS
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
   
@@ -18,7 +22,7 @@ module Gemwarrior
       self.player = nil
     end
 
-    def all_vars
+    def print_all_vars
       puts "======================\n"
       puts "All Variables in World\n"
       puts "======================\n"
@@ -27,7 +31,32 @@ module Gemwarrior
       puts "#{list("items", true)}\n\n"
       puts "#{list("locations", true)}\n"
     end
-    
+
+    def print_map
+      0.upto(WORLD_DIM_HEIGHT-1) do |count_y|
+        print '  '
+        0.upto(WORLD_DIM_WIDTH-1) do
+          print '___'
+        end
+        print "\n"
+        print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
+        0.upto(WORLD_DIM_WIDTH-1) do |count_x|
+          if location_by_coords({:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y})
+            print '|X|'
+          else
+            print '|_|'
+          end
+        end
+        print "\n"
+      end
+      puts
+      print '   '
+      0.upto(WORLD_DIM_WIDTH-1) do |count_x|
+        print "#{count_x}  "
+      end
+      return
+    end
+
     def list(param, details = false)
       case param
       when 'players'
@@ -163,6 +192,7 @@ module Gemwarrior
       require_relative 'entities/items/feather'
       require_relative 'entities/items/gun'
       require_relative 'entities/items/stalactite'
+      require_relative 'entities/items/stonemite'
       require_relative 'entities/items/stone'
       require_relative 'entities/items/tree'
       
@@ -189,12 +219,42 @@ module Gemwarrior
         })
       )
       locations.push(Location.new({
-          :name               => 'Cave (Room1)', 
-          :description        => 'Now inside the first cavernous room, you confirm that there are stacktites, stonemites, rocksites, and even one or two pebblejites.',
+          :name               => 'Cave (Foyer)', 
+          :description        => 'Now inside the entrance to the cavern, you confirm that there are stacktites, stonemites, rocksites, and even one or two pebblejites.',
           :coords             => {:x => 7, :y => 0},
-          :locs_connected     => {:north => false, :east => false, :south => false, :west => true},
+          :locs_connected     => {:north => true, :east => true, :south => false, :west => true},
           :danger_level       => :moderate,
-          :items              => [Stalactite.new],
+          :items              => [Stalactite.new, Stonemite.new],
+          :monsters_available => monsters
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Cave (Nook)', 
+          :description        => 'A depression in the cave wall casts a shadow over a small rock shelf.',
+          :coords             => {:x => 7, :y => 1},
+          :locs_connected     => {:north => false, :east => true, :south => true, :west => false},
+          :danger_level       => :moderate,
+          :items              => [],
+          :monsters_available => monsters
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Cave (Dropoff)', 
+          :description        => 'Caves do not usually feature sudden chasms spilling down into an unknowable void, but this one does.',
+          :coords             => {:x => 8, :y => 1},
+          :locs_connected     => {:north => false, :east => false, :south => true, :west => true},
+          :danger_level       => :moderate,
+          :items              => [],
+          :monsters_available => monsters
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Cave (Causeway)', 
+          :description        => 'Paths lead north and west, but nothing of interest is in this causeway.',
+          :coords             => {:x => 8, :y => 0},
+          :locs_connected     => {:north => true, :east => false, :south => false, :west => true},
+          :danger_level       => :moderate,
+          :items              => [],
           :monsters_available => monsters
         })
       )

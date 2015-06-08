@@ -28,13 +28,15 @@ module Gemwarrior
     ERROR_DROP_PARAM_MISSING    = 'You cannot just "drop". You gotta choose something to drop.'
     ERROR_EQUIP_PARAM_MISSING   = 'You cannot just "equip". You gotta choose something to equip.'
     ERROR_UNEQUIP_PARAM_MISSING = 'You cannot just "unequip". You gotta choose something to unequip.'
+    ERROR_DEBUG_PARAM_MISSING   = 'You cannot just "debug". You gotta choose a debug command.'
+    ERROR_DEBUG_PARAM_INVALID   = 'You cannot debug that...yet.'
     
     attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases
     
     def initialize(world)
       self.world = world
-      self.devcmds = %w(allvars godmode iddqd)
-      self.devaliases = %w(av god)
+      self.devcmds = %w(debug)
+      self.devaliases = %w(db)
       self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit quit!)
       self.aliases = %w(c i ls r l t d e ue g a ch h q qq)
       self.descriptions = [
@@ -72,10 +74,21 @@ module Gemwarrior
 
       case command
       # dev commands
-      when 'allvars', 'av'
-        world.all_vars()
-      when 'iddqd', 'godmode', 'god'
-        world.player.god_mode = !world.player.god_mode
+      when 'debug', 'db'
+        if param.nil?
+          ERROR_DEBUG_PARAM_MISSING
+        else
+          case param
+          when 'vars', 'v'
+            world.print_all_vars
+          when 'godmode', 'iddqd', 'god', 'g'
+            world.player.god_mode = !world.player.god_mode
+          when 'map', 'm'
+            world.print_map
+          else
+            ERROR_DEBUG_PARAM_INVALID
+          end
+        end
       # normal commands
       when 'character', 'c'
         world.player.check_self

@@ -61,6 +61,7 @@ module Gemwarrior
       end
 
       self_text =  "NAME: #{name}\n"
+      self_text =  "XY  : #{cur_coords.values.to_a}\n"
       self_text << "WPN : #{cur_weapon_name}\n"
       self_text << "LVL : #{level}\n"
       self_text << "XP  : #{xp}\n"
@@ -152,13 +153,13 @@ module Gemwarrior
     # CHARACTER
     def print_char_pic
       char_pic = ""
-      char_pic << "**********\n"
-      char_pic << "*   ()   *\n"
-      char_pic << "* \\-||-/ *\n"
-      char_pic << "*   --   *\n"
-      char_pic << "*   ||   *\n"
-      char_pic << "*  _||_  *\n"
-      char_pic << "**********\n"
+      char_pic << "************\n"
+      char_pic << "*    ()    *\n"
+      char_pic << "*  \\-||-/  *\n"
+      char_pic << "*    --    *\n"
+      char_pic << "*    ||    *\n"
+      char_pic << "*   _||_   *\n"
+      char_pic << "************\n"
       puts char_pic
     end
 
