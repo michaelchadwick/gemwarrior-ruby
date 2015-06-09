@@ -12,7 +12,7 @@ module Gemwarrior
   class Repl
     # CONSTANTS
     ## MESSAGES
-    QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'
+    QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'.colorize(:red)
     SPLASH_MESSAGE = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
     
     attr_accessor :world, :eval
@@ -50,9 +50,9 @@ module Gemwarrior
     end
     
     def print_splash_message
-      puts "/-+-+-+ +-+-+-+-+-+-+-\\"
-      puts '|G|E|M| |W|A|R|R|I|O|R|'
-      puts "\\-+-+-+ +-+-+-+-+-+-+-/"
+      puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
+      puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
+      puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
       0.upto(SPLASH_MESSAGE.length-1) do print '=' end
       puts
       puts SPLASH_MESSAGE

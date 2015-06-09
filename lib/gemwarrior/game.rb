@@ -1,6 +1,8 @@
 # lib/gemwarrior/game.rb
 # Main launching point for Gem Warrior
 
+require 'colorize'
+
 require_relative 'entities/player'
 require_relative 'world'
 require_relative 'evaluator'

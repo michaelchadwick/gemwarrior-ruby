@@ -8,8 +8,8 @@ module Gemwarrior
     # CONSTANTS
     ## MESSAGES
     PROGRAM_NAME   = 'Gem Warrior'
-    QUIT_MESSAGE   = 'Thanks for playing the game. Until next time...'
-    RESUME_MESSAGE = 'Back to adventuring!'
+    QUIT_MESSAGE   = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
+    RESUME_MESSAGE = 'Back to adventuring!'.colorize(:green)
     SEPARATOR      = '=========================================================================='
     CHANGE_PARAMS  = 'Options: name'
     LIST_PARAMS    = 'Options: monsters, items, locations'
@@ -68,7 +68,7 @@ module Gemwarrior
       unless input_valid?(input)
         return ERROR_COMMAND_INVALID
       end
-      
+
       command = tokens.first.downcase
       param = tokens[1]
 
@@ -217,14 +217,16 @@ module Gemwarrior
     def input_valid?(input)
       tokens = input.split
       commands_and_aliases = commands | aliases | devcmds | devaliases
-      if commands_and_aliases.include?(tokens.first.downcase)
-        if tokens.size.between?(1,2)
+      unless tokens.first.nil?
+        if commands_and_aliases.include?(tokens.first.downcase)
+          if tokens.size.between?(1,2)
+            return true
+          end
+        elsif tokens.empty?
           return true
         end
-      elsif tokens.empty?
-        return true
+        return false
       end
-      return false
     end
     
   end
