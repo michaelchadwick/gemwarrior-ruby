@@ -52,6 +52,10 @@ module Gemwarrior
         end
         print "\n"
       end
+      print '  '
+      0.upto(WORLD_DIM_WIDTH-1) do
+        print '---'
+      end
       puts
       print '   '
       0.upto(WORLD_DIM_WIDTH-1) do |count_x|
