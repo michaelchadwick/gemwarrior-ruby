@@ -1,8 +1,6 @@
 # lib/gemwarrior/entities/location.rb
 # Place in the game
 
-require 'matrext'
-
 require_relative 'entity'
 
 module Gemwarrior

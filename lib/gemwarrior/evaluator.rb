@@ -59,14 +59,16 @@ module Gemwarrior
     end
     
     def evaluate(input)
-      if input.nil?
+      case input
+      # Ctrl-D or empty command
+      when nil, ""
         return
-      end
-    
-      tokens = input.split
-      
-      unless input_valid?(input)
-        return ERROR_COMMAND_INVALID
+      # real command
+      else
+        tokens = input.split
+        unless input_valid?(input)
+          return ERROR_COMMAND_INVALID
+        end
       end
 
       command = tokens.first.downcase
@@ -216,18 +218,16 @@ module Gemwarrior
     
     def input_valid?(input)
       tokens = input.split
+      command = tokens[0]
       commands_and_aliases = commands | aliases | devcmds | devaliases
-      unless tokens.first.nil?
-        if commands_and_aliases.include?(tokens.first.downcase)
-          if tokens.size.between?(1,2)
-            return true
-          end
-        elsif tokens.empty?
+
+      if commands_and_aliases.include?(command.downcase)
+        if tokens.size.between?(1,2)
           return true
         end
-        return false
+      elsif tokens.empty?
+        return true
       end
     end
-    
   end
 end

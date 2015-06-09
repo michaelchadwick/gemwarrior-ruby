@@ -43,7 +43,7 @@ module Gemwarrior
       self.stam_max     = options.fetch(:stam_max)
       self.cur_coords   = options.fetch(:cur_coords)
 
-      self.god_mode     = false
+      self.god_mode     = options.fetch(:god_mode)
     end
 
     def check_self(show_pic = true)

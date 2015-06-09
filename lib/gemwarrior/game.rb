@@ -2,6 +2,7 @@
 # Main launching point for Gem Warrior
 
 require 'colorize'
+require 'matrext'
 
 require_relative 'entities/player'
 require_relative 'world'
@@ -29,9 +30,10 @@ module Gemwarrior
 
     attr_accessor :world, :eval, :repl
     
-    def initialize
+    def initialize(options)
       # create new world and player
       self.world = World.new
+
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,
         :level              => PLAYER_LEVEL_DEFAULT,
@@ -46,7 +48,8 @@ module Gemwarrior
         :dexterity          => PLAYER_DEXTERITY_DEFAULT,
         :inventory          => PLAYER_INVENTORY_DEFAULT,
         :rox                => PLAYER_ROX_DEFAULT,
-        :cur_coords         => world.location_coords_by_name('Home')
+        :cur_coords         => world.location_coords_by_name('Home'),
+        :god_mode           => options.fetch(:god_mode)
       })
 
       # create the console
