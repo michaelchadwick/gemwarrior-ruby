@@ -91,7 +91,7 @@ module Gemwarrior
         world.player.name,
         world.location_by_coords(world.player.cur_coords).name
       ]
-      puts (prompt_template % prompt_vars_arr)
+      puts (prompt_template % prompt_vars_arr).colorize(:color => :white, :background => :green)
     end
     
     def read_line
