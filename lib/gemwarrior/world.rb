@@ -36,7 +36,7 @@ module Gemwarrior
       0.upto(WORLD_DIM_HEIGHT-1) do |count_y|
         print '  '
         0.upto(WORLD_DIM_WIDTH-1) do
-          print '___'
+          print '---'
         end
         print "\n"
         print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
@@ -47,7 +47,7 @@ module Gemwarrior
           elsif location_by_coords(cur_map_coords)
             print '|X|'
           else
-            print '|_|'
+            print '| |'
           end
         end
         print "\n"
