@@ -41,7 +41,10 @@ module Gemwarrior
         print "\n"
         print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
         0.upto(WORLD_DIM_WIDTH-1) do |count_x|
-          if location_by_coords({:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y})
+          cur_map_coords = {:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y}
+          if self.player.cur_coords.eql?(cur_map_coords)
+            print '|O|'
+          elsif location_by_coords(cur_map_coords)
             print '|X|'
           else
             print '|_|'
