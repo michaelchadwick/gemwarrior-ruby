@@ -13,7 +13,7 @@ module Gemwarrior
     # CONSTANTS
     ## MESSAGES
     QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'
-    SPLASH_MESSAGE = 'Welcome to Gem Warrior, where randomized fortune is just as likely as mayhem.'
+    SPLASH_MESSAGE = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
     
     attr_accessor :world, :eval
     
@@ -50,11 +50,14 @@ module Gemwarrior
     end
     
     def print_splash_message
-      0.upto(SPLASH_MESSAGE.length-1) do print "=" end
-      print "\n"
+      puts "/-+-+-+ +-+-+-+-+-+-+-\\"
+      puts '|G|E|M| |W|A|R|R|I|O|R|'
+      puts "\\-+-+-+ +-+-+-+-+-+-+-/"
+      0.upto(SPLASH_MESSAGE.length-1) do print '=' end
+      puts
       puts SPLASH_MESSAGE
-      0.upto(SPLASH_MESSAGE.length-1) do print "=" end
-      print "\n"
+      0.upto(SPLASH_MESSAGE.length-1) do print '=' end
+      puts
     end
     
     def print_fortune
