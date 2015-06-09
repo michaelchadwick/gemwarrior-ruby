@@ -117,14 +117,18 @@ module Gemwarrior
       case direction
       when 'north', 'n'
         self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]+1}
+        direction_text = '^^^'
       when 'east', 'e'
         self.cur_coords = {:x => cur_coords[:x]+1,  :y => cur_coords[:y]}
+        direction_text = '>>>'
       when 'south', 's'
         self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]-1}
+        direction_text = 'vvv'
       when 'west', 'w'
         self.cur_coords = {:x => cur_coords[:x]-1,  :y => cur_coords[:y]}
+        direction_text = '<<<'
       end
-      print_traveling_text
+      print_traveling_text(direction_text)
     end
 
     def attack(world, monster)
@@ -141,10 +145,10 @@ module Gemwarrior
     private
     
     # TRAVEL    
-    def print_traveling_text
+    def print_traveling_text(direction_text)
       loc = Thread.new do
         print "* "
-        print "#{Matrext::process({ :phrase => ">>>", :sl => true })}"
+        print "#{Matrext::process({ :phrase => direction_text, :sl => true })}"
         print " *\n"
       end
       return loc.join
