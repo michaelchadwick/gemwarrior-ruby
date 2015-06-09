@@ -37,8 +37,8 @@ module Gemwarrior
 
         puts
         puts "[Fight/Attack][Look][Run]".colorize(:color => :white, :background => :green)
-        puts "P :: #{player.hp_cur} HP\n"
-        puts "M :: #{monster.hp_cur} HP\n"
+        puts "P :: #{player.hp_cur.to_s.rjust(3)} HP\n"
+        puts "M :: #{monster.hp_cur.to_s.rjust(3)} HP\n"
         
         if player_near_death?
           puts "You are almost dead!\n".colorize(:yellow)
