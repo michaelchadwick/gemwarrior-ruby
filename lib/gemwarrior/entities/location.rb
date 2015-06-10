@@ -14,7 +14,7 @@ module Gemwarrior
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
 
     attr_accessor :coords, :locs_connected, :danger_level, :items, 
-                  :monsters_available, :monsters_abounding, :checked_for_monsters
+                  :monsters_abounding, :checked_for_monsters
   
     def initialize(options)
       self.name                 = options.fetch(:name)
@@ -23,14 +23,13 @@ module Gemwarrior
       self.locs_connected       = options.fetch(:locs_connected)
       self.danger_level         = options.fetch(:danger_level)
       self.items                = options.fetch(:items)
-      self.monsters_available   = options.fetch(:monsters_available)
       self.monsters_abounding   = []
       self.checked_for_monsters = false
     end
     
     def status
       status_text =  name.ljust(20).upcase
-      status_text << coords.values.to_a
+      status_text << coords.values.to_a.to_s
       status_text << " #{description}\n"
     end
     
@@ -104,7 +103,7 @@ module Gemwarrior
       return "\n >> Paths: #{valid_paths.join(', ')}"
     end
     
-    def populate_monsters
+    def populate_monsters(monsters_available)
       self.checked_for_monsters = true
       if has_monster?
         self.monsters_abounding = []

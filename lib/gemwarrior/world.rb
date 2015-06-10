@@ -127,7 +127,7 @@ module Gemwarrior
       desc_text << "[ #{point.name} ]\n"
       desc_text << point.description
       unless point.checked_for_monsters?
-        point.populate_monsters
+        point.populate_monsters(self.monsters)
       end
       unless point.list_items.nil?
         desc_text << point.list_items
