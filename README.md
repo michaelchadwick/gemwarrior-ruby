@@ -54,9 +54,10 @@ To come:
 * Saving!
 * Loading of said saved state!
 * More locations to move between!
+* Randomized worlds!
 * Quests (maybe)!
 * Towns (maybe)!
-* Merchants!
+* Merchants (maybe)!
 * Sound FX!
 * Music!
 * Epic Length (whereby "Epic" I mean "maybe 30 minutes"?)!
