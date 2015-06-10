@@ -62,17 +62,17 @@ module Gemwarrior
         self.atk_hi = inventory.weapon.atk_hi
       end
 
-      self_text =  "NAME : #{name}\n"
-      self_text =  "XY   : #{cur_coords.values.to_a}\n"
-      self_text << "WPN  : #{cur_weapon_name}\n"
-      self_text << "LVL  : #{level}\n"
-      self_text << "XP   : #{xp}\n"
-      self_text << "HP   : #{hp_cur}/#{hp_max}\n"
-      self_text << "ATK  : #{atk_lo}-#{atk_hi}\n"
-      self_text << "DEX  : #{dexterity}\n"
-      self_text << "DEF  : #{defense}\n"
-      self_text << "GOD  : #{god_mode}\n"
-      self_text << "BEAST: #{beast_mode}\n\n"
+      self_text =  "NAME      : #{name}\n"
+      self_text =  "POSITION  : #{cur_coords.values.to_a}\n"
+      self_text << "WEAPON    : #{cur_weapon_name}\n"
+      self_text << "LEVEL     : #{level}\n"
+      self_text << "EXPERIENCE: #{xp}\n"
+      self_text << "HIT POINTS: #{hp_cur}/#{hp_max}\n"
+      self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
+      self_text << "DEXTERITY : #{dexterity}\n"
+      self_text << "DEFENSE   : #{defense}\n"
+      self_text << "GOD_MODE  : #{god_mode}\n"
+      self_text << "BEAST_MODE: #{beast_mode}\n\n"
       
       self_text << "#{description}\n\n"
       

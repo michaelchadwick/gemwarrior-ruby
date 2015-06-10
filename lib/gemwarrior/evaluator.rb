@@ -11,6 +11,8 @@ module Gemwarrior
     QUIT_MESSAGE      = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
     RESUME_MESSAGE    = 'Back to adventuring!'.colorize(:green)
     SEPARATOR         = '=========================================================================='
+    
+    GO_PARAMS         = 'Options: north, east, south, west'
     CHANGE_PARAMS     = 'Options: name'
     LIST_PARAMS       = 'Options: monsters, items, locations'
     DEBUG_PARAMS      = 'Options: vars, map, stat'
@@ -48,7 +50,7 @@ module Gemwarrior
         'Display character information',
         'Look in your inventory',
         'List all the objects of a type that exist in the world',
-        'Take a load off and regain stamina',
+        'Take a load off and regain HP',
         'Look around your current location',
         'Take item',
         'Drop item',
@@ -86,7 +88,7 @@ module Gemwarrior
       when 'debug', 'db'
         if param1.nil?
           puts ERROR_DEBUG_PARAM_MISSING
-          puts DEBUG_PARAMS
+          DEBUG_PARAMS
         else
           case param1
           when 'vars', 'v'
@@ -100,7 +102,7 @@ module Gemwarrior
           when 'stat'
             if param2.nil?
               puts ERROR_DEBUG_STAT_PARAM_MISSING
-              puts DEBUG_STAT_PARAMS
+              DEBUG_STAT_PARAMS
             else
               case param2
               when 'atk_lo'
@@ -160,7 +162,7 @@ module Gemwarrior
       when 'list', 'ls'
         if param1.nil?
           puts ERROR_LIST_PARAM_MISSING
-          puts LIST_PARAMS
+          LIST_PARAMS
         else
           world.list(param1)
         end
@@ -198,7 +200,8 @@ module Gemwarrior
         end
       when 'go', 'g'
         if param1.nil?
-          ERROR_GO_PARAM_MISSING
+          puts ERROR_GO_PARAM_MISSING
+          GO_PARAMS
         else
           direction = param1
           if world.can_move?(direction)
@@ -224,7 +227,7 @@ module Gemwarrior
       when 'change', 'ch'
         if param1.nil?
           puts ERROR_CHANGE_PARAM_MISSING
-          puts CHANGE_PARAMS
+          CHANGE_PARAMS
         else
           case param1
           when 'name'

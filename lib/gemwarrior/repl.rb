@@ -67,12 +67,20 @@ module Gemwarrior
 
       puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
     end
+    
+    def print_help
+      puts '* Basic functions: look, go, character, inventory, attack *'
+      puts '* Type \'help\' for complete command list'
+      puts '* Most commands can be abbreviated to their first letter *'
+      puts
+    end
 
     def setup_screen(initialCommand = nil)
       # welcome player to game
       clear_screen
       print_splash_message
-      print_fortune 
+      print_fortune
+      print_help
 
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?
@@ -91,7 +99,7 @@ module Gemwarrior
         world.player.name,
         world.location_by_coords(world.player.cur_coords).name
       ]
-      puts (prompt_template % prompt_vars_arr).colorize(:color => :white, :background => :green)
+      puts (prompt_template % prompt_vars_arr).colorize(:yellow)
     end
     
     def read_line
