@@ -148,7 +148,7 @@ module Gemwarrior
     def print_traveling_text(direction_text)
       loc = Thread.new do
         print "* "
-        print "#{Matrext::process({ :phrase => direction_text, :sl => true })}"
+        print "#{Matrext::process({ :phrase => direction_text, :oneline => true })}"
         print " *\n"
       end
       return loc.join

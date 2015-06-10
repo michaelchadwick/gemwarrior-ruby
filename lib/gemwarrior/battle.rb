@@ -56,7 +56,6 @@ module Gemwarrior
           puts "You attack #{monster.name}#{player.cur_weapon_name}!"
           dmg = calculate_damage_to(monster)
           if dmg > 0
-            puts "> You wound it for #{dmg} point(s)!".colorize(:yellow)
             take_damage(monster, dmg)
             if monster_dead?
               monster_death
@@ -118,13 +117,24 @@ module Gemwarrior
     
     def take_damage(entity, dmg)
       entity.hp_cur = entity.hp_cur.to_i - dmg.to_i
+      who_gets_wounded = ''
+      if entity.eql?(monster)
+        who_gets_wounded = "> You wound #{monster.name} for "
+      else
+        who_gets_wounded = "> You are wounded for "
+      end
+      hit = Thread.new do
+        print who_gets_wounded
+        print "#{Matrext::process({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })}"
+        print " point(s)!\n"
+      end
+      return hit.join
     end
     
     def monster_attacks_player
       puts "#{monster.name} attacks you!"
       dmg = calculate_damage_to(player)
       if dmg > 0
-        puts "> You are wounded for #{dmg} point(s)!".colorize(:yellow)
         take_damage(player, dmg)
         if player_dead?
           player_death
@@ -200,7 +210,7 @@ module Gemwarrior
     def print_escape_text
       escape = Thread.new do
         print "* "
-        print "#{Matrext::process({ :phrase => 'POOF', :sl => true })}"
+        print "#{Matrext::process({ :phrase => 'POOF', :oneline => true })}"
         print " *\n"
       end
       return escape.join

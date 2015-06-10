@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.license         = 'MIT'
 
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
-  spec.add_runtime_dependency 'matrext', '~> 0.2'
+  spec.add_runtime_dependency 'matrext', '~> 0.4.7'
   spec.add_runtime_dependency 'http', '~> 0.8.10'
   spec.add_runtime_dependency 'json', '~> 1.8.2'
   spec.add_runtime_dependency 'colorize', '~> 0.7.7'
