@@ -16,7 +16,8 @@ module Gemwarrior
     HANDS_DESC  = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
     MOOD_DESC   = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
     
-    attr_accessor :stam_cur, :stam_max, :cur_coords, :god_mode
+    attr_accessor :stam_cur, :stam_max, :cur_coords, 
+                  :god_mode, :beast_mode
     
     def initialize(options)
       self.name         = generate_name
@@ -25,13 +26,13 @@ module Gemwarrior
       self.face         = generate_face
       self.hands        = generate_hands
       self.mood         = generate_mood
-      
+
       self.level        = options.fetch(:level)
       self.xp           = options.fetch(:xp)
       self.hp_cur       = options.fetch(:hp_cur)
       self.hp_max       = options.fetch(:hp_max)
-      self.atk_lo       = options.fetch(:atk_lo)
-      self.atk_hi       = options.fetch(:atk_hi)
+      self.atk_lo       = options.fetch(:beast_mode) ? 40 : options.fetch(:atk_lo)
+      self.atk_hi       = options.fetch(:beast_mode) ? 40 : options.fetch(:atk_hi)
 
       self.defense      = options.fetch(:defense)
       self.dexterity    = options.fetch(:dexterity)
@@ -42,8 +43,9 @@ module Gemwarrior
       self.stam_cur     = options.fetch(:stam_cur)
       self.stam_max     = options.fetch(:stam_max)
       self.cur_coords   = options.fetch(:cur_coords)
-
+      
       self.god_mode     = options.fetch(:god_mode)
+      self.beast_mode   = options.fetch(:beast_mode)
     end
 
     def check_self(show_pic = true)
@@ -60,16 +62,17 @@ module Gemwarrior
         self.atk_hi = inventory.weapon.atk_hi
       end
 
-      self_text =  "NAME: #{name}\n"
-      self_text =  "XY  : #{cur_coords.values.to_a}\n"
-      self_text << "WPN : #{cur_weapon_name}\n"
-      self_text << "LVL : #{level}\n"
-      self_text << "XP  : #{xp}\n"
-      self_text << "HP  : #{hp_cur}|#{hp_max}\n"
-      self_text << "ATK : #{atk_lo}-#{atk_hi}\n"
-      self_text << "DEX : #{dexterity}\n"
-      self_text << "DEF : #{defense}\n"
-      self_text << "GOD : #{god_mode}\n\n"
+      self_text =  "NAME : #{name}\n"
+      self_text =  "XY   : #{cur_coords.values.to_a}\n"
+      self_text << "WPN  : #{cur_weapon_name}\n"
+      self_text << "LVL  : #{level}\n"
+      self_text << "XP   : #{xp}\n"
+      self_text << "HP   : #{hp_cur}/#{hp_max}\n"
+      self_text << "ATK  : #{atk_lo}-#{atk_hi}\n"
+      self_text << "DEX  : #{dexterity}\n"
+      self_text << "DEF  : #{defense}\n"
+      self_text << "GOD  : #{god_mode}\n"
+      self_text << "BEAST: #{beast_mode}\n\n"
       
       self_text << "#{description}\n\n"
       

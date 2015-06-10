@@ -7,7 +7,7 @@ module Gemwarrior
                   :description
 
     def status
-      status_text =  name.ljust(20).upcase
+      status_text =  name.ljust(26).upcase
       status_text << "#{description}\n"
     end
   end

@@ -11,10 +11,9 @@ module Gemwarrior
     
     ## ERRORS
     ERROR_LOCATION_ITEM_REMOVE_INVALID      = 'That item cannot be removed as it does not exist here.'
-    ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
 
     attr_accessor :coords, :locs_connected, :danger_level, :items, 
-                  :monsters_abounding, :checked_for_monsters
+                  :monsters_abounding, :bosses_abounding, :checked_for_monsters
   
     def initialize(options)
       self.name                 = options.fetch(:name)
@@ -24,11 +23,12 @@ module Gemwarrior
       self.danger_level         = options.fetch(:danger_level)
       self.items                = options.fetch(:items)
       self.monsters_abounding   = []
+      self.bosses_abounding     = options[:bosses_abounding]
       self.checked_for_monsters = false
     end
     
     def status
-      status_text =  name.ljust(20).upcase
+      status_text =  name.ljust(26).upcase
       status_text << coords.values.to_a.to_s
       status_text << " #{description}\n"
     end
@@ -59,9 +59,11 @@ module Gemwarrior
       locs_connected[direction.to_sym]
     end
 
-    def monster_by_name(name)
-      monsters_abounding.each do |m|
-        if m.name.eql?(name)
+    def monster_by_name(monster_name)
+      monsters_list = monsters_abounding | bosses_abounding
+
+      monsters_list.each do |m|
+        if m.name.downcase.eql?(monster_name.downcase)
           return m.clone
         end
       end
@@ -86,11 +88,15 @@ module Gemwarrior
     end
     
     def list_items
-      return "\n >> Shiny object(s): #{items.map(&:name).join(', ')}" if items.length > 0
+      return "\n >> Curious object(s): #{items.map(&:name).join(', ')}" if items.length > 0
     end
     
     def list_monsters
       return "\n >> Monster(s) abound: #{monsters_abounding.map(&:name).join(', ')}" if monsters_abounding.length > 0
+    end
+    
+    def list_bosses
+      return "\n >> Boss(es) abound: #{bosses_abounding.map(&:name).join(', ')}" if bosses_abounding.length > 0
     end
     
     def list_paths
@@ -104,10 +110,20 @@ module Gemwarrior
     end
     
     def populate_monsters(monsters_available)
-      self.checked_for_monsters = true
       if has_monster?
+        self.checked_for_monsters = true
         self.monsters_abounding = []
-        monsters_abounding.push(monsters_available[rand(0..monsters_available.length-1)])
+        random_monster = nil
+
+        # get random non-boss monster
+        loop do
+          random_monster = monsters_available[rand(0..monsters_available.length-1)]
+          unless random_monster.is_boss
+            break
+          end
+        end
+
+        monsters_abounding.push(random_monster)
       else
         return nil
       end

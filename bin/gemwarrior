@@ -8,7 +8,7 @@ require_relative '../lib/gemwarrior/game'
 GAME_NAME = "Gem Warrior"
 
 def parse_options
-  options = {:god_mode => false}
+  options = {:god_mode => false, :beast_mode => false}
 
   optparse = OptionParser.new do |opts|
     opts.on('-v', '--version', 'Display version number and exit') do
@@ -18,6 +18,10 @@ def parse_options
     
     opts.on('-g', '--god', 'Set godmode to true on load') do
       options[:god_mode] = true
+    end
+    
+    opts.on('-b', '--beast', 'Set beastmode to true on load') do
+      options[:beast_mode] = true
     end
   end
 

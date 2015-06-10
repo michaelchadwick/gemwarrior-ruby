@@ -14,24 +14,24 @@ module Gemwarrior
     ERROR_ITEM_UNEQUIP_INVALID    = 'You do not have anything called that to unequip.'
     ERROR_ITEM_UNEQUIP_NONWEAPON  = 'That cannot be unequipped.'
     
-    attr_accessor :inventory, :weapon
+    attr_accessor :items, :weapon
     
-    def initialize(inventory = [], weapon = nil)
-      self.inventory = inventory
+    def initialize(items = [], weapon = nil)
+      self.items = items
       self.weapon = weapon
     end
     
     def list_contents
-      if inventory.empty?
+      if items.empty?
         return contents_text = '[empty]'
       else
-        return contents_text = "Inventory contains: #{inventory.map(&:name).join ', '}\n"
+        return contents_text = "#{items.map(&:name).join ', '}"
       end
     end
     
     def describe_item(item_name)
-      if inventory.map(&:name).include?(item_name)
-        inventory.each do |i|
+      if items.map(&:name).include?(item_name)
+        items.each do |i|
           if i.name.eql?(item_name)
             return i.description
           end
@@ -42,8 +42,8 @@ module Gemwarrior
     end
     
     def equip_item(item_name)
-      if inventory.map(&:name).include?(item_name)
-        inventory.each do |i|
+      if items.map(&:name).include?(item_name)
+        items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
               i.equipped = true
@@ -60,8 +60,8 @@ module Gemwarrior
     end
     
     def unequip_item(item_name)
-      if inventory.map(&:name).include?(item_name)
-        inventory.each do |i|
+      if items.map(&:name).include?(item_name)
+        items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
               i.equipped = false
@@ -81,7 +81,7 @@ module Gemwarrior
       cur_loc.items.each do |i|
         if i.name.eql?(item_name)
           if i.takeable
-            inventory.push(i)
+            items.push(i)
             cur_loc.remove_item(item_name)
             return "Added #{item_name} to your increasing collection of bits of tid."
           else
@@ -93,8 +93,8 @@ module Gemwarrior
     end
     
     def remove_item(item_name)
-      if inventory.map(&:name).include?(item_name)
-        inventory.reject! { |item| item.name == item_name }
+      if items.map(&:name).include?(item_name)
+        items.reject! { |item| item.name == item_name }
         return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
       else
         ERROR_ITEM_REMOVE_INVALID

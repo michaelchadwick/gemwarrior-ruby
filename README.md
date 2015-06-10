@@ -29,16 +29,16 @@ Run the commands above and you'll be whisked away to Jool, ready to start or con
 This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working console prompt, some commands (type `h` for a list), and a few locations exist already. Each time you start the game a new hero will be created with a randomized name, but you can change that with `> change name`.
 
 `> c` - character check for visual identity  
-`> i [object]` - check your inventory (or an individual item within)  
+`> i  [object]` - check your inventory (or an individual item within)  
 `> ls [entity_type]` - list entities in the game (monsters, items, locations)  
 `> r` - take a load off and replenish hp  
-`> l [object]` - look at current location and its items and monsters  
-`> t [object]` - take an item from a location  
-`> d [object]` - drop an item from your inventory  
-`> e [object]` - equip an item in your inventory as a weapon  
+`> l  [object]` - look at current location and its items and monsters  
+`> t  [object]` - take an item from a location  
+`> d  [object]` - drop an item from your inventory  
+`> e  [object]` - equip an item in your inventory as a weapon  
 `> ue [object]` - unequip an item in your inventory  
-`> g [direction]` - go in a direction, if possible  
-`> a [monster]` - attack a monster  
+`> g  [direction]` - go in a direction, if possible  
+`> a  [monster]` - attack a monster  
 `> ch [attribute]` - change some things about yourself  
 `> h` - display available commands  
 `> q` - quit this nonsense w/ prompt  
@@ -51,6 +51,7 @@ To come:
 * ~~Ability to fight those monsters!~~
 * ~~Monsters to fight back!~~
 * ~~Items you can pick up!~~
+* ~~Main Boss and Win State!~~
 * Saving!
 * Loading of said saved state!
 * More locations to move between!

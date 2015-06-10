@@ -13,6 +13,7 @@ module Gemwarrior
     
     ## ERRORS
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
+    ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
   
     attr_accessor :monsters, :locations, :player
   
@@ -72,10 +73,11 @@ module Gemwarrior
       when 'monsters'
         puts '[MONSTERS]'
         if details
-          monsters.map { |m| print m.describe }
+          monsters.map { |m| print m.describe unless m.is_boss}
+          monsters.map { |m| print m.describe if m.is_boss }
           return
         else
-          ">> #{monsters.map(&:name).join(', ')}"
+          monster_text =  ">> monsters: #{monsters.map(&:name).join(', ')}"
         end
       when 'items'
         puts '[ITEMS]'
@@ -126,15 +128,12 @@ module Gemwarrior
       desc_text = ""
       desc_text << "[ #{point.name} ]\n"
       desc_text << point.description
-      unless point.checked_for_monsters?
-        point.populate_monsters(self.monsters)
-      end
-      unless point.list_items.nil?
-        desc_text << point.list_items
-      end
-      unless point.list_monsters.nil?
-        desc_text << point.list_monsters
-      end
+      
+      point.populate_monsters(self.monsters) unless point.checked_for_monsters?
+      
+      desc_text << point.list_items     unless point.list_items.nil?
+      desc_text << point.list_monsters  unless point.list_monsters.nil?
+      desc_text << point.list_bosses    unless point.list_bosses.nil?
       desc_text << point.list_paths
     end
     
@@ -153,6 +152,14 @@ module Gemwarrior
             end
           end
         end
+      elsif
+        if point.bosses_abounding.map(&:name).include?(entity_name)
+          point.bosses_abounding.each do |b|
+            if b.name.eql?(entity_name)
+              return "#{b.description}"
+            end
+          end
+        end
       else
         ERROR_LOCATION_DESCRIBE_ENTITY_INVALID
       end
@@ -163,7 +170,15 @@ module Gemwarrior
     end
     
     def has_monster_to_attack?(monster_name)
-      location_by_coords(player.cur_coords).monsters_abounding.map(&:name).include?(monster_name.downcase)
+      possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
+
+      possible_combatants.each do |combatant|
+        if combatant.downcase.eql?(monster_name.downcase)
+          return true
+        end
+      end
+      
+      return false
     end
  
     private
@@ -179,6 +194,7 @@ module Gemwarrior
       require_relative 'entities/monsters/coraliz'
       require_relative 'entities/monsters/cubicat'
       require_relative 'entities/monsters/diaman'
+      require_relative 'entities/monsters/bosses/emerald'
       
       self.monsters = [
         Alexandrat.new, 
@@ -190,7 +206,8 @@ module Gemwarrior
         Citrinaga.new, 
         Coraliz.new, 
         Cubicat.new, 
-        Diaman.new
+        Diaman.new,
+        Emerald.new
       ]
     end
 
@@ -201,6 +218,7 @@ module Gemwarrior
       require_relative 'entities/items/stalactite'
       require_relative 'entities/items/stonemite'
       require_relative 'entities/items/stone'
+      require_relative 'entities/items/throne'
       require_relative 'entities/items/tree'
       
       locations = []
@@ -212,7 +230,7 @@ module Gemwarrior
           :locs_connected     => {:north => true, :east => true, :south => false, :west => true},
           :danger_level       => :none,
           :items              => [Bed.new, Stone.new],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -222,17 +240,17 @@ module Gemwarrior
           :locs_connected     => {:north => false, :east => true, :south => false, :west => true},
           :danger_level       => :low,
           :items              => [],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
-          :name               => 'Cave (Foyer)', 
+          :name               => 'Cave (Antechamber)', 
           :description        => 'Now inside the entrance to the cavern, you confirm that there are stacktites, stonemites, rocksites, and even one or two pebblejites.',
           :coords             => {:x => 7, :y => 0},
           :locs_connected     => {:north => true, :east => true, :south => false, :west => true},
           :danger_level       => :moderate,
           :items              => [Stalactite.new, Stonemite.new],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -242,7 +260,7 @@ module Gemwarrior
           :locs_connected     => {:north => false, :east => true, :south => true, :west => false},
           :danger_level       => :moderate,
           :items              => [],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -252,7 +270,7 @@ module Gemwarrior
           :locs_connected     => {:north => false, :east => false, :south => true, :west => true},
           :danger_level       => :moderate,
           :items              => [],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -262,7 +280,7 @@ module Gemwarrior
           :locs_connected     => {:north => true, :east => false, :south => false, :west => true},
           :danger_level       => :moderate,
           :items              => [],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -272,7 +290,7 @@ module Gemwarrior
           :locs_connected     => {:north => false, :east => true, :south => false, :west => false},
           :danger_level       => :low,
           :items              => [Feather.new, Tree.new],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
@@ -282,17 +300,37 @@ module Gemwarrior
           :locs_connected     => {:north => true, :east => false, :south => true, :west => false},
           :danger_level       => :low,
           :items              => [],
-          :monsters_available => monsters
+          :bosses_abounding   => []
         })
       )
       locations.push(Location.new({
-          :name               => 'Emerald\'s Sky Tower', 
-          :description        => 'The craziest guy that ever existed is around here somewhere amongst the cloud floors, snow walls, and ethereal vibe.',
+          :name               => 'Sky Tower (Entrance)', 
+          :description        => 'The craziest guy that ever existed is inside the towering structure of cloud floors and snow walls standing before you.',
           :coords             => {:x => 5, :y => 2},
-          :locs_connected     => {:north => false, :east => false, :south => true, :west => false},
-          :danger_level       => :assured,
+          :locs_connected     => {:north => true, :east => false, :south => true, :west => false},
+          :danger_level       => :high,
           :items              => [Gun.new],
-          :monsters_available => monsters
+          :bosses_abounding   => []
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Sky Tower (Foyer)', 
+          :description        => 'There appears to be one path forward, towards the throne room.',
+          :coords             => {:x => 5, :y => 3},
+          :locs_connected     => {:north => true, :east => false, :south => true, :west => false},
+          :danger_level       => :high,
+          :items              => [],
+          :bosses_abounding   => []
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Sky Tower (Throne Room)', 
+          :description        => 'There, on a mighty seat made of broken dreams, sits Emerald himself, staring at you coldly, silently.',
+          :coords             => {:x => 5, :y => 4},
+          :locs_connected     => {:north => false, :east => false, :south => true, :west => false},
+          :danger_level       => :high,
+          :items              => [Throne.new],
+          :bosses_abounding   => [Emerald.new]
         })
       )
     end

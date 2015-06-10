@@ -5,10 +5,10 @@ require_relative 'creature'
 
 module Gemwarrior
   class Monster < Creature
-    attr_accessor :battlecry
+    attr_accessor :battlecry, :is_boss
 
     def describe
-      status_text =  name.upcase.ljust(20)
+      status_text =  name.upcase.ljust(26)
       status_text << "LEVEL: #{level.to_s.rjust(2)}, "
       status_text << "HP: #{hp_cur.to_s.rjust(3)}/#{hp_max.to_s.rjust(3)} "
       status_text << "ATK: #{atk_lo.to_s.rjust(2)}-#{atk_hi.to_s.rjust(2)} "

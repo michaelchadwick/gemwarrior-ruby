@@ -162,13 +162,22 @@ module Gemwarrior
     end
     
     def monster_death
-      puts "You have defeated #{monster.name}!".colorize(:green)
-      puts 'You get the following spoils of war:'
-      puts " XP : #{monster.xp}".colorize(:green)
-      puts " ROX: #{monster.rox}".colorize(:green)
-      print_battle_line
-      update_player_stats
-      world.location_by_coords(player.cur_coords).remove_monster(monster.name)
+      puts "You have defeated #{monster.name}!\n".colorize(:green)
+      if monster.is_boss
+        if monster.name.eql?("Emerald")
+          monster.defeated_text
+          exit(0)
+        else
+          puts 'You just beat a boss monster. Way to go!'
+        end
+      else
+        puts 'You get the following spoils of war:'
+        puts " XP : #{monster.xp}".colorize(:green)
+        puts " ROX: #{monster.rox}".colorize(:green)
+        print_battle_line
+        update_player_stats
+        world.location_by_coords(player.cur_coords).remove_monster(monster.name)
+      end
     end
     
     def update_player_stats

@@ -49,7 +49,8 @@ module Gemwarrior
         :inventory          => PLAYER_INVENTORY_DEFAULT,
         :rox                => PLAYER_ROX_DEFAULT,
         :cur_coords         => world.location_coords_by_name('Home'),
-        :god_mode           => options.fetch(:god_mode)
+        :god_mode           => options.fetch(:god_mode),
+        :beast_mode         => options.fetch(:beast_mode)
       })
 
       # create the console
