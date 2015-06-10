@@ -38,7 +38,7 @@ module Gemwarrior
     ERROR_DEBUG_STAT_PARAM_MISSING  = 'You cannot just "change stats". You gotta choose a stat to change.'
     ERROR_DEBUG_STAT_PARAM_INVALID  = 'You cannot change that stat...yet.'
     
-    attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases
+    attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases, :extras
     
     def initialize(world)
       self.world = world
@@ -46,6 +46,7 @@ module Gemwarrior
       self.devaliases = %w(db)
       self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit quit!)
       self.aliases = %w(c i ls r l t d e ue g a ch h q qq)
+      self.extras = %w(exit exit! x x)
       self.descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -274,7 +275,7 @@ module Gemwarrior
     def input_valid?(input)
       tokens = input.split
       command = tokens[0]
-      commands_and_aliases = commands | aliases | devcmds | devaliases
+      commands_and_aliases = commands | aliases | devcmds | devaliases | extras
 
       if commands_and_aliases.include?(command.downcase)
         if tokens.size.between?(1,4)
