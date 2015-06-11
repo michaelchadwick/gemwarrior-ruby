@@ -25,10 +25,11 @@ module Gemwarrior
     
     def initialize(options)
       # create new world and player
-      self.world = World.new
-
+      self.world            = World.new
+      
       start_stats = PlayerLevels::get_level_stats(1)
       
+      world.debug_mode      = options.fetch(:debug_mode)
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,
         :level              => start_stats[:level],
@@ -44,6 +45,7 @@ module Gemwarrior
         :inventory          => PLAYER_INVENTORY_DEFAULT,
         :rox                => PLAYER_ROX_DEFAULT,
         :cur_coords         => world.location_coords_by_name('Home'),
+        
         :god_mode           => options.fetch(:god_mode),
         :beast_mode         => options.fetch(:beast_mode)
       })

@@ -51,7 +51,7 @@ module Gemwarrior
       self.beast_mode   = options.fetch(:beast_mode)
     end
 
-    def check_self(show_pic = true)
+    def check_self(debug_mode = false, show_pic = true)
       unless show_pic == false
         print_char_pic
       end
@@ -74,10 +74,12 @@ module Gemwarrior
       self_text << "ATTACK    : #{self.atk_lo}-#{self.atk_hi}\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "DEFENSE   : #{self.defense}\n"
-      self_text << "GOD_MODE  : #{self.god_mode}\n"
-      self_text << "BEAST_MODE: #{self.beast_mode}\n\n"
+      if debug_mode
+        self_text << "GOD_MODE  : #{self.god_mode}\n"
+        self_text << "BEAST_MODE: #{self.beast_mode}\n"
+      end
       
-      self_text << "#{self.description}\n\n"
+      self_text << "\n#{self.description}\n\n"
       
       self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end

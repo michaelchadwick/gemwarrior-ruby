@@ -15,12 +15,12 @@ module Gemwarrior
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
   
-    attr_accessor :monsters, :locations, :player
+    attr_accessor :monsters, :locations, :player, :debug_mode
   
     def initialize
-      self.monsters = init_monsters
-      self.locations = init_locations
-      self.player = nil
+      self.monsters   = init_monsters
+      self.locations  = init_locations
+      self.player     = nil
     end
 
     def print_all_vars

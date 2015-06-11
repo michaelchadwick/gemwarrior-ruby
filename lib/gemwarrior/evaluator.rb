@@ -14,8 +14,7 @@ module Gemwarrior
     
     GO_PARAMS         = 'Options: north, east, south, west'
     CHANGE_PARAMS     = 'Options: name'
-    LIST_PARAMS       = 'Options: monsters, items, locations'
-    DEBUG_PARAMS      = 'Options: vars, map, stat'
+    DEBUG_LIST_PARAMS = 'Options: monsters, items, locations'
     DEBUG_STAT_PARAMS = 'Options: atk_lo, atk_hi, strength, dexterity'
     
     ## ERRORS
@@ -33,24 +32,33 @@ module Gemwarrior
     ERROR_CHANGE_PARAM_INVALID      = 'You cannot change that...yet.'
     ERROR_LIST_PARAM_MISSING        = 'You cannot just "list". You gotta choose something to list.'
     ERROR_LIST_PARAM_INVALID        = 'You cannot list that...yet.'
-    ERROR_DEBUG_PARAM_MISSING       = 'You cannot just "debug". You gotta choose a debug command.'
-    ERROR_DEBUG_PARAM_INVALID       = 'You cannot debug that...yet.'
     ERROR_DEBUG_STAT_PARAM_MISSING  = 'You cannot just "change stats". You gotta choose a stat to change.'
     ERROR_DEBUG_STAT_PARAM_INVALID  = 'You cannot change that stat...yet.'
     
-    attr_accessor :world, :commands, :aliases, :descriptions, :devcmds, :devaliases, :extras
+    attr_accessor :world, 
+                  :commands, :aliases, :extras, :cmd_descriptions, 
+                  :devcommands, :devaliases, :devcmd_descriptions
     
     def initialize(world)
       self.world = world
-      self.devcmds = %w(debug)
-      self.devaliases = %w(db)
-      self.commands = %w(character inventory list rest look take drop equip unequip go attack change help quit quit!)
-      self.aliases = %w(c i ls r l t d e ue g a ch h q qq)
+      
+      self.devcommands = %w(god beast list vars map stat)
+      self.devaliases = %w(gd bs ls v m s)
+      self.devcmd_descriptions = [
+        'Toggle god mode (i.e. invincible)',
+        'Toggle beast mode (i.e. super strength)',
+        'List all instances of a specific entity type',
+        'List all the variables in the world',
+        'Show a map of the world',
+        'Change player stat'
+      ]
+      
+      self.commands = %w(character inventory rest look take drop equip unequip go attack change help quit quit!)
+      self.aliases = %w(c i r l t d e ue g a ch h q qq)
       self.extras = %w(exit exit! x x)
-      self.descriptions = [
+      self.cmd_descriptions = [
         'Display character information',
         'Look in your inventory',
-        'List all the objects of a type that exist in the world',
         'Take a load off and regain HP',
         'Look around your current location',
         'Take item',
@@ -82,90 +90,84 @@ module Gemwarrior
       command = tokens.first.downcase
       param1 = tokens[1]
       param2 = tokens[2]
-      param3 = tokens[3]
 
-      case command
       # dev commands
-      when 'debug', 'db'
-        if param1.nil?
-          puts ERROR_DEBUG_PARAM_MISSING
-          DEBUG_PARAMS
-        else
-          case param1
-          when 'vars', 'v'
-            world.print_all_vars
-          when 'godmode', 'iddqd', 'god', 'g'
-            world.player.god_mode = !world.player.god_mode
-          when 'beastmode', 'beast', 'b'
-            world.player.beast_mode = !world.player.beast_mode
-          when 'map', 'm'
-            world.print_map
-          when 'stat'
-            if param2.nil?
-              puts ERROR_DEBUG_STAT_PARAM_MISSING
-              DEBUG_STAT_PARAMS
-            else
-              case param2
-              when 'atk_lo'
-                unless param3.nil?
-                  param3 = param3.to_i
-                  if param3.is_a? Numeric
-                    if param3 >= 0
-                      world.player.atk_lo = param3
-                    end
-                  end
-                end
-              when 'atk_hi'
-                unless param3.nil?
-                  param3 = param3.to_i
-                  if param3.is_a? Numeric
-                    if param3 >= 0
-                      world.player.atk_hi = param3
-                    end
-                  end
-                end
-              when 'strength', 'str', 'st'
-                unless param3.nil?
-                  param3 = param3.to_i
-                  if param3.is_a? Numeric
-                    if param3 >= 0
-                      world.player.atk_lo = param3
-                      world.player.atk_hi = param3
-                    end
-                  end
-                end
-              when 'dexterity', 'dex', 'd'
-                unless param3.nil?
-                  param3 = param3.to_i
-                  if param3.is_a? Numeric
-                    if param3 >= 0
-                      world.player.dexterity = param3
-                    end
-                  end
-                end
-              else
-                ERROR_DEBUG_STAT_PARAM_INVALID
-              end
-            end
+      if world.debug_mode
+        case command
+        when 'god', 'gd'
+          return world.player.god_mode = !world.player.god_mode
+        when 'beast', 'bs'
+          return world.player.beast_mode = !world.player.beast_mode
+        when 'vars', 'v'
+          world.print_all_vars
+        when 'list', 'ls'
+          if param1.nil?
+            puts ERROR_LIST_PARAM_MISSING
+            return DEBUG_LIST_PARAMS
           else
-            ERROR_DEBUG_PARAM_INVALID
+            return world.list(param1)
+          end
+        when 'map', 'm'
+          world.print_map
+        when 'stat', 'st'
+          if param1.nil?
+            puts ERROR_DEBUG_STAT_PARAM_MISSING
+            return DEBUG_STAT_PARAMS
+          else
+            case param1
+            when 'atk_lo'
+              unless param2.nil?
+                param2.to_i!
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.atk_lo = param2
+                  end
+                end
+              end
+            when 'atk_hi'
+              unless param2.nil?
+                param2.to_i!
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.atk_hi = param2
+                  end
+                end
+              end
+            when 'strength', 'str', 'st'
+              unless param2.nil?
+                param2.to_i!
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.atk_lo = param2
+                    world.player.atk_hi = param2
+                  end
+                end
+              end
+            when 'dexterity', 'dex', 'd'
+              unless param2.nil?
+                param2.to_i!
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.dexterity = param2
+                  end
+                end
+              end
+            else
+              return ERROR_DEBUG_STAT_PARAM_INVALID
+            end
           end
         end
+      end
+      
       # normal commands
+      case command
       when 'character', 'c'
-        world.player.check_self
+        world.player.check_self(world.debug_mode)
       when 'inventory', 'i'
         if param1
           world.player.inventory.describe_item(param1)
         else
           world.player.list_inventory
-        end
-      when 'list', 'ls'
-        if param1.nil?
-          puts ERROR_LIST_PARAM_MISSING
-          LIST_PARAMS
-        else
-          world.list(param1)
         end
       when 'rest', 'r'
         world.player.rest
@@ -266,16 +268,30 @@ module Gemwarrior
       i = 0
       print_separator
       commands.each do |cmd|
-        puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{descriptions[i]}"
+        puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{cmd_descriptions[i]}"
         i = i + 1
       end
       print_separator
+      puts " DEBUG COMMANDS"
+      print_separator
+      if world.debug_mode
+        i = 0
+        devcommands.each do |cmd|
+          puts " #{cmd.ljust(9)}, #{devaliases[i].ljust(2)} -- #{devcmd_descriptions[i]}"
+          i = i + 1
+        end
+        print_separator
+      end
     end
     
     def input_valid?(input)
       tokens = input.split
       command = tokens[0]
-      commands_and_aliases = commands | aliases | devcmds | devaliases | extras
+      commands_and_aliases = commands | aliases | extras
+      
+      if world.debug_mode
+        commands_and_aliases = commands_and_aliases | devcommands | devaliases
+      end
 
       if commands_and_aliases.include?(command.downcase)
         if tokens.size.between?(1,4)
