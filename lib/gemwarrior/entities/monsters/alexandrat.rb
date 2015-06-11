@@ -10,7 +10,7 @@ module Gemwarrior
       self.description  = 'Tiny, but fierce, color-changing rodent.'
       self.face         = 'ugly'
       self.hands        = 'gnarled'
-      self.mood         = 'unsurprisingly unchipper'
+      self.mood         = 'unchipper'
       
       self.level        = rand(1..2)
       self.hp_cur       = rand((level * 2)..(level * 3))
