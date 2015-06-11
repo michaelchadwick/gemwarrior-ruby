@@ -48,11 +48,18 @@ module Gemwarrior
         end
         
         puts
-        puts "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
-        puts "MONSTER :: #{monster.hp_cur.to_s.rjust(3)} HP"
-        puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
+        puts  "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
+        print "MONSTER :: "
+        if world.debug_mode || PlayerLevels::get_level_stats(player.level)[:special_abilities].include?(:rocking_vision)
+          print "#{monster.hp_cur.to_s.rjust(3)}"
+        else
+          print "???"
+        end
+        print " HP\n"
+        puts
         
         puts 'What do you do?'
+        puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
         cmd = gets.chomp.downcase
         
         # player action
@@ -70,7 +77,7 @@ module Gemwarrior
             puts "You miss entirely!".colorize(:yellow)
           end
         when 'look', 'l'
-          puts "#{monster.name}: #{monster.description}"
+          puts "#{monster.name} (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}"
           puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
         when 'run', 'r'
           if player_escape?
@@ -175,7 +182,7 @@ module Gemwarrior
       puts "You have defeated #{monster.name}!\n".colorize(:green)
       if monster.is_boss
         if monster.name.eql?("Emerald")
-          monster.defeated_text
+          puts monster.defeated_text
           exit(0)
         else
           puts 'You just beat a boss monster. Way to go!'
