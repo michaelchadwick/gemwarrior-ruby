@@ -33,22 +33,20 @@ module Gemwarrior
     end
     
     def defeated_text
-      0.upto(9) do print '<^>' end
-      print "\n"
-      puts  "You beat #{name}! You win!\n"
-      print "You receive the "
-      print "SparklyThing(tm)".colorize(:magenta)
-      print " and become the true "
-      print "Gem Warrior".colorize(:yellow)
-      print "!\n"
-      print "You decide to ignore "
-      print "Queen Ruby".colorize(:red)
-      print " and take your spoils back home\n"
-      print "where you live out the rest of your days staring at it, wondering\n"
-      print "what it was all about.\n\n"
-      puts  "Thank you for playing. Goodbye."
-      0.upto(9) do print '<^>' end      
-      puts
+      text =  "<^><^><^><^><^><^><^><^><^><^>\n"
+      text <<  "You beat #{name}! You win!\n"
+      text << "You receive the "
+      text << "SparklyThing(tm)".colorize(:magenta)
+      text << " and become the true "
+      text << "Gem Warrior".colorize(:yellow)
+      text << "!\n"
+      text << "You decide to ignore "
+      text << "Queen Ruby".colorize(:red)
+      text << " and take your spoils back home\n"
+      text << "where you live out the rest of your days staring at it, wondering\n"
+      text << "what it was all about.\n\n"
+      text << "Thank you for playing. Goodbye.\n"
+      text << "<^><^><^><^><^><^><^><^><^><^>\n"
     end
   end
 end
