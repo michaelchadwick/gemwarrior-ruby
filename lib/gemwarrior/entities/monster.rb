@@ -14,12 +14,12 @@ module Gemwarrior
       status_text << "ATK: #{atk_lo.to_s.rjust(2)}-#{atk_hi.to_s.rjust(2)} "
       status_text << "DEF: #{defense.to_s.rjust(2)} "
       status_text << "DEX: #{dexterity.to_s.rjust(2)} "
-      status_text << "INV: #{inventory.list_contents} "
       status_text << "ROX: #{rox.to_s.rjust(3)} "
       status_text << "XP: #{xp.to_s.rjust(3)} "
-      status_text << "FACE: #{face.ljust(10)} "
-      status_text << "HANDS: #{hands.ljust(11)} "
-      status_text << "MOOD: #{mood.ljust(10)}\n"
+      status_text << "FACE: #{face.ljust(12)} "
+      status_text << "HANDS: #{hands.ljust(12)} "
+      status_text << "MOOD: #{mood.ljust(12)}"
+      status_text << "INV: #{inventory.list_contents}\n"
     end
   end
 end
