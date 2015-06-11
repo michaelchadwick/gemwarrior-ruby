@@ -43,6 +43,7 @@ module Gemwarrior
 
     def remove_monster(name)
       monsters_abounding.reject! { |monster| monster.name == name }
+      bosses_abounding.reject! { |monster| monster.name == name }
     end
     
     def has_loc_to_the?(direction)

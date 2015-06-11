@@ -3,9 +3,12 @@
 
 require_relative 'creature'
 require_relative '../battle'
+require_relative '../misc/player_levels'
 
 module Gemwarrior
   class Player < Creature
+    include PlayerLevels
+  
     # CONSTANTS
     ## CHARACTER ATTRIBUTES
     CHAR_UPPER_POOL       = (65..90).map{ |i| i.chr }
@@ -31,8 +34,8 @@ module Gemwarrior
       self.xp           = options.fetch(:xp)
       self.hp_cur       = options.fetch(:hp_cur)
       self.hp_max       = options.fetch(:hp_max)
-      self.atk_lo       = options.fetch(:beast_mode) ? 40 : options.fetch(:atk_lo)
-      self.atk_hi       = options.fetch(:beast_mode) ? 40 : options.fetch(:atk_hi)
+      self.atk_lo       = options.fetch(:atk_lo)
+      self.atk_hi       = options.fetch(:atk_hi)
 
       self.defense      = options.fetch(:defense)
       self.dexterity    = options.fetch(:dexterity)
@@ -53,30 +56,30 @@ module Gemwarrior
         print_char_pic
       end
       
-      cur_weapon_name = ''
-      if inventory.weapon.nil?
-        cur_weapon_name = '(unarmed)'
-      else
-        cur_weapon_name = inventory.weapon.name
+      weapon_slot = ''
+      if has_weapon_equipped?
+        weapon_slot = inventory.weapon.name
         self.atk_lo = inventory.weapon.atk_lo
         self.atk_hi = inventory.weapon.atk_hi
+      else
+        weapon_slot = '(unarmed)'
       end
 
-      self_text =  "NAME      : #{name}\n"
-      self_text =  "POSITION  : #{cur_coords.values.to_a}\n"
-      self_text << "WEAPON    : #{cur_weapon_name}\n"
-      self_text << "LEVEL     : #{level}\n"
-      self_text << "EXPERIENCE: #{xp}\n"
-      self_text << "HIT POINTS: #{hp_cur}/#{hp_max}\n"
-      self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
-      self_text << "DEXTERITY : #{dexterity}\n"
-      self_text << "DEFENSE   : #{defense}\n"
-      self_text << "GOD_MODE  : #{god_mode}\n"
-      self_text << "BEAST_MODE: #{beast_mode}\n\n"
+      self_text =  "NAME      : #{self.name}\n"
+      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n"
+      self_text << "WEAPON    : #{weapon_slot}\n"
+      self_text << "LEVEL     : #{self.level}\n"
+      self_text << "EXPERIENCE: #{self.xp}\n"
+      self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
+      self_text << "ATTACK    : #{self.atk_lo}-#{self.atk_hi}\n"
+      self_text << "DEXTERITY : #{self.dexterity}\n"
+      self_text << "DEFENSE   : #{self.defense}\n"
+      self_text << "GOD_MODE  : #{self.god_mode}\n"
+      self_text << "BEAST_MODE: #{self.beast_mode}\n\n"
       
-      self_text << "#{description}\n\n"
+      self_text << "#{self.description}\n\n"
       
-      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n"
+      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end
     
     def rest
@@ -139,12 +142,32 @@ module Gemwarrior
       battle.start
     end
     
+    def has_weapon_equipped?
+      self.inventory.weapon
+    end
+    
     def cur_weapon_name
-      unless inventory.weapon.nil?
+      if has_weapon_equipped?
         return " with your #{inventory.weapon.name}"
+      else
+        return nil
       end
     end
 
+    def switch_beast_mode
+      if self.beast_mode
+binding.pry
+        self.beast_mode = false
+        self.atk_lo = has_weapon_equipped? ? self.inventory.weapon.atk_lo : PlayerLevels::get_level_stats(self.level)[:atk_lo]
+        self.atk_hi = has_weapon_equipped? ? self.inventory.weapon.atk_hi : PlayerLevels::get_level_stats(self.level)[:atk_hi]
+      else
+        self.beast_mode = true
+        self.atk_lo = BEAST_MODE_ATTACK
+binding.pry
+        self.atk_hi = BEAST_MODE_ATTACK
+      end
+    end
+    
     private
     
     # TRAVEL    

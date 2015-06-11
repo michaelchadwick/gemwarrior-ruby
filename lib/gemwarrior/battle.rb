@@ -1,11 +1,16 @@
 # lib/gemwarrior/battle.rb
 # Monster battle
 
+require_relative 'misc/player_levels'
+
 module Gemwarrior
   class Battle
+    include PlayerLevels
+  
     # CONSTANTS
     ## ERRORS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
+    BEAST_MODE_ATTACK           = 100
     
     attr_accessor :world, :player, :monster
     
@@ -35,17 +40,17 @@ module Gemwarrior
           player_death
         end
 
-        puts
-        puts "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
-        puts "MONSTER :: #{monster.hp_cur.to_s.rjust(3)} HP"
-        puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
-        
         if player_near_death?
           puts "You are almost dead!\n".colorize(:yellow)
         end
         if monster_near_death?
           puts "#{monster.name} is almost dead!\n".colorize(:yellow)
         end
+        
+        puts
+        puts "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
+        puts "MONSTER :: #{monster.hp_cur.to_s.rjust(3)} HP"
+        puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
         
         puts 'What do you do?'
         cmd = gets.chomp.downcase
@@ -108,7 +113,12 @@ module Gemwarrior
         0
       else
         if entity.eql?(monster)
-          rand(player.atk_lo..player.atk_hi)
+          if player.beast_mode
+            atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
+          else
+            atk_range = player.atk_lo..player.atk_hi
+          end
+          rand(atk_range)
         else
           rand(monster.atk_lo..monster.atk_hi)
         end
@@ -169,6 +179,11 @@ module Gemwarrior
           exit(0)
         else
           puts 'You just beat a boss monster. Way to go!'
+          puts " XP : #{monster.xp}".colorize(:green)
+          puts " ROX: #{monster.rox}".colorize(:green)
+          print_battle_line
+          update_player_stats
+          world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
         puts 'You get the following spoils of war:'
@@ -181,8 +196,33 @@ module Gemwarrior
     end
     
     def update_player_stats
+      old_player_level = PlayerLevels::check_level(player.xp)
+      
       player.xp = player.xp + monster.xp
       player.rox = player.rox + monster.rox
+      
+      new_player_level = PlayerLevels::check_level(player.xp)
+      
+      if new_player_level > old_player_level
+        puts 'You leveled up!'
+        new_stats = PlayerLevels::get_level_stats(new_player_level)
+        
+        player.level = new_stats[:level]
+        puts "You are now level #{player.level}!"
+        player.hp_cur = new_stats[:hp_max]
+        player.hp_max = new_stats[:hp_max]
+        puts "You now have #{player.hp_max} hit points!"
+        player.stam_cur = new_stats[:stam_max]
+        player.stam_max = new_stats[:stam_max]
+        puts "You now have #{player.stam_max} stamina points!"
+        player.atk_lo = new_stats[:atk_lo]
+        player.atk_hi = new_stats[:atk_hi]
+        puts "You now have an attack of #{player.atk_lo}-#{player.atk_hi}!"
+        player.defense = new_stats[:defense]
+        puts "You now have #{player.defense} defensive points!"
+        player.dexterity = new_stats[:dexterity]
+        puts "You now have #{player.dexterity} dexterity points!"
+      end
     end
     
     def player_near_death?

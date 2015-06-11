@@ -195,6 +195,7 @@ module Gemwarrior
       require_relative 'entities/monsters/cubicat'
       require_relative 'entities/monsters/diaman'
       require_relative 'entities/monsters/bosses/emerald'
+      require_relative 'entities/monsters/bosses/garynetty'
       
       self.monsters = [
         Alexandrat.new, 
@@ -207,7 +208,8 @@ module Gemwarrior
         Coraliz.new, 
         Cubicat.new, 
         Diaman.new,
-        Emerald.new
+        Emerald.new,
+        Garynetty.new
       ]
     end
 
@@ -287,10 +289,50 @@ module Gemwarrior
           :name               => 'Forest', 
           :description        => 'Trees exist here, in droves.',
           :coords             => {:x => 4, :y => 0},
-          :locs_connected     => {:north => false, :east => true, :south => false, :west => false},
+          :locs_connected     => {:north => false, :east => true, :south => false, :west => true},
           :danger_level       => :low,
           :items              => [Feather.new, Tree.new],
           :bosses_abounding   => []
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Pain Desert (Southeast)', 
+          :description        => 'Horrible terribleness emanates from this desolate land of unkind misery.',
+          :coords             => {:x => 3, :y => 0},
+          :locs_connected     => {:north => true, :east => true, :south => false, :west => true},
+          :danger_level       => :assured,
+          :items              => [],
+          :bosses_abounding   => [Garynetty.new]
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Pain Desert (Northeast)', 
+          :description        => 'Horrible terribleness emanates from this desolate land of unkind misery.',
+          :coords             => {:x => 3, :y => 1},
+          :locs_connected     => {:north => false, :east => false, :south => true, :west => true},
+          :danger_level       => :assured,
+          :items              => [],
+          :bosses_abounding   => [Garynetty.new]
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Pain Desert (Northwest)', 
+          :description        => 'Horrible terribleness emanates from this desolate land of unkind misery.',
+          :coords             => {:x => 2, :y => 1},
+          :locs_connected     => {:north => false, :east => true, :south => true, :west => false},
+          :danger_level       => :assured,
+          :items              => [],
+          :bosses_abounding   => [Garynetty.new]
+        })
+      )
+      locations.push(Location.new({
+          :name               => 'Pain Desert (Southwest)', 
+          :description        => 'Horrible terribleness emanates from this desolate land of unkind misery.',
+          :coords             => {:x => 2, :y => 0},
+          :locs_connected     => {:north => true, :east => true, :south => false, :west => false},
+          :danger_level       => :assured,
+          :items              => [],
+          :bosses_abounding   => [Garynetty.new]
         })
       )
       locations.push(Location.new({
