@@ -1,13 +1,13 @@
-# lib/gemwarrior/entities/items/feather.rb
-# Item::Feather
+# lib/gemwarrior/entities/items/cup.rb
+# Item::Cup
 
 require_relative '../item'
 
 module Gemwarrior
-  class Feather < Item
+  class Cup < Item
     def initialize
-      self.name         = 'feather'
-      self.description  = 'A blue and green feather. It is soft and tender, unlike the craven bird that probably shed it.'
+      self.name         = 'cup'
+      self.description  = 'A nice, stone mug, perfect for putting things into and then using to carry such things from place to place.'
       self.atk_lo       = nil
       self.atk_hi       = nil
       self.takeable     = true

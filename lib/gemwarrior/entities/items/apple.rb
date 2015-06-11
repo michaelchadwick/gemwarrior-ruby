@@ -1,13 +1,13 @@
-# lib/gemwarrior/entities/items/feather.rb
-# Item::Feather
+# lib/gemwarrior/entities/items/apple.rb
+# Item::Apple
 
 require_relative '../item'
 
 module Gemwarrior
-  class Feather < Item
+  class Apple < Item
     def initialize
-      self.name         = 'feather'
-      self.description  = 'A blue and green feather. It is soft and tender, unlike the craven bird that probably shed it.'
+      self.name         = 'apple'
+      self.description  = 'Reddish-orangeish in color, this fruit looks sweet, but it is heavy and feels more like a rock you would sooner not bite into.'
       self.atk_lo       = nil
       self.atk_hi       = nil
       self.takeable     = true

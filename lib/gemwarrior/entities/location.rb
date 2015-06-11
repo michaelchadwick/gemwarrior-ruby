@@ -12,7 +12,7 @@ module Gemwarrior
     ## ERRORS
     ERROR_LOCATION_ITEM_REMOVE_INVALID      = 'That item cannot be removed as it does not exist here.'
 
-    attr_accessor :coords, :locs_connected, :danger_level, :items, 
+    attr_accessor :coords, :locs_connected, :danger_level, :monster_level_range, :items, 
                   :monsters_abounding, :bosses_abounding, :checked_for_monsters
   
     def initialize(options)
@@ -21,6 +21,7 @@ module Gemwarrior
       self.coords               = options.fetch(:coords)
       self.locs_connected       = options.fetch(:locs_connected)
       self.danger_level         = options.fetch(:danger_level)
+      self.monster_level_range  = options.fetch(:monster_level_range)
       self.items                = options.fetch(:items)
       self.monsters_abounding   = []
       self.bosses_abounding     = options[:bosses_abounding]

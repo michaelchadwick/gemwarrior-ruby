@@ -10,6 +10,11 @@ module Gemwarrior
                   :takeable, 
                   :useable, 
                   :equippable, 
-                  :equipped
+                  :equipped,
+                  :use
+    
+    def use
+      'That items does not do anything...yet'
+    end
   end
 end

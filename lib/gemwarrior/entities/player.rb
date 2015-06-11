@@ -155,22 +155,22 @@ module Gemwarrior
         return nil
       end
     end
-
-    def switch_beast_mode
-      if self.beast_mode
-binding.pry
-        self.beast_mode = false
-        self.atk_lo = has_weapon_equipped? ? self.inventory.weapon.atk_lo : PlayerLevels::get_level_stats(self.level)[:atk_lo]
-        self.atk_hi = has_weapon_equipped? ? self.inventory.weapon.atk_hi : PlayerLevels::get_level_stats(self.level)[:atk_hi]
-      else
-        self.beast_mode = true
-        self.atk_lo = BEAST_MODE_ATTACK
-binding.pry
-        self.atk_hi = BEAST_MODE_ATTACK
+    
+    def take_damage(dmg)
+      self.hp_cur = self.hp_cur - dmg.to_i
+      
+      if hp_cur <= 0
+        player_death
       end
     end
-    
+
     private
+
+    def player_death
+      puts 'You\'re actions have reduced you to death.'.colorize(:red)
+      puts 'Your adventure ends here. Try again next time!'.colorize(:red)
+      exit(0)
+    end
     
     # TRAVEL    
     def print_traveling_text(direction_text)

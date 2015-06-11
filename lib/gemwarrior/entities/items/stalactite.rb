@@ -11,7 +11,7 @@ module Gemwarrior
       self.atk_lo       = 2
       self.atk_hi       = 3
       self.takeable     = true
-      self.useable      = true
+      self.useable      = false
       self.equippable   = true
       self.equipped     = false
     end

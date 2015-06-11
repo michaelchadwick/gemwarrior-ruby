@@ -7,15 +7,15 @@ module Gemwarrior
   class Evaluator
     # CONSTANTS
     ## MESSAGES
-    PROGRAM_NAME      = 'Gem Warrior'
-    QUIT_MESSAGE      = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
-    RESUME_MESSAGE    = 'Back to adventuring!'.colorize(:green)
-    SEPARATOR         = '=========================================================================='
+    PROGRAM_NAME                    = 'Gem Warrior'
+    QUIT_MESSAGE                    = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
+    RESUME_MESSAGE                  = 'Back to adventuring!'.colorize(:green)
+    SEPARATOR                       = '=========================================================================='
     
-    GO_PARAMS         = 'Options: north, east, south, west'
-    CHANGE_PARAMS     = 'Options: name'
-    DEBUG_LIST_PARAMS = 'Options: monsters, items, locations'
-    DEBUG_STAT_PARAMS = 'Options: atk_lo, atk_hi, strength, dexterity'
+    GO_PARAMS                       = 'Options: north, east, south, west'
+    CHANGE_PARAMS                   = 'Options: name'
+    DEBUG_LIST_PARAMS               = 'Options: monsters, items, locations'
+    DEBUG_STAT_PARAMS               = 'Options: atk_lo, atk_hi, strength, dexterity'
     
     ## ERRORS
     ERROR_COMMAND_INVALID           = 'That is not something the game yet understands.'
@@ -25,6 +25,9 @@ module Gemwarrior
     ERROR_ATTACK_PARAM_MISSING      = 'You cannot just "attack". You gotta choose something to attack.'
     ERROR_ATTACK_PARAM_INVALID      = 'That monster does not exist here or can\'t be attacked.'
     ERROR_TAKE_PARAM_MISSING        = 'You cannot just "take". You gotta choose something to take.'
+    ERROR_USE_PARAM_MISSING         = 'You cannot just "use". You gotta choose something to use.'
+    ERROR_USE_PARAM_INVALID         = 'You cannot use that, as it does not exist here or in your inventory.'
+    ERROR_USE_PARAM_UNUSEABLE       = 'That object is not useable.'
     ERROR_DROP_PARAM_MISSING        = 'You cannot just "drop". You gotta choose something to drop.'
     ERROR_EQUIP_PARAM_MISSING       = 'You cannot just "equip". You gotta choose something to equip.'
     ERROR_UNEQUIP_PARAM_MISSING     = 'You cannot just "unequip". You gotta choose something to unequip.'
@@ -53,8 +56,8 @@ module Gemwarrior
         'Change player stat'
       ]
       
-      self.commands = %w(character inventory rest look take drop equip unequip go attack change help quit quit!)
-      self.aliases = %w(c i r l t d e ue g a ch h q qq)
+      self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
+      self.aliases = %w(c i r l t u d e ue g a ch h q qq)
       self.extras = %w(exit exit! x x)
       self.cmd_descriptions = [
         'Display character information',
@@ -62,6 +65,7 @@ module Gemwarrior
         'Take a load off and regain HP',
         'Look around your current location',
         'Take item',
+        'Use item (in inventory or environment)',
         'Drop item',
         'Equip item',
         'Unequip item',
@@ -182,6 +186,60 @@ module Gemwarrior
           ERROR_TAKE_PARAM_MISSING
         else
           world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param1)
+        end
+      when 'use', 'u'
+        if param1.nil?
+          ERROR_USE_PARAM_MISSING
+        else
+          item_name = param1
+          result = nil
+          location_inventory = world.location_by_coords(world.player.cur_coords).items
+
+          if location_inventory.map(&:name).include?(item_name)
+            location_inventory.each do |i|
+              if i.name.eql?(item_name)
+                if i.useable
+                  result = i.use
+                else
+                  return ERROR_USE_PARAM_UNUSEABLE
+                end
+              end
+            end
+          elsif
+            player_inventory = world.player.inventory.items
+            if player_inventory.map(&:name).include?(item_name)
+              player_inventory.each do |i|
+                if i.name.eql?(item_name)
+                  if i.useable
+                    result = i.use
+                  else
+                    return ERROR_USE_PARAM_UNUSEABLE
+                  end
+                end
+              end
+            end
+          end
+          
+          if result.nil?
+            ERROR_USE_PARAM_INVALID
+          else
+            case result[:type]
+            when 'move'
+              world.player.cur_coords = world.location_coords_by_name(result[:data])
+              world.describe(world.location_by_coords(world.player.cur_coords))
+            when 'dmg'
+              world.player.take_damage(result[:data])
+              return
+            when 'rest'
+              world.player.hp_cur = world.player.hp_cur + result[:data]
+              if world.player.hp_cur > world.player.hp_max
+                world.player.hp_cur = world.player.hp_max
+              end
+              return
+            else
+              return
+            end
+          end
         end
       when 'drop', 'd'
         if param1.nil?
