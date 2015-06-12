@@ -96,7 +96,7 @@ module Gemwarrior
       when 'locations'
         puts '[LOCATIONS]'
         if details
-          locations.map { |l| print l.status }
+          locations.map { |l| print l.status(self.debug_mode) }
           return
         else
           ">> #{locations.map(&:name).join(', ')}"
@@ -126,7 +126,9 @@ module Gemwarrior
  
     def describe(point)
       desc_text = ""
-      desc_text << "[ #{point.name} ]\n"
+      desc_text << "[ #{point.name} ]".colorize(:green)
+      desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]" if self.debug_mode
+      desc_text << "\n"
       desc_text << point.description
       
       point.populate_monsters(self.monsters) unless point.checked_for_monsters?

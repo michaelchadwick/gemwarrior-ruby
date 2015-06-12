@@ -55,7 +55,11 @@ module Gemwarrior
         else
           print "???"
         end
-        print " HP\n"
+        print " HP"
+        if world.debug_mode
+          print " (LVL: #{monster.level})"
+        end
+        print "\n"
         puts
         
         puts 'What do you do?'

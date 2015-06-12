@@ -28,10 +28,12 @@ module Gemwarrior
       self.checked_for_monsters = false
     end
     
-    def status
-      status_text =  name.ljust(26).upcase
-      status_text << coords.values.to_a.to_s
-      status_text << " #{description}\n"
+    def status(debug_mode = false)
+      status_text =  name.ljust(26).upcase.colorize(:green)
+      status_text << coords.values.to_a.to_s.colorize(:white)
+      status_text << " DL[#{danger_level.to_s}] ".colorize(:white) if debug_mode
+      status_text << " MLR[#{monster_level_range.to_s}] ".colorize(:white) if debug_mode
+      status_text << " #{description}\n".colorize(:white)
     end
     
     def remove_item(item_name)
@@ -120,7 +122,7 @@ module Gemwarrior
         # get random non-boss monster
         loop do
           random_monster = monsters_available[rand(0..monsters_available.length-1)]
-          unless random_monster.is_boss
+          unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
             break
           end
         end

@@ -7,8 +7,8 @@ module Gemwarrior
                   :description
 
     def status
-      status_text =  name.ljust(26).upcase
-      status_text << "#{description}\n"
+      status_text =  name.ljust(26).upcase.colorize(:green)
+      status_text << "#{description}\n".colorize(:white)
     end
   end
 end
