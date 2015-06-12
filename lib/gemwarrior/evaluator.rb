@@ -330,9 +330,10 @@ module Gemwarrior
         i = i + 1
       end
       print_separator
-      puts " DEBUG COMMANDS"
-      print_separator
+      
       if world.debug_mode
+        puts " DEBUG COMMANDS"
+        print_separator
         i = 0
         devcommands.each do |cmd|
           puts " #{cmd.ljust(9)}, #{devaliases[i].ljust(2)} -- #{devcmd_descriptions[i]}"
