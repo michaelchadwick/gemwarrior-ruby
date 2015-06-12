@@ -119,7 +119,7 @@ module Gemwarrior
     end
     
     def calculate_damage_to(entity)
-      miss = rand(0..100)
+      miss = rand(0..(100 + entity.defense))
       if (miss < 15)
         0
       else
