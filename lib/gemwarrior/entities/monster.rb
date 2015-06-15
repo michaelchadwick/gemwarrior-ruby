@@ -2,11 +2,22 @@
 # Monster creature
 
 require_relative 'creature'
+require_relative 'items/herb'
 
 module Gemwarrior
   class Monster < Creature
-    attr_accessor :battlecry, :is_boss
+    INVENTORY_ITEMS_DEFAULT = [Herb.new]
+  
+    attr_accessor :inventory, :battlecry, :is_boss
 
+    def initialize
+      if [true, false].sample
+        self.inventory = Inventory.new([INVENTORY_ITEMS_DEFAULT[rand(0..INVENTORY_ITEMS_DEFAULT.length-1)]])
+      else
+        self.inventory = Inventory.new
+      end
+    end
+    
     def describe
       status_text =  name.upcase.ljust(26).colorize(:green)
       status_text << "LEVEL: #{level.to_s.rjust(2)}, ".colorize(:white)
@@ -19,7 +30,8 @@ module Gemwarrior
       status_text << "FACE: #{face.ljust(12)} ".colorize(:white)
       status_text << "HANDS: #{hands.ljust(12)} ".colorize(:white)
       status_text << "MOOD: #{mood.ljust(12)}".colorize(:white)
-      status_text << "INV: #{inventory.list_contents}\n".colorize(:white)
+      status_text << "INV: #{inventory.list_contents}".colorize(:white)
+      status_text << "\n"
     end
   end
 end

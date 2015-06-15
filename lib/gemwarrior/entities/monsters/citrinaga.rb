@@ -6,6 +6,8 @@ require_relative '../monster'
 module Gemwarrior
   class Citrinaga < Monster
     def initialize
+      super
+    
       self.name         = 'citrinaga'
       self.description  = 'Refreshing in its shiny, gleaming effectiveness at ending your life.'
       self.face         = 'shiny'
@@ -20,7 +22,6 @@ module Gemwarrior
       self.defense      = rand(7..9)
       self.dexterity    = rand(6..7)
 
-      self.inventory    = Inventory.new
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 3))
       

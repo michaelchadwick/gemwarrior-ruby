@@ -150,7 +150,11 @@ module Gemwarrior
         if point.monsters_abounding.map(&:name).include?(entity_name)
           point.monsters_abounding.each do |m|
             if m.name.eql?(entity_name)
-              return "#{m.description}"
+              if debug_mode
+                return m.describe
+              else
+                return m.description
+              end
             end
           end
         end

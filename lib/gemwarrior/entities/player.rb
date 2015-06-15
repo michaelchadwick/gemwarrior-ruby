@@ -163,6 +163,13 @@ module Gemwarrior
         player_death
       end
     end
+    
+    def heal_damage(dmg)
+      self.hp_cur = self.hp_cur + dmg.to_i
+      if self.hp_cur > self.hp_max
+        self.hp_cur = self.hp_max
+      end
+    end
 
     private
 

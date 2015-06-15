@@ -22,7 +22,7 @@ module Gemwarrior
     end
     
     def list_contents
-      if items.empty?
+      if items.nil? || items.empty?
         return contents_text = '[empty]'
       else
         return contents_text = "#{items.map(&:name).join ', '}"

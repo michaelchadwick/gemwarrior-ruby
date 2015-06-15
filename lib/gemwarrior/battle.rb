@@ -12,6 +12,9 @@ module Gemwarrior
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     BEAST_MODE_ATTACK           = 100
     
+    ## MESSAGES
+    TEXT_ESCAPE                 = 'POOF'
+    
     attr_accessor :world, :player, :monster
     
     def initialize(options)
@@ -48,7 +51,12 @@ module Gemwarrior
         end
         
         puts
-        puts  "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
+        print "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
+        if world.debug_mode
+          print " (LVL: #{player.level})"
+        end
+        print "\n"
+        
         print "MONSTER :: "
         if world.debug_mode || PlayerLevels::get_level_stats(player.level)[:special_abilities].include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
@@ -64,8 +72,9 @@ module Gemwarrior
         
         puts 'What do you do?'
         puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
-        cmd = gets.chomp.downcase
         
+        cmd = gets.chomp.downcase
+
         # player action
         case cmd
         when 'fight', 'f', 'attack', 'a'
@@ -81,8 +90,16 @@ module Gemwarrior
             puts "You miss entirely!".colorize(:yellow)
           end
         when 'look', 'l'
-          puts "#{monster.name} (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}"
-          puts "Its got some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
+          print "#{monster.name}".colorize(:white)
+          print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
+          puts "It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
+          if world.debug_mode
+            puts "If defeated, will receive:"
+            puts " >> XP   : #{monster.xp}"
+            puts " >> ROX  : #{monster.rox}"
+            puts " >> ITEMS: #{monster.inventory.list_contents}"
+            next
+          end
         when 'run', 'r'
           if player_escape?
             monster.hp_cur = monster.hp_max
@@ -104,20 +121,7 @@ module Gemwarrior
     
     private
     
-    def monster_strikes_first?
-      if (monster.dexterity > player.dexterity)
-        return true
-      else
-        dex_diff = player.dexterity - monster.dexterity
-        rand_dex = rand(0..dex_diff)
-        if rand_dex % 2 > 0
-          return true
-        else
-          return false
-        end
-      end
-    end
-    
+    # NEUTRAL   
     def calculate_damage_to(entity)
       miss = rand(0..(100 + entity.defense))
       if (miss < 15)
@@ -152,6 +156,21 @@ module Gemwarrior
       return hit.join
     end
     
+    # MONSTER
+    def monster_strikes_first?
+      if (monster.dexterity > player.dexterity)
+        return true
+      else
+        dex_diff = player.dexterity - monster.dexterity
+        rand_dex = rand(0..dex_diff)
+        if rand_dex % 2 > 0
+          return true
+        else
+          return false
+        end
+      end
+    end
+    
     def monster_attacks_player
       puts "#{monster.name} attacks you!"
       dmg = calculate_damage_to(player)
@@ -164,16 +183,7 @@ module Gemwarrior
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
     end
-    
-    def calculate_monster_damage
-      miss = rand(0..100)
-      if (miss < 15)
-        0
-      else
-        rand(player.atk_lo..player.atk_hi)
-      end
-    end
-    
+
     def monster_near_death?
       ((monster.hp_cur.to_f / monster.hp_max.to_f) < 0.10)
     end
@@ -198,19 +208,29 @@ module Gemwarrior
         end
       else
         puts 'You get the following spoils of war:'
-        puts " XP : #{monster.xp}".colorize(:green)
-        puts " ROX: #{monster.rox}".colorize(:green)
+        puts " XP   : #{monster.xp}".colorize(:green)
+        puts " ROX  : #{monster.rox}".colorize(:green)
+        unless monster.inventory.nil?
+          puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
+        end
         print_battle_line
         update_player_stats
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
     end
     
+    # PLAYER
     def update_player_stats
       old_player_level = PlayerLevels::check_level(player.xp)
       
       player.xp = player.xp + monster.xp
       player.rox = player.rox + monster.rox
+      
+      monster_items = monster.inventory.items
+      binding.pry
+      unless monster_items.nil?
+        player.inventory.items.concat monster_items unless monster_items.empty?
+      end
       
       new_player_level = PlayerLevels::check_level(player.xp)
       
@@ -270,7 +290,7 @@ module Gemwarrior
     def print_escape_text
       escape = Thread.new do
         print "* "
-        print "#{Matrext::process({ :phrase => 'POOF', :oneline => true })}"
+        print "#{Matrext::process({ :phrase => TEXT_ESCAPE, :oneline => true })}"
         print " *\n"
       end
       return escape.join

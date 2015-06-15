@@ -113,7 +113,7 @@ module Gemwarrior
           end
         when 'map', 'm'
           world.print_map
-        when 'stat', 'st'
+        when 'stat', 's'
           if param1.nil?
             puts ERROR_DEBUG_STAT_PARAM_MISSING
             return DEBUG_STAT_PARAMS
@@ -230,11 +230,8 @@ module Gemwarrior
             when 'dmg'
               world.player.take_damage(result[:data])
               return
-            when 'rest'
-              world.player.hp_cur = world.player.hp_cur + result[:data]
-              if world.player.hp_cur > world.player.hp_max
-                world.player.hp_cur = world.player.hp_max
-              end
+            when 'rest', 'health'
+              world.player.heal_damage(result[:data])
               return
             else
               return

@@ -6,6 +6,8 @@ require_relative '../monster'
 module Gemwarrior
   class Aquamarine < Monster
     def initialize
+      super
+    
       self.name         = 'aquamarine'
       self.description  = 'It is but one of the few, the proud, the underwater.'
       self.face         = 'strained'
@@ -20,7 +22,6 @@ module Gemwarrior
       self.defense      = rand(3..5)
       self.dexterity    = rand(4..6)
 
-      self.inventory    = Inventory.new
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
       

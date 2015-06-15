@@ -49,10 +49,14 @@ module Gemwarrior
       end
     end
     
-    def print_splash_message
+    def print_logo
       puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
       puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
       puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
+    end
+    
+    def print_splash_message
+      print_logo
       0.upto(SPLASH_MESSAGE.length-1) do print '=' end
       puts
       puts SPLASH_MESSAGE
