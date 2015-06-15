@@ -71,7 +71,7 @@ module Gemwarrior
         puts '[PLAYERS]'
         player.check_self(false)
       when 'monsters'
-        puts '[MONSTERS]'
+        puts "[MONSTERS](#{monsters.length})"
         if details
           monsters.map { |m| print m.describe unless m.is_boss}
           monsters.map { |m| print m.describe if m.is_boss }
@@ -80,7 +80,13 @@ module Gemwarrior
           monster_text =  ">> monsters: #{monsters.map(&:name).join(', ')}"
         end
       when 'items'
-        puts '[ITEMS]'
+        item_count = 0
+        locations.each do |l|
+          l.items.each do |i|
+            item_count = item_count + 1
+          end
+        end
+        puts "[ITEMS](#{item_count})"
         if details
           locations.each do |l|
             l.items.map { |i| print i.status }
@@ -94,7 +100,7 @@ module Gemwarrior
           ">> #{item_list.sort.join(', ')}"
         end
       when 'locations'
-        puts '[LOCATIONS]'
+        puts "[LOCATIONS](#{locations.length})"
         if details
           locations.map { |l| print l.status(self.debug_mode) }
           return
