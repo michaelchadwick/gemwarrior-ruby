@@ -133,15 +133,19 @@ module Gemwarrior
     def describe(point)
       desc_text = ""
       desc_text << "[ #{point.name} ]".colorize(:green)
-      desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]" if self.debug_mode
+      
+      if debug_mode
+        desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
+      end
+      
       desc_text << "\n"
       desc_text << point.description
       
       point.populate_monsters(self.monsters) unless point.checked_for_monsters?
       
-      desc_text << "\n >> Curious object(s): #{point.list_items.join(', ')}" unless point.list_items.nil?
-      desc_text << "\n >> Monster(s) abound: #{point.list_monsters.join(', ')}" unless point.list_monsters.nil?
-      desc_text << "\n >> Boss(es) abound: #{point.list_bosses.join(', ')}" unless point.list_bosses.nil?
+      desc_text << "\n >> Curious object(s): #{point.list_items.join(', ')}" unless point.list_items.empty?
+      desc_text << "\n >> Monster(s) abound: #{point.list_monsters.join(', ')}" unless point.list_monsters.empty?
+      desc_text << "\n >> Boss(es) abound: #{point.list_bosses.join(', ')}" unless point.list_bosses.empty?
       desc_text << "\n >> Paths: #{point.list_paths.join(', ')}"
       
       if debug_mode
@@ -153,16 +157,20 @@ module Gemwarrior
     end
     
     def describe_entity(point, entity_name)
-      if point.items.map(&:name).include?(entity_name)
+      if point.list_items.map{|i| i.downcase}.include?(entity_name)
         point.items.each do |i|
-          if i.name.eql?(entity_name)
-            return "#{i.description}"
+          if i.name.downcase.eql?(entity_name.downcase)
+            if debug_mode
+              return i.status
+            else
+              return i.description
+            end
           end
         end
       elsif
-        if point.monsters_abounding.map(&:name).include?(entity_name)
+        if point.list_monsters.map{|m| m.downcase}.include?(entity_name)
           point.monsters_abounding.each do |m|
-            if m.name.eql?(entity_name)
+            if m.name.downcase.eql?(entity_name.downcase)
               if debug_mode
                 return m.describe
               else
@@ -172,10 +180,14 @@ module Gemwarrior
           end
         end
       elsif
-        if point.bosses_abounding.map(&:name).include?(entity_name)
+        if point.list_bosses.map{|b| b.downcase}.include?(entity_name)
           point.bosses_abounding.each do |b|
-            if b.name.eql?(entity_name)
-              return "#{b.description}"
+            if b.name.downcase.eql?(entity_name.downcase)
+              if debug_mode
+                return b.describe
+              else
+                return b.description
+              end
             end
           end
         end

@@ -92,15 +92,27 @@ module Gemwarrior
     end
     
     def list_items
-      return items.map(&:name) if items.length > 0
+      if items.length > 0
+        items.map(&:name)
+      else
+        []
+      end
     end
     
     def list_monsters
-      return monsters_abounding.map(&:name) if monsters_abounding.length > 0
+      if monsters_abounding.length > 0
+        monsters_abounding.map(&:name)
+      else
+        []
+      end
     end
     
     def list_bosses
-      return bosses_abounding.map(&:name) if bosses_abounding.length > 0
+      if bosses_abounding.length > 0
+        bosses_abounding.map(&:name)
+      else
+        []
+      end
     end
     
     def list_paths
