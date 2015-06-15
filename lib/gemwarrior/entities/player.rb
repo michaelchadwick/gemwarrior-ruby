@@ -181,12 +181,7 @@ module Gemwarrior
     
     # TRAVEL    
     def print_traveling_text(direction_text)
-      loc = Thread.new do
-        print "* "
-        print "#{Matrext::process({ :phrase => direction_text, :oneline => true })}"
-        print " *\n"
-      end
-      return loc.join
+      Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
     end
     
     # CHARACTER

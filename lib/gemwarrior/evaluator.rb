@@ -121,7 +121,7 @@ module Gemwarrior
             case param1
             when 'atk_lo'
               unless param2.nil?
-                param2.to_i!
+                param2 = param2.to_i
                 if param2.is_a? Numeric
                   if param2 >= 0
                     world.player.atk_lo = param2
@@ -130,7 +130,7 @@ module Gemwarrior
               end
             when 'atk_hi'
               unless param2.nil?
-                param2.to_i!
+                param2 = param2.to_i
                 if param2.is_a? Numeric
                   if param2 >= 0
                     world.player.atk_hi = param2
@@ -139,7 +139,7 @@ module Gemwarrior
               end
             when 'strength', 'str', 'st'
               unless param2.nil?
-                param2.to_i!
+                param2 = param2.to_i
                 if param2.is_a? Numeric
                   if param2 >= 0
                     world.player.atk_lo = param2
@@ -149,7 +149,7 @@ module Gemwarrior
               end
             when 'dexterity', 'dex', 'd'
               unless param2.nil?
-                param2.to_i!
+                param2 = param2.to_i
                 if param2.is_a? Numeric
                   if param2 >= 0
                     world.player.dexterity = param2

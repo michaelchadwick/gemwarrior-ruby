@@ -6,6 +6,7 @@ require 'matrext'
 
 require_relative 'entities/player'
 require_relative 'misc/player_levels'
+require_relative 'misc/animation'
 require_relative 'world'
 require_relative 'evaluator'
 require_relative 'repl'

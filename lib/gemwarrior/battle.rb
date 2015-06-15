@@ -143,17 +143,16 @@ module Gemwarrior
     def take_damage(entity, dmg)
       entity.hp_cur = entity.hp_cur.to_i - dmg.to_i
       who_gets_wounded = ''
+      
       if entity.eql?(monster)
         who_gets_wounded = "> You wound #{monster.name} for "
       else
         who_gets_wounded = "> You are wounded for "
       end
-      hit = Thread.new do
-        print who_gets_wounded
-        print "#{Matrext::process({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })}"
-        print " point(s)!\n"
-      end
-      return hit.join
+      
+      print who_gets_wounded
+      Animation::run({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })
+      print " point(s)!\n"
     end
     
     # MONSTER
@@ -227,7 +226,6 @@ module Gemwarrior
       player.rox = player.rox + monster.rox
       
       monster_items = monster.inventory.items
-      binding.pry
       unless monster_items.nil?
         player.inventory.items.concat monster_items unless monster_items.empty?
       end
@@ -288,12 +286,7 @@ module Gemwarrior
     # STATUS TEXT
     
     def print_escape_text
-      escape = Thread.new do
-        print "* "
-        print "#{Matrext::process({ :phrase => TEXT_ESCAPE, :oneline => true })}"
-        print " *\n"
-      end
-      return escape.join
+      Animation::run({ :phrase => "* #{TEXT_ESCAPE} *", :oneline => true })
     end
     
     def print_battle_line

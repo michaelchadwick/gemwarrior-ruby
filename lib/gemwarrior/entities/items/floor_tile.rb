@@ -20,11 +20,7 @@ module Gemwarrior
       puts 'You slowly lower your foot onto the tile, and then gently depress it, through the floor. Your whole body begins to feel light, lifeless. You black out.'
       puts
       
-      t = Thread.new do
-        print "#{Matrext::process({ :phrase => '*** SHOOOOOM ***', :oneline => true })}"
-        puts
-      end
-      t.join
+      Animation::run({ :phrase => '*** SHOOOOOM ***' })
       
       {:type => 'move', :data => 'Sky Tower (Entrance)'}
     end

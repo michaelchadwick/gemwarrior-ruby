@@ -20,11 +20,7 @@ module Gemwarrior
       puts 'You move the switch from "No" to "Yes". Suddenly, a great wind picks up and you are gently lifted up by it. The ground moves away and your whole body begins to gently drift towards Emerald\'s compound high in the stratosphere.'
       puts
 
-      t = Thread.new do
-        print "#{Matrext::process({ :phrase => '*** WHOOOOOSH ***', :oneline => true })}"
-        puts
-      end
-      t.join
+      Animation::run({ :phrase => '*** WHOOOOOSH ***' })
 
       {:type => 'move', :data => 'Sky Tower (Foyer)'}
     end
