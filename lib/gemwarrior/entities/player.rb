@@ -174,7 +174,7 @@ module Gemwarrior
     private
 
     def player_death
-      puts 'You\'re actions have reduced you to death.'.colorize(:red)
+      puts 'Your actions have reduced you to death.'.colorize(:red)
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       exit(0)
     end
