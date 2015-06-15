@@ -113,7 +113,7 @@ module Gemwarrior
           end
         when 'map', 'm'
           world.print_map
-        when 'stat', 's'
+        when 'stat', 'st', 's'
           if param1.nil?
             puts ERROR_DEBUG_STAT_PARAM_MISSING
             return DEBUG_STAT_PARAMS
