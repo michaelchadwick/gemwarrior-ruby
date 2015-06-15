@@ -31,6 +31,8 @@ module Gemwarrior
       start_stats = PlayerLevels::get_level_stats(1)
       
       world.debug_mode      = options.fetch(:debug_mode)
+      world.use_wordnik     = options.fetch(:use_wordnik)
+      
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,
         :level              => start_stats[:level],

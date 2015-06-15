@@ -65,9 +65,9 @@ module Gemwarrior
     end
     
     def print_fortune
-      noun1_values = WordList.new('noun-plural')
-      noun2_values = WordList.new('noun-plural')
-      noun3_values = WordList.new('noun-plural')
+      noun1_values = WordList.new(world.use_wordnik, 'noun-plural')
+      noun2_values = WordList.new(world.use_wordnik, 'noun-plural')
+      noun3_values = WordList.new(world.use_wordnik, 'noun-plural')
 
       puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
     end
