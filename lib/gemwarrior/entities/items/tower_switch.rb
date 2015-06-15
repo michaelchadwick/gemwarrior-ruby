@@ -7,7 +7,7 @@ module Gemwarrior
   class TowerSwitch < Item
     def initialize
       self.name         = 'tower_switch'
-      self.description  = 'A pedestal about 4 feet in height rises up from the ground, a switch atop it. It is labeled "Tower" and the choices are "Yes" and "No". It is currently set to "No".'
+      self.description  = 'A pedestal about 4 feet in height rises up from the ground, a switch atop it. It is labeled "Tower" with choices for "Yes" and "No". It is set to "No".'
       self.atk_lo       = nil
       self.atk_hi       = nil
       self.takeable     = false

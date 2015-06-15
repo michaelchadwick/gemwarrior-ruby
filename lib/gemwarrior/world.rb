@@ -244,7 +244,7 @@ module Gemwarrior
       )
       locations.push(Location.new({
           :name                 => 'Cave (Antechamber)', 
-          :description          => 'Now inside the entrance to the cavern, you confirm that there are stacktites, stonemites, rocksites, and even one or two pebblejites.',
+          :description          => 'Now inside the cavern, you confirm there are stacktites, stonemites, rocksites, and even some pebblejites.',
           :coords               => {:x => 7, :y => 0},
           :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
           :danger_level         => :moderate,
@@ -387,7 +387,7 @@ module Gemwarrior
       )
       locations.push(Location.new({
           :name                 => 'Sky Tower (Armory)', 
-          :description          => 'Weapons of all kinds litter the ground and are hung on hooks from the wall, assumedly for use against assailants who might try to storm the tower.',
+          :description          => 'Weapons of all kinds litter the ground and are hung on hooks from the wall. Tower assailants beware/rejoice!',
           :coords               => {:x => 4, :y => 4},
           :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
           :danger_level         => :moderate,
