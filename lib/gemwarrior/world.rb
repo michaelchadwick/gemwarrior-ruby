@@ -139,10 +139,17 @@ module Gemwarrior
       
       point.populate_monsters(self.monsters) unless point.checked_for_monsters?
       
-      desc_text << point.list_items     unless point.list_items.nil?
-      desc_text << point.list_monsters  unless point.list_monsters.nil?
-      desc_text << point.list_bosses    unless point.list_bosses.nil?
-      desc_text << point.list_paths
+      desc_text << "\n >> Curious object(s): #{point.list_items.join(', ')}" unless point.list_items.nil?
+      desc_text << "\n >> Monster(s) abound: #{point.list_monsters.join(', ')}" unless point.list_monsters.nil?
+      desc_text << "\n >> Boss(es) abound: #{point.list_bosses.join(', ')}" unless point.list_bosses.nil?
+      desc_text << "\n >> Paths: #{point.list_paths.join(', ')}"
+      
+      if debug_mode
+        desc_text << "\n >>> Actionable words: "
+        desc_text << point.list_actionable_words.colorize(:white)
+      end
+      
+      return desc_text
     end
     
     def describe_entity(point, entity_name)

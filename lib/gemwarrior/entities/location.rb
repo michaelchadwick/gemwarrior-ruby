@@ -92,15 +92,15 @@ module Gemwarrior
     end
     
     def list_items
-      return "\n >> Curious object(s): #{items.map(&:name).join(', ')}" if items.length > 0
+      return items.map(&:name) if items.length > 0
     end
     
     def list_monsters
-      return "\n >> Monster(s) abound: #{monsters_abounding.map(&:name).join(', ')}" if monsters_abounding.length > 0
+      return monsters_abounding.map(&:name) if monsters_abounding.length > 0
     end
     
     def list_bosses
-      return "\n >> Boss(es) abound: #{bosses_abounding.map(&:name).join(', ')}" if bosses_abounding.length > 0
+      return bosses_abounding.map(&:name) if bosses_abounding.length > 0
     end
     
     def list_paths
@@ -110,7 +110,15 @@ module Gemwarrior
           valid_paths.push(key.to_s)
         end
       end
-      return "\n >> Paths: #{valid_paths.join(', ')}"
+      return valid_paths
+    end
+    
+    def list_actionable_words
+      actionable_words =  []
+      actionable_words.push(monsters_abounding.map(&:name)) unless monsters_abounding.empty?
+      actionable_words.push(bosses_abounding.map(&:name))   unless bosses_abounding.empty?
+      actionable_words.push(items.map(&:name))              unless items.empty?
+      actionable_words.join(', ')
     end
     
     def populate_monsters(monsters_available)
