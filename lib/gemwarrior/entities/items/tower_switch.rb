@@ -22,7 +22,7 @@ module Gemwarrior
 
       Animation::run({ :phrase => '*** WHOOOOOSH ***' })
 
-      {:type => 'move', :data => 'Sky Tower (Foyer)'}
+      {:type => 'move', :data => 'Sky Tower (Entryway)'}
     end
   end
 end
