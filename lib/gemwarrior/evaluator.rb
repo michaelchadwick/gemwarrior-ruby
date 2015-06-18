@@ -10,7 +10,6 @@ module Gemwarrior
     PROGRAM_NAME                        = 'Gem Warrior'
     QUIT_MESSAGE                        = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
     RESUME_MESSAGE                      = 'Back to adventuring!'.colorize(:green)
-    SEPARATOR                           = '=========================================================================='
     
     GO_PARAMS                           = 'Options: north, east, south, west'
     CHANGE_PARAMS                       = 'Options: name'
@@ -349,7 +348,7 @@ module Gemwarrior
     private
     
     def print_separator
-      puts SEPARATOR
+      Hr.print "="
     end
 
     def list_commands

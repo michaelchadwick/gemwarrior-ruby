@@ -233,7 +233,7 @@ module Gemwarrior
       new_player_level = PlayerLevels::check_level(player.xp)
       
       if new_player_level > old_player_level
-        puts 'You leveled up!'
+        Animation::run({:phrase => '** LEVEL UP! **'})
         new_stats = PlayerLevels::get_level_stats(new_player_level)
         
         player.level = new_stats[:level]
@@ -286,11 +286,11 @@ module Gemwarrior
     # STATUS TEXT
     
     def print_escape_text
-      Animation::run({ :phrase => "* #{TEXT_ESCAPE} *", :oneline => true })
+      Animation::run({ :phrase => "** POOF **", :oneline => true })
     end
     
     def print_battle_line
-      puts '**************************************'
+      Hr.print "*"
     end
   end
 end
