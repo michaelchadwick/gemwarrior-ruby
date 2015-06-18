@@ -4,6 +4,7 @@
 require_relative 'creature'
 require_relative '../battle'
 require_relative '../misc/player_levels'
+require_relative '../misc/wordlist'
 
 module Gemwarrior
   class Player < Creature
@@ -84,18 +85,36 @@ module Gemwarrior
       self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end
     
-    def rest
+    def rest(world)
+      cur_loc = world.location_by_coords(cur_coords)
+
+      if cur_loc.has_monster?
+        chance_of_ambush = rand(0..100)
+      
+        if chance_of_ambush < 25
+          battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)]})
+          return battle.start
+        end
+      end
+
       hours = rand(1..23)
       minutes = rand(1..59)
       seconds = rand(1..59)
-    
+  
       hours_text = hours == 1 ? "hour" : "hours"
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
-    
-      self.hp_cur = hp_max
-    
-      return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start, look around you, notice nothing in particular, and get back up, ready to go again."
+      
+      if self.inventory.has_item?('tent')
+        self.hp_cur = self.hp_max
+        
+        return "You pull out your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
+      else
+        self.hp_cur = self.hp_cur.to_i + rand(10..15)
+        self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
+        
+        return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
+      end
     end
 
     def stamina_dec

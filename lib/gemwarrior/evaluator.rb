@@ -42,13 +42,14 @@ module Gemwarrior
     
     attr_accessor :world, 
                   :commands, :aliases, :extras, :cmd_descriptions, 
-                  :devcommands, :devaliases, :devcmd_descriptions
+                  :devcommands, :devaliases, :devextras, :devcmd_descriptions
     
     def initialize(world)
       self.world = world
       
       self.devcommands = %w(god beast list vars map stat teleport)
       self.devaliases = %w(gd bs ls v m s tp)
+      self.devextras = %w(st)
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
         'Toggle beast mode (i.e. super strength)',
@@ -122,6 +123,15 @@ module Gemwarrior
             return DEBUG_STAT_PARAMS
           else
             case param1
+            when 'hp_cur'
+              unless param2.nil?
+                param2 = param2.to_i
+                if param2.is_a? Numeric
+                  if param2 > 0
+                    world.player.hp_cur = param2
+                  end
+                end
+              end
             when 'atk_lo'
               unless param2.nil?
                 param2 = param2.to_i
@@ -197,7 +207,7 @@ module Gemwarrior
           world.player.list_inventory
         end
       when 'rest', 'r'
-        world.player.rest
+        world.player.rest(world)
       when 'look', 'l'
         if param1
           world.describe_entity(world.location_by_coords(world.player.cur_coords), param1)
@@ -369,7 +379,7 @@ module Gemwarrior
       commands_and_aliases = commands | aliases | extras
       
       if world.debug_mode
-        commands_and_aliases = commands_and_aliases | devcommands | devaliases
+        commands_and_aliases = commands_and_aliases | devcommands | devaliases | devextras
       end
 
       if commands_and_aliases.include?(command.downcase)

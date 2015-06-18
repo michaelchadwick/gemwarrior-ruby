@@ -252,7 +252,7 @@ module Gemwarrior
           :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
           :danger_level         => :none,
           :monster_level_range  => nil,
-          :items                => [Bed.new, Stone.new],
+          :items                => [Bed.new, Stone.new, Tent.new],
           :bosses_abounding     => []
         })
       )
