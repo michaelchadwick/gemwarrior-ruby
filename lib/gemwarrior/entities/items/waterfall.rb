@@ -16,9 +16,8 @@ module Gemwarrior
       self.equipped     = false
     end
     
-    def use
+    def use(inventory = nil)
       puts 'You stretch out your hand and touch the waterfall. It stings you with its cold and forceful gushing. Your hand is now wet and rougher than before. In time, it will dry.'
-      puts
       {:type => 'dmg', :data => rand(0..1)}
     end
   end

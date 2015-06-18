@@ -13,8 +13,8 @@ module Gemwarrior
                   :equipped,
                   :use
     
-    def use
-      'That items does not do anything...yet'
+    def use(inventory = nil)
+      'That item does not do anything...yet.'
     end
   end
 end

@@ -105,6 +105,8 @@ module Gemwarrior
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
       
+      Animation::run({:phrase => '** Zzzzz **'})
+      
       if self.inventory.has_item?('tent')
         self.hp_cur = self.hp_max
         
