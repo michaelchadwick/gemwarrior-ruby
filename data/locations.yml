@@ -1,0 +1,17 @@
+-
+  name:                 'Home'
+  description:          'The little, unimportant, decrepit hut that you live in.'
+  coords:
+    x: 5
+    y: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  danger_level:         :none
+  items:
+  - Bed
+  - Stone
+  - Tent
+

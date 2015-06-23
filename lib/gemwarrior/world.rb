@@ -1,15 +1,17 @@
 # lib/gemwarrior/world.rb
 # World where the locations, monsters, items, etc. exist
 
+require 'yaml'
+
 require_relative 'entities/item'
 require_relative 'entities/location'
 
 module Gemwarrior
   class World
     # CONSTANTS
-    ## WORLD DIMENSIONS
-    WORLD_DIM_WIDTH   = 10
-    WORLD_DIM_HEIGHT  = 10
+    LOCATION_DATA_FILE  = "data/locations.yml"
+    WORLD_DIM_WIDTH     = 10
+    WORLD_DIM_HEIGHT    = 10
     
     ## ERRORS
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
@@ -245,17 +247,40 @@ module Gemwarrior
       
       locations = []
 
-      locations.push(Location.new({
-          :name                 => 'Home', 
-          :description          => 'The little, unimportant, decrepit hut that you live in.', 
-          :coords               => {:x => 5, :y => 0},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-          :danger_level         => :none,
-          :monster_level_range  => nil,
-          :items                => [Bed.new, Stone.new, Tent.new],
-          :bosses_abounding     => []
-        })
-      )
+      location_data = YAML.load_file(LOCATION_DATA_FILE)
+
+      location_data.each {|l|
+        locations.push(Location.new({
+          :name                 => l["name"],
+          :description          => l["description"],
+          :coords               => {
+                                    :x => l["coords"]["x"], 
+                                    :y => l["coords"]["y"]
+                                   },
+          :locs_connected       => {
+                                    :north => l["locs_connected"]["north"], 
+                                    :east => l["locs_connected"]["east"], 
+                                    :south => l["locs_connected"]["south"], 
+                                    :west => l["locs_connected"]["west"]
+                                   },
+          :danger_level         => l["danger_level"],
+          :monster_level_range  => l["monster_level_range"],
+          :items                => create_item_objects(l["items"]),
+          :bosses_abounding     => l["bosses_abounding"].nil? ? [] : l["bosses_abounding"]
+        }))
+      }
+
+      #locations.push(Location.new({
+      #    :name                 => 'Home', 
+      #    :description          => 'The little, unimportant, decrepit hut that you live in.', 
+      #    :coords               => {:x => 5, :y => 0},
+      #    :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
+      #    :danger_level         => :none,
+      #    :monster_level_range  => nil,
+      #    :items                => [Bed.new, Stone.new, Tent.new],
+      #    :bosses_abounding     => []
+      #  })
+      #)
       locations.push(Location.new({
           :name                 => 'Cave (Entrance)', 
           :description          => 'A nearby, dank entrance to a cavern, surely filled with stacktites, stonemites, and rocksites.',
@@ -630,6 +655,14 @@ module Gemwarrior
           :bosses_abounding     => []
         })
       )
+    end
+    
+    def create_item_objects(item_names)
+      items = []
+      item_names.each do |name|
+        items.push(eval(name).new)
+      end
+      return items
     end
   end
 end
