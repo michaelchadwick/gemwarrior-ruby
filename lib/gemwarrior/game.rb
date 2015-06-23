@@ -3,7 +3,6 @@
 
 require 'colorize'
 require 'matrext'
-require 'hr'
 
 require_relative 'entities/player'
 require_relative 'misc/player_levels'

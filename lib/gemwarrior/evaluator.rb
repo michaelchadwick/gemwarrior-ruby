@@ -348,7 +348,7 @@ module Gemwarrior
     private
     
     def print_separator
-      Hr.print "="
+      puts "=============================="
     end
 
     def list_commands

@@ -290,7 +290,7 @@ module Gemwarrior
     end
     
     def print_battle_line
-      Hr.print "*"
+      puts '******************************'
     end
   end
 end
