@@ -166,7 +166,7 @@
     hi: 3
 
 -
-  name:                 'Pain Desert (Southeast)'
+  name:                 'Pain Quarry (Southeast)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -184,7 +184,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (East)'
+  name:                 'Pain Quarry (East)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -202,7 +202,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (Central)' 
+  name:                 'Pain Quarry (Central)' 
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -220,7 +220,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (South)'
+  name:                 'Pain Quarry (South)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -238,7 +238,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (West)'
+  name:                 'Pain Quarry (West)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -256,7 +256,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (Northwest)'
+  name:                 'Pain Quarry (Northwest)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -274,7 +274,7 @@
   - Garynetty
 
 -
-  name:                 'Pain Desert (North)'
+  name:                 'Pain Quarry (North)'
   description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
   danger_level:         :assured
   coords:
@@ -401,7 +401,7 @@
     hi: 3
 
 -
-  name:                 'Rock Quarry'
+  name:                 'Rock Piles'
   description:          'Piles of rocks, both big and small, are placed here and there, a testament to someone''s surely back-breaking labor.'
   danger_level:         :moderate
   coords:
