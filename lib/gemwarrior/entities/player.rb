@@ -224,14 +224,14 @@ module Gemwarrior
 
     # INIT
     def generate_name
-      name = []
+      default_name = []
       letter_max = rand(5..10)
-      name[0] = CHAR_UPPER_POOL[rand(0..25)]
-      name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
+      default_name[0] = CHAR_UPPER_POOL[rand(0..25)]
+      default_name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
       2.upto(letter_max) do |i|
-        name[i] = CHAR_LOWER_POOL[rand(0..25)]
+        default_name[i] = CHAR_LOWER_POOL[rand(0..25)]
       end
-      return name.join
+      return default_name.join
     end
     
     def generate_face

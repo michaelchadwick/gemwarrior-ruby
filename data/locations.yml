@@ -1,6 +1,7 @@
 -
   name:                 'Home'
   description:          'The little, unimportant, decrepit hut that you live in.'
+  danger_level:         :none
   coords:
     x: 5
     y: 0
@@ -9,9 +10,591 @@
     east:  true
     south: false
     west:  true
-  danger_level:         :none
   items:
   - Bed
   - Stone
   - Tent
 
+-
+  name:                 'Cave (Entrance)'
+  description:          'A nearby, dank entrance to a cavern, surely filled with stacktites, stonemites, and rocksites.'
+  danger_level:         :low
+  coords:
+    x: 6
+    y: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:  
+    lo: 1
+    hi: 2
+
+-
+  name:                 'Cave (Antechamber)'
+  description:          'Now inside the cavern, you confirm there are stacktites, stonemites, rocksites, and even some pebblejites.'
+  danger_level:         :moderate
+  coords:
+    x: 7
+    y: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+  items:
+  - Stalactite
+  - Stonemite
+
+-
+  name:                 'Cave (Nook)'
+  description:          'A depression in the cave wall casts a shadow over a small rock shelf.'
+  danger_level:         :moderate
+  monster_level_range:
+    lo: 2
+    hi: 3
+  coords:
+    x: 7
+    y: 1
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  false
+
+-
+  name:                 'Cave (Dropoff)'
+  description:          'Caves do not usually feature sudden chasms spilling down into an unknowable void, but this one does.'
+  danger_level:         :moderate,
+  coords:
+    x: 8
+    y: 1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west: true
+  monster_level_range:
+    lo: 2
+    hi: 4
+
+-
+  name:                 'Cave (Causeway)'
+  description:          'Paths lead north and west, but nothing of interest is in this causeway.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true  
+  monster_level_range:
+    lo: 2
+    hi: 3
+-
+  name:                 'Forest (Southeast)'
+  description:          'Trees exist here, in droves.'
+  danger_level:         :low
+  coords:
+    x: 4
+    y: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 1
+    hi: 3
+  items:
+  - Tree
+
+-
+  name:                 'Forest (Northeast)'
+  description:          'You see much foliage.'
+  danger_level:         :low
+  coords:
+    x: 4
+    y: 1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 1
+    hi: 3
+
+-
+  name:                 'Forest (Northwest)'
+  description:          'The amount of leaves and branches and trunks you can see boggles the mind.'
+  danger_level:         :low
+  coords:
+    x: 3
+    y: 1
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west: false
+  monster_level_range:
+    lo: 1
+    hi: 3
+  items:
+  - Feather
+
+-
+  name:                 'Forest (Southwest)'
+  description:          'While you continue to be impressed at the sheer size of this forest, a clearing appears to open up to the west.'
+  danger_level:         :low
+  coords:
+    x: 3
+    y: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 1
+    hi: 3
+
+-
+  name:                 'Pain Desert (Southeast)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 2
+    y: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (East)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 2
+    y: 1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (Central)' 
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 1
+    y: 1
+  locs_connected:
+    north: true
+    east:  true
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (South)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 1
+    y: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (West)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 0
+    y: 1
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west: false  
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (Northwest)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 0
+    y: 2
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Pain Desert (North)'
+  description:          'Horrible terribleness emanates from this desolate land of unkind misery.'
+  danger_level:         :assured
+  coords:
+    x: 1
+    y: 2
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 20
+  bosses_abounding:
+  - Garynetty
+
+-
+  name:                 'Plains (Outskirts)'
+  description:          'A lot of grass and nothing, stretching out northward.'
+  danger_level:         :low
+  coords:
+    x: 5
+    y: 1
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Plains (Fields)'
+  description:          'Now you are plum smack dab in the middle of rolling fields.'
+  danger_level:         :low
+  coords:
+    x: 5
+    y: 2
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false  
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Plains (South of River)'
+  description:          'A raging river borders the northern side of this bucolic vista.'
+  danger_level:         :low
+  coords:
+    x: 5
+    y: 3
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Plains (South of Bridge)'
+  description:          'To the north of these fields lies a bridge that may be crossable.'
+  danger_level:         :low
+  coords:
+    x: 4
+    y: 3
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Plains (Hut)'
+  description:          'A straw hut sits alone, curiously, in a patch of grass, sticks, and straw.'
+  danger_level:         :none
+  coords:
+    x: 3
+    y: 3
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  false
+
+-
+  name:                 'River Bridge'
+  description:          'Sturdy and safe, this bridge will get you across the otherwise unpassable river you see below.'
+  danger_level:         :moderate
+  coords:
+    x: 4
+    y: 4
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west: false  
+  monster_level_range:
+    lo: 3
+    hi: 5
+
+-
+  name:                 'Plains (North of Bridge)'
+  description:          'North of the river feels similar to south of the river, as you continue to be surrounded by grass and grass and, well, grass.'
+  danger_level:         :low
+  coords:
+    x: 4
+    y: 5
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west: true  
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Rock Quarry'
+  description:          'Piles of rocks, both big and small, are placed here and there, a testament to someone''s surely back-breaking labor.'
+  danger_level:         :moderate
+  coords:
+    x: 3
+    y: 5
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  false  
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Gun
+  - TowerSwitch
+
+-
+  name:                 'Sky Tower (Entryway)'
+  description:          'You feel unsettled as you gaze upon the wondrous proportions of Emerald''s home.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 6
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true  
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - FloorTile
+
+-
+  name:                 'Sky Tower (Cloud Garden)'
+  description:          'A perfectly-maintained array of wispy flowers and other ethereal plantlife contained within a cumulonimbus barrier.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 7
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Flower
+  - Keystone
+
+-
+  name:                 'Sky Tower (Armory)'
+  description:          'Weapons of all kinds litter the ground and are hung on hooks from the wall. Tower assailants beware/rejoice!'
+  danger_level:         :moderate
+  coords:
+    x: 7
+    y: 6
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Dehumidifier
+
+-
+  name:                 'Sky Tower (West Hallway)'
+  description:          'The hallway seems to stretch on for days.'
+  danger_level:         :moderate
+  coords:
+    x: 7
+    y: 7
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Sky Tower (Waterfalls)'
+  description:          'The seemingly neverending deluge of water causes this room to be quite loud, yet pretty.'
+  danger_level:         :moderate
+  coords:
+    x: 7
+    y: 8
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false  
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Waterfall
+
+-
+  name:                 'Sky Tower (Massive Door)'
+  description:          'Before you lies a massive collection of cumulus clouds that form into a seemingly impenetrable door, beyond which may well be your doom.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 8
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 4
+    hi: 5
+  items:
+  - MassiveDoor
+
+-
+  name:                 'Sky Tower (Throne Room)'
+  description:          'There, on a mighty seat made of broken dreams, sits Emerald himself, staring at you coldly, silently.'
+  danger_level:         :high
+  coords:
+    x: 8
+    y: 9
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  false  
+  monster_level_range:
+    lo: 5
+    hi: 7
+  items:
+  - Throne
+  bosses_abounding:
+  - Emerald
+
+-
+  name:                 'Sky Tower (Lounge)'
+  description:          'Nothing but a simple couch, which looks very comfortable, exists in this corner of the tower.'
+  danger_level:         :moderate,
+  coords:
+    x: 9
+    y: 8
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Couch
+
+-
+  name:                 'Sky Tower (East Hallway)'
+  description:          'Longish and neverending is what you might say about this stretch of the tower.'
+  danger_level:         :moderate
+  coords:
+    x: 9
+    y: 7
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Sky Tower (Kitchen)'
+  description:          'This kitchen looks well-used, as appliances abound, and leftover food sits atop counters.'
+  danger_level:         :moderate
+  coords:
+    x: 9
+    y: 6
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Apple
+  - Cup

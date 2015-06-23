@@ -215,6 +215,26 @@ module Gemwarrior
     end
  
     private
+
+    def create_item_objects(item_names)
+      items = []
+      unless item_names.nil?
+        item_names.each do |name|
+          items.push(eval(name).new)
+        end
+      end
+      return items
+    end
+
+    def create_boss_objects(bosses_names)
+      bosses = []
+      unless bosses_names.nil?
+        bosses_names.each do |name|
+          bosses.push(eval(name).new)
+        end
+      end
+      return bosses
+    end
     
     def init_monsters
       Dir.glob('lib/gemwarrior/entities/monsters/*.rb').each do |item|
@@ -248,11 +268,13 @@ module Gemwarrior
       locations = []
 
       location_data = YAML.load_file(LOCATION_DATA_FILE)
-
+      
       location_data.each {|l|
         locations.push(Location.new({
           :name                 => l["name"],
           :description          => l["description"],
+          :danger_level         => l["danger_level"],
+          :monster_level_range  => l["monster_level_range"].nil? ? nil : l["monster_level_range"]["lo"]..l["monster_level_range"]["hi"],
           :coords               => {
                                     :x => l["coords"]["x"], 
                                     :y => l["coords"]["y"]
@@ -263,406 +285,12 @@ module Gemwarrior
                                     :south => l["locs_connected"]["south"], 
                                     :west => l["locs_connected"]["west"]
                                    },
-          :danger_level         => l["danger_level"],
-          :monster_level_range  => l["monster_level_range"],
           :items                => create_item_objects(l["items"]),
-          :bosses_abounding     => l["bosses_abounding"].nil? ? [] : l["bosses_abounding"]
+          :bosses_abounding     => create_boss_objects(l["bosses_abounding"])
         }))
       }
-
-      #locations.push(Location.new({
-      #    :name                 => 'Home', 
-      #    :description          => 'The little, unimportant, decrepit hut that you live in.', 
-      #    :coords               => {:x => 5, :y => 0},
-      #    :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-      #    :danger_level         => :none,
-      #    :monster_level_range  => nil,
-      #    :items                => [Bed.new, Stone.new, Tent.new],
-      #    :bosses_abounding     => []
-      #  })
-      #)
-      locations.push(Location.new({
-          :name                 => 'Cave (Entrance)', 
-          :description          => 'A nearby, dank entrance to a cavern, surely filled with stacktites, stonemites, and rocksites.',
-          :coords               => {:x => 6, :y => 0},
-          :locs_connected       => {:north => false, :east => true, :south => false, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 1..2,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Cave (Antechamber)', 
-          :description          => 'Now inside the cavern, you confirm there are stacktites, stonemites, rocksites, and even some pebblejites.',
-          :coords               => {:x => 7, :y => 0},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 2..3,
-          :items                => [Stalactite.new, Stonemite.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Cave (Nook)', 
-          :description          => 'A depression in the cave wall casts a shadow over a small rock shelf.',
-          :coords               => {:x => 7, :y => 1},
-          :locs_connected       => {:north => false, :east => true, :south => true, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Cave (Dropoff)', 
-          :description          => 'Caves do not usually feature sudden chasms spilling down into an unknowable void, but this one does.',
-          :coords               => {:x => 8, :y => 1},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 2..4,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Cave (Causeway)', 
-          :description          => 'Paths lead north and west, but nothing of interest is in this causeway.',
-          :coords               => {:x => 8, :y => 0},
-          :locs_connected       => {:north => true, :east => false, :south => false, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Forest (Southeast)', 
-          :description          => 'Trees exist here, in droves.',
-          :coords               => {:x => 4, :y => 0},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
-          :danger_level         => :low,
-          :monster_level_range  => 1..3,
-          :items                => [Tree.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Forest (Northeast)', 
-          :description          => 'You see much foliage.',
-          :coords               => {:x => 4, :y => 1},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 1..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Forest (Northwest)', 
-          :description          => 'The amount of leaves and branches and trunks you can see boggles the mind.',
-          :coords               => {:x => 3, :y => 1},
-          :locs_connected       => {:north => false, :east => true, :south => true, :west => false},
-          :danger_level         => :low,
-          :monster_level_range  => 1..3,
-          :items                => [Feather.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Forest (Southwest)', 
-          :description          => 'While you continue to be impressed at the sheer size of this forest, a clearing appears to open up to the west.',
-          :coords               => {:x => 3, :y => 0},
-          :locs_connected       => {:north => true, :east => false, :south => false, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 1..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (Southeast)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 2, :y => 0},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (East)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 2, :y => 1},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (Central)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 1, :y => 1},
-          :locs_connected       => {:north => true, :east => true, :south => true, :west => true},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (South)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 1, :y => 0},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (West)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 0, :y => 1},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (Northwest)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 0, :y => 2},
-          :locs_connected       => {:north => false, :east => true, :south => true, :west => false},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Pain Desert (North)', 
-          :description          => 'Horrible terribleness emanates from this desolate land of unkind misery.',
-          :coords               => {:x => 1, :y => 2},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :assured,
-          :monster_level_range  => 5..20,
-          :items                => [],
-          :bosses_abounding     => [Garynetty.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (Outskirts)', 
-          :description          => 'A lot of grass and nothing, stretching out northward.',
-          :coords               => {:x => 5, :y => 1},
-          :locs_connected       => {:north => true, :east => false, :south => true, :west => false},
-          :danger_level         => :low,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (Fields)', 
-          :description          => 'Now you\'re plum in the middle of rolling fields.',
-          :coords               => {:x => 5, :y => 2},
-          :locs_connected       => {:north => true, :east => false, :south => true, :west => false},
-          :danger_level         => :low,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (South of River)', 
-          :description          => 'A raging river borders the northern side of this bucolic vista.',
-          :coords               => {:x => 5, :y => 3},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (South of Bridge)', 
-          :description          => 'To the north of these fields lies a bridge that may be crossable.',
-          :coords               => {:x => 4, :y => 3},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (Hut)', 
-          :description          => 'A straw hut sits alone, curiously, in a patch of grass, sticks, and straw.',
-          :coords               => {:x => 3, :y => 3},
-          :locs_connected       => {:north => false, :east => true, :south => false, :west => false},
-          :danger_level         => :none,
-          :monster_level_range  => nil,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'River Bridge', 
-          :description          => 'Sturdy and safe, this bridge will get you across the otherwise unpassable river you see below.',
-          :coords               => {:x => 4, :y => 4},
-          :locs_connected       => {:north => true, :east => false, :south => true, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..5,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Plains (North of Bridge)', 
-          :description          => 'North of the river feels similar to south of the river, as you continue to be surrounded by grass and grass and, well, grass.',
-          :coords               => {:x => 4, :y => 5},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :low,
-          :monster_level_range  => 2..3,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Rock Quarry', 
-          :description          => 'Piles of rocks, both big and small, are placed here and there, a testament to someone\'s surely back-breaking labor.',
-          :coords               => {:x => 3, :y => 5},
-          :locs_connected       => {:north => false, :east => true, :south => false, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Gun.new, TowerSwitch.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Entryway)', 
-          :description          => 'You feel unsettled as you gaze upon the wondrous proportions of Emerald\'s home.',
-          :coords               => {:x => 8, :y => 6},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [FloorTile.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Cloud Garden)', 
-          :description          => 'A perfectly-maintained array of wispy flowers and other ethereal plantlife contained within a cumulonimbus barrier.',
-          :coords               => {:x => 8, :y => 7},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Flower.new, Keystone.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Armory)', 
-          :description          => 'Weapons of all kinds litter the ground and are hung on hooks from the wall. Tower assailants beware/rejoice!',
-          :coords               => {:x => 7, :y => 6},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Dehumidifier.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (West Hallway)', 
-          :description          => 'The hallway seems to stretch on for days.',
-          :coords               => {:x => 7, :y => 7},
-          :locs_connected       => {:north => true, :east => false, :south => true, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Flower.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Waterfalls)', 
-          :description          => 'The seemingly neverending deluge of water causes this room to be quite loud, yet pretty.',
-          :coords               => {:x => 7, :y => 8},
-          :locs_connected       => {:north => true, :east => true, :south => false, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Waterfall.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Massive Door)', 
-          :description          => 'Before you lies a massive collection of cumulus clouds that form into a seemingly impenetrable door, beyond which may well be your doom.',
-          :coords               => {:x => 8, :y => 8},
-          :locs_connected       => {:north => false, :east => true, :south => false, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 4..5,
-          :items                => [MassiveDoor.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Throne Room)', 
-          :description          => 'There, on a mighty seat made of broken dreams, sits Emerald himself, staring at you coldly, silently.',
-          :coords               => {:x => 8, :y => 9},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => false},
-          :danger_level         => :high,
-          :monster_level_range  => 5..7,
-          :items                => [Throne.new],
-          :bosses_abounding     => [Emerald.new]
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Lounge)', 
-          :description          => 'Nothing but a simple couch, which looks very comfortable, exists in this corner of the tower.',
-          :coords               => {:x => 9, :y => 8},
-          :locs_connected       => {:north => false, :east => false, :south => true, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Couch.new],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (East Hallway)', 
-          :description          => 'Longish and neverending is what you might say about this stretch of the tower.',
-          :coords               => {:x => 9, :y => 7},
-          :locs_connected       => {:north => true, :east => false, :south => true, :west => false},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [],
-          :bosses_abounding     => []
-        })
-      )
-      locations.push(Location.new({
-          :name                 => 'Sky Tower (Kitchen)', 
-          :description          => 'This kitchen looks well-used, as appliances abound, and leftover food sits atop counters.',
-          :coords               => {:x => 9, :y => 6},
-          :locs_connected       => {:north => true, :east => false, :south => false, :west => true},
-          :danger_level         => :moderate,
-          :monster_level_range  => 3..4,
-          :items                => [Apple.new, Cup.new],
-          :bosses_abounding     => []
-        })
-      )
-    end
-    
-    def create_item_objects(item_names)
-      items = []
-      item_names.each do |name|
-        items.push(eval(name).new)
-      end
-      return items
+      
+      return locations
     end
   end
 end
