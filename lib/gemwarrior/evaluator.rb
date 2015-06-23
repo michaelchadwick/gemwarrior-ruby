@@ -265,6 +265,10 @@ module Gemwarrior
             when 'rest', 'health'
               world.player.heal_damage(result[:data])
               return
+            when 'action'
+              if result[:data].eql?('rest')
+                world.player.rest(world)
+              end
             else
               return
             end

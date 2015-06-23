@@ -15,5 +15,9 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
+    
+    def use(inventory = nil)
+      {:type => 'action', :data => 'rest'}
+    end
   end
 end

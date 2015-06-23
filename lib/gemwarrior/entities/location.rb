@@ -36,8 +36,12 @@ module Gemwarrior
       status_text << " #{description}\n".colorize(:white)
     end
     
+    def has_item?(item_name)
+      items.map(&:name).include?(item_name)
+    end
+    
     def remove_item(item_name)
-      if items.map(&:name).include?(item_name)
+      if has_item?(item_name)
         items.reject! { |item| item.name == item_name }
       else
         ERROR_LOCATION_ITEM_REMOVE_INVALID

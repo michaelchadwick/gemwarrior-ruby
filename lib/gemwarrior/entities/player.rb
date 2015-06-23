@@ -107,10 +107,10 @@ module Gemwarrior
       
       Animation::run({:phrase => '** Zzzzz **'})
       
-      if self.inventory.has_item?('tent')
+      if self.inventory.has_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
         self.hp_cur = self.hp_max
         
-        return "You pull out your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
+        return "You brandish your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
       else
         self.hp_cur = self.hp_cur.to_i + rand(10..15)
         self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
