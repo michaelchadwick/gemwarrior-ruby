@@ -46,7 +46,7 @@ module Gemwarrior
         :defense            => start_stats[:defense],
         :dexterity          => start_stats[:dexterity],
         :inventory          => PLAYER_INVENTORY_DEFAULT,
-        :rox                => PLAYER_ROX_DEFAULT,
+        :rox                => world.debug_mode ? 300 : PLAYER_ROX_DEFAULT,
         :cur_coords         => world.location_coords_by_name('Home'),
         
         :god_mode           => options.fetch(:god_mode),
