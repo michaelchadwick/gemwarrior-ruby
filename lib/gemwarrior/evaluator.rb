@@ -36,7 +36,8 @@ module Gemwarrior
     ERROR_LIST_PARAM_INVALID            = 'You cannot list that...yet.'
     ERROR_DEBUG_STAT_PARAM_MISSING      = 'You cannot just "change stats". You gotta choose a stat to change.'
     ERROR_DEBUG_STAT_PARAM_INVALID      = 'You cannot change that stat...yet.'
-    ERROR_DEBUG_TELEPORT_PARAMS_MISSING = 'You cannot just "teleport". You gotta choose somewhere to teleport to.'
+    ERROR_DEBUG_TELEPORT_PARAMS_MISSING = 'You cannot just "teleport". You gotta specify an x AND y coordinate, at least.'
+    ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
     
     attr_accessor :world, 
@@ -182,15 +183,34 @@ module Gemwarrior
           if param1.nil?
             return ERROR_DEBUG_TELEPORT_PARAMS_MISSING
           else
-            if (param1.to_i.to_s == param1) && (param2.to_i.to_s == param2)
-              world.player.cur_coords = {:x => param1.to_i, :y => param2.to_i, :z => param3.to_i}
+            if (param1.to_i.to_s == param1)
+              # we got at least an x coordinate
+              if (param2.to_i.to_s == param2)
+                # we got a y coordinate, too
+                x_coord = param1.to_i
+                y_coord = param2.to_i
+                # grab the z coordinate, if present, otherwise default to current level
+                z_coord = param3.to_i.to_s == param3 ? param3.to_i : world.player.cur_coords[:z]
+                
+                # check to make sure new location exists
+                if world.location_by_coords({:x => x_coord, :y => y_coord, :z => z_coord})
+                  world.player.cur_coords = {:x => x_coord, :y => y_coord, :z => z_coord}
+                else
+                  return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
+                end
+              else
+                # we only got an x coordinate
+                return ERROR_DEBUG_TELEPORT_PARAMS_NEEDED
+              end
             else
+              # we got a place name instead, potentially
+              place_to_match = tokens[1..tokens.length].join(' ').downcase
               locations = []
               world.locations.each do |l|
                 locations << l.name.downcase
               end
-              if locations.include?(param1.downcase)
-                world.player.cur_coords = world.location_coords_by_name(param1)
+              if locations.include?(place_to_match)
+                world.player.cur_coords = world.location_coords_by_name(place_to_match)
               else
                 return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
               end
@@ -362,7 +382,7 @@ module Gemwarrior
     private
     
     def print_separator
-      puts "=============================="
+      puts "=================================================="
     end
 
     def list_commands
