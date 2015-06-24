@@ -695,6 +695,7 @@
   coords:
     x: 5
     y: 3
+    z: 0
   locs_connected:
     north: false
     east:  false
