@@ -72,6 +72,7 @@ module Gemwarrior
         
         puts 'What do you do?'
         puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
+        binding.pry
         
         cmd = gets.chomp.downcase
 

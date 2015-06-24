@@ -5,6 +5,7 @@
   coords:
     x: 5
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -22,6 +23,7 @@
   coords:
     x: 6
     y: 0
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -38,6 +40,7 @@
   coords:
     x: 7
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -60,6 +63,7 @@
   coords:
     x: 7
     y: 1
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -73,16 +77,361 @@
   coords:
     x: 8
     y: 1
+    z: 0
   locs_connected:
     north: false
     east:  false
     south: true
-    west: true
+    west:  true
   monster_level_range:
     lo: 2
     hi: 4
   items:
   - Ladder
+  
+-
+  name:                 'Metal Tunnel (South Entrance)'
+  description:          'You are in a tightly-enclosed tunnel running under the ground. The walls are made of shiny, smooth material you think may be some kindof metal. It is claustrophobic, to say the least.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 1
+    z: -1
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 2
+    z: -1
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 3
+    z: -1
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 8
+    y: 4
+    z: -1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 7
+    y: 4
+    z: -1
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 6
+    y: 4
+    z: -1
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 6
+    y: 5
+    z: -1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 5
+    y: 5
+    z: -1
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Metal Tunnel'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 5
+    y: 6
+    z: -1
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+    
+-
+  name:                 'Metal Tunnel (North Entrance)'
+  description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
+  danger_level:         :moderate
+  coords:
+    x: 5
+    y: 7
+    z: -1
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - Rope
+  
+-
+  name:                 'Snow Fields (Southeast)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :low
+  coords:
+    x: 5
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (South-Southeast)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 4
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+
+-
+  name:                 'Snow Fields (South)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 3
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (South-Southwest)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 2
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (Southwest)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 1
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (Northwest)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 1
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 5
+    hi: 6
+  items:
+  - Snowman
+    
+-
+  name:                 'Snow Fields (North-Northwest)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 2
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (North)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 3
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (North-Northeast)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 4
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
+    
+-
+  name:                 'Snow Fields (Northeast)'
+  description:          'It is as if the color palette for this still and frozen scene before you consisted only of whites, off-whites, and vanilla.'
+  danger_level:         :moderate
+  coords:
+    x: 5
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+  monster_level_range:
+    lo: 5
+    hi: 6
 
 -
   name:                 'Cave (Causeway)'
@@ -91,6 +440,7 @@
   coords:
     x: 8
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -106,6 +456,7 @@
   coords:
     x: 4
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -124,6 +475,7 @@
   coords:
     x: 4
     y: 1
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -140,6 +492,7 @@
   coords:
     x: 3
     y: 1
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -158,6 +511,7 @@
   coords:
     x: 3
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -174,6 +528,7 @@
   coords:
     x: 2
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -192,6 +547,7 @@
   coords:
     x: 2
     y: 1
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -210,6 +566,7 @@
   coords:
     x: 1
     y: 1
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -228,6 +585,7 @@
   coords:
     x: 1
     y: 0
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -246,6 +604,7 @@
   coords:
     x: 0
     y: 1
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -264,6 +623,7 @@
   coords:
     x: 0
     y: 2
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -282,6 +642,7 @@
   coords:
     x: 1
     y: 2
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -300,6 +661,7 @@
   coords:
     x: 5
     y: 1
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -316,6 +678,7 @@
   coords:
     x: 5
     y: 2
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -348,6 +711,7 @@
   coords:
     x: 4
     y: 3
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -364,6 +728,7 @@
   coords:
     x: 3
     y: 3
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -377,6 +742,7 @@
   coords:
     x: 4
     y: 4
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -393,6 +759,7 @@
   coords:
     x: 4
     y: 5
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -409,6 +776,7 @@
   coords:
     x: 3
     y: 5
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -428,6 +796,7 @@
   coords:
     x: 8
     y: 6
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -446,6 +815,7 @@
   coords:
     x: 8
     y: 7
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -465,6 +835,7 @@
   coords:
     x: 7
     y: 6
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -483,6 +854,7 @@
   coords:
     x: 7
     y: 7
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -499,6 +871,7 @@
   coords:
     x: 7
     y: 8
+    z: 0
   locs_connected:
     north: true
     east:  true
@@ -517,6 +890,7 @@
   coords:
     x: 8
     y: 8
+    z: 0
   locs_connected:
     north: false
     east:  true
@@ -535,6 +909,7 @@
   coords:
     x: 8
     y: 9
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -555,6 +930,7 @@
   coords:
     x: 9
     y: 8
+    z: 0
   locs_connected:
     north: false
     east:  false
@@ -573,6 +949,7 @@
   coords:
     x: 9
     y: 7
+    z: 0
   locs_connected:
     north: true
     east:  false
@@ -589,6 +966,7 @@
   coords:
     x: 9
     y: 6
+    z: 0
   locs_connected:
     north: true
     east:  false

@@ -97,6 +97,7 @@ module Gemwarrior
       command = tokens.first.downcase
       param1 = tokens[1]
       param2 = tokens[2]
+      param3 = tokens[3]
 
       # dev commands
       if world.debug_mode
@@ -177,7 +178,7 @@ module Gemwarrior
             return ERROR_DEBUG_TELEPORT_PARAMS_MISSING
           else
             if (param1.to_i.to_s == param1) && (param2.to_i.to_s == param2)
-              world.player.cur_coords = {:x => param1.to_i, :y => param2.to_i}
+              world.player.cur_coords = {:x => param1.to_i, :y => param2.to_i, :z => param3.to_i}
             else
               locations = []
               world.locations.each do |l|
@@ -257,6 +258,10 @@ module Gemwarrior
           else
             case result[:type]
             when 'move'
+              world.player.cur_coords = world.location_coords_by_name(result[:data])
+              world.describe(world.location_by_coords(world.player.cur_coords))
+            when 'move_dangerous'
+              world.player.take_damage(rand(0..2))
               world.player.cur_coords = world.location_coords_by_name(result[:data])
               world.describe(world.location_by_coords(world.player.cur_coords))
             when 'dmg'

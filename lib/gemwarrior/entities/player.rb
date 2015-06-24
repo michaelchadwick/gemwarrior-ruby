@@ -145,16 +145,32 @@ module Gemwarrior
     def go(locations, direction)
       case direction
       when 'north', 'n'
-        self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]+1}
+        self.cur_coords = {
+          :x => cur_coords[:x], 
+          :y => cur_coords[:y]+1,
+          :z => cur_coords[:z]
+        }
         direction_text = '^^^'
       when 'east', 'e'
-        self.cur_coords = {:x => cur_coords[:x]+1,  :y => cur_coords[:y]}
+        self.cur_coords = {
+          :x => cur_coords[:x]+1, 
+          :y => cur_coords[:y],
+          :z => cur_coords[:z]
+        }
         direction_text = '>>>'
       when 'south', 's'
-        self.cur_coords = {:x => cur_coords[:x],    :y => cur_coords[:y]-1}
+        self.cur_coords = {
+          :x => cur_coords[:x], 
+          :y => cur_coords[:y]-1,
+          :z => cur_coords[:z]
+        }
         direction_text = 'vvv'
       when 'west', 'w'
-        self.cur_coords = {:x => cur_coords[:x]-1,  :y => cur_coords[:y]}
+        self.cur_coords = {
+          :x => cur_coords[:x]-1, 
+          :y => cur_coords[:y],
+          :z => cur_coords[:z]
+        }
         direction_text = '<<<'
       end
       print_traveling_text(direction_text)

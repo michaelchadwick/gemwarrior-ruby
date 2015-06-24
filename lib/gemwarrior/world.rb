@@ -44,7 +44,7 @@ module Gemwarrior
         print "\n"
         print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
         0.upto(WORLD_DIM_WIDTH-1) do |count_x|
-          cur_map_coords = {:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y}
+          cur_map_coords = {:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y, :z => self.player.cur_coords[:z]}
           if self.player.cur_coords.eql?(cur_map_coords)
             print '|O|'
           elsif location_by_coords(cur_map_coords)
@@ -277,7 +277,8 @@ module Gemwarrior
           :monster_level_range  => l["monster_level_range"].nil? ? nil : l["monster_level_range"]["lo"]..l["monster_level_range"]["hi"],
           :coords               => {
                                     :x => l["coords"]["x"], 
-                                    :y => l["coords"]["y"]
+                                    :y => l["coords"]["y"],
+                                    :z => l["coords"]["z"]
                                    },
           :locs_connected       => {
                                     :north => l["locs_connected"]["north"], 
