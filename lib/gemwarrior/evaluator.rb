@@ -46,8 +46,8 @@ module Gemwarrior
     def initialize(world)
       self.world = world
       
-      self.devcommands = %w(god beast list vars map stat teleport)
-      self.devaliases = %w(gd bs ls v m s tp)
+      self.devcommands = %w(god beast list vars map stat teleport spawn)
+      self.devaliases = %w(gd bs ls v m s tp sp)
       self.devextras = %w(st)
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
@@ -56,7 +56,8 @@ module Gemwarrior
         'List all the variables in the world',
         'Show a map of the world',
         'Change player stat',
-        'Teleport to coordinates (5 0) or location name (\'Home\')'
+        'Teleport to coordinates (5 0 0) or location name (\'Home\')',
+        'Spawn random monster'
       ]
       
       self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
@@ -173,6 +174,10 @@ module Gemwarrior
               return ERROR_DEBUG_STAT_PARAM_INVALID
             end
           end
+        when 'spawn', 'sp'
+          cur_loc = world.location_by_coords(world.player.cur_coords)
+          cur_loc.populate_monsters(world.monsters, true)
+          return world.describe(cur_loc)
         when 'teleport', 'tp'
           if param1.nil?
             return ERROR_DEBUG_TELEPORT_PARAMS_MISSING

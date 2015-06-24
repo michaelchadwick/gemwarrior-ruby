@@ -137,17 +137,22 @@ module Gemwarrior
       actionable_words.join(', ')
     end
     
-    def populate_monsters(monsters_available)
-      if has_monster?
-        self.checked_for_monsters = true
-        self.monsters_abounding = []
+    def populate_monsters(monsters_available, spawn = false)
+      if has_monster? || spawn
+        self.checked_for_monsters = true unless spawn
+        self.monsters_abounding = [] unless spawn
         random_monster = nil
 
         # get random non-boss monster
         loop do
           random_monster = monsters_available[rand(0..monsters_available.length-1)]
-          unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
+          
+          if spawn
             break
+          else
+            unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
+              break
+            end
           end
         end
 
