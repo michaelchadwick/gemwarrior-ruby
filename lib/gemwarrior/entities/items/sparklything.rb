@@ -16,7 +16,7 @@ module Gemwarrior
       self.equipped     = false
     end
     
-    def use(inventory = nil)
+    def use(player = nil)
       puts 'Everything, and I mean *everything*, begins to sparkle. Huh.'
       puts
       {:type => nil, :data => nil}

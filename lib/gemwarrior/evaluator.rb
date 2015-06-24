@@ -171,6 +171,15 @@ module Gemwarrior
                   end
                 end
               end
+            when 'rox', 'r', '$'
+              unless param2.nil?
+                param2 = param2.to_i
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.rox = param2
+                  end
+                end
+              end
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
             end
@@ -257,7 +266,7 @@ module Gemwarrior
             location_inventory.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
-                  result = i.use(world.player.inventory)
+                  result = i.use(world.player)
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
                 end
@@ -269,7 +278,7 @@ module Gemwarrior
               player_inventory.each do |i|
                 if i.name.eql?(item_name)
                   if i.useable
-                    result = i.use(world.player.inventory)
+                    result = i.use(world.player)
                   else
                     return ERROR_USE_PARAM_UNUSEABLE
                   end
@@ -299,6 +308,8 @@ module Gemwarrior
               if result[:data].eql?('rest')
                 world.player.rest(world)
               end
+            when 'arena'
+              return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
             else
               return
             end

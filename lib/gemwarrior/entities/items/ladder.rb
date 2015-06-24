@@ -16,7 +16,7 @@ module Gemwarrior
       self.equipped     = false
     end
     
-    def use(inventory = nil)
+    def use(player = nil)
       puts 'You grab onto the shaky, rough-hewn, wooden ladder with all your might and start to descend, being extra careful not to loose your grip, which with every moment becomes shakier and shakier.'
       puts
 

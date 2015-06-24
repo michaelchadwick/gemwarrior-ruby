@@ -690,7 +690,7 @@
 
 -
   name:                 'Plains (South of River)'
-  description:          'A raging river borders the northern side of this bucolic vista.'
+  description:          'A raging river borders the northern side of this bucolic vista. Much raucous noise comes from the east.'
   danger_level:         :low
   coords:
     x: 5
@@ -698,13 +698,65 @@
     z: 0
   locs_connected:
     north: false
-    east:  false
+    east:  true
     south: true
     west:  true
   monster_level_range:
     lo: 2
     hi: 3
-
+ 
+-
+  name:                 'Plains (South-Southeast)'
+  description:          'The river continues to flow north of you, as plains stretch out all around. The noise from the east is quite loud, and a building can be seen in the near distance.'
+  danger_level:         :low
+  coords:
+    x: 6
+    y: 3
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+ 
+- 
+  name:                 'Plains (Arena Entrance)'
+  description:          'Well above the noise of the raging river nearby, the din of the mighty Arena reaches its near fever-pitch just outside. The door, and battle, beckons.'
+  danger_level:         :low
+  coords:
+    x: 7
+    y: 3
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+  items:
+  - ArenaDoor
+ 
+- 
+  name:                 'Arena'
+  description:          'Dangerous and risky, the Arena allows would-be monster-slayers and adventurers fight against an infinite number of beasts in order to test their mettle and improve their skill...for a small fee, of course.'
+  danger_level:         :none
+  coords:
+    x: 8
+    y: 3
+    z: 0
+  locs_connected:
+    north: false
+    east:  false
+    south: false
+    west:  true
+  items:
+  - ArenaMaster
+  
 -
   name:                 'Plains (South of Bridge)'
   description:          'To the north of these fields lies a bridge that may be crossable.'

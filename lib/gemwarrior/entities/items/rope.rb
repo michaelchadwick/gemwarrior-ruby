@@ -16,7 +16,7 @@ module Gemwarrior
       self.equipped     = false
     end
     
-    def use(inventory = nil)
+    def use(player = nil)
       puts 'You hold on to the rope with both hands and begin to climb upwards towards the small opening in the ceiling.'
       puts
 

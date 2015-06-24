@@ -16,7 +16,7 @@ module Gemwarrior
       self.equipped     = false
     end
     
-    def use(inventory = nil)
+    def use(player = nil)
       Animation::run({:phrase => '** ZZZZZ **'})
       puts 'You unmake the bed, get under the covers, close your eyes, and begin to think about all the things you need to do today. You realize sleep is not one of them and quickly get back up, remake the bed, and get on about your day.'
       puts '>> You regain a few hit points.'
