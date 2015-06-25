@@ -40,6 +40,14 @@ module Gemwarrior
       items.map(&:name).include?(item_name)
     end
     
+    def add_item(item_name)
+      Dir.glob('lib/gemwarrior/items/*.rb').each do |item|
+        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+      end
+
+      self.items.push(eval(item_name).new)
+    end
+    
     def remove_item(item_name)
       if has_item?(item_name)
         items.reject! { |item| item.name == item_name }
