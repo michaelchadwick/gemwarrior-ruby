@@ -38,11 +38,10 @@ module Gemwarrior
           player.xp = player.xp + bonus_xp
           puts 'You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
           puts "You have gained #{bonus_rox} rox and #{bonus_xp} XP!"
-          return
+
+          return print_arena_outro
         end
       end
-      
-      print_arena_outro
     end
     
     private
