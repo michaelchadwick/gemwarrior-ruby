@@ -6,7 +6,7 @@ require 'json'
 
 module Gemwarrior
   class WordList
-    STATIC_ADJECTIVE_VALUES_VALUES = [
+    STATIC_ADJECTIVE_VALUES = [
       '5 o\'clock-shadowed', 'angry', 'aristocratic', 'calm', 'choice', 'clinical', 'cracked', 'depressed', 'dingy', 'excited', 'ginormous', 'handsome', 'hydrothermal', 'lackadaisical', 'man-sized', 'moist', 'non-venomous', 'picaresque', 'positive', 'relaxed', 'ruddy', 'smooth', 'shocked', 'sticky', 'tense', 'tingly', 'tired', 'toneless', 'unpolished', 'worn'
     ]
     STATIC_NOUN_VALUES = [

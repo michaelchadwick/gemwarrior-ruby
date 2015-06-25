@@ -53,7 +53,8 @@ module Gemwarrior
         :cur_coords         => world.location_coords_by_name('Home'),
         
         :god_mode           => options.fetch(:god_mode),
-        :beast_mode         => options.fetch(:beast_mode)
+        :beast_mode         => options.fetch(:beast_mode),
+        :use_wordnik        => options.fetch(:use_wordnik)
       })
 
       # create the console

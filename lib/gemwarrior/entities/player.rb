@@ -15,21 +15,18 @@ module Gemwarrior
     CHAR_UPPER_POOL       = (65..90).map{ |i| i.chr }
     CHAR_LOWER_POOL       = (97..122).map{ |i| i.chr }
     CHAR_LOWER_VOWEL_POOL = ['a','e','i','o','u','y']
-    
-    FACE_DESC   = ['smooth', 'tired', 'ruddy', 'moist', 'shocked', 'handsome', '5 o\'clock-shadowed']
-    HANDS_DESC  = ['worn', 'balled into fists', 'relaxed', 'cracked', 'tingly', 'mom\'s spaghetti']
-    MOOD_DESC   = ['calm', 'excited', 'depressed', 'tense', 'lackadaisical', 'angry', 'positive']
-    
+
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
-                  :god_mode, :beast_mode
-    
+                  :god_mode, :beast_mode, :use_wordnik
+
     def initialize(options)
       self.name         = generate_name
       self.description  = options.fetch(:description)
+      self.use_wordnik  = options.fetch(:use_wordnik)
       
-      self.face         = generate_face
-      self.hands        = generate_hands
-      self.mood         = generate_mood
+      self.face         = generate_face(use_wordnik)
+      self.hands        = generate_hands(use_wordnik)
+      self.mood         = generate_mood(use_wordnik)
 
       self.level        = options.fetch(:level)
       self.xp           = options.fetch(:xp)
@@ -49,7 +46,7 @@ module Gemwarrior
       self.cur_coords   = options.fetch(:cur_coords)
       
       self.god_mode     = options.fetch(:god_mode)
-      self.beast_mode   = options.fetch(:beast_mode)
+      self.beast_mode   = options.fetch(:beast_mode)      
     end
 
     def check_self(debug_mode = false, show_pic = true)
@@ -255,16 +252,19 @@ module Gemwarrior
       return default_name.join
     end
     
-    def generate_face
-      FACE_DESC[rand(0..FACE_DESC.length-1)]
+    def generate_face(use_wordnik)
+      face_descriptors = WordList.new(use_wordnik, 'adjective')
+      face_descriptors.get_random_value
     end
     
-    def generate_hands
-      HANDS_DESC[rand(0..HANDS_DESC.length-1)]
+    def generate_hands(use_wordnik)
+      hand_descriptors = WordList.new(use_wordnik, 'adjective')
+      hand_descriptors.get_random_value
     end
     
-    def generate_mood
-      MOOD_DESC[rand(0..MOOD_DESC.length-1)]
+    def generate_mood(use_wordnik)
+      mood_descriptors = WordList.new(use_wordnik, 'adjective')
+      mood_descriptors.get_random_value
     end
   end
 end
