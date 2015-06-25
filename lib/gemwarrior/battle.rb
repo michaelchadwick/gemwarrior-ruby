@@ -15,17 +15,18 @@ module Gemwarrior
     ## MESSAGES
     TEXT_ESCAPE                 = 'POOF'
     
-    attr_accessor :world, :player, :monster
+    attr_accessor :world, :player, :monster, :player_defending
     
     def initialize(options)
-      self.world    = options.fetch(:world)
-      self.player   = options.fetch(:player)
-      self.monster  = options.fetch(:monster)
+      self.world            = options.fetch(:world)
+      self.player           = options.fetch(:player)
+      self.monster          = options.fetch(:monster)
+      self.player_defending = false
     end
     
     def start(is_arena = nil, is_event = nil)
       print_battle_line
-      binding.pry
+
       if is_arena
         print 'Your opponent is now...'
         Animation::run({:phrase => "#{monster.name.upcase}!", :speed => :slow})
@@ -81,8 +82,21 @@ module Gemwarrior
         print "\n"
         puts
         
+        self.player_defending = false
+        
         puts 'What do you do?'
-        puts "[Fight/Attack][Look][Run]".colorize(:color => :yellow)
+        print '['.colorize(:yellow)
+        print 'F'.colorize(:green)
+        print 'ight/'.colorize(:yellow)
+        print 'A'.colorize(:green)
+        print 'ttack]['.colorize(:yellow)
+        print 'D'.colorize(:green)
+        print 'efend]['.colorize(:yellow)
+        print 'L'.colorize(:green)
+        print 'ook]['.colorize(:yellow)
+        print 'R'.colorize(:green)
+        print 'un]'.colorize(:yellow)
+        print "\n"
         
         cmd = STDIN.gets.chomp.downcase
 
@@ -100,6 +114,9 @@ module Gemwarrior
           else
             puts "You miss entirely!".colorize(:yellow)
           end
+        when 'defend', 'd'
+          puts 'You dig in and defend this round.'
+          self.player_defending = true
         when 'look', 'l'
           print "#{monster.name}".colorize(:white)
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
@@ -146,7 +163,9 @@ module Gemwarrior
           end
           rand(atk_range)
         else
-          rand(monster.atk_lo..monster.atk_hi)
+          dmg = rand(monster.atk_lo..monster.atk_hi)
+          dmg = dmg - (entity.defense / 2) if player_defending
+          return dmg
         end
       end
     end
