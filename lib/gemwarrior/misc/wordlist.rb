@@ -1,4 +1,4 @@
-# lib/gemwarrior/wordlist.rb
+# lib/gemwarrior/misc/wordlist.rb
 # List of words for flavor text, hopefully randomized from Wordnik
 
 require 'http'

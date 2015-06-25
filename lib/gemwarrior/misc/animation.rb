@@ -1,4 +1,4 @@
-# lib/gemwarrior/animation.rb
+# lib/gemwarrior/misc/animation.rb
 # Animation routine
 
 module Gemwarrior
