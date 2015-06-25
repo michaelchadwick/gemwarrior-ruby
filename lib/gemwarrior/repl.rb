@@ -53,6 +53,12 @@ module Gemwarrior
       puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
       puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
       puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
+      
+      if world.sound
+        Music::cue([
+          {:freq_or_note => 'A3,E4,C#5,F#5', :duration => 1000}
+        ])
+      end
     end
     
     def print_splash_message

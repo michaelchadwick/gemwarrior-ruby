@@ -347,7 +347,7 @@ module Gemwarrior
         else
           direction = param1
           if world.can_move?(direction)
-            world.player.go(world.locations, param1)
+            world.player.go(world.locations, param1, world.sound)
             world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
             world.describe(world.location_by_coords(world.player.cur_coords))
           else

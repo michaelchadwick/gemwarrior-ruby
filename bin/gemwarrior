@@ -8,7 +8,7 @@ require_relative '../lib/gemwarrior/game'
 GAME_NAME = "Gem Warrior"
 
 def parse_options
-  options = {:debug_mode => false, :god_mode => false, :beast_mode => false, :use_wordnik => false}
+  options = {:debug_mode => false, :god_mode => false, :beast_mode => false, :use_wordnik => false, :sound => false}
 
   optparse = OptionParser.new do |opts|
     opts.on('-v', '--version', 'Display version number and exit') do
@@ -30,6 +30,10 @@ def parse_options
     
     opts.on('-w', '--wordnik', 'Use Wordnik to generate more diverse, dynamic descriptors of entities') do
       options[:use_wordnik] = true
+    end
+    
+    opts.on('-s', '--sound', 'Turn sound on') do
+      options[:sound] = true
     end
   end
 

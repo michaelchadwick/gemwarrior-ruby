@@ -3,10 +3,12 @@
 
 require 'colorize'
 require 'matrext'
+require 'feep'
 
 require_relative 'entities/player'
 require_relative 'misc/player_levels'
 require_relative 'misc/animation'
+require_relative 'misc/music'
 require_relative 'world'
 require_relative 'evaluator'
 require_relative 'repl'
@@ -32,6 +34,7 @@ module Gemwarrior
       
       world.debug_mode      = options.fetch(:debug_mode)
       world.use_wordnik     = options.fetch(:use_wordnik)
+      world.sound           = options.fetch(:sound)
 
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,

@@ -142,7 +142,7 @@ module Gemwarrior
       inventory.list_contents
     end 
 
-    def go(locations, direction)
+    def go(locations, direction, sound)
       case direction
       when 'north', 'n'
         self.cur_coords = {
@@ -173,7 +173,7 @@ module Gemwarrior
         }
         direction_text = '<<<'
       end
-      print_traveling_text(direction_text)
+      print_traveling_text(direction_text, sound)
     end
 
     def attack(world, monster)
@@ -217,8 +217,13 @@ module Gemwarrior
     end
     
     # TRAVEL    
-    def print_traveling_text(direction_text)
+    def print_traveling_text(direction_text, sound)
       Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
+      if sound
+        Music::cue([
+          {:freq_or_note => 'C3,E3'}
+        ])
+      end
     end
     
     # CHARACTER
