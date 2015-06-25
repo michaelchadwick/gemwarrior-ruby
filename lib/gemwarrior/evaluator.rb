@@ -3,6 +3,8 @@
 
 require 'pry'
 
+require_relative 'arena'
+
 module Gemwarrior  
   class Evaluator
     # CONSTANTS
@@ -309,7 +311,9 @@ module Gemwarrior
                 world.player.rest(world)
               end
             when 'arena'
-              return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
+              arena = Arena.new({:world => world, :player => world.player})
+              arena.start
+              #return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
             else
               return
             end

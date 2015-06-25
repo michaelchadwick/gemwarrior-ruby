@@ -93,7 +93,7 @@ module Gemwarrior
       
         if chance_of_ambush < 25
           battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)]})
-          return battle.start
+          return battle.start(is_arena = false, is_event = true)
         end
       end
 

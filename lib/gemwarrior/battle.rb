@@ -23,15 +23,26 @@ module Gemwarrior
       self.monster  = options.fetch(:monster)
     end
     
-    def start
+    def start(is_arena = nil, is_event = nil)
       print_battle_line
-      puts "You decide to attack the #{monster.name}!"
+      binding.pry
+      if is_arena
+        print 'Your opponent is now...'
+        Animation::run({:phrase => "#{monster.name.upcase}!", :speed => :slow})
+      elsif is_event
+        puts "You are attacked by #{monster.name}!"
+      else
+        puts "You decide to attack #{monster.name}!"
+      end
+      
       puts "#{monster.name} cries out: \"#{monster.battlecry}\"".colorize(:yellow)
 
       # first strike!
-      if monster_strikes_first?
-        puts "#{monster.name} strikes first!".colorize(:yellow)
-        monster_attacks_player
+      unless is_arena
+        if monster_strikes_first?(is_event)
+          puts "#{monster.name} strikes first!".colorize(:yellow)
+          monster_attacks_player
+        end
       end
       
       # main battle loop
@@ -156,8 +167,8 @@ module Gemwarrior
     end
     
     # MONSTER
-    def monster_strikes_first?
-      if (monster.dexterity > player.dexterity)
+    def monster_strikes_first?(is_event = nil)
+      if (monster.dexterity > player.dexterity) || is_event
         return true
       else
         dex_diff = player.dexterity - monster.dexterity
