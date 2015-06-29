@@ -9,8 +9,8 @@ module Gemwarrior
     attr_accessor :world, :player
 
     def initialize(options)
-      self.world    = options.fetch(:world)
-      self.player   = options.fetch(:player)
+      self.world    = options.fetch :world
+      self.player   = options.fetch :player
     end
     
     def start
@@ -20,7 +20,7 @@ module Gemwarrior
 
       loop do
         monster = generate_monster
-        battle = Battle.new({:world => self.world, :player => self.player, :monster => monster})
+        battle = Battle.new(world: self.world, player: self.player, monster: monster)
         battle.start(is_arena = true)
         
         monsters_vanquished += 1
@@ -34,8 +34,8 @@ module Gemwarrior
         else
           bonus_rox = monsters_vanquished * 25
           bonus_xp = monsters_vanquished * 10
-          player.rox = player.rox + bonus_rox
-          player.xp = player.xp + bonus_xp
+          player.rox += bonus_rox
+          player.xp += bonus_xp
           puts 'You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
           puts "You have gained #{bonus_rox} rox and #{bonus_xp} XP!"
 
@@ -50,26 +50,24 @@ module Gemwarrior
       random_monster = nil
       
       loop do
-        random_monster = world.monsters[rand(0..world.monsters.length-1)]
+        random_monster = world.monsters[rand 0..world.monsters.length-1 ]
           
-        unless random_monster.is_boss
-          break
-        end
+        break unless random_monster.is_boss
       end
 
       return random_monster.clone
     end
     
     def print_arena_intro
-      puts '**************************'.colorize(:red)
-      puts '* YOU ENTER THE ARENA!!! *'.colorize(:red)
-      puts '**************************'.colorize(:red)
+      puts '**************************'.colorize :red
+      puts '* YOU ENTER THE ARENA!!! *'.colorize :red
+      puts '**************************'.colorize :red
     end
     
     def print_arena_outro
-      puts '**************************'.colorize(:red)
-      puts '* YOU LEAVE THE ARENA!!! *'.colorize(:red)
-      puts '**************************'.colorize(:red)
+      puts '**************************'.colorize :red
+      puts '* YOU LEAVE THE ARENA!!! *'.colorize :red
+      puts '**************************'.colorize :red
     end
   end
 end
