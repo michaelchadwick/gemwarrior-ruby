@@ -3,18 +3,13 @@
 
 require_relative 'creature'
 require_relative '../battle'
+require_relative '../misc/name_generator'
 require_relative '../misc/player_levels'
 require_relative '../misc/wordlist'
 
 module Gemwarrior
   class Player < Creature
     include PlayerLevels
-  
-    # CONSTANTS
-    ## CHARACTER ATTRIBUTES
-    CHAR_UPPER_POOL       = (65..90).map{ |i| i.chr }
-    CHAR_LOWER_POOL       = (97..122).map{ |i| i.chr }
-    CHAR_LOWER_VOWEL_POOL = ['a','e','i','o','u','y']
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
                   :god_mode, :beast_mode, :use_wordnik
@@ -122,8 +117,12 @@ module Gemwarrior
 
     def modify_name
       print "Enter new name: "
+
       new_name = gets.chomp!
-      if new_name.length < 3 || new_name.length > 10
+
+      if new_name.length <= 0
+        return "You continue on as #{name}."
+      elsif new_name.length < 3 || new_name.length > 10
         return "'#{new_name}' is an invalid length. Make it between 3 and 10 characters, please."
       else
         name_to_add = ""
@@ -132,7 +131,6 @@ module Gemwarrior
         self.name = name_to_add
         return "New name, '#{name}', accepted."
       end
-      return nil
     end
     
     def list_inventory
@@ -242,14 +240,7 @@ module Gemwarrior
 
     # INIT
     def generate_name
-      default_name = []
-      letter_max = rand(5..10)
-      default_name[0] = CHAR_UPPER_POOL[rand(0..25)]
-      default_name[1] = CHAR_LOWER_VOWEL_POOL[rand(0..5)]
-      2.upto(letter_max) do |i|
-        default_name[i] = CHAR_LOWER_POOL[rand(0..25)]
-      end
-      return default_name.join
+      NameGenerator.new('fantasy').generate_name
     end
     
     def generate_face(use_wordnik)
