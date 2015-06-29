@@ -3,7 +3,6 @@
 
 require 'readline'
 require 'os'
-require 'hr'
 
 require_relative 'misc/wordlist'
 require_relative 'evaluator'
@@ -64,10 +63,10 @@ module Gemwarrior
     
     def print_splash_message
       print_logo
-      Hr.print '='
+      SPLASH_MESSAGE.length.times do print '=' end
       puts
       puts SPLASH_MESSAGE
-      Hr.print '='
+      SPLASH_MESSAGE.length.times do print '=' end
       puts
     end
     

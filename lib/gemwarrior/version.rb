@@ -2,5 +2,5 @@
 # Version of Gem Warrior
 
 module Gemwarrior
-  VERSION = "0.8.4"
+  VERSION = "0.8.5"
 end
