@@ -7,7 +7,7 @@ module Gemwarrior
       defaults = {
         :freq_or_note => 440, 
         :waveform     => 'saw', 
-        :volume       => 0.5, 
+        :volume       => 0.3, 
         :duration     => 500,
         :notext       => true
       }
