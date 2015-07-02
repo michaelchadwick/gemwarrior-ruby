@@ -307,8 +307,11 @@ module Gemwarrior
               world.player.heal_damage(result[:data])
               return
             when 'action'
-              if result[:data].eql?('rest')
+              case result[:data]
+              when 'rest'
                 world.player.rest(world)
+              when 'map'
+                world.print_map
               end
             when 'arena'
               arena = Arena.new({:world => world, :player => world.player})

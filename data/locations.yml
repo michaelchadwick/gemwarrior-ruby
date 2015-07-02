@@ -435,7 +435,7 @@
 
 -
   name:                 'Cave (Causeway)'
-  description:          'Paths lead north and west, but nothing of interest is in this causeway.'
+  description:          'Paths lead north and west as a dank, musty smell permeates your sinuses.'
   danger_level:         :moderate
   coords:
     x: 8
@@ -449,6 +449,8 @@
   monster_level_range:
     lo: 2
     hi: 3
+  items:
+  - Map
 -
   name:                 'Forest (Southeast)'
   description:          'Trees exist here, in droves.'

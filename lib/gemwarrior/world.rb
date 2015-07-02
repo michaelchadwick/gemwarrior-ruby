@@ -64,6 +64,14 @@ module Gemwarrior
       0.upto(WORLD_DIM_WIDTH-1) do |count_x|
         print "#{count_x}  "
       end
+      if debug_mode
+        puts
+        puts
+        puts "Current level: #{player.cur_coords[:z]}"
+        puts '| | = invalid location'
+        puts '|X| = valid location'
+        puts '|O| = player'
+      end
       return
     end
 
