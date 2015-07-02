@@ -65,7 +65,7 @@ module Gemwarrior
       
       self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
       self.aliases = %w(c i r l t u d e ue g a ch h q qq)
-      self.extras = %w(exit exit! x x)
+      self.extras = %w(exit exit! x x fight f)
       self.cmd_descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -354,7 +354,7 @@ module Gemwarrior
             ERROR_GO_PARAM_INVALID
           end
         end
-      when 'attack', 'a'
+      when 'attack', 'a', 'fight', 'f'
         if param1.nil?
           ERROR_ATTACK_PARAM_MISSING
         else
