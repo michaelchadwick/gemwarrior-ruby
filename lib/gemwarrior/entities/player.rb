@@ -216,7 +216,9 @@ module Gemwarrior
       Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
       if sound
         Music::cue([
-          {:freq_or_note => 'C3,E3'}
+          {:freq_or_note => 'C3', :duration => 75},
+          {:freq_or_note => 'D3', :duration => 75},
+          {:freq_or_note => 'E3', :duration => 75}
         ])
       end
     end

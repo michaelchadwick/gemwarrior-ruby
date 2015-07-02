@@ -12,7 +12,7 @@ module Gemwarrior
         :notext       => true
       }
 
-      th = Thread.new do
+      Thread.start {
         sequence.each do |note|
           note_to_play  = note[:freq_or_note]
           waveform      = note[:waveform].nil? ? defaults[:waveform] : note[:waveform]
@@ -28,9 +28,7 @@ module Gemwarrior
             :notext       => notext
           })
         end
-      end
-      
-      return th.join
+      }
     end
   end
 end
