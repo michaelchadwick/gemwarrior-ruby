@@ -18,8 +18,8 @@ module Gemwarrior
     attr_accessor :world, :eval
     
     def initialize(world, evaluator)
-      self.world = world
-      self.eval = evaluator
+      self.world  = world
+      self.eval   = evaluator
     end
 
     def start(initialCommand = nil)
@@ -42,23 +42,19 @@ module Gemwarrior
     private
     
     def clear_screen
-      if OS.windows?
-        system('cls')
-      else
-        system('clear')
-      end
+      OS.windows? ? system('cls') : system('clear')
     end
     
     def print_logo
-      puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
-      puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
-      puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
-      
       if world.sound
         Music::cue([
           {:freq_or_note => 'A3,E4,C#5,F#5', :duration => 1000}
         ])
       end
+
+      puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
+      puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
+      puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
     end
     
     def print_splash_message
