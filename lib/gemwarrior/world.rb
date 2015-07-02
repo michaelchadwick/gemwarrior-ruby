@@ -159,18 +159,18 @@ module Gemwarrior
     end
     
     def describe_entity(point, entity_name)
-      if point.list_items.map{|i| i.downcase}.include?(entity_name)
+      if point.has_item?(entity_name)
         point.items.each do |i|
           if i.name.downcase.eql?(entity_name.downcase)
             if debug_mode
-              return i.status
+              return i.describe
             else
               return i.description
             end
           end
         end
       elsif
-        if point.list_monsters.map{|m| m.downcase}.include?(entity_name)
+        if point.has_monster?(entity_name)
           point.monsters_abounding.each do |m|
             if m.name.downcase.eql?(entity_name.downcase)
               if debug_mode
@@ -182,7 +182,7 @@ module Gemwarrior
           end
         end
       elsif
-        if point.list_bosses.map{|b| b.downcase}.include?(entity_name)
+        if point.has_boss?(entity_name)
           point.bosses_abounding.each do |b|
             if b.name.downcase.eql?(entity_name.downcase)
               if debug_mode

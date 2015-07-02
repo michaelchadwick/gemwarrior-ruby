@@ -37,7 +37,15 @@ module Gemwarrior
     end
     
     def has_item?(item_name)
-      items.map(&:name).include?(item_name)
+      items.map{|i| i.name.downcase}.include?(item_name)
+    end
+    
+    def has_monster?(monster_name)
+      monsters_abounding.map{|m| m.name.downcase}.include?(monster_name)
+    end
+    
+    def has_boss?(boss_name)
+      bosses_abounding.map{|b| b.downcase}.include?(boss_name)
     end
     
     def add_item(item_name)
@@ -89,7 +97,7 @@ module Gemwarrior
       checked_for_monsters
     end
     
-    def has_monster?
+    def should_spawn_monster?
       found = false
       unless danger_level.eql?(:none)
         max = DANGER_LEVEL[danger_level]
@@ -146,7 +154,7 @@ module Gemwarrior
     end
     
     def populate_monsters(monsters_available, spawn = false)
-      if has_monster? || spawn
+      if should_spawn_monster? || spawn
         self.checked_for_monsters = true unless spawn
         self.monsters_abounding = [] unless spawn
         random_monster = nil
