@@ -29,11 +29,11 @@ module Gemwarrior
     end
     
     def status(debug_mode = false)
-      status_text =  name.ljust(26).upcase.colorize(:green)
+      status_text =  name.ljust(30).upcase.colorize(:green)
       status_text << coords.values.to_a.to_s.colorize(:white)
       status_text << " DL[#{danger_level.to_s.ljust(8)}] ".colorize(:white) if debug_mode
       status_text << " MLR[#{monster_level_range.to_s.ljust(6)}] ".colorize(:white) if debug_mode
-      status_text << " #{description}\n".colorize(:white)
+      status_text << "\n#{description}\n".colorize(:white)
     end
     
     def has_item?(item_name)
@@ -45,7 +45,7 @@ module Gemwarrior
     end
     
     def has_boss?(boss_name)
-      bosses_abounding.map{|b| b.downcase}.include?(boss_name)
+      bosses_abounding.map{|b| b.name.downcase}.include?(boss_name)
     end
     
     def add_item(item_name)

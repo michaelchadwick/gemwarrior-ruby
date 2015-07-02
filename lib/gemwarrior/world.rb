@@ -25,7 +25,7 @@ module Gemwarrior
       self.player     = nil
     end
 
-    def print_all_vars
+    def print_vars
       puts "======================\n"
       puts "All Variables in World\n"
       puts "======================\n"
@@ -73,10 +73,9 @@ module Gemwarrior
         puts '[PLAYERS]'
         player.check_self(false)
       when 'monsters'
-        puts "[MONSTERS](#{monsters.length})"
+        puts "[MONSTERS](#{monsters.length})".colorize(:yellow)
         if details
-          monsters.map { |m| print m.describe unless m.is_boss}
-          monsters.map { |m| print m.describe if m.is_boss }
+          monsters.map { |m| print m.describe }
           return
         else
           monster_text =  ">> monsters: #{monsters.map(&:name).join(', ')}"
@@ -88,10 +87,10 @@ module Gemwarrior
             item_count = item_count + 1
           end
         end
-        puts "[ITEMS](#{item_count})"
+        puts "[ITEMS](#{item_count})".colorize(:yellow)
         if details
           locations.each do |l|
-            l.items.map { |i| print i.status }
+            l.items.map { |i| print i.describe }
           end
           return
         else
@@ -102,7 +101,7 @@ module Gemwarrior
           ">> #{item_list.sort.join(', ')}"
         end
       when 'locations'
-        puts "[LOCATIONS](#{locations.length})"
+        puts "[LOCATIONS](#{locations.length})".colorize(:yellow)
         if details
           locations.map { |l| print l.status(self.debug_mode) }
           return

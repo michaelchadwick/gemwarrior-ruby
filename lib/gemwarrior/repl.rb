@@ -55,10 +55,10 @@ module Gemwarrior
       puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
       puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
       puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
+      puts '[[[[[[[DEBUGGING]]]]]]]'.colorize(:white) if world.debug_mode
     end
     
     def print_splash_message
-      print_logo
       SPLASH_MESSAGE.length.times do print '=' end
       puts
       puts SPLASH_MESSAGE
@@ -84,9 +84,10 @@ module Gemwarrior
     def setup_screen(initialCommand = nil)
       # welcome player to game
       clear_screen
+      print_logo
       print_splash_message
       print_fortune
-      print_help
+      print_help unless world.debug_mode
 
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?
@@ -94,6 +95,9 @@ module Gemwarrior
     
     def prompt
       prompt_template = "\n[LV:%3s][XP:%3s][ROX:%3s] -- [HP:%3s/%-3s][STM:%2s/%-2s] -- [%s @ %s]"
+      if world.debug_mode
+        prompt_template += "[%s, %s, %s]"
+      end
       prompt_vars_arr = [
         world.player.level,
         world.player.xp,
@@ -105,11 +109,15 @@ module Gemwarrior
         world.player.name,
         world.location_by_coords(world.player.cur_coords).name
       ]
+      if world.debug_mode
+        prompt_vars_arr.push(world.player.cur_coords[:x], world.player.cur_coords[:y], world.player.cur_coords[:z])
+      end
       puts (prompt_template % prompt_vars_arr).colorize(:yellow)
     end
     
     def read_line
-      Readline.readline(' GW> ', true).to_s
+      prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
+      Readline.readline(prompt_text, true).to_s
     end
   end
 end

@@ -111,13 +111,13 @@ module Gemwarrior
         when 'beast', 'bs'
           return world.player.beast_mode = !world.player.beast_mode
         when 'vars', 'v'
-          world.print_all_vars
+          world.print_vars
         when 'list', 'ls'
           if param1.nil?
             puts ERROR_LIST_PARAM_MISSING
             return DEBUG_LIST_PARAMS
           else
-            return world.list(param1)
+            return world.list(param1, param2)
           end
         when 'map', 'm'
           world.print_map
