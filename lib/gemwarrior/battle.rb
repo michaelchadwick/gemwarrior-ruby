@@ -225,7 +225,18 @@ module Gemwarrior
       puts "You have defeated #{monster.name}!\n".colorize(:green)
       if monster.is_boss
         if monster.name.eql?("Emerald")
+          Music::cue([
+            {:freq_or_note => 'G3', :duration => 50},
+            {:freq_or_note => 'A3', :duration => 50},
+            {:freq_or_note => 'B3', :duration => 50},
+            {:freq_or_note => 'C4', :duration => 50},
+            {:freq_or_note => 'D4', :duration => 50},
+            {:freq_or_note => 'E4', :duration => 50},
+            {:freq_or_note => 'F#4', :duration => 50},
+            {:freq_or_note => 'G4', :duration => 50}
+          ])
           puts monster.defeated_text
+          gets
           exit(0)
         else
           puts 'You just beat a boss monster. Way to go!'
