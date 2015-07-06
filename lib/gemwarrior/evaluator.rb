@@ -388,13 +388,13 @@ module Gemwarrior
         response = gets.chomp.downcase
         if (response.eql?("y") || response.eql?("yes"))
           puts QUIT_MESSAGE
-          exit(0)
+          return 'exit'
         else
           puts RESUME_MESSAGE
         end
       when 'quit!', 'exit!', 'qq', 'xx'
         puts QUIT_MESSAGE
-        exit(0)
+        return 'exit'
       else
         return
       end

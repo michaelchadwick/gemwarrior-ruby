@@ -307,7 +307,7 @@ module Gemwarrior
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       print_battle_line
-      exit(0)
+      return 'exit'
     end
     
     def player_escape?

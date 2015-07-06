@@ -3,7 +3,9 @@
 
 require 'readline'
 require 'os'
+require 'clocker'
 
+require_relative 'misc/timer'
 require_relative 'misc/wordlist'
 require_relative 'evaluator'
 require_relative 'version'
@@ -25,18 +27,32 @@ module Gemwarrior
     def start(initialCommand = nil)
       setup_screen(initialCommand)
 
-      # main loop
-      loop do
-        prompt
-        begin
-          input = read_line
-          puts eval.evaluate(input)
-        rescue Interrupt
-          puts
-          puts QUIT_MESSAGE
-          exit(0)
-        end
+      clocker = Clocker.new
+
+      at_exit do
+        duration = clocker.stop
+        puts "Gem Warrior played for #{duration[:secs]} secs and #{duration[:ms]} ms"
       end
+
+      clocker.clock {
+        # main loop
+        loop do
+          prompt
+          begin
+            input = read_line
+            result = eval.evaluate(input)
+            if result.eql?("exit")
+              exit
+            else
+              puts result
+            end
+          rescue Interrupt
+            puts
+            puts QUIT_MESSAGE
+            exit
+          end
+        end
+      }
     end
     
     private
