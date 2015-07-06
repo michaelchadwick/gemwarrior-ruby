@@ -35,7 +35,7 @@ module Gemwarrior
       puts "#{list("locations", true)}\n"
     end
 
-    def print_map
+    def print_map(floor)
       0.upto(WORLD_DIM_HEIGHT-1) do |count_y|
         print '  '
         0.upto(WORLD_DIM_WIDTH-1) do
@@ -44,7 +44,11 @@ module Gemwarrior
         print "\n"
         print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
         0.upto(WORLD_DIM_WIDTH-1) do |count_x|
-          cur_map_coords = {:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y, :z => self.player.cur_coords[:z]}
+          cur_map_coords = {
+            :x => count_x, 
+            :y => (WORLD_DIM_HEIGHT-1) - count_y, 
+            :z => floor.nil? ? self.player.cur_coords[:z] : floor.to_i
+          }
           if self.player.cur_coords.eql?(cur_map_coords)
             print '|O|'
           elsif location_by_coords(cur_map_coords)

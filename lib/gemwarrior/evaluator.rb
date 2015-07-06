@@ -120,7 +120,7 @@ module Gemwarrior
             return world.list(param1, param2)
           end
         when 'map', 'm'
-          world.print_map
+          world.print_map(param1)
         when 'stat', 'st', 's'
           if param1.nil?
             puts ERROR_DEBUG_STAT_PARAM_MISSING
