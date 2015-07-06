@@ -226,6 +226,25 @@
     hi: 4
 
 -
+  name:                 'Tunnel Alcove'
+  description:          'A moderately-sized alcove seems to have been blown out of the side of tunnel here, almost as if an actual bomb detonated, the remainder of the wall a mix of rock and wires.'
+  danger_level:         :moderate
+  coords:
+    x: 4
+    y: 5
+    z: -1
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  false
+  monster_level_range:
+    lo: 3
+    hi: 4
+  items:
+  - SmallHole
+
+-
   name:                 'Metal Tunnel'
   description:          'The walls of this underground tunnel shine, as if some otherworldly light source emanates directly from them. It is cold and narrow and you are not sure you are a huge fan of it.'
   danger_level:         :moderate

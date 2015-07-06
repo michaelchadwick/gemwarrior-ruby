@@ -316,10 +316,13 @@ module Gemwarrior
             when 'arena'
               arena = Arena.new({:world => world, :player => world.player})
               arena.start
-              #return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
             when 'item'
               world.location_by_coords(world.player.cur_coords).add_item(result[:data])
               return
+            when 'purchase'
+              result[:data].each do |i|
+                world.player.inventory.items.push(i)
+              end
             else
               return
             end

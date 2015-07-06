@@ -11,7 +11,8 @@ module Gemwarrior
                   :useable, 
                   :equippable, 
                   :equipped,
-                  :use
+                  :use,
+                  :reuse
 
     def use(inventory = nil)
       'That item does not do anything...yet.'
