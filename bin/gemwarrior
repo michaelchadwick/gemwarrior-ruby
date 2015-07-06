@@ -2,13 +2,19 @@
 
 require 'optparse'
 
-require_relative '../lib/gemwarrior/version'
 require_relative '../lib/gemwarrior/game'
+require_relative '../lib/gemwarrior/version'
 
-GAME_NAME = "Gem Warrior"
+GAME_NAME = 'Gem Warrior'
 
 def parse_options
-  options = {:debug_mode => false, :god_mode => false, :beast_mode => false, :use_wordnik => false, :sound => false}
+  options = {
+    :debug_mode   => false, 
+    :god_mode     => false, 
+    :beast_mode   => false, 
+    :use_wordnik  => false, 
+    :sound        => false
+  }
 
   optparse = OptionParser.new do |opts|
     opts.on('-v', '--version', 'Display version number and exit') do
@@ -19,19 +25,19 @@ def parse_options
     opts.on('-d', '--debug', 'Turn debug on') do
       options[:debug_mode] = true
     end
-    
+
     opts.on('-g', '--god', 'Set godmode to true on load') do
       options[:god_mode] = true
     end
-    
+
     opts.on('-b', '--beast', 'Set beastmode to true on load') do
       options[:beast_mode] = true
     end
-    
+
     opts.on('-w', '--wordnik', 'Use Wordnik to generate more diverse, dynamic descriptors of entities') do
       options[:use_wordnik] = true
     end
-    
+
     opts.on('-s', '--sound', 'Turn sound on') do
       options[:sound] = true
     end
@@ -45,9 +51,9 @@ end
 def print_error(error)
   case error
   when OptionParser::InvalidOption
-    puts "#{$PROGRAM_NAME}: illegal option #{error.args.join(' ')}"
+    puts "#{$GAME_NAME}: illegal option #{error.args.join(' ')}"
   else
-    puts "An unexpected error occurred while running #{$PROGRAM_NAME}:"
+    puts "An unexpected error occurred while running #{$GAME_NAME}:"
     puts "  #{error}\n"
   end
 end
