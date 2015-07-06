@@ -12,36 +12,42 @@ module Gemwarrior
     include PlayerLevels
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
-                  :god_mode, :beast_mode, :use_wordnik
+                  :god_mode, :beast_mode, :use_wordnik,
+                  :monsters_killed, :items_taken, :movements_made, :rests_taken
 
     def initialize(options)
-      self.name         = generate_name
-      self.description  = options.fetch(:description)
-      self.use_wordnik  = options.fetch(:use_wordnik)
-      
-      self.face         = generate_face(use_wordnik)
-      self.hands        = generate_hands(use_wordnik)
-      self.mood         = generate_mood(use_wordnik)
+      self.name             = generate_name
+      self.description      = options.fetch(:description)
+      self.use_wordnik      = options.fetch(:use_wordnik)
 
-      self.level        = options.fetch(:level)
-      self.xp           = options.fetch(:xp)
-      self.hp_cur       = options.fetch(:hp_cur)
-      self.hp_max       = options.fetch(:hp_max)
-      self.atk_lo       = options.fetch(:atk_lo)
-      self.atk_hi       = options.fetch(:atk_hi)
+      self.face             = generate_face(use_wordnik)
+      self.hands            = generate_hands(use_wordnik)
+      self.mood             = generate_mood(use_wordnik)
 
-      self.defense      = options.fetch(:defense)
-      self.dexterity    = options.fetch(:dexterity)
-      
-      self.inventory    = Inventory.new
-      self.rox          = options.fetch(:rox)
+      self.level            = options.fetch(:level)
+      self.xp               = options.fetch(:xp)
+      self.hp_cur           = options.fetch(:hp_cur)
+      self.hp_max           = options.fetch(:hp_max)
+      self.atk_lo           = options.fetch(:atk_lo)
+      self.atk_hi           = options.fetch(:atk_hi)
 
-      self.stam_cur     = options.fetch(:stam_cur)
-      self.stam_max     = options.fetch(:stam_max)
-      self.cur_coords   = options.fetch(:cur_coords)
+      self.defense          = options.fetch(:defense)
+      self.dexterity        = options.fetch(:dexterity)
       
-      self.god_mode     = options.fetch(:god_mode)
-      self.beast_mode   = options.fetch(:beast_mode)      
+      self.inventory        = Inventory.new
+      self.rox              = options.fetch(:rox)
+
+      self.stam_cur         = options.fetch(:stam_cur)
+      self.stam_max         = options.fetch(:stam_max)
+      self.cur_coords       = options.fetch(:cur_coords)
+
+      self.god_mode         = options.fetch(:god_mode)
+      self.beast_mode       = options.fetch(:beast_mode)
+      
+      self.monsters_killed  = 0
+      self.items_taken      = 0
+      self.movements_made   = 0
+      self.rests_taken      = 0
     end
 
     def check_self(debug_mode = false, show_pic = true)
@@ -76,11 +82,11 @@ module Gemwarrior
       
       self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end
-    
+
     def rest(world)
       cur_loc = world.location_by_coords(cur_coords)
 
-      if cur_loc.has_monster?
+      if cur_loc.should_spawn_monster?
         chance_of_ambush = rand(0..100)
       
         if chance_of_ambush < 25
@@ -89,6 +95,9 @@ module Gemwarrior
         end
       end
 
+      # stats
+      self.rests_taken += 1
+
       hours = rand(1..23)
       minutes = rand(1..59)
       seconds = rand(1..59)
@@ -96,9 +105,9 @@ module Gemwarrior
       hours_text = hours == 1 ? "hour" : "hours"
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
-      
+
       Animation::run({:phrase => '** Zzzzz **'})
-      
+
       if self.inventory.has_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
         self.hp_cur = self.hp_max
         
@@ -132,7 +141,7 @@ module Gemwarrior
         return "New name, '#{name}', accepted."
       end
     end
-    
+
     def list_inventory
       inventory.list_contents
     end 
@@ -169,17 +178,20 @@ module Gemwarrior
         direction_text = '<<<'
       end
       print_traveling_text(direction_text, sound)
+
+      # stats
+      self.movements_made += 1
     end
 
     def attack(world, monster)
       battle = Battle.new({:world => world, :player => self, :monster => monster})
       battle.start
     end
-    
+
     def has_weapon_equipped?
       self.inventory.weapon
     end
-    
+
     def cur_weapon_name
       if has_weapon_equipped?
         return " with your #{inventory.weapon.name}"
@@ -187,7 +199,7 @@ module Gemwarrior
         return nil
       end
     end
-    
+
     def take_damage(dmg)
       self.hp_cur = self.hp_cur - dmg.to_i
       
@@ -195,7 +207,7 @@ module Gemwarrior
         player_death
       end
     end
-    
+
     def heal_damage(dmg)
       self.hp_cur = self.hp_cur + dmg.to_i
       if self.hp_cur > self.hp_max
@@ -211,7 +223,7 @@ module Gemwarrior
       exit(0)
     end
     
-    # TRAVEL    
+    # TRAVEL
     def print_traveling_text(direction_text, sound)
       Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
       if sound

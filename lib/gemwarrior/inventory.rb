@@ -81,12 +81,16 @@ module Gemwarrior
       end
     end
     
-    def add_item(cur_loc, item_name)
+    def add_item(cur_loc, item_name, player)
       cur_loc.items.each do |i|
         if i.name.eql?(item_name)
           if i.takeable
             items.push(i)
             cur_loc.remove_item(item_name)
+            
+            # stats
+            player.items_taken += 1
+            
             return "Added #{item_name} to your increasing collection of bits of tid."
           else
             return ERROR_ITEM_ADD_UNTAKEABLE

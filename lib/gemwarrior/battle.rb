@@ -223,7 +223,12 @@ module Gemwarrior
     
     def monster_death
       puts "You have defeated #{monster.name}!\n".colorize(:green)
+
+      # stats
+      world.player.monsters_killed += 1
+      
       if monster.is_boss
+        # end game boss!
         if monster.name.eql?("Emerald")
           Music::cue([
             {:freq_or_note => 'G3', :duration => 50},

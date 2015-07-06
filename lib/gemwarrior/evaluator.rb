@@ -254,7 +254,7 @@ module Gemwarrior
         if param1.nil?
           ERROR_TAKE_PARAM_MISSING
         else
-          world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param1)
+          world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param1, world.player)
         end
       when 'use', 'u'
         if param1.nil?
