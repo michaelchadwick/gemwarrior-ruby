@@ -32,20 +32,7 @@ module Gemwarrior
       at_exit do
         pl = world.player
         duration = clocker.stop
-        puts  '######################################################################'
-        puts
-        print 'Gem Warrior'.colorize(:color => :white, :background => :black)
-        print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} minutes, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} seconds, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} milliseconds\n"
-        puts  '----------------------------------------------------------------------'
-        print "Player killed #{pl.monsters_killed.to_s.colorize(:color => :white, :background => :black)} monster(s)"
-        print "\n".ljust(8)
-        print "picked up #{pl.items_taken.to_s.colorize(:color => :white, :background => :black)} item(s)"
-        print "\n".ljust(8)
-        print "traveled #{pl.movements_made.to_s.colorize(:color => :white, :background => :black)} time(s)"
-        print "\n".ljust(8)
-        print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
-        puts
-        puts '######################################################################'
+        print_stats(duration, pl)
       end
 
       clocker.clock {
@@ -109,6 +96,23 @@ module Gemwarrior
       puts '* Type \'help\' for complete command list'
       puts '* Most commands can be abbreviated to their first letter *'
       puts
+    end
+    
+    def print_stats(duration, pl)
+      puts  '######################################################################'
+      puts
+      print 'Gem Warrior'.colorize(:color => :white, :background => :black)
+      print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} minutes, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} seconds, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} milliseconds\n"
+      puts  '----------------------------------------------------------------------'
+      print "Player killed #{pl.monsters_killed.to_s.colorize(:color => :white, :background => :black)} monster(s)"
+      print "\n".ljust(8)
+      print "picked up #{pl.items_taken.to_s.colorize(:color => :white, :background => :black)} item(s)"
+      print "\n".ljust(8)
+      print "traveled #{pl.movements_made.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      print "\n".ljust(8)
+      print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      puts
+      puts '######################################################################'
     end
 
     def setup_screen(initialCommand = nil)
