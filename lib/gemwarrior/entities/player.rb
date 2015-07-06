@@ -11,7 +11,7 @@ module Gemwarrior
   class Player < Creature
     include PlayerLevels
 
-    attr_accessor :stam_cur, :stam_max, :cur_coords, 
+    attr_accessor :stam_cur, :stam_max, :cur_coords,
                   :god_mode, :beast_mode, :use_wordnik,
                   :monsters_killed, :items_taken, :movements_made, :rests_taken
 
@@ -51,9 +51,7 @@ module Gemwarrior
     end
 
     def check_self(debug_mode = false, show_pic = true)
-      unless show_pic == false
-        print_char_pic
-      end
+      print_char_pic unless show_pic == false
 
       weapon_slot = ''
       if has_weapon_equipped?
@@ -64,23 +62,23 @@ module Gemwarrior
         weapon_slot = '(unarmed)'
       end
 
-      self_text =  "NAME      : #{self.name}\n"
-      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n"
+      self_text =  "NAME      : #{name}\n"
+      self_text << "POSITION  : #{cur_coords.values.to_a}\n"
       self_text << "WEAPON    : #{weapon_slot}\n"
-      self_text << "LEVEL     : #{self.level}\n"
-      self_text << "EXPERIENCE: #{self.xp}\n"
-      self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
-      self_text << "ATTACK    : #{self.atk_lo}-#{self.atk_hi}\n"
-      self_text << "DEXTERITY : #{self.dexterity}\n"
-      self_text << "DEFENSE   : #{self.defense}\n"
+      self_text << "LEVEL     : #{level}\n"
+      self_text << "EXPERIENCE: #{xp}\n"
+      self_text << "HIT POINTS: #{hp_cur}/#{hp_max}\n"
+      self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
+      self_text << "DEXTERITY : #{dexterity}\n"
+      self_text << "DEFENSE   : #{defense}\n"
       if debug_mode
-        self_text << "GOD_MODE  : #{self.god_mode}\n"
-        self_text << "BEAST_MODE: #{self.beast_mode}\n"
+        self_text << "GOD_MODE  : #{god_mode}\n"
+        self_text << "BEAST_MODE: #{beast_mode}\n"
       end
 
-      self_text << "\n#{self.description}\n\n"
+      self_text << "\n#{description}\n\n"
 
-      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
+      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{face}, hands are #{hands}, and general mood is #{mood}.\n"
     end
 
     def rest(world)
@@ -90,7 +88,7 @@ module Gemwarrior
         chance_of_ambush = rand(0..100)
 
         if chance_of_ambush < 25
-          battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)]})
+          battle = Battle.new(world: world, player: self, monster: cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length - 1)])
           return battle.start(is_arena = false, is_event = true)
         end
       end
@@ -102,19 +100,19 @@ module Gemwarrior
       minutes = rand(1..59)
       seconds = rand(1..59)
 
-      hours_text = hours == 1 ? "hour" : "hours"
-      mins_text = minutes == 1 ? "minute" : "minutes"
-      secs_text = seconds == 1 ? "second" : "seconds"
+      hours_text = hours == 1 ? 'hour' : 'hours'
+      mins_text = minutes == 1 ? 'minute' : 'minutes'
+      secs_text = seconds == 1 ? 'second' : 'seconds'
 
-      Animation::run({:phrase => '** Zzzzz **'})
+      Animation.run(phrase: '** Zzzzz **')
 
-      if self.inventory.has_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
-        self.hp_cur = self.hp_max
+      if inventory.has_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
+        self.hp_cur = hp_max
 
         return "You brandish your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
       else
-        self.hp_cur = self.hp_cur.to_i + rand(10..15)
-        self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
+        self.hp_cur = hp_cur.to_i + rand(10..15)
+        self.hp_cur = hp_max if hp_cur > hp_max
 
         return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
       end
@@ -125,7 +123,7 @@ module Gemwarrior
     end
 
     def modify_name
-      print "Enter new name: "
+      print 'Enter new name: '
 
       new_name = gets.chomp!
 
@@ -134,9 +132,9 @@ module Gemwarrior
       elsif new_name.length < 3 || new_name.length > 10
         return "'#{new_name}' is an invalid length. Make it between 3 and 10 characters, please."
       else
-        name_to_add = ""
+        name_to_add = ''
         name_to_add << new_name[0].upcase
-        name_to_add << new_name[1..new_name.length-1].downcase
+        name_to_add << new_name[1..new_name.length - 1].downcase
         self.name = name_to_add
         return "New name, '#{name}', accepted."
       end
@@ -144,36 +142,36 @@ module Gemwarrior
 
     def list_inventory
       inventory.list_contents
-    end 
+    end
 
-    def go(locations, direction, sound)
+    def go(_locations, direction, sound)
       case direction
       when 'north', 'n'
         self.cur_coords = {
-          :x => cur_coords[:x], 
-          :y => cur_coords[:y]+1,
-          :z => cur_coords[:z]
+          x: cur_coords[:x],
+          y: cur_coords[:y] + 1,
+          z: cur_coords[:z]
         }
         direction_text = '^^^'
       when 'east', 'e'
         self.cur_coords = {
-          :x => cur_coords[:x]+1, 
-          :y => cur_coords[:y],
-          :z => cur_coords[:z]
+          x: cur_coords[:x] + 1,
+          y: cur_coords[:y],
+          z: cur_coords[:z]
         }
         direction_text = '>>>'
       when 'south', 's'
         self.cur_coords = {
-          :x => cur_coords[:x], 
-          :y => cur_coords[:y]-1,
-          :z => cur_coords[:z]
+          x: cur_coords[:x],
+          y: cur_coords[:y] - 1,
+          z: cur_coords[:z]
         }
         direction_text = 'vvv'
       when 'west', 'w'
         self.cur_coords = {
-          :x => cur_coords[:x]-1, 
-          :y => cur_coords[:y],
-          :z => cur_coords[:z]
+          x: cur_coords[:x] - 1,
+          y: cur_coords[:y],
+          z: cur_coords[:z]
         }
         direction_text = '<<<'
       end
@@ -184,12 +182,12 @@ module Gemwarrior
     end
 
     def attack(world, monster)
-      battle = Battle.new({:world => world, :player => self, :monster => monster})
+      battle = Battle.new(world: world, player: self, monster: monster)
       battle.start
     end
 
     def has_weapon_equipped?
-      self.inventory.weapon
+      inventory.weapon
     end
 
     def cur_weapon_name
@@ -201,18 +199,14 @@ module Gemwarrior
     end
 
     def take_damage(dmg)
-      self.hp_cur = self.hp_cur - dmg.to_i
+      self.hp_cur = hp_cur - dmg.to_i
 
-      if hp_cur <= 0
-        player_death
-      end
+      player_death if hp_cur <= 0
     end
 
     def heal_damage(dmg)
-      self.hp_cur = self.hp_cur + dmg.to_i
-      if self.hp_cur > self.hp_max
-        self.hp_cur = self.hp_max
-      end
+      self.hp_cur = hp_cur + dmg.to_i
+      self.hp_cur = hp_max if hp_cur > hp_max
     end
 
     private
@@ -225,19 +219,19 @@ module Gemwarrior
 
     # TRAVEL
     def print_traveling_text(direction_text, sound)
-      Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
+      Animation.run(oneline: false, phrase: "* #{direction_text} *")
       if sound
-        Music::cue([
-          {:freq_or_note => 'C3', :duration => 75},
-          {:freq_or_note => 'D3', :duration => 75},
-          {:freq_or_note => 'E3', :duration => 75}
+        Music.cue([
+          { freq_or_note: 'C3', duration: 75 },
+          { freq_or_note: 'D3', duration: 75 },
+          { freq_or_note: 'E3', duration: 75 }
         ])
       end
     end
 
     # CHARACTER
     def print_char_pic
-      char_pic = ""
+      char_pic = ''
       char_pic << "************\n"
       char_pic << "*    ()    *\n"
       char_pic << "*  \\-||-/  *\n"

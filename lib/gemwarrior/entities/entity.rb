@@ -3,7 +3,7 @@
 
 module Gemwarrior
   class Entity
-    attr_accessor :name, 
+    attr_accessor :name,
                   :description
 
     def status

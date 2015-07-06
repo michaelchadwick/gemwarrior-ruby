@@ -29,7 +29,7 @@ module Gemwarrior
 
       if is_arena
         print 'Your opponent is now...'
-        Animation::run({:phrase => "#{monster.name.upcase}!", :speed => :slow})
+        Animation.run(phrase: "#{monster.name.upcase}!", speed: :slow)
       elsif is_event
         puts "You are attacked by #{monster.name}!"
       else
@@ -55,30 +55,24 @@ module Gemwarrior
           player_death
         end
 
-        if player_near_death?
-          puts "You are almost dead!\n".colorize(:yellow)
-        end
+        puts "You are almost dead!\n".colorize(:yellow) if player_near_death?
         if monster_near_death?
           puts "#{monster.name} is almost dead!\n".colorize(:yellow)
         end
 
         puts
         print "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
-        if world.debug_mode
-          print " (LVL: #{player.level})"
-        end
+        print " (LVL: #{player.level})" if world.debug_mode
         print "\n"
 
-        print "MONSTER :: "
-        if world.debug_mode || PlayerLevels::get_level_stats(player.level)[:special_abilities].include?(:rocking_vision)
+        print 'MONSTER :: '
+        if world.debug_mode || PlayerLevels.get_level_stats(player.level)[:special_abilities].include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
-          print "???"
+          print '???'
         end
-        print " HP"
-        if world.debug_mode
-          print " (LVL: #{monster.level})"
-        end
+        print ' HP'
+        print " (LVL: #{monster.level})" if world.debug_mode
         print "\n"
         puts
 
@@ -112,7 +106,7 @@ module Gemwarrior
               return
             end
           else
-            puts "You miss entirely!".colorize(:yellow)
+            puts 'You miss entirely!'.colorize(:yellow)
           end
         when 'defend', 'd'
           puts 'You dig in and defend this round.'
@@ -122,7 +116,7 @@ module Gemwarrior
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
           puts "It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
           if world.debug_mode
-            puts "If defeated, will receive:"
+            puts 'If defeated, will receive:'
             puts " >> XP   : #{monster.xp}"
             puts " >> ROX  : #{monster.rox}"
             puts " >> ITEMS: #{monster.inventory.list_contents}"
@@ -135,7 +129,7 @@ module Gemwarrior
             print_escape_text
             return
           else
-            puts "You were not able to run away! :-(".colorize(:yellow)
+            puts 'You were not able to run away! :-('.colorize(:yellow)
           end
         else
           puts ERROR_ATTACK_OPTION_INVALID
@@ -149,10 +143,10 @@ module Gemwarrior
 
     private
 
-    # NEUTRAL   
+    # NEUTRAL
     def calculate_damage_to(entity)
       miss = rand(0..(100 + entity.defense))
-      if (miss < 15)
+      if miss < 15
         0
       else
         if entity.eql?(monster)
@@ -164,7 +158,7 @@ module Gemwarrior
           rand(atk_range)
         else
           dmg = rand(monster.atk_lo..monster.atk_hi)
-          dmg = dmg - (entity.defense / 2) if player_defending
+          dmg -= (entity.defense / 2) if player_defending
           return dmg
         end
       end
@@ -177,11 +171,11 @@ module Gemwarrior
       if entity.eql?(monster)
         who_gets_wounded = "> You wound #{monster.name} for "
       else
-        who_gets_wounded = "> You are wounded for "
+        who_gets_wounded = '> You are wounded for '
       end
 
       print who_gets_wounded
-      Animation::run({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })
+      Animation.run(phrase: dmg.to_s, speed: :slow, oneline: true, alpha: false, random: false)
       print " point(s)!\n"
     end
 
@@ -205,9 +199,7 @@ module Gemwarrior
       dmg = calculate_damage_to(player)
       if dmg > 0
         take_damage(player, dmg)
-        if player_dead?
-          player_death
-        end
+        player_death if player_dead?
       else
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
@@ -229,16 +221,16 @@ module Gemwarrior
 
       if monster.is_boss
         # end game boss!
-        if monster.name.eql?("Emerald")
-          Music::cue([
-            {:freq_or_note => 'G3', :duration => 50},
-            {:freq_or_note => 'A3', :duration => 50},
-            {:freq_or_note => 'B3', :duration => 50},
-            {:freq_or_note => 'C4', :duration => 50},
-            {:freq_or_note => 'D4', :duration => 50},
-            {:freq_or_note => 'E4', :duration => 50},
-            {:freq_or_note => 'F#4', :duration => 50},
-            {:freq_or_note => 'G4', :duration => 50}
+        if monster.name.eql?('Emerald')
+          Music.cue([
+            { freq_or_note: 'G3', duration: 50 },
+            { freq_or_note: 'A3', duration: 50 },
+            { freq_or_note: 'B3', duration: 50 },
+            { freq_or_note: 'C4', duration: 50 },
+            { freq_or_note: 'D4', duration: 50 },
+            { freq_or_note: 'E4', duration: 50 },
+            { freq_or_note: 'F#4', duration: 50 },
+            { freq_or_note: 'G4', duration: 50 }
           ])
           puts monster.defeated_text
           gets
@@ -266,7 +258,7 @@ module Gemwarrior
 
     # PLAYER
     def update_player_stats
-      old_player_level = PlayerLevels::check_level(player.xp)
+      old_player_level = PlayerLevels.check_level(player.xp)
 
       player.xp = player.xp + monster.xp
       player.rox = player.rox + monster.rox
@@ -276,11 +268,11 @@ module Gemwarrior
         player.inventory.items.concat monster_items unless monster_items.empty?
       end
 
-      new_player_level = PlayerLevels::check_level(player.xp)
+      new_player_level = PlayerLevels.check_level(player.xp)
 
       if new_player_level > old_player_level
-        Animation::run({:phrase => '** LEVEL UP! **'})
-        new_stats = PlayerLevels::get_level_stats(new_player_level)
+        Animation.run(phrase: '** LEVEL UP! **')
+        new_stats = PlayerLevels.get_level_stats(new_player_level)
 
         player.level = new_stats[:level]
         puts "You are now level #{player.level}!"
@@ -312,11 +304,11 @@ module Gemwarrior
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       print_battle_line
-      return 'exit'
+      'exit'
     end
 
     def player_escape?
-      if (player.dexterity > monster.dexterity)
+      if player.dexterity > monster.dexterity
         return true
       else
         dex_diff = monster.dexterity - player.dexterity
@@ -332,7 +324,7 @@ module Gemwarrior
     # STATUS TEXT
 
     def print_escape_text
-      Animation::run({ :phrase => "** POOF **", :oneline => true })
+      Animation.run(phrase: '** POOF **', oneline: true)
     end
 
     def print_battle_line

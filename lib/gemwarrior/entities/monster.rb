@@ -12,7 +12,7 @@ module Gemwarrior
 
     def initialize
       if [true, false].sample
-        self.inventory = Inventory.new([INVENTORY_ITEMS_DEFAULT[rand(0..INVENTORY_ITEMS_DEFAULT.length-1)]])
+        self.inventory = Inventory.new([INVENTORY_ITEMS_DEFAULT[rand(0..INVENTORY_ITEMS_DEFAULT.length - 1)]])
       else
         self.inventory = Inventory.new
       end

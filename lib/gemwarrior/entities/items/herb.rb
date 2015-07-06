@@ -16,10 +16,10 @@ module Gemwarrior
       self.equipped     = false
     end
 
-    def use(player = nil)
+    def use(_player = nil)
       puts 'You place the herb in your mouth, testing its texture. The mysterious herb is easily chewable, and you are able to swallow it without much effort. Slight tingles travel up and down your spine.'
       puts '>> You regain a few hit points.'
-      {:type => 'health', :data => rand(3..5)}
+      { type: 'health', data: rand(3..5) }
     end
   end
 end

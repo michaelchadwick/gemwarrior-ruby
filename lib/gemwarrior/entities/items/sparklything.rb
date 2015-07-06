@@ -16,10 +16,10 @@ module Gemwarrior
       self.equipped     = false
     end
 
-    def use(player = nil)
+    def use(_player = nil)
       puts 'Everything, and I mean *everything*, begins to sparkle. Huh.'
       puts
-      {:type => nil, :data => nil}
+      { type: nil, data: nil }
     end
   end
 end

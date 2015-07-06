@@ -9,7 +9,7 @@ require_relative 'entities/location'
 module Gemwarrior
   class World
     # CONSTANTS
-    LOCATION_DATA_FILE  = "data/locations.yml"
+    LOCATION_DATA_FILE  = 'data/locations.yml'
     WORLD_DIM_WIDTH     = 10
     WORLD_DIM_HEIGHT    = 10
 
@@ -29,23 +29,23 @@ module Gemwarrior
       puts "======================\n"
       puts "All Variables in World\n"
       puts "======================\n"
-      puts "#{list("players", true)}\n"
-      puts "#{list("monsters", true)}\n\n"
-      puts "#{list("items", true)}\n\n"
-      puts "#{list("locations", true)}\n"
+      puts "#{list('players', true)}\n"
+      puts "#{list('monsters', true)}\n\n"
+      puts "#{list('items', true)}\n\n"
+      puts "#{list('locations', true)}\n"
     end
 
     def print_map
-      0.upto(WORLD_DIM_HEIGHT-1) do |count_y|
+      0.upto(WORLD_DIM_HEIGHT - 1) do |count_y|
         print '  '
-        0.upto(WORLD_DIM_WIDTH-1) do
+        0.upto(WORLD_DIM_WIDTH - 1) do
           print '---'
         end
         print "\n"
-        print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
-        0.upto(WORLD_DIM_WIDTH-1) do |count_x|
-          cur_map_coords = {:x => count_x, :y => (WORLD_DIM_HEIGHT-1) - count_y, :z => self.player.cur_coords[:z]}
-          if self.player.cur_coords.eql?(cur_map_coords)
+        print "#{(WORLD_DIM_HEIGHT - 1) - count_y} "
+        0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
+          cur_map_coords = { x: count_x, y: (WORLD_DIM_HEIGHT - 1) - count_y, z: player.cur_coords[:z] }
+          if player.cur_coords.eql?(cur_map_coords)
             print '|O|'
           elsif location_by_coords(cur_map_coords)
             print '|X|'
@@ -56,12 +56,12 @@ module Gemwarrior
         print "\n"
       end
       print '  '
-      0.upto(WORLD_DIM_WIDTH-1) do
+      0.upto(WORLD_DIM_WIDTH - 1) do
         print '---'
       end
       puts
       print '   '
-      0.upto(WORLD_DIM_WIDTH-1) do |count_x|
+      0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
         print "#{count_x}  "
       end
       if debug_mode
@@ -72,7 +72,7 @@ module Gemwarrior
         puts '|X| = valid location'
         puts '|O| = player'
       end
-      return
+      nil
     end
 
     def list(param, details = false)
@@ -91,8 +91,8 @@ module Gemwarrior
       when 'items'
         item_count = 0
         locations.each do |l|
-          l.items.each do |i|
-            item_count = item_count + 1
+          l.items.each do |_i|
+            item_count += 1
           end
         end
         puts "[ITEMS](#{item_count})".colorize(:yellow)
@@ -111,7 +111,7 @@ module Gemwarrior
       when 'locations'
         puts "[LOCATIONS](#{locations.length})".colorize(:yellow)
         if details
-          locations.map { |l| print l.status(self.debug_mode) }
+          locations.map { |l| print l.status(debug_mode) }
           return
         else
           ">> #{locations.map(&:name).join(', ')}"
@@ -123,34 +123,30 @@ module Gemwarrior
 
     def location_by_coords(coords)
       locations.each do |l|
-        if l.coords.eql?(coords)
-          return l
-        end
+        return l if l.coords.eql?(coords)
       end
-      return nil
+      nil
     end
 
     def location_coords_by_name(name)
       locations.each do |l|
-        if l.name.downcase.eql?(name.downcase)
-          return l.coords
-        end
+        return l.coords if l.name.downcase.eql?(name.downcase)
       end
-      return nil
+      nil
     end
 
     def describe(point)
-      desc_text = ""
+      desc_text = ''
       desc_text << "[ #{point.name} ]".colorize(:green)
 
       if debug_mode
-        desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
+        desc_text << " DL[#{point.danger_level}] MLR[#{point.monster_level_range}]".colorize(:yellow)
       end
 
       desc_text << "\n"
       desc_text << point.description
 
-      point.populate_monsters(self.monsters) unless point.checked_for_monsters?
+      point.populate_monsters(monsters) unless point.checked_for_monsters?
 
       desc_text << "\n >> Curious object(s): #{point.list_items.join(', ')}" unless point.list_items.empty?
       desc_text << "\n >> Monster(s) abound: #{point.list_monsters.join(', ')}" unless point.list_monsters.empty?
@@ -162,7 +158,7 @@ module Gemwarrior
         desc_text << point.list_actionable_words.colorize(:white)
       end
 
-      return desc_text
+      desc_text
     end
 
     def describe_entity(point, entity_name)
@@ -213,12 +209,10 @@ module Gemwarrior
       possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
 
       possible_combatants.each do |combatant|
-        if combatant.downcase.eql?(monster_name.downcase)
-          return true
-        end
+        return true if combatant.downcase.eql?(monster_name.downcase)
       end
 
-      return false
+      false
     end
 
     private
@@ -230,7 +224,7 @@ module Gemwarrior
           items.push(eval(name).new)
         end
       end
-      return items
+      items
     end
 
     def create_boss_objects(bosses_names)
@@ -240,27 +234,27 @@ module Gemwarrior
           bosses.push(eval(name).new)
         end
       end
-      return bosses
+      bosses
     end
 
     def init_monsters
       Dir.glob('lib/gemwarrior/entities/monsters/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+        require_relative item[item.index('/', item.index('/') + 1) + 1..item.length]
       end
       Dir.glob('lib/gemwarrior/entities/monsters/bosses/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+        require_relative item[item.index('/', item.index('/') + 1) + 1..item.length]
       end
 
       self.monsters = [
-        Alexandrat.new, 
-        Amberoo.new, 
-        Amethystle.new, 
-        Apatiger.new, 
-        Aquamarine.new, 
-        Bloodstorm.new, 
-        Citrinaga.new, 
-        Coraliz.new, 
-        Cubicat.new, 
+        Alexandrat.new,
+        Amberoo.new,
+        Amethystle.new,
+        Apatiger.new,
+        Aquamarine.new,
+        Bloodstorm.new,
+        Citrinaga.new,
+        Coraliz.new,
+        Cubicat.new,
         Diaman.new,
         Emerald.new,
         Garynetty.new
@@ -269,36 +263,34 @@ module Gemwarrior
 
     def init_locations
       Dir.glob('lib/gemwarrior/entities/items/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+        require_relative item[item.index('/', item.index('/') + 1) + 1..item.length]
       end
 
       locations = []
 
       location_data = YAML.load_file(LOCATION_DATA_FILE)
 
-      location_data.each {|l|
-        locations.push(Location.new({
-          :name                 => l["name"],
-          :description          => l["description"],
-          :danger_level         => l["danger_level"],
-          :monster_level_range  => l["monster_level_range"].nil? ? nil : l["monster_level_range"]["lo"]..l["monster_level_range"]["hi"],
-          :coords               => {
-                                    :x => l["coords"]["x"], 
-                                    :y => l["coords"]["y"],
-                                    :z => l["coords"]["z"]
-                                   },
-          :locs_connected       => {
-                                    :north => l["locs_connected"]["north"], 
-                                    :east => l["locs_connected"]["east"], 
-                                    :south => l["locs_connected"]["south"], 
-                                    :west => l["locs_connected"]["west"]
-                                   },
-          :items                => create_item_objects(l["items"]),
-          :bosses_abounding     => create_boss_objects(l["bosses_abounding"])
-        }))
-      }
+      location_data.each do|l|
+        locations.push(Location.new(name: l['name'],
+                                    description: l['description'],
+                                    danger_level: l['danger_level'],
+                                    monster_level_range: l['monster_level_range'].nil? ? nil : l['monster_level_range']['lo']..l['monster_level_range']['hi'],
+                                    coords: {
+                                      x: l['coords']['x'],
+                                      y: l['coords']['y'],
+                                      z: l['coords']['z']
+                                    },
+                                    locs_connected: {
+                                      north: l['locs_connected']['north'],
+                                      east: l['locs_connected']['east'],
+                                      south: l['locs_connected']['south'],
+                                      west: l['locs_connected']['west']
+                                    },
+                                    items: create_item_objects(l['items']),
+                                    bosses_abounding: create_boss_objects(l['bosses_abounding'])))
+      end
 
-      return locations
+      locations
     end
   end
 end
