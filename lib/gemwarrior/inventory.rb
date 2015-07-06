@@ -13,14 +13,14 @@ module Gemwarrior
     ERROR_ITEM_EQUIP_NONWEAPON    = 'That cannot be equipped as a weapon.'
     ERROR_ITEM_UNEQUIP_INVALID    = 'You do not have anything called that to unequip.'
     ERROR_ITEM_UNEQUIP_NONWEAPON  = 'That cannot be unequipped.'
-    
+
     attr_accessor :items, :weapon
-    
+
     def initialize(items = [], weapon = nil)
       self.items = items
       self.weapon = weapon
     end
-    
+
     def list_contents
       if items.nil? || items.empty?
         return contents_text = '[empty]'
@@ -28,11 +28,11 @@ module Gemwarrior
         return contents_text = "#{items.map(&:name).join ', '}"
       end
     end
-    
+
     def has_item?(item_name)
       items.map(&:name).include?(item_name)
     end
-    
+
     def describe_item(item_name)
       if has_item?(item_name)
         items.each do |i|
@@ -44,7 +44,7 @@ module Gemwarrior
         ERROR_ITEM_DESCRIBE_INVALID
       end
     end
-    
+
     def equip_item(item_name)
       if has_item?(item_name)
         items.each do |i|
@@ -62,7 +62,7 @@ module Gemwarrior
         ERROR_ITEM_EQUIP_INVALID
       end
     end
-    
+
     def unequip_item(item_name)
       if has_item?(item_name)
         items.each do |i|
@@ -80,17 +80,17 @@ module Gemwarrior
         ERROR_ITEM_UNEQUIP_INVALID
       end
     end
-    
+
     def add_item(cur_loc, item_name, player)
       cur_loc.items.each do |i|
         if i.name.eql?(item_name)
           if i.takeable
             items.push(i)
             cur_loc.remove_item(item_name)
-            
+
             # stats
             player.items_taken += 1
-            
+
             return "Added #{item_name} to your increasing collection of bits of tid."
           else
             return ERROR_ITEM_ADD_UNTAKEABLE
@@ -99,7 +99,7 @@ module Gemwarrior
       end
       ERROR_ITEM_ADD_INVALID
     end
-    
+
     def remove_item(item_name)
       if has_item?(item_name)
         items.reject! { |item| item.name == item_name }

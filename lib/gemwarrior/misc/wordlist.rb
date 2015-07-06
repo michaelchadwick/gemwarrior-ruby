@@ -18,9 +18,9 @@ module Gemwarrior
     STATIC_VERB_VALUES = [
       'accentuate', 'accompany', 'blatter', 'bully', 'collide', 'crusade', 'disallow', 'entitle', 'infest', 'lateral', 'micturate', 'mourn', 'munge', 'numb', 'outdraw', 'overstep', 'plummet', 'refill', 'refurnish', 'reroute', 'rumple', 'scupper', 'smoosh', 'spifflicate', 'straighten', 'synthesize', 'terrorize', 'unshift', 'vociferate'
     ]
-  
+
     attr_accessor :use_wordnik, :type, :limit, :words, :error
-  
+
     def initialize(use_wordnik = false, type = 'noun', limit = 10)
       self.use_wordnik  = use_wordnik
       self.type         = type
@@ -34,7 +34,7 @@ module Gemwarrior
 
       return random_value.nil? ? get_random_value : random_value
     end
-    
+
     def list_words
       words.join(',')
     end
@@ -52,7 +52,7 @@ module Gemwarrior
           error = 'invalid wordlist type'
           return
         end
-        
+
         json_return = HTTP.get(
           url, 
           :params => { 
@@ -70,7 +70,7 @@ module Gemwarrior
             :api_key => api_key
           }
         )
-        
+
         json_data = JSON.parse(json_return.to_s)
 
         if json_data.include?('type') && json_data.include?('message')
@@ -87,10 +87,10 @@ module Gemwarrior
           end
         end
       end
-      
+
       return get_static_values(type)
     end
-    
+
     def get_static_values(type = nil)
       static_values = []
       0.upto(10) do

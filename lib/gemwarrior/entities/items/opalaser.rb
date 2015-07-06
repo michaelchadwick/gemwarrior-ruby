@@ -15,7 +15,7 @@ module Gemwarrior
       self.equippable   = true
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You pull the "trigger" on the opalaser, but nothing happens.'
       {:type => nil, :data => nil}

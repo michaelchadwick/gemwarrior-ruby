@@ -7,13 +7,13 @@ module Gemwarrior
   class Bloodstorm < Monster
     def initialize
       super
-    
+
       self.name         = 'bloodstorm'
       self.description  = 'A literal swirling, maniacal vortex of human hemoglobin.'
       self.face         = 'bloody'
       self.hands        = 'bloody'
       self.mood         = 'boiling'
-      
+
       self.level        = rand(5..6)
       self.hp_cur       = rand((level * 2)..(level * 3))
       self.hp_max       = hp_cur
@@ -24,7 +24,7 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-      
+
       self.battlecry    = '/swirls'
     end
   end

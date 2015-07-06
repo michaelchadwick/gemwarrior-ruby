@@ -17,7 +17,7 @@ require_relative 'inventory'
 module Gemwarrior
   class Game
     include PlayerLevels
-  
+
     # CONSTANTS
     ## PLAYER DEFAULTS
     PLAYER_DESC_DEFAULT       = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes.'
@@ -25,13 +25,13 @@ module Gemwarrior
     PLAYER_ROX_DEFAULT        = 0
 
     attr_accessor :world, :eval, :repl
-    
+
     def initialize(options)
       # create new world and player
       self.world            = World.new
-      
+
       start_stats = PlayerLevels::get_level_stats(1)
-      
+
       world.debug_mode      = options.fetch(:debug_mode)
       world.use_wordnik     = options.fetch(:use_wordnik)
       world.sound           = options.fetch(:sound)
@@ -51,7 +51,7 @@ module Gemwarrior
         :inventory          => PLAYER_INVENTORY_DEFAULT,
         :rox                => world.debug_mode ? 300 : PLAYER_ROX_DEFAULT,
         :cur_coords         => world.location_coords_by_name('Home'),
-        
+
         :god_mode           => options.fetch(:god_mode),
         :beast_mode         => options.fetch(:beast_mode),
         :use_wordnik        => options.fetch(:use_wordnik)

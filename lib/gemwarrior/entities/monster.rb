@@ -7,7 +7,7 @@ require_relative 'items/herb'
 module Gemwarrior
   class Monster < Creature
     INVENTORY_ITEMS_DEFAULT = [Herb.new]
-  
+
     attr_accessor :inventory, :battlecry, :is_boss
 
     def initialize
@@ -17,7 +17,7 @@ module Gemwarrior
         self.inventory = Inventory.new
       end
     end
-    
+
     def describe
       status_text =  name.upcase.ljust(13).colorize(:green)
       status_text << "#{description}\n".colorize(:white)

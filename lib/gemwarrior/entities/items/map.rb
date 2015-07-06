@@ -15,10 +15,10 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You unfold the piece of worn canvas, and study the markings upon it.'
-      
+
       {:type => 'action', :data => 'map'}
     end
   end

@@ -63,7 +63,7 @@ module Gemwarrior
         }
       end
     end
-    
+
     def self.check_level(xp)
       if xp < 50
         1

@@ -12,11 +12,11 @@ module Gemwarrior
                   :equippable, 
                   :equipped,
                   :use
-    
+
     def use(inventory = nil)
       'That item does not do anything...yet.'
     end
-    
+
     def describe
       status_text =  name.upcase.colorize(:green)
       status_text << "\n#{description} \n".colorize(:white)

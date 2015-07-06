@@ -13,7 +13,7 @@ module Gemwarrior
       self.face         = 'calloused'
       self.hands        = 'soft'
       self.mood         = 'apathetic'
-      
+
       self.level        = rand(4..5)
       self.hp_cur       = rand((level * 2)..(level * 3))
       self.hp_max       = hp_cur
@@ -24,7 +24,7 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-      
+
       self.battlecry    = 'Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!'
     end
   end

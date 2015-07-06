@@ -15,7 +15,7 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You place the herb in your mouth, testing its texture. The mysterious herb is easily chewable, and you are able to swallow it without much effort. Slight tingles travel up and down your spine.'
       puts '>> You regain a few hit points.'

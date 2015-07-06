@@ -12,13 +12,13 @@ module Gemwarrior
     LOCATION_DATA_FILE  = "data/locations.yml"
     WORLD_DIM_WIDTH     = 10
     WORLD_DIM_HEIGHT    = 10
-    
+
     ## ERRORS
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
-  
+
     attr_accessor :monsters, :locations, :player, :debug_mode, :use_wordnik, :sound
-  
+
     def initialize
       self.monsters   = init_monsters
       self.locations  = init_locations
@@ -129,7 +129,7 @@ module Gemwarrior
       end
       return nil
     end
-    
+
     def location_coords_by_name(name)
       locations.each do |l|
         if l.name.downcase.eql?(name.downcase)
@@ -138,33 +138,33 @@ module Gemwarrior
       end
       return nil
     end
- 
+
     def describe(point)
       desc_text = ""
       desc_text << "[ #{point.name} ]".colorize(:green)
-      
+
       if debug_mode
         desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
       end
-      
+
       desc_text << "\n"
       desc_text << point.description
-      
+
       point.populate_monsters(self.monsters) unless point.checked_for_monsters?
-      
+
       desc_text << "\n >> Curious object(s): #{point.list_items.join(', ')}" unless point.list_items.empty?
       desc_text << "\n >> Monster(s) abound: #{point.list_monsters.join(', ')}" unless point.list_monsters.empty?
       desc_text << "\n >> Boss(es) abound: #{point.list_bosses.join(', ')}" unless point.list_bosses.empty?
       desc_text << "\n >> Paths: #{point.list_paths.join(', ')}"
-      
+
       if debug_mode
         desc_text << "\n >>> Actionable words: "
         desc_text << point.list_actionable_words.colorize(:white)
       end
-      
+
       return desc_text
     end
-    
+
     def describe_entity(point, entity_name)
       if point.has_item?(entity_name)
         point.items.each do |i|
@@ -204,11 +204,11 @@ module Gemwarrior
         ERROR_LOCATION_DESCRIBE_ENTITY_INVALID
       end
     end
- 
+
     def can_move?(direction)
       location_by_coords(player.cur_coords).has_loc_to_the?(direction)
     end
-    
+
     def has_monster_to_attack?(monster_name)
       possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
 
@@ -217,10 +217,10 @@ module Gemwarrior
           return true
         end
       end
-      
+
       return false
     end
- 
+
     private
 
     def create_item_objects(item_names)
@@ -242,7 +242,7 @@ module Gemwarrior
       end
       return bosses
     end
-    
+
     def init_monsters
       Dir.glob('lib/gemwarrior/entities/monsters/*.rb').each do |item|
         require_relative item[item.index('/', item.index('/')+1)+1..item.length]
@@ -250,7 +250,7 @@ module Gemwarrior
       Dir.glob('lib/gemwarrior/entities/monsters/bosses/*.rb').each do |item|
         require_relative item[item.index('/', item.index('/')+1)+1..item.length]
       end
-      
+
       self.monsters = [
         Alexandrat.new, 
         Amberoo.new, 
@@ -271,11 +271,11 @@ module Gemwarrior
       Dir.glob('lib/gemwarrior/entities/items/*.rb').each do |item|
         require_relative item[item.index('/', item.index('/')+1)+1..item.length]
       end
-      
+
       locations = []
 
       location_data = YAML.load_file(LOCATION_DATA_FILE)
-      
+
       location_data.each {|l|
         locations.push(Location.new({
           :name                 => l["name"],
@@ -297,7 +297,7 @@ module Gemwarrior
           :bosses_abounding     => create_boss_objects(l["bosses_abounding"])
         }))
       }
-      
+
       return locations
     end
   end

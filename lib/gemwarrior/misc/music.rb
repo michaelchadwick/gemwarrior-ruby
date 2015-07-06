@@ -19,7 +19,7 @@ module Gemwarrior
           volume        = note[:volume].nil? ? defaults[:volume] : note[:volume]
           duration      = note[:duration].nil? ? defaults[:duration] : note[:duration]
           notext        = note[:notext].nil? ? defaults[:notext] : note[:notext]
-          
+
           Feep::Base.new({
             :freq_or_note => note_to_play, 
             :waveform     => waveform, 

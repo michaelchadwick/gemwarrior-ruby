@@ -12,15 +12,15 @@ module Gemwarrior
     PROGRAM_NAME                        = 'Gem Warrior'
     QUIT_MESSAGE                        = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
     RESUME_MESSAGE                      = 'Back to adventuring!'.colorize(:green)
-    
+
     GO_PARAMS                           = 'Options: north, east, south, west'
     CHANGE_PARAMS                       = 'Options: name'
     DEBUG_LIST_PARAMS                   = 'Options: monsters, items, locations'
     DEBUG_STAT_PARAMS                   = 'Options: atk_lo, atk_hi, strength, dexterity'
-    
+
     ## ERRORS
     ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
-    
+
     ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     ERROR_ATTACK_PARAM_MISSING          = 'You cannot just "attack". You gotta choose something to attack.'
@@ -41,14 +41,14 @@ module Gemwarrior
     ERROR_DEBUG_TELEPORT_PARAMS_MISSING = 'You cannot just "teleport". You gotta specify an x AND y coordinate, at least.'
     ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
-    
+
     attr_accessor :world, 
                   :commands, :aliases, :extras, :cmd_descriptions, 
                   :devcommands, :devaliases, :devextras, :devcmd_descriptions
-    
+
     def initialize(world)
       self.world = world
-      
+
       self.devcommands = %w(god beast list vars map stat teleport spawn)
       self.devaliases = %w(gd bs ls v m s tp sp)
       self.devextras = %w(st)
@@ -62,7 +62,7 @@ module Gemwarrior
         'Teleport to coordinates (5 0 0) or location name (\'Home\')',
         'Spawn random monster'
       ]
-      
+
       self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
       self.aliases = %w(c i r l t u d e ue g a ch h q qq)
       self.extras = %w(exit exit! x x fight f)
@@ -84,7 +84,7 @@ module Gemwarrior
         'Quit w/o confirmation (also exit!/xx)'
       ]
     end
-    
+
     def evaluate(input)
       case input
       # Ctrl-D or empty command
@@ -202,7 +202,7 @@ module Gemwarrior
                 y_coord = param2.to_i
                 # grab the z coordinate, if present, otherwise default to current level
                 z_coord = param3.to_i.to_s == param3 ? param3.to_i : world.player.cur_coords[:z]
-                
+
                 # check to make sure new location exists
                 if world.location_by_coords({:x => x_coord, :y => y_coord, :z => z_coord})
                   world.player.cur_coords = {:x => x_coord, :y => y_coord, :z => z_coord}
@@ -231,7 +231,7 @@ module Gemwarrior
           end
         end
       end
-      
+
       # normal commands
       case command
       when 'character', 'c'
@@ -288,7 +288,7 @@ module Gemwarrior
               end
             end
           end
-          
+
           if result.nil?
             ERROR_USE_PARAM_INVALID
           else
@@ -401,7 +401,7 @@ module Gemwarrior
     end
 
     private
-    
+
     def print_separator
       puts "=================================================="
     end
@@ -414,7 +414,7 @@ module Gemwarrior
         i = i + 1
       end
       print_separator
-      
+
       if world.debug_mode
         puts " DEBUG COMMANDS"
         print_separator
@@ -426,12 +426,12 @@ module Gemwarrior
         print_separator
       end
     end
-    
+
     def input_valid?(input)
       tokens = input.split
       command = tokens[0]
       commands_and_aliases = commands | aliases | extras
-      
+
       if world.debug_mode
         commands_and_aliases = commands_and_aliases | devcommands | devaliases | devextras
       end

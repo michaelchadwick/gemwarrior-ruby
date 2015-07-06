@@ -7,7 +7,7 @@ module Gemwarrior
   class Pond < Item
     # CONTACTS
     NEEDED_ITEMS = ['dehumidifier', 'feather', 'gun', 'stalactite']
-    
+
     def initialize
       self.name         = 'pond'
       self.description  = 'This tiny pool of water self-ripples every minute or so. Small, floating insects buzz around merrily. A small plaque lays at the foot, reading: "If the right objects curious doth possess, touch the water\'s surface and you\'ll get redress."'
@@ -18,7 +18,7 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You gently place your fingers on the pond\'s rippling surface.'
       binding.pry

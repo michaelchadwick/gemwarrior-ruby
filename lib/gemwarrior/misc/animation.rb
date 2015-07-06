@@ -22,7 +22,7 @@ module Gemwarrior
           :random     => options.fetch(:random)
         })
       end
-      
+
       return th.join
     end
   end

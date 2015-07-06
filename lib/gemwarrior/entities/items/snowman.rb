@@ -15,7 +15,7 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You go to touch the snowy softness of the snowman when it magically comes to life! The frozen homunculus grabs you by the wrist and tosses you to the ground, only to follow this up by jumping onto you with its full, freezing, force. Your body, and mind, go numb.'
       puts

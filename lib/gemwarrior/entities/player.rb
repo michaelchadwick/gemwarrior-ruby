@@ -33,7 +33,7 @@ module Gemwarrior
 
       self.defense          = options.fetch(:defense)
       self.dexterity        = options.fetch(:dexterity)
-      
+
       self.inventory        = Inventory.new
       self.rox              = options.fetch(:rox)
 
@@ -43,7 +43,7 @@ module Gemwarrior
 
       self.god_mode         = options.fetch(:god_mode)
       self.beast_mode       = options.fetch(:beast_mode)
-      
+
       self.monsters_killed  = 0
       self.items_taken      = 0
       self.movements_made   = 0
@@ -54,7 +54,7 @@ module Gemwarrior
       unless show_pic == false
         print_char_pic
       end
-      
+
       weapon_slot = ''
       if has_weapon_equipped?
         weapon_slot = inventory.weapon.name
@@ -77,9 +77,9 @@ module Gemwarrior
         self_text << "GOD_MODE  : #{self.god_mode}\n"
         self_text << "BEAST_MODE: #{self.beast_mode}\n"
       end
-      
+
       self_text << "\n#{self.description}\n\n"
-      
+
       self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end
 
@@ -88,7 +88,7 @@ module Gemwarrior
 
       if cur_loc.should_spawn_monster?
         chance_of_ambush = rand(0..100)
-      
+
         if chance_of_ambush < 25
           battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)]})
           return battle.start(is_arena = false, is_event = true)
@@ -101,7 +101,7 @@ module Gemwarrior
       hours = rand(1..23)
       minutes = rand(1..59)
       seconds = rand(1..59)
-  
+
       hours_text = hours == 1 ? "hour" : "hours"
       mins_text = minutes == 1 ? "minute" : "minutes"
       secs_text = seconds == 1 ? "second" : "seconds"
@@ -110,12 +110,12 @@ module Gemwarrior
 
       if self.inventory.has_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
         self.hp_cur = self.hp_max
-        
+
         return "You brandish your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
       else
         self.hp_cur = self.hp_cur.to_i + rand(10..15)
         self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
-        
+
         return "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
       end
     end
@@ -202,7 +202,7 @@ module Gemwarrior
 
     def take_damage(dmg)
       self.hp_cur = self.hp_cur - dmg.to_i
-      
+
       if hp_cur <= 0
         player_death
       end
@@ -222,7 +222,7 @@ module Gemwarrior
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       exit(0)
     end
-    
+
     # TRAVEL
     def print_traveling_text(direction_text, sound)
       Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
@@ -234,7 +234,7 @@ module Gemwarrior
         ])
       end
     end
-    
+
     # CHARACTER
     def print_char_pic
       char_pic = ""
@@ -256,17 +256,17 @@ module Gemwarrior
     def generate_name
       NameGenerator.new('fantasy').generate_name
     end
-    
+
     def generate_face(use_wordnik)
       face_descriptors = WordList.new(use_wordnik, 'adjective')
       face_descriptors.get_random_value
     end
-    
+
     def generate_hands(use_wordnik)
       hand_descriptors = WordList.new(use_wordnik, 'adjective')
       hand_descriptors.get_random_value
     end
-    
+
     def generate_mood(use_wordnik)
       mood_descriptors = WordList.new(use_wordnik, 'adjective')
       mood_descriptors.get_random_value

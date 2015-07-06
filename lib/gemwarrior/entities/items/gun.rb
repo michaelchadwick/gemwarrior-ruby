@@ -15,7 +15,7 @@ module Gemwarrior
       self.equippable   = true
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'You pull the trigger on the gun, but realize there are no bullets in it. So, it does not do much except cause a barely audible *click* sound.'
       {:type => nil, :data => nil}

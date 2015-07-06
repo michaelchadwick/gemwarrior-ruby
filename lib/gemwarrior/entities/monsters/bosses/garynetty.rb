@@ -11,7 +11,7 @@ module Gemwarrior
       self.face         = 'irregular'
       self.hands        = 'sharp'
       self.mood         = 'abrasive'
-      
+
       self.level        = rand(12..15)
       self.hp_cur       = rand((level * 2.5).floor..(level * 3.5).floor)
       self.hp_max       = hp_cur
@@ -23,7 +23,7 @@ module Gemwarrior
       self.inventory    = Inventory.new
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand((level * 3)..(level * 4))
-      
+
       self.battlecry    = '...?!'
       self.is_boss      = true
     end

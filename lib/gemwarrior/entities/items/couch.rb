@@ -15,7 +15,7 @@ module Gemwarrior
       self.equippable   = false
       self.equipped     = false
     end
-    
+
     def use(player = nil)
       puts 'Your body comes to rest somewhere below the surface of the cloudy apparatus, almost as if it were floating *amongst* the couch. The feeling is heavenly, and you actually feel somewhat better after getting back up.'
       puts '>> You regain a hit point.'

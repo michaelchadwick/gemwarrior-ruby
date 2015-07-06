@@ -23,7 +23,7 @@ class NameGenerator
     end
     return names
   end
-  
+
   # generator function
   def generate_name
     chain = nil
@@ -31,7 +31,7 @@ class NameGenerator
     if (chain = markov_chain(self.type))
       return markov_name(chain)
     end
-    
+
     return ''
   end
 
@@ -42,7 +42,7 @@ class NameGenerator
     for i in 1..count
       list.push(generate_name)
     end
-    
+
     return list
   end
 
@@ -61,7 +61,7 @@ class NameGenerator
         end
       end
     end
-    
+
     return false
   end
 
@@ -92,7 +92,7 @@ class NameGenerator
         end
       end
     end
-    
+
     return scale_chain(chain)
   end
 
@@ -107,7 +107,7 @@ class NameGenerator
       chain[key] = {}
       chain[key][token] = 1
     end
-    
+
     return chain
   end
 
@@ -125,7 +125,7 @@ class NameGenerator
         table_len[key] += weighted
       end
     end
-    
+
     chain['table_len'] = table_len
 
     return chain
@@ -162,7 +162,7 @@ class NameGenerator
       t += chain_value
       return chain_key if (idx < t)
     end
-    
+
     return '-'
   end
 end

@@ -12,7 +12,7 @@ module Gemwarrior
       self.world    = options.fetch(:world)
       self.player   = options.fetch(:player)
     end
-    
+
     def start
       print_arena_intro
 
@@ -22,12 +22,12 @@ module Gemwarrior
         monster = generate_monster
         battle = Battle.new({:world => self.world, :player => self.player, :monster => monster})
         battle.start(is_arena = true)
-        
+
         monsters_vanquished += 1
-        
+
         puts 'Do you wish to continue fighting in the Arena? (Y/N)'
         answer = gets.chomp.downcase
-        
+
         case answer
         when 'yes', 'y'
           next
@@ -43,15 +43,15 @@ module Gemwarrior
         end
       end
     end
-    
+
     private
-    
+
     def generate_monster
       random_monster = nil
-      
+
       loop do
         random_monster = world.monsters[rand(0..world.monsters.length-1)]
-          
+
         unless random_monster.is_boss
           break
         end
@@ -59,13 +59,13 @@ module Gemwarrior
 
       return random_monster.clone
     end
-    
+
     def print_arena_intro
       puts '**************************'.colorize(:red)
       puts '* YOU ENTER THE ARENA!!! *'.colorize(:red)
       puts '**************************'.colorize(:red)
     end
-    
+
     def print_arena_outro
       puts '**************************'.colorize(:red)
       puts '* YOU LEAVE THE ARENA!!! *'.colorize(:red)

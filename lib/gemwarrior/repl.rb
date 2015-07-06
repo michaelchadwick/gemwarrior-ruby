@@ -16,9 +16,9 @@ module Gemwarrior
     ## MESSAGES
     QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'.colorize(:red)
     SPLASH_MESSAGE = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
-    
+
     attr_accessor :world, :eval
-    
+
     def initialize(world, evaluator)
       self.world  = world
       self.eval   = evaluator
@@ -55,13 +55,13 @@ module Gemwarrior
         end
       }
     end
-    
+
     private
-    
+
     def clear_screen
       OS.windows? ? system('cls') : system('clear')
     end
-    
+
     def print_logo
       if world.sound
         Music::cue([
@@ -74,7 +74,7 @@ module Gemwarrior
       puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
       puts '[[[[[[[DEBUGGING]]]]]]]'.colorize(:white) if world.debug_mode
     end
-    
+
     def print_splash_message
       SPLASH_MESSAGE.length.times do print '=' end
       puts
@@ -82,7 +82,7 @@ module Gemwarrior
       SPLASH_MESSAGE.length.times do print '=' end
       puts
     end
-    
+
     def print_fortune
       noun1_values = WordList.new(world.use_wordnik, 'noun-plural')
       noun2_values = WordList.new(world.use_wordnik, 'noun-plural')
@@ -90,14 +90,14 @@ module Gemwarrior
 
       puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
     end
-    
+
     def print_help
       puts '* Basic functions: look, go, character, inventory, attack *'
       puts '* Type \'help\' for complete command list'
       puts '* Most commands can be abbreviated to their first letter *'
       puts
     end
-    
+
     def print_stats(duration, pl)
       puts  '######################################################################'
       puts
@@ -126,7 +126,7 @@ module Gemwarrior
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?
     end
-    
+
     def prompt
       prompt_template = "\n[LV:%3s][XP:%3s][ROX:%3s] -- [HP:%3s/%-3s][STM:%2s/%-2s] -- [%s @ %s]"
       if world.debug_mode
@@ -148,7 +148,7 @@ module Gemwarrior
       end
       puts (prompt_template % prompt_vars_arr).colorize(:yellow)
     end
-    
+
     def read_line
       prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
       Readline.readline(prompt_text, true).to_s

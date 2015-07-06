@@ -7,13 +7,13 @@ module Gemwarrior
   class Alexandrat < Monster
     def initialize
       super
-    
+
       self.name         = 'alexandrat'
       self.description  = 'Tiny, but fierce, color-changing rodent.'
       self.face         = 'ugly'
       self.hands        = 'gnarled'
       self.mood         = 'unchipper'
-      
+
       self.level        = rand(1..2)
       self.hp_cur       = rand((level * 2)..(level * 3))
       self.hp_max       = hp_cur
@@ -24,7 +24,7 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-      
+
       self.battlecry    = 'Bitey, bitey!'
     end
   end
