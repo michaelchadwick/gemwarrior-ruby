@@ -16,13 +16,13 @@ module Gemwarrior
       self.equipped     = false
     end
 
-    def use(player = nil)
+    def use(_player = nil)
       puts 'You move the switch from "No" to "Yes". Suddenly, a great wind picks up and you are gently lifted up by it. The ground moves away and your whole body begins to gently drift towards Emerald\'s compound high in the stratosphere.'
       puts
 
-      Animation::run({ :phrase => '*** WHOOOOOSH ***' })
+      Animation.run(phrase: '*** WHOOOOOSH ***')
 
-      {:type => 'move', :data => 'Sky Tower (Entryway)'}
+      { type: 'move', data: 'Sky Tower (Entryway)' }
     end
   end
 end

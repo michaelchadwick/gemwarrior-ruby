@@ -32,15 +32,15 @@ module Gemwarrior
           puts
           puts 'She finishes by wishing you good luck!'
 
-          return {:type => 'arena', :data => nil}
+          return { type: 'arena', data: nil }
         else
           puts 'She gives you a dirty look, as you have obviously wasted her time. You are told not to mess around with her anymore, and she turns away from you.'
-          return {:type => nil, :data => nil}
+          return { type: nil, data: nil }
         end
       else
         puts 'She can tell you seem particularly poor today and says to come back when that has changed.'
         puts
-        return {:type => nil, :data => nil}
+        return { type: nil, data: nil }
       end
     end
   end

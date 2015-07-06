@@ -6,8 +6,8 @@ module Gemwarrior
     attr_accessor :duration_in_s, :timer_name, :background, :progress, :verbose
 
     DEFAULTS = {
-      duration_in_s: 1, 
-      timer_name:    'Timer', 
+      duration_in_s: 1,
+      timer_name:    'Timer',
       background:    false,
       progress:      false,
       verbose:       true
@@ -25,9 +25,9 @@ module Gemwarrior
 
     def start
       if background
-        Thread.start { self.run }
+        Thread.start { run }
       else
-        self.run
+        run
       end
     end
 

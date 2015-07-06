@@ -20,7 +20,7 @@ module Gemwarrior
 
       loop do
         monster = generate_monster
-        battle = Battle.new({:world => self.world, :player => self.player, :monster => monster})
+        battle = Battle.new(world: world, player: player, monster: monster)
         battle.start(is_arena = true)
 
         monsters_vanquished += 1
@@ -50,14 +50,12 @@ module Gemwarrior
       random_monster = nil
 
       loop do
-        random_monster = world.monsters[rand(0..world.monsters.length-1)]
+        random_monster = world.monsters[rand(0..world.monsters.length - 1)]
 
-        unless random_monster.is_boss
-          break
-        end
+        break unless random_monster.is_boss
       end
 
-      return random_monster.clone
+      random_monster.clone
     end
 
     def print_arena_intro

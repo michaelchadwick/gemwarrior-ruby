@@ -16,13 +16,13 @@ module Gemwarrior
       self.equipped     = false
     end
 
-    def use(player = nil)
+    def use(_player = nil)
       puts 'You slowly lower your foot onto the tile, and then gently depress it, through the floor. Your whole body begins to feel light, lifeless. You black out.'
       puts
 
-      Animation::run({ :phrase => '*** SHOOOOOM ***' })
+      Animation.run(phrase: '*** SHOOOOOM ***')
 
-      {:type => 'move', :data => 'Rock Quarry'}
+      { type: 'move', data: 'Rock Quarry' }
     end
   end
 end

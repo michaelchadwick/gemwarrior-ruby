@@ -7,12 +7,12 @@ module Gemwarrior
   class Location < Entity
     # CONSTANTS
     ## HASHES
-    DANGER_LEVEL = {:none => 0, :low => 15, :moderate => 30, :high => 55, :assured => 100}
+    DANGER_LEVEL = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
 
     ## ERRORS
     ERROR_LOCATION_ITEM_REMOVE_INVALID      = 'That item cannot be removed as it does not exist here.'
 
-    attr_accessor :coords, :locs_connected, :danger_level, :monster_level_range, :items, 
+    attr_accessor :coords, :locs_connected, :danger_level, :monster_level_range, :items,
                   :monsters_abounding, :bosses_abounding, :checked_for_monsters
 
     def initialize(options)
@@ -37,23 +37,23 @@ module Gemwarrior
     end
 
     def has_item?(item_name)
-      items.map{|i| i.name.downcase}.include?(item_name)
+      items.map { |i| i.name.downcase }.include?(item_name)
     end
 
     def has_monster?(monster_name)
-      monsters_abounding.map{|m| m.name.downcase}.include?(monster_name)
+      monsters_abounding.map { |m| m.name.downcase }.include?(monster_name)
     end
 
     def has_boss?(boss_name)
-      bosses_abounding.map{|b| b.name.downcase}.include?(boss_name)
+      bosses_abounding.map { |b| b.name.downcase }.include?(boss_name)
     end
 
     def add_item(item_name)
       Dir.glob('lib/gemwarrior/items/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+        require_relative item[item.index('/', item.index('/') + 1) + 1..item.length]
       end
 
-      self.items.push(eval(item_name).new)
+      items.push(eval(item_name).new)
     end
 
     def remove_item(item_name)
@@ -87,9 +87,7 @@ module Gemwarrior
       monsters_list = monsters_abounding | bosses_abounding
 
       monsters_list.each do |m|
-        if m.name.downcase.eql?(monster_name.downcase)
-          return m.clone
-        end
+        return m.clone if m.name.downcase.eql?(monster_name.downcase)
       end
     end
 
@@ -104,11 +102,9 @@ module Gemwarrior
         trigger_values = 0..max
         actual_value = rand(1..100)
 
-        if trigger_values.include?(actual_value)
-          found = true
-        end
+        found = true if trigger_values.include?(actual_value)
       end
-      return found
+      found
     end
 
     def list_items
@@ -138,11 +134,9 @@ module Gemwarrior
     def list_paths
       valid_paths = []
       locs_connected.each do |key, value|
-        if value
-          valid_paths.push(key.to_s)
-        end
+        valid_paths.push(key.to_s) if value
       end
-      return valid_paths
+      valid_paths
     end
 
     def list_actionable_words
@@ -161,12 +155,12 @@ module Gemwarrior
 
         # get random non-boss monster
         loop do
-          random_monster = monsters_available[rand(0..monsters_available.length-1)]
+          random_monster = monsters_available[rand(0..monsters_available.length - 1)]
 
           if spawn
             break
           else
-            unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
+            unless random_monster.is_boss || !monster_level_range.include?(random_monster.level)
               break
             end
           end

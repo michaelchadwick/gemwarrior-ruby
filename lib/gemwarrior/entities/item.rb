@@ -5,15 +5,15 @@ require_relative 'entity'
 
 module Gemwarrior
   class Item < Entity
-    attr_accessor :atk_lo, 
-                  :atk_hi, 
-                  :takeable, 
-                  :useable, 
-                  :equippable, 
+    attr_accessor :atk_lo,
+                  :atk_hi,
+                  :takeable,
+                  :useable,
+                  :equippable,
                   :equipped,
                   :use
 
-    def use(inventory = nil)
+    def use(_inventory = nil)
       'That item does not do anything...yet.'
     end
 

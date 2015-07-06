@@ -15,7 +15,7 @@ module Gemwarrior
       self.mood         = 'emotionless'
 
       self.level        = rand(5..8)
-      self.hp_cur       = rand((level * 2)..(level*3))
+      self.hp_cur       = rand((level * 2)..(level * 3))
       self.hp_max       = hp_cur
       self.atk_lo       = rand(level..(level * 3).floor)
       self.atk_hi       = rand((level * 3).floor..(level * 3).floor)

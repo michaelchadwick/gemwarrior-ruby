@@ -36,9 +36,7 @@ module Gemwarrior
     def describe_item(item_name)
       if has_item?(item_name)
         items.each do |i|
-          if i.name.eql?(item_name)
-            return i.description
-          end
+          return i.description if i.name.eql?(item_name)
         end
       else
         ERROR_ITEM_DESCRIBE_INVALID

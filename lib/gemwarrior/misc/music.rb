@@ -5,14 +5,14 @@ module Gemwarrior
   module Music
     def self.cue(sequence)
       defaults = {
-        :freq_or_note => 440, 
-        :waveform     => 'saw', 
-        :volume       => 0.3, 
-        :duration     => 500,
-        :notext       => true
+        freq_or_note: 440,
+        waveform: 'saw',
+        volume: 0.3,
+        duration: 500,
+        notext: true
       }
 
-      Thread.start {
+      Thread.start do
         sequence.each do |note|
           note_to_play  = note[:freq_or_note]
           waveform      = note[:waveform].nil? ? defaults[:waveform] : note[:waveform]
@@ -20,15 +20,13 @@ module Gemwarrior
           duration      = note[:duration].nil? ? defaults[:duration] : note[:duration]
           notext        = note[:notext].nil? ? defaults[:notext] : note[:notext]
 
-          Feep::Base.new({
-            :freq_or_note => note_to_play, 
-            :waveform     => waveform, 
-            :volume       => volume, 
-            :duration     => duration,
-            :notext       => notext
-          })
+          Feep::Base.new(freq_or_note: note_to_play,
+                         waveform: waveform,
+                         volume: volume,
+                         duration: duration,
+                         notext: notext)
         end
-      }
+      end
     end
   end
 end

@@ -9,11 +9,11 @@ GAME_NAME = 'Gem Warrior'
 
 def parse_options
   options = {
-    :debug_mode   => false, 
-    :god_mode     => false, 
-    :beast_mode   => false, 
-    :use_wordnik  => false, 
-    :sound        => false
+    debug_mode: false,
+    god_mode: false,
+    beast_mode: false,
+    use_wordnik: false,
+    sound: false
   }
 
   optparse = OptionParser.new do |opts|
@@ -43,9 +43,9 @@ def parse_options
     end
   end
 
-  optparse.parse!()
+  optparse.parse!
 
-  return options
+  options
 end
 
 def print_error(error)

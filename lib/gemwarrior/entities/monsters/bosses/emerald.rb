@@ -34,14 +34,14 @@ module Gemwarrior
 
     def defeated_text
       text =  "<^><^><^><^><^><^><^><^><^><^>\n"
-      text <<  "You beat #{name}! You win!\n"
-      text << "You receive the "
-      text << "SparklyThing(tm)".colorize(:magenta)
-      text << " and become the true "
-      text << "Gem Warrior".colorize(:yellow)
+      text << "You beat #{name}! You win!\n"
+      text << 'You receive the '
+      text << 'SparklyThing(tm)'.colorize(:magenta)
+      text << ' and become the true '
+      text << 'Gem Warrior'.colorize(:yellow)
       text << "!\n"
-      text << "You decide to ignore "
-      text << "Queen Ruby".colorize(:red)
+      text << 'You decide to ignore '
+      text << 'Queen Ruby'.colorize(:red)
       text << " and take your spoils back home\n"
       text << "where you live out the rest of your days staring at it, wondering\n"
       text << "what it was all about.\n\n"

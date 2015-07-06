@@ -5,7 +5,7 @@ require 'pry'
 
 require_relative 'arena'
 
-module Gemwarrior  
+module Gemwarrior
   class Evaluator
     # CONSTANTS
     ## MESSAGES
@@ -42,8 +42,8 @@ module Gemwarrior
     ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
 
-    attr_accessor :world, 
-                  :commands, :aliases, :extras, :cmd_descriptions, 
+    attr_accessor :world,
+                  :commands, :aliases, :extras, :cmd_descriptions,
                   :devcommands, :devaliases, :devextras, :devcmd_descriptions
 
     def initialize(world)
@@ -88,14 +88,12 @@ module Gemwarrior
     def evaluate(input)
       case input
       # Ctrl-D or empty command
-      when nil, ""
+      when nil, ''
         return
       # real command
       else
         tokens = input.split
-        unless input_valid?(input)
-          return ERROR_COMMAND_INVALID
-        end
+        return ERROR_COMMAND_INVALID unless input_valid?(input)
       end
 
       command = tokens.first.downcase
@@ -131,27 +129,21 @@ module Gemwarrior
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
-                  if param2 > 0
-                    world.player.hp_cur = param2
-                  end
+                  world.player.hp_cur = param2 if param2 > 0
                 end
               end
             when 'atk_lo'
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
-                  if param2 >= 0
-                    world.player.atk_lo = param2
-                  end
+                  world.player.atk_lo = param2 if param2 >= 0
                 end
               end
             when 'atk_hi'
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
-                  if param2 >= 0
-                    world.player.atk_hi = param2
-                  end
+                  world.player.atk_hi = param2 if param2 >= 0
                 end
               end
             when 'strength', 'str', 'st'
@@ -168,19 +160,13 @@ module Gemwarrior
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
-                  if param2 >= 0
-                    world.player.dexterity = param2
-                  end
+                  world.player.dexterity = param2 if param2 >= 0
                 end
               end
             when 'rox', 'r', '$'
               unless param2.nil?
                 param2 = param2.to_i
-                if param2.is_a? Numeric
-                  if param2 >= 0
-                    world.player.rox = param2
-                  end
-                end
+                world.player.rox = param2 if param2 >= 0 if param2.is_a? Numeric
               end
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
@@ -204,8 +190,8 @@ module Gemwarrior
                 z_coord = param3.to_i.to_s == param3 ? param3.to_i : world.player.cur_coords[:z]
 
                 # check to make sure new location exists
-                if world.location_by_coords({:x => x_coord, :y => y_coord, :z => z_coord})
-                  world.player.cur_coords = {:x => x_coord, :y => y_coord, :z => z_coord}
+                if world.location_by_coords(x: x_coord, y: y_coord, z: z_coord)
+                  world.player.cur_coords = { x: x_coord, y: y_coord, z: z_coord }
                 else
                   return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
                 end
@@ -226,7 +212,7 @@ module Gemwarrior
                 return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
               end
             end
-            Animation::run({:phrase => '** TELEPORT! **', :speed => :insane})
+            Animation.run(phrase: '** TELEPORT! **', speed: :insane)
             return world.describe(world.location_by_coords(world.player.cur_coords))
           end
         end
@@ -314,9 +300,9 @@ module Gemwarrior
                 world.print_map
               end
             when 'arena'
-              arena = Arena.new({:world => world, :player => world.player})
+              arena = Arena.new(world: world, player: world.player)
               arena.start
-              #return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
+              # return 'You enter the arena and fight some battles. It was cool, but not as cool as if it were actually implemented.'
             when 'item'
               world.location_by_coords(world.player.cur_coords).add_item(result[:data])
               return
@@ -330,7 +316,7 @@ module Gemwarrior
           ERROR_DROP_PARAM_MISSING
         else
           world.player.inventory.remove_item(param1)
-        end  
+        end
       when 'equip', 'e'
         if param1.nil?
           ERROR_EQUIP_PARAM_MISSING
@@ -384,9 +370,9 @@ module Gemwarrior
       when 'help', 'h'
         list_commands
       when 'quit', 'exit', 'q', 'x'
-        puts "You sure you want to quit? (y/n): "
+        puts 'You sure you want to quit? (y/n): '
         response = gets.chomp.downcase
-        if (response.eql?("y") || response.eql?("yes"))
+        if response.eql?('y') || response.eql?('yes')
           puts QUIT_MESSAGE
           return 'exit'
         else
@@ -403,7 +389,7 @@ module Gemwarrior
     private
 
     def print_separator
-      puts "=================================================="
+      puts '=================================================='
     end
 
     def list_commands
@@ -411,17 +397,17 @@ module Gemwarrior
       print_separator
       commands.each do |cmd|
         puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{cmd_descriptions[i]}"
-        i = i + 1
+        i += 1
       end
       print_separator
 
       if world.debug_mode
-        puts " DEBUG COMMANDS"
+        puts ' DEBUG COMMANDS'
         print_separator
         i = 0
         devcommands.each do |cmd|
           puts " #{cmd.ljust(9)}, #{devaliases[i].ljust(2)} -- #{devcmd_descriptions[i]}"
-          i = i + 1
+          i += 1
         end
         print_separator
       end
@@ -437,9 +423,7 @@ module Gemwarrior
       end
 
       if commands_and_aliases.include?(command.downcase)
-        if tokens.size.between?(1,4)
-          return true
-        end
+        return true if tokens.size.between?(1, 4)
       elsif tokens.empty?
         return true
       end
