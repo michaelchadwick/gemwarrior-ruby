@@ -29,12 +29,12 @@ module Gemwarrior
       end
     end
 
-    def has_item?(item_name)
+    def contains_item?(item_name)
       items.map(&:name).include?(item_name)
     end
 
     def describe_item(item_name)
-      if has_item?(item_name)
+      if contains_item?(item_name)
         items.each do |i|
           if i.name.eql?(item_name)
             return i.description
@@ -46,7 +46,7 @@ module Gemwarrior
     end
 
     def equip_item(item_name)
-      if has_item?(item_name)
+      if contains_item?(item_name)
         items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
@@ -64,7 +64,7 @@ module Gemwarrior
     end
 
     def unequip_item(item_name)
-      if has_item?(item_name)
+      if contains_item?(item_name)
         items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
@@ -101,8 +101,11 @@ module Gemwarrior
     end
 
     def remove_item(item_name)
-      if has_item?(item_name)
+      if contains_item?(item_name)
         items.reject! { |item| item.name == item_name }
+
+        self.weapon = nil if self.weapon.name.eql?(item_name)
+        
         return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
       else
         ERROR_ITEM_REMOVE_INVALID
