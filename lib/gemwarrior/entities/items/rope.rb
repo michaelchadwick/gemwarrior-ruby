@@ -22,6 +22,9 @@ module Gemwarrior
 
       puts 'After a few minutes you pull yourself up onto a field of pure driven snow. Without warning, the rope and opening in the floor vanish.'
       puts
+      
+      # stats
+      player.movements_made += 1
 
       {:type => 'move', :data => 'Snow Fields (Southeast)'}
     end
