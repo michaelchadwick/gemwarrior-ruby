@@ -20,9 +20,12 @@ module Gemwarrior
       puts 'You slowly lower your foot onto the tile, and then gently depress it, through the floor. Your whole body begins to feel light, lifeless. You black out.'
       puts
 
+      # stats
+      player.movements_made += 1
+
       Animation::run({ :phrase => '*** SHOOOOOM ***' })
 
-      {:type => 'move', :data => 'Rock Quarry'}
+      {:type => 'move', :data => 'Rock Piles'}
     end
   end
 end

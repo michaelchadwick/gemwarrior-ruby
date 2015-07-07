@@ -37,7 +37,7 @@ module Gemwarrior
       puts
       puts 'The creature gently shoves a small slip of paper out of his hole and towards you. You take a peek and notice it has a list of things with prices on it.'
       puts
-      puts 'Rodney\'s Hole in the Wall'
+      puts 'Rockney\'s Hole in the Wall'
       puts '--------------------------'
       puts '(1) Herb     - 10  rox'
       puts '(2) Dagger   - 150 rox'

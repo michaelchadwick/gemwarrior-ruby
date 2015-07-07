@@ -6,7 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class ArenaMaster < Item
     # CONSTANTS
-    ARENA_FEE = 50
+    ARENA_FEE         = 50
+    ARENA_MASTER_NAME = 'Iolita'
 
     def initialize
       self.name         = 'arena_master'
@@ -20,7 +21,7 @@ module Gemwarrior
     end
 
     def use(player = nil)
-      puts 'You approach the Arena Master and ask to fight. She snickers to herself, but sees you have a good spirit about you.'
+      puts "You approach #{ARENA_MASTER_NAME.colorize(:color => :white, :background => :black)}, the Arena Master, and ask to prove your mettle in the arena. She snickers to herself, but sees you have a good spirit about you."
       puts
 
       if player.rox >= 50

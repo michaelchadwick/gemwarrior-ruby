@@ -861,7 +861,7 @@
     hi: 4
   items:
   - Gun
-  - TowerSwitch
+  - Pedestal
 
 -
   name:                 'Sky Tower (Entryway)'
