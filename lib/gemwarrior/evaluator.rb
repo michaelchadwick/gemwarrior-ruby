@@ -226,6 +226,10 @@ module Gemwarrior
                 return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
               end
             end
+
+            # stats
+            world.player.movements_made += 1
+            
             Animation::run({:phrase => '** TELEPORT! **', :speed => :insane})
             return world.describe(world.location_by_coords(world.player.cur_coords))
           end
