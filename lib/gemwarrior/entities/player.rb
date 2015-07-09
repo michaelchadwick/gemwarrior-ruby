@@ -12,37 +12,39 @@ module Gemwarrior
     include PlayerLevels
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
-                  :god_mode, :beast_mode, :use_wordnik,
+                  :god_mode, :beast_mode, :use_wordnik, :special_abilities,
                   :monsters_killed, :items_taken, :movements_made, :rests_taken
 
     def initialize(options)
-      self.name             = generate_name
-      self.description      = options.fetch(:description)
-      self.use_wordnik      = options.fetch(:use_wordnik)
+      self.name               = generate_name
+      self.description        = options.fetch(:description)
+      self.use_wordnik        = options.fetch(:use_wordnik)
 
-      self.face             = generate_face(use_wordnik)
-      self.hands            = generate_hands(use_wordnik)
-      self.mood             = generate_mood(use_wordnik)
+      self.face               = generate_face(use_wordnik)
+      self.hands              = generate_hands(use_wordnik)
+      self.mood               = generate_mood(use_wordnik)
 
-      self.level            = options.fetch(:level)
-      self.xp               = options.fetch(:xp)
-      self.hp_cur           = options.fetch(:hp_cur)
-      self.hp_max           = options.fetch(:hp_max)
-      self.atk_lo           = options.fetch(:atk_lo)
-      self.atk_hi           = options.fetch(:atk_hi)
+      self.level              = options.fetch(:level)
+      self.xp                 = options.fetch(:xp)
+      self.hp_cur             = options.fetch(:hp_cur)
+      self.hp_max             = options.fetch(:hp_max)
+      self.atk_lo             = options.fetch(:atk_lo)
+      self.atk_hi             = options.fetch(:atk_hi)
 
-      self.defense          = options.fetch(:defense)
-      self.dexterity        = options.fetch(:dexterity)
+      self.defense            = options.fetch(:defense)
+      self.dexterity          = options.fetch(:dexterity)
 
-      self.inventory        = Inventory.new
-      self.rox              = options.fetch(:rox)
+      self.inventory          = Inventory.new([Herb.new])
+      self.rox                = options.fetch(:rox)
 
-      self.stam_cur         = options.fetch(:stam_cur)
-      self.stam_max         = options.fetch(:stam_max)
-      self.cur_coords       = options.fetch(:cur_coords)
+      self.stam_cur           = options.fetch(:stam_cur)
+      self.stam_max           = options.fetch(:stam_max)
+      self.cur_coords         = options.fetch(:cur_coords)
 
-      self.god_mode         = options.fetch(:god_mode)
-      self.beast_mode       = options.fetch(:beast_mode)
+      self.god_mode           = options.fetch(:god_mode)
+      self.beast_mode         = options.fetch(:beast_mode)
+      
+      self.special_abilities  = []
 
       self.monsters_killed  = 0
       self.items_taken      = 0
@@ -63,6 +65,13 @@ module Gemwarrior
       else
         weapon_slot = '(unarmed)'
       end
+      
+      abilities = ''
+      if special_abilities.empty?
+        abilities = 'none'
+      else
+        abilities = special_abilities.join(', ')
+      end        
 
       self_text =  "NAME      : #{self.name}\n"
       self_text << "POSITION  : #{self.cur_coords.values.to_a}\n"
@@ -73,6 +82,7 @@ module Gemwarrior
       self_text << "ATTACK    : #{self.atk_lo}-#{self.atk_hi}\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "DEFENSE   : #{self.defense}\n"
+      self_text << "ABILITIES : #{abilities}\n"
       if debug_mode
         self_text << "GOD_MODE  : #{self.god_mode}\n"
         self_text << "BEAST_MODE: #{self.beast_mode}\n"
@@ -185,7 +195,10 @@ module Gemwarrior
 
     def attack(world, monster)
       battle = Battle.new({:world => world, :player => self, :monster => monster})
-      battle.start
+      result = battle.start
+      if result.eql?('death')
+        return 'exit'
+      end
     end
 
     def has_weapon_equipped?
@@ -214,13 +227,54 @@ module Gemwarrior
         self.hp_cur = self.hp_max
       end
     end
+    
+    def update_stats(monster)
+      old_player_level = PlayerLevels::check_level(self.xp)
+
+      self.xp = self.xp + monster.xp
+      self.rox = self.rox + monster.rox
+
+      monster_items = monster.inventory.items
+      unless monster_items.nil?
+        self.inventory.items.concat monster_items unless monster_items.empty?
+      end
+
+      new_player_level = PlayerLevels::check_level(self.xp)
+
+      if new_player_level > old_player_level
+        Animation::run({:phrase => '** LEVEL UP! **'})
+        new_stats = PlayerLevels::get_level_stats(new_player_level)
+
+        self.level = new_stats[:level]
+        puts "You are now level #{self.level}!"
+        self.hp_cur = new_stats[:hp_max]
+        self.hp_max = new_stats[:hp_max]
+        puts "You now have #{self.hp_max} hit points!"
+        self.stam_cur = new_stats[:stam_max]
+        self.stam_max = new_stats[:stam_max]
+        puts "You now have #{self.stam_max} stamina points!"
+        self.atk_lo = new_stats[:atk_lo]
+        self.atk_hi = new_stats[:atk_hi]
+        puts "You now have an attack of #{self.atk_lo}-#{self.atk_hi}!"
+        self.defense = new_stats[:defense]
+        puts "You now have #{self.defense} defensive points!"
+        self.dexterity = new_stats[:dexterity]
+        puts "You now have #{self.dexterity} dexterity points!"
+        unless new_stats[:special_abilities].nil?
+          unless self.special_abilities.include?(new_stats[:special_abilities])
+            self.special_abilities.push(new_stats[:special_abilities])
+            puts "You learned a new ability: #{new_stats[:special_abilities]}!"
+          end
+        end
+      end
+    end
 
     private
 
     def player_death
       puts 'Your actions have reduced you to death.'.colorize(:red)
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
-      exit(0)
+      return 'exit'
     end
 
     # TRAVEL

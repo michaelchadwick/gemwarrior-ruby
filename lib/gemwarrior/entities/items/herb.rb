@@ -12,6 +12,7 @@ module Gemwarrior
       self.atk_hi       = nil
       self.takeable     = true
       self.useable      = true
+      self.consumable   = true
       self.equippable   = false
       self.equipped     = false
     end

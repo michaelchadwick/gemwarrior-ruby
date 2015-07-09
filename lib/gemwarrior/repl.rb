@@ -100,7 +100,6 @@ module Gemwarrior
 
     def print_stats(duration, pl)
       puts  '######################################################################'
-      puts
       print 'Gem Warrior'.colorize(:color => :white, :background => :black)
       print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} minutes, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} seconds, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} milliseconds\n"
       puts  '----------------------------------------------------------------------'
@@ -111,7 +110,7 @@ module Gemwarrior
       print "traveled #{pl.movements_made.to_s.colorize(:color => :white, :background => :black)} time(s)"
       print "\n".ljust(8)
       print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
-      puts
+      print "\n"
       puts '######################################################################'
     end
 

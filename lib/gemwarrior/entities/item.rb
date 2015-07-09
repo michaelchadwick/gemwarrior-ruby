@@ -11,6 +11,7 @@ module Gemwarrior
                   :useable, 
                   :equippable, 
                   :equipped,
+                  :consumable,
                   :use,
                   :reuse
 

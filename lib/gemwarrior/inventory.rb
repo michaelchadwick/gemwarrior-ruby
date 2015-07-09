@@ -102,9 +102,11 @@ module Gemwarrior
 
     def remove_item(item_name)
       if contains_item?(item_name)
-        items.reject! { |item| item.name == item_name }
+        items.delete_at(items.map(&:name).index(item_name) || items.length)
 
-        self.weapon = nil if self.weapon.name.eql?(item_name)
+        unless self.weapon.nil?
+          self.weapon = nil if self.weapon.name.eql?(item_name)
+        end
         
         return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
       else

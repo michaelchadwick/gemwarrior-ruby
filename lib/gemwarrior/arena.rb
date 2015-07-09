@@ -16,14 +16,18 @@ module Gemwarrior
     def start
       print_arena_intro
 
-      monsters_vanquished = 0
+      arena_monsters_vanquished = 0
 
       loop do
         monster = generate_monster
         battle = Battle.new({:world => self.world, :player => self.player, :monster => monster})
-        battle.start(is_arena = true)
+        result = battle.start(is_arena = true)
+        
+        if result.eql?('death')
+          return 'exit'
+        end
 
-        monsters_vanquished += 1
+        arena_monsters_vanquished += 1
 
         puts 'Do you wish to continue fighting in the Arena? (Y/N)'
         answer = gets.chomp.downcase
@@ -32,11 +36,12 @@ module Gemwarrior
         when 'yes', 'y'
           next
         else
-          bonus_rox = monsters_vanquished * 25
-          bonus_xp = monsters_vanquished * 10
+          bonus_rox = arena_monsters_vanquished * 25
+          bonus_xp = arena_monsters_vanquished * 10
           player.rox = player.rox + bonus_rox
           player.xp = player.xp + bonus_xp
           puts 'You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
+          puts "You defeated #{arena_monsters_vanquished} monsters!"
           puts "You have gained #{bonus_rox} rox and #{bonus_xp} XP!"
 
           return print_arena_outro

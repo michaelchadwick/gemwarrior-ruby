@@ -21,7 +21,7 @@ module Gemwarrior
 
     def use(player = nil)
       puts 'You gently place your fingers on the pond\'s rippling surface.'
-      binding.pry
+
       if (NEEDED_ITEMS - player.inventory.items.map(&:name)).empty?
         puts 'The pond water explodes with a force that knocks you back onto the ground. When you come to, you notice the depression in the ground where the pond once was now has a new curious object!'
         self.description = 'A barren depression in the ground is all that is left of the pond.'

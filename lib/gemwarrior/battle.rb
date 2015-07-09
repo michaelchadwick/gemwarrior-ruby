@@ -5,8 +5,6 @@ require_relative 'misc/player_levels'
 
 module Gemwarrior
   class Battle
-    include PlayerLevels
-
     # CONSTANTS
     ## ERRORS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
@@ -15,13 +13,13 @@ module Gemwarrior
     ## MESSAGES
     TEXT_ESCAPE                 = 'POOF'
 
-    attr_accessor :world, :player, :monster, :player_defending
+    attr_accessor :world, :player, :monster, :player_is_defending
 
     def initialize(options)
-      self.world            = options.fetch(:world)
-      self.player           = options.fetch(:player)
-      self.monster          = options.fetch(:monster)
-      self.player_defending = false
+      self.world                = options.fetch(:world)
+      self.player               = options.fetch(:player)
+      self.monster              = options.fetch(:monster)
+      self.player_is_defending  = false
     end
 
     def start(is_arena = nil, is_event = nil)
@@ -53,8 +51,10 @@ module Gemwarrior
           return
         elsif player_dead?
           player_death
+          return 'death'
         end
 
+        # check for near death
         if player_near_death?
           puts "You are almost dead!\n".colorize(:yellow)
         end
@@ -63,14 +63,16 @@ module Gemwarrior
         end
 
         puts
-        print "PLAYER  :: #{player.hp_cur.to_s.rjust(3)} HP"
+        
+        # print health info
+        print "#{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
         if world.debug_mode
           print " (LVL: #{player.level})"
         end
         print "\n"
 
-        print "MONSTER :: "
-        if world.debug_mode || PlayerLevels::get_level_stats(player.level)[:special_abilities].include?(:rocking_vision)
+        print "#{monster.name.upcase.ljust(12)} :: "
+        if world.debug_mode || player.special_abilities.include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
           print "???"
@@ -82,8 +84,9 @@ module Gemwarrior
         print "\n"
         puts
 
-        self.player_defending = false
+        self.player_is_defending = false
 
+        # battle options prompt
         puts 'What do you do?'
         print '['.colorize(:yellow)
         print 'F'.colorize(:green)
@@ -94,14 +97,16 @@ module Gemwarrior
         print 'efend]['.colorize(:yellow)
         print 'L'.colorize(:green)
         print 'ook]['.colorize(:yellow)
+        print 'P'.colorize(:green)
+        print 'ass]['.colorize(:yellow)
         print 'R'.colorize(:green)
         print 'un]'.colorize(:yellow)
         print "\n"
 
-        cmd = STDIN.gets.chomp.downcase
+        player_action = STDIN.gets.chomp.downcase
 
         # player action
-        case cmd
+        case player_action
         when 'fight', 'f', 'attack', 'a'
           puts "You attack #{monster.name}#{player.cur_weapon_name}!"
           dmg = calculate_damage_to(monster)
@@ -116,7 +121,9 @@ module Gemwarrior
           end
         when 'defend', 'd'
           puts 'You dig in and defend this round.'
-          self.player_defending = true
+          self.player_is_defending = true
+        when 'pass', 'p'
+          puts 'You decide to pass your turn for some reason. Brave!'
         when 'look', 'l'
           print "#{monster.name}".colorize(:white)
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
@@ -164,7 +171,7 @@ module Gemwarrior
           rand(atk_range)
         else
           dmg = rand(monster.atk_lo..monster.atk_hi)
-          dmg = dmg - (entity.defense / 2) if player_defending
+          dmg = dmg - (entity.defense / 2) if player_is_defending
           return dmg
         end
       end
@@ -205,9 +212,6 @@ module Gemwarrior
       dmg = calculate_damage_to(player)
       if dmg > 0
         take_damage(player, dmg)
-        if player_dead?
-          player_death
-        end
       else
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
@@ -242,13 +246,13 @@ module Gemwarrior
           ])
           puts monster.defeated_text
           gets
-          exit(0)
+          return 'exit'
         else
           puts 'You just beat a boss monster. Way to go!'
           puts " XP : #{monster.xp}".colorize(:green)
           puts " ROX: #{monster.rox}".colorize(:green)
           print_battle_line
-          update_player_stats
+          player.update_stats(monster)
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
@@ -259,47 +263,12 @@ module Gemwarrior
           puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
         end
         print_battle_line
-        update_player_stats
+        player.update_stats(monster)
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
     end
 
     # PLAYER
-    def update_player_stats
-      old_player_level = PlayerLevels::check_level(player.xp)
-
-      player.xp = player.xp + monster.xp
-      player.rox = player.rox + monster.rox
-
-      monster_items = monster.inventory.items
-      unless monster_items.nil?
-        player.inventory.items.concat monster_items unless monster_items.empty?
-      end
-
-      new_player_level = PlayerLevels::check_level(player.xp)
-
-      if new_player_level > old_player_level
-        Animation::run({:phrase => '** LEVEL UP! **'})
-        new_stats = PlayerLevels::get_level_stats(new_player_level)
-
-        player.level = new_stats[:level]
-        puts "You are now level #{player.level}!"
-        player.hp_cur = new_stats[:hp_max]
-        player.hp_max = new_stats[:hp_max]
-        puts "You now have #{player.hp_max} hit points!"
-        player.stam_cur = new_stats[:stam_max]
-        player.stam_max = new_stats[:stam_max]
-        puts "You now have #{player.stam_max} stamina points!"
-        player.atk_lo = new_stats[:atk_lo]
-        player.atk_hi = new_stats[:atk_hi]
-        puts "You now have an attack of #{player.atk_lo}-#{player.atk_hi}!"
-        player.defense = new_stats[:defense]
-        puts "You now have #{player.defense} defensive points!"
-        player.dexterity = new_stats[:dexterity]
-        puts "You now have #{player.dexterity} dexterity points!"
-      end
-    end
-
     def player_near_death?
       ((player.hp_cur.to_f / player.hp_max.to_f) < 0.10 && !player.god_mode)
     end
@@ -312,7 +281,6 @@ module Gemwarrior
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       print_battle_line
-      return 'exit'
     end
 
     def player_escape?

@@ -127,7 +127,7 @@ module Gemwarrior
             return DEBUG_STAT_PARAMS
           else
             case param1
-            when 'hp_cur'
+            when 'hp_cur', 'hp'
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
@@ -181,6 +181,19 @@ module Gemwarrior
                     world.player.rox = param2
                   end
                 end
+              end
+            when 'experience', 'xp'
+              unless param2.nil?
+                param2 = param2.to_i
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.xp = param2
+                  end
+                end
+              end
+            when 'inventory', 'inv'
+              unless param2.nil?
+                world.player.inventory.items.push(eval(param2).new)
               end
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
@@ -266,28 +279,39 @@ module Gemwarrior
         else
           item_name = param1
           result = nil
-          location_inventory = world.location_by_coords(world.player.cur_coords).items
 
-          if location_inventory.map(&:name).include?(item_name)
-            location_inventory.each do |i|
+          player_inventory = world.player.inventory.items
+          location_inventory = world.location_by_coords(world.player.cur_coords).items
+          
+          if player_inventory.map(&:name).include?(item_name)
+            player_inventory.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
                   result = i.use(world.player)
+                  if i.consumable
+                    world.player.inventory.remove_item(i.name)
+                    return
+                  else
+                    return
+                  end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
                 end
               end
             end
-          elsif
-            player_inventory = world.player.inventory.items
-            if player_inventory.map(&:name).include?(item_name)
-              player_inventory.each do |i|
-                if i.name.eql?(item_name)
-                  if i.useable
-                    result = i.use(world.player)
+          elsif location_inventory.map(&:name).include?(item_name)
+            location_inventory.each do |i|
+              if i.name.eql?(item_name)
+                if i.useable
+                  result = i.use(world.player)
+                  if i.consumable
+                    world.location_by_coords(world.player.cur_coords).remove_item(i)
+                    return
                   else
-                    return ERROR_USE_PARAM_UNUSEABLE
+                    return
                   end
+                else
+                  return ERROR_USE_PARAM_UNUSEABLE
                 end
               end
             end
@@ -319,7 +343,11 @@ module Gemwarrior
               end
             when 'arena'
               arena = Arena.new({:world => world, :player => world.player})
-              arena.start
+              result = arena.start
+              
+              if result.eql?('exit')
+                return 'exit'
+              end
             when 'item'
               world.location_by_coords(world.player.cur_coords).add_item(result[:data])
               return
