@@ -34,7 +34,7 @@ module Gemwarrior
       self.defense            = options.fetch(:defense)
       self.dexterity          = options.fetch(:dexterity)
 
-      self.inventory          = Inventory.new([Herb.new])
+      self.inventory          = options.fetch(:inventory)
       self.rox                = options.fetch(:rox)
 
       self.stam_cur           = options.fetch(:stam_cur)

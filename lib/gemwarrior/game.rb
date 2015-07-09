@@ -6,6 +6,7 @@ require 'matrext'
 require 'feep'
 
 require_relative 'entities/player'
+require_relative 'entities/items/herb'
 require_relative 'misc/player_levels'
 require_relative 'misc/animation'
 require_relative 'misc/music'
@@ -22,7 +23,9 @@ module Gemwarrior
     ## PLAYER DEFAULTS
     PLAYER_DESC_DEFAULT       = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes.'
     PLAYER_INVENTORY_DEFAULT  = Inventory.new
+    PLAYER_INVENTORY_DEBUG    = Inventory.new([Herb.new])
     PLAYER_ROX_DEFAULT        = 0
+    PLAYER_ROX_DEBUG          = 300
 
     attr_accessor :world, :eval, :repl
 
@@ -48,8 +51,8 @@ module Gemwarrior
         :atk_hi             => start_stats[:atk_hi],
         :defense            => start_stats[:defense],
         :dexterity          => start_stats[:dexterity],
-        :inventory          => PLAYER_INVENTORY_DEFAULT,
-        :rox                => world.debug_mode ? 300 : PLAYER_ROX_DEFAULT,
+        :inventory          => world.debug_mode ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
+        :rox                => world.debug_mode ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
         :cur_coords         => world.location_coords_by_name('Home'),
 
         :god_mode           => options.fetch(:god_mode),
