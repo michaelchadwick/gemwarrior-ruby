@@ -290,9 +290,6 @@ module Gemwarrior
                   result = i.use(world.player)
                   if i.consumable
                     world.player.inventory.remove_item(i.name)
-                    return
-                  else
-                    return
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -306,9 +303,6 @@ module Gemwarrior
                   result = i.use(world.player)
                   if i.consumable
                     world.location_by_coords(world.player.cur_coords).remove_item(i)
-                    return
-                  else
-                    return
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -316,7 +310,7 @@ module Gemwarrior
               end
             end
           end
-
+binding.pry
           if result.nil?
             ERROR_USE_PARAM_INVALID
           else
