@@ -13,6 +13,7 @@
     west:  true
   items:
   - Bed
+  - Letter
   - Stone
   - Tent
 

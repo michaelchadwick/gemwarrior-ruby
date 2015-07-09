@@ -13,7 +13,7 @@ module Gemwarrior
                   :equipped,
                   :consumable,
                   :use,
-                  :reuse
+                  :used
 
     def use(inventory = nil)
       'That item does not do anything...yet.'

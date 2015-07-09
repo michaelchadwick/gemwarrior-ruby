@@ -310,7 +310,7 @@ module Gemwarrior
               end
             end
           end
-binding.pry
+
           if result.nil?
             ERROR_USE_PARAM_INVALID
           else
@@ -327,6 +327,9 @@ binding.pry
               return
             when 'rest', 'health'
               world.player.heal_damage(result[:data])
+              return
+            when 'xp'
+              world.player.xp += result[:data]
               return
             when 'action'
               case result[:data]
