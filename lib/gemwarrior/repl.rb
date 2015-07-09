@@ -4,6 +4,7 @@
 require 'readline'
 require 'os'
 require 'clocker'
+require 'io/console'
 
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
@@ -93,11 +94,62 @@ module Gemwarrior
 
     def print_help
       puts '* Basic functions: look, go, character, inventory, attack *'
-      puts '* Type \'help\' for complete command list'
+      puts '* Type \'help\' while in-game for complete command list'
       puts '* Most commands can be abbreviated to their first letter *'
       puts
     end
 
+    def print_about_text
+      puts 'Gem Warrior - A Game of Fortune and Mayhem'
+      puts '=========================================='
+      puts 'Gem Warrior is a text adventure roguelike-lite as a RubyGem created by Michael Chadwick (mike@codana.me) and released as open-source on Github. Take on the task set by Queen Ruby to defeat the evil Emerald and get back the ShinyThing(tm) he stole for terrible, dastardly reasons.'
+      puts
+      puts 'Explore the land of Jool with the power of text, fighting enemies to improve your station, grabbing curious items that may or may not come in handy, and finally defeating Mr. Emerald himself to win the game.'
+      puts
+    end
+    
+    def print_main_menu
+      puts '======================='
+      puts ' (N)ew Game'
+      puts ' (A)bout'
+      puts ' (H)elp'
+      puts ' (E)xit'
+      puts '======================='
+      puts
+    end
+    
+    def print_main_menu_prompt
+      print '> '
+    end
+
+    def run_main_menu(show_choices = true)
+      print_main_menu if show_choices
+      print_main_menu_prompt if show_choices
+
+      choice = STDIN.getch
+
+      case choice
+      when 'n'
+        clear_screen
+        print_splash_message
+        print_fortune
+        return
+      when 'a'
+        puts choice
+        print_about_text
+        run_main_menu
+      when 'h'
+        puts choice
+        print_help
+        run_main_menu
+      when 'e', 'x'
+        puts choice
+        exit(0)
+      else
+        run_main_menu(show_choices = false)
+      end
+    end
+    
     def print_stats(duration, pl)
       puts  '######################################################################'
       print 'Gem Warrior'.colorize(:color => :white, :background => :black)
@@ -118,9 +170,9 @@ module Gemwarrior
       # welcome player to game
       clear_screen
       print_logo
-      print_splash_message
-      print_fortune
-      print_help unless world.debug_mode
+
+      # main menu loop until new game or exit
+      run_main_menu
 
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?

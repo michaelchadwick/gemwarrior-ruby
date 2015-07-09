@@ -432,7 +432,7 @@ binding.pry
     private
 
     def print_separator
-      puts "=================================================="
+      puts "========================================================="
     end
 
     def list_commands
