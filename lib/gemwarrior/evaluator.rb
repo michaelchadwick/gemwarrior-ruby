@@ -1,8 +1,6 @@
 # lib/gemwarrior/evaluator.rb
 # Evaluates prompt input
 
-require 'pry'
-
 require_relative 'arena'
 
 module Gemwarrior  
