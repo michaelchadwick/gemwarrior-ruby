@@ -2,6 +2,7 @@
 # World where the locations, monsters, items, etc. exist
 
 require 'yaml'
+require 'pry'
 
 require_relative 'entities/item'
 require_relative 'entities/location'
@@ -9,7 +10,7 @@ require_relative 'entities/location'
 module Gemwarrior
   class World
     # CONSTANTS
-    LOCATION_DATA_FILE  = "data/locations.yml"
+    LOCATION_DATA_FILE  = File.expand_path('../../../data/locations.yml', __FILE__)
     WORLD_DIM_WIDTH     = 10
     WORLD_DIM_HEIGHT    = 10
 
@@ -248,11 +249,11 @@ module Gemwarrior
     end
 
     def init_monsters
-      Dir.glob('lib/gemwarrior/entities/monsters/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+      Dir.glob(File.expand_path('../entities/monsters/*.rb', __FILE__)).each do |item|
+        require_relative item
       end
-      Dir.glob('lib/gemwarrior/entities/monsters/bosses/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+      Dir.glob(File.expand_path('../entities/monsters/bosses/*.rb', __FILE__)).each do |item|
+        require_relative item
       end
 
       self.monsters = [
@@ -272,8 +273,8 @@ module Gemwarrior
     end
 
     def init_locations
-      Dir.glob('lib/gemwarrior/entities/items/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+      Dir.glob(File.expand_path('../entities/items/*.rb', __FILE__)).each do |item|
+        require_relative item
       end
 
       locations = []
