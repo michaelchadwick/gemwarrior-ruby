@@ -334,7 +334,7 @@ module Gemwarrior
               when 'rest'
                 world.player.rest(world)
               when 'map'
-                world.print_map
+                world.print_map(world.player.cur_coords[:z])
               end
             when 'arena'
               arena = Arena.new({:world => world, :player => world.player})
