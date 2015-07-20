@@ -3,6 +3,7 @@
 
 require_relative 'creature'
 require_relative '../battle'
+require_relative '../misc/formatting'
 require_relative '../misc/name_generator'
 require_relative '../misc/player_levels'
 require_relative '../misc/wordlist'
@@ -10,6 +11,7 @@ require_relative '../misc/wordlist'
 module Gemwarrior
   class Player < Creature
     include PlayerLevels
+    include Formatting
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
                   :god_mode, :beast_mode, :use_wordnik, :special_abilities,
@@ -46,10 +48,10 @@ module Gemwarrior
       
       self.special_abilities  = []
 
-      self.monsters_killed  = 0
-      self.items_taken      = 0
-      self.movements_made   = 0
-      self.rests_taken      = 0
+      self.monsters_killed    = 0
+      self.items_taken        = 0
+      self.movements_made     = 0
+      self.rests_taken        = 0
     end
 
     def check_self(debug_mode = false, show_pic = true)
@@ -68,10 +70,10 @@ module Gemwarrior
       
       abilities = ''
       if special_abilities.empty?
-        abilities = 'none'
+        abilities = 'none...yet(?)'
       else
-        abilities = special_abilities.join(', ')
-      end        
+        abilities = Formatting::upstyle(special_abilities.collect { |x| x.to_s }).join(', ')
+      end
 
       self_text =  "NAME      : #{self.name}\n"
       self_text << "POSITION  : #{self.cur_coords.values.to_a}\n"
@@ -144,10 +146,7 @@ module Gemwarrior
       elsif new_name.length < 3 || new_name.length > 10
         return "'#{new_name}' is an invalid length. Make it between 3 and 10 characters, please."
       else
-        name_to_add = ""
-        name_to_add << new_name[0].upcase
-        name_to_add << new_name[1..new_name.length-1].downcase
-        self.name = name_to_add
+        self.name = Formatting::upstyle(new_name)
         return "New name, '#{name}', accepted."
       end
     end
@@ -227,16 +226,25 @@ module Gemwarrior
         self.hp_cur = self.hp_max
       end
     end
-    
-    def update_stats(monster)
+
+    def update_stats(trigger)
       old_player_level = PlayerLevels::check_level(self.xp)
 
-      self.xp = self.xp + monster.xp
-      self.rox = self.rox + monster.rox
+      case
+      when trigger[:reason].eql?(:monster)
+        monster = trigger[:value]
+        self.xp += monster.xp
+        self.rox += monster.rox
 
-      monster_items = monster.inventory.items
-      unless monster_items.nil?
-        self.inventory.items.concat monster_items unless monster_items.empty?
+        monster_items = monster.inventory.items
+        unless monster_items.nil?
+          self.inventory.items.concat monster_items unless monster_items.empty?
+        end
+      when trigger[:reason].eql?(:xp)
+        self.xp += trigger[:value].xp
+      when trigger[:reason].eql?(:level_bump)
+        next_player_level = old_player_level + 1
+        self.xp = PlayerLevels::get_level_stats(next_player_level)[:xp_start]
       end
 
       new_player_level = PlayerLevels::check_level(self.xp)
@@ -263,7 +271,7 @@ module Gemwarrior
         unless new_stats[:special_abilities].nil?
           unless self.special_abilities.include?(new_stats[:special_abilities])
             self.special_abilities.push(new_stats[:special_abilities])
-            puts "You learned a new ability: #{new_stats[:special_abilities]}!"
+            puts "You learned a new ability: #{Formatting::upstyle(new_stats[:special_abilities])}!"
           end
         end
       end

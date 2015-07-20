@@ -47,8 +47,8 @@ module Gemwarrior
     def initialize(world)
       self.world = world
 
-      self.devcommands = %w(god beast list vars map stat teleport spawn)
-      self.devaliases = %w(gd bs ls v m s tp sp)
+      self.devcommands = %w(god beast list vars map stat teleport spawn levelbump)
+      self.devaliases = %w(gd bs ls v m s tp sp lb)
       self.devextras = %w(st)
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
@@ -58,12 +58,13 @@ module Gemwarrior
         'Show a map of the world',
         'Change player stat',
         'Teleport to coordinates (5 0 0) or location name (\'Home\')',
-        'Spawn random monster'
+        'Spawn random monster',
+        'Bump your character to the next experience level'
       ]
 
       self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
       self.aliases = %w(c i r l t u d e ue g a ch h q qq)
-      self.extras = %w(exit exit! x x fight f)
+      self.extras = %w(exit exit! x xx fight f)
       self.cmd_descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -244,6 +245,8 @@ module Gemwarrior
             Animation::run({:phrase => '** TELEPORT! **', :speed => :insane})
             return world.describe(world.location_by_coords(world.player.cur_coords))
           end
+        when 'levelbump', 'lb'
+          world.player.update_stats({:reason => :level_bump, :value => 1})
         end
       end
 
@@ -327,7 +330,7 @@ module Gemwarrior
               world.player.heal_damage(result[:data])
               return
             when 'xp'
-              world.player.xp += result[:data]
+              world.player.update_stats({:reason => :xp, :value => result[:data]})
               return
             when 'action'
               case result[:data]

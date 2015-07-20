@@ -172,7 +172,7 @@ module Gemwarrior
       print_logo
 
       # main menu loop until new game or exit
-      run_main_menu
+      run_main_menu unless world.new_game
 
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?

@@ -165,6 +165,14 @@ module Gemwarrior
         if entity.eql?(monster)
           if player.beast_mode
             atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
+          elsif player.special_abilities.include?(:rock_slide)
+            lo_boost = rand(0..9)
+
+            if lo_boost >= 7
+              puts "#{player.name} uses Rock Slide for added damage!"
+              hi_boost = lo_boost + rand(0..5)
+              atk_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
+            end
           else
             atk_range = player.atk_lo..player.atk_hi
           end
@@ -252,7 +260,7 @@ module Gemwarrior
           puts " XP : #{monster.xp}".colorize(:green)
           puts " ROX: #{monster.rox}".colorize(:green)
           print_battle_line
-          player.update_stats(monster)
+          player.update_stats({:reason => :monster, :value => monster})
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
@@ -263,7 +271,7 @@ module Gemwarrior
           puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
         end
         print_battle_line
-        player.update_stats(monster)
+        player.update_stats({:reason => :monster, :value => monster})
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
     end

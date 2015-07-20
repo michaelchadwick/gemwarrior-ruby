@@ -13,7 +13,8 @@ def parse_options
     :god_mode     => false, 
     :beast_mode   => false, 
     :use_wordnik  => false, 
-    :sound        => false
+    :sound        => false,
+    :new_game     => false
   }
 
   optparse = OptionParser.new do |opts|
@@ -40,6 +41,10 @@ def parse_options
 
     opts.on('-s', '--sound', 'Turn sound on') do
       options[:sound] = true
+    end
+    
+    opts.on('-n', '--new', 'Immediately start a new game, skipping main menu') do
+      options[:new_game] = true
     end
   end
 

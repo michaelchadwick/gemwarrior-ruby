@@ -38,6 +38,7 @@ module Gemwarrior
       world.debug_mode      = options.fetch(:debug_mode)
       world.use_wordnik     = options.fetch(:use_wordnik)
       world.sound           = options.fetch(:sound)
+      world.new_game        = options.fetch(:new_game)
 
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,
