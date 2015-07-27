@@ -343,8 +343,8 @@ module Gemwarrior
               arena = Arena.new({:world => world, :player => world.player})
               result = arena.start
               
-              if result.eql?('exit')
-                return 'exit'
+              if result.eql?('death')
+                player_death_resurrection
               end
             when 'item'
               world.location_by_coords(world.player.cur_coords).add_item(result[:data])
@@ -397,7 +397,11 @@ module Gemwarrior
           monster_name = param1
           if world.has_monster_to_attack?(monster_name)
             monster = world.location_by_coords(world.player.cur_coords).monster_by_name(monster_name)
-            world.player.attack(world, monster)
+            result = world.player.attack(world, monster)
+            
+            if result.eql?('death')
+              player_death_resurrection
+            end
           else
             ERROR_ATTACK_PARAM_INVALID
           end
@@ -434,6 +438,17 @@ module Gemwarrior
     end
 
     private
+
+    def player_death_resurrection
+      puts 'Somehow, though, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
+      world.player.hp_cur = 1
+      world.player.rox -= (world.player.rox * 0.1).to_i
+      if world.player.rox < 0
+        world.player.rox = 0
+      end
+      world.player.cur_coords = world.location_coords_by_name('Home')
+      world.describe(world.location_by_coords(world.player.cur_coords))
+    end
 
     def print_separator
       puts "========================================================="

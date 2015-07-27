@@ -136,11 +136,11 @@ module Gemwarrior
             next
           end
         when 'run', 'r'
-          if player_escape?
+          if player_escape?(is_arena)
             monster.hp_cur = monster.hp_max
             puts "You successfully elude #{monster.name}!".colorize(:green)
             print_escape_text
-            return
+            return 'escaped'
           else
             puts "You were not able to run away! :-(".colorize(:yellow)
           end
@@ -287,22 +287,24 @@ module Gemwarrior
 
     def player_death
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
-      puts 'Your adventure ends here. Try again next time!'.colorize(:red)
       print_battle_line
     end
 
-    def player_escape?
-      if (player.dexterity > monster.dexterity)
-        return true
-      else
-        dex_diff = monster.dexterity - player.dexterity
-        rand_dex = rand(0..dex_diff)
-        if rand_dex % 2 > 0
+    def player_escape?(is_arena)
+      unless is_arena
+        if (player.dexterity > monster.dexterity)
           return true
         else
-          return false
+          dex_diff = monster.dexterity - player.dexterity
+          rand_dex = rand(0..dex_diff)
+          if rand_dex % 2 > 0
+            return true
+          else
+            return false
+          end
         end
       end
+      return false
     end
 
     # STATUS TEXT

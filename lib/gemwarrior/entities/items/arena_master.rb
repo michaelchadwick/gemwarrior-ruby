@@ -29,6 +29,7 @@ module Gemwarrior
         answer = gets.chomp.downcase
         case answer
         when 'y', 'yes'
+          player.rox -= 50
           puts 'She pockets the money and motions toward the center of the arena. She reminds you that you will be facing an ever-worsening onslaught of monsters. Each one you dispatch nets you a bonus cache of rox in addition to whatever the monster gives you. You will also become more experienced the longer you last. Finally, you can give up at any time between battles.'
           puts
           puts 'She finishes by wishing you good luck!'

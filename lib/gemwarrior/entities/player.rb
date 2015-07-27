@@ -196,7 +196,7 @@ module Gemwarrior
       battle = Battle.new({:world => world, :player => self, :monster => monster})
       result = battle.start
       if result.eql?('death')
-        return 'exit'
+        return 'death'
       end
     end
 
@@ -281,8 +281,8 @@ module Gemwarrior
 
     def player_death
       puts 'Your actions have reduced you to death.'.colorize(:red)
-      puts 'Your adventure ends here. Try again next time!'.colorize(:red)
-      return 'exit'
+      puts 'Somehow, however, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
+      return 'death'
     end
 
     # TRAVEL

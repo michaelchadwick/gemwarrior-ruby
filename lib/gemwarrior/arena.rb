@@ -24,11 +24,12 @@ module Gemwarrior
         result = battle.start(is_arena = true)
         
         if result.eql?('death')
-          return 'exit'
+          return 'death'
         end
 
         arena_monsters_vanquished += 1
 
+        puts
         puts 'Do you wish to continue fighting in the Arena? (Y/N)'
         answer = gets.chomp.downcase
 
