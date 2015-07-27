@@ -261,7 +261,36 @@ module Gemwarrior
           world.player.list_inventory
         end
       when 'rest', 'r'
-        world.player.rest(world)
+        tent_uses = 0
+        player_inventory = world.player.inventory.items
+        location_inventory = world.location_by_coords(world.player.cur_coords).items
+        
+        if player_inventory.map(&:name).include?('tent')
+          player_inventory.each do |i|
+            if i.name.eql?('tent')
+              if i.number_of_uses > 0
+                result = i.use(world.player)
+                tent_uses = i.number_of_uses
+                i.number_of_uses -= 1
+                
+                puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
+              end
+            end
+          end
+        elsif location_inventory.map(&:name).include?('tent')
+          location_inventory.each do |i|
+            if i.name.eql?('tent')
+              if i.number_of_uses > 0
+                result = i.use(world.player)
+                tent_uses = i.number_of_uses
+                i.number_of_uses -= 1
+                
+                puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
+              end
+            end
+          end
+        end
+        world.player.rest(world, tent_uses)
       when 'look', 'l'
         if param1
           world.describe_entity(world.location_by_coords(world.player.cur_coords), param1)
@@ -283,13 +312,21 @@ module Gemwarrior
 
           player_inventory = world.player.inventory.items
           location_inventory = world.location_by_coords(world.player.cur_coords).items
-          
+
           if player_inventory.map(&:name).include?(item_name)
             player_inventory.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
-                  result = i.use(world.player)
-                  if i.consumable
+                  if !i.number_of_uses.nil?
+                    if i.number_of_uses > 0
+                      result = i.use(world.player)
+                      i.number_of_uses -= 1
+                      puts "#{i.name} can be used #{i.number_of_uses} more time(s)."
+                    else
+                      return "#{i.name} cannot be used anymore."
+                    end
+                  elsif i.consumable
+                    result = i.use(world.player)
                     world.player.inventory.remove_item(i.name)
                   end
                 else
@@ -301,9 +338,17 @@ module Gemwarrior
             location_inventory.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
-                  result = i.use(world.player)
-                  if i.consumable
-                    world.location_by_coords(world.player.cur_coords).remove_item(i)
+                  if !i.number_of_uses.nil?
+                    if i.number_of_uses > 0
+                      result = i.use(world.player)
+                      i.number_of_uses -= 1
+                      puts "#{i.name} can be used #{i.number_of_uses} more time(s)."
+                    else
+                      return "#{i.name} cannot be used anymore."
+                    end
+                  elsif i.consumable
+                    result = i.use(world.player)
+                    world.player.inventory.remove_item(i.name)
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -332,6 +377,8 @@ module Gemwarrior
             when 'xp'
               world.player.update_stats({:reason => :xp, :value => result[:data]})
               return
+            when 'tent'
+              world.player.rest(world, result[:data])
             when 'action'
               case result[:data]
               when 'rest'

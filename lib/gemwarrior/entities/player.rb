@@ -95,7 +95,7 @@ module Gemwarrior
       self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
     end
 
-    def rest(world)
+    def rest(world, tent_uses = nil)
       cur_loc = world.location_by_coords(cur_coords)
 
       if cur_loc.should_spawn_monster?
@@ -120,10 +120,10 @@ module Gemwarrior
 
       Animation::run({:phrase => '** Zzzzz **'})
 
-      if self.inventory.contains_item?('tent') || world.location_by_coords(cur_coords).has_item?('tent')
+      if tent_uses > 0
         self.hp_cur = self.hp_max
 
-        return "You brandish your trusty magical canvas, and with a flick of the wrist your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
+        return "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
       else
         self.hp_cur = self.hp_cur.to_i + rand(10..15)
         self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
