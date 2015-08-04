@@ -2,7 +2,6 @@
 # World where the locations, monsters, items, etc. exist
 
 require 'yaml'
-require 'pry'
 
 require_relative 'entities/item'
 require_relative 'entities/location'
