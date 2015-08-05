@@ -15,8 +15,9 @@ module Gemwarrior
   class Repl
     # CONSTANTS
     ## MESSAGES
-    QUIT_MESSAGE   = 'Temporal flux detected. Shutting down...'.colorize(:red)
-    SPLASH_MESSAGE = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
+    QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
+    MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
+    SPLASH_MESSAGE          = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
 
     attr_accessor :world, :eval
 
@@ -94,8 +95,8 @@ module Gemwarrior
 
     def print_help
       puts '* Basic functions: look, go, character, inventory, attack *'
-      puts '* Type \'help\' while in-game for complete command list'
-      puts '* Most commands can be abbreviated to their first letter *'
+      puts '* Type \'help\' while in-game for complete list of commands *'
+      puts '* Most commands can be abbreviated to their first letter  *'
       puts
     end
 
@@ -126,7 +127,7 @@ module Gemwarrior
       print_main_menu if show_choices
       print_main_menu_prompt if show_choices
 
-      choice = STDIN.getch
+      choice = STDIN.getch.downcase
 
       case choice
       when 'n'
@@ -144,6 +145,7 @@ module Gemwarrior
         run_main_menu
       when 'e', 'x'
         puts choice
+        puts MAIN_MENU_QUIT_MESSAGE
         exit(0)
       else
         run_main_menu(show_choices = false)
