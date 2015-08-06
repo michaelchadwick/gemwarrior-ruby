@@ -241,7 +241,7 @@ module Gemwarrior
           self.inventory.items.concat monster_items unless monster_items.empty?
         end
       when trigger[:reason].eql?(:xp)
-        self.xp += trigger[:value].xp
+        self.xp += trigger[:value]
       when trigger[:reason].eql?(:level_bump)
         next_player_level = old_player_level + 1
         self.xp = PlayerLevels::get_level_stats(next_player_level)[:xp_start]

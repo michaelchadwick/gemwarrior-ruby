@@ -328,6 +328,8 @@ module Gemwarrior
                   elsif i.consumable
                     result = i.use(world.player)
                     world.player.inventory.remove_item(i.name)
+                  else
+                    result = i.use(world.player)
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -349,6 +351,8 @@ module Gemwarrior
                   elsif i.consumable
                     result = i.use(world.player)
                     world.player.inventory.remove_item(i.name)
+                  else
+                    result = i.use(world.player)
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE

@@ -170,9 +170,11 @@ module Gemwarrior
     end
 
     def describe_entity(point, entity_name)
+      entity_name.downcase!
+      
       if point.has_item?(entity_name)
         point.items.each do |i|
-          if i.name.downcase.eql?(entity_name.downcase)
+          if i.name.downcase.eql?(entity_name)
             if debug_mode
               return i.describe
             else
@@ -182,7 +184,7 @@ module Gemwarrior
         end
       elsif point.has_monster?(entity_name)
         point.monsters_abounding.each do |m|
-          if m.name.downcase.eql?(entity_name.downcase)
+          if m.name.downcase.eql?(entity_name)
             if debug_mode
               return m.describe
             else
@@ -192,7 +194,7 @@ module Gemwarrior
         end
       elsif point.has_boss?(entity_name)
         point.bosses_abounding.each do |b|
-          if b.name.downcase.eql?(entity_name.downcase)
+          if b.name.downcase.eql?(entity_name)
             if debug_mode
               return b.describe
             else
