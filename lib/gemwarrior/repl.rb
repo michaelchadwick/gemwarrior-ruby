@@ -158,18 +158,21 @@ module Gemwarrior
         run_main_menu(show_choices = false)
       end
     end
-    
+
     def get_log_file_path
       "#{Dir.home}/.gemwarrior"
     end
     
     def display_log
-      File.open(get_log_file_path).readlines.each do |line|
-        puts line
+      if File.exists?(get_log_file_path)
+        File.open(get_log_file_path).readlines.each do |line|
+          puts line
+        end
+      else
+        puts 'No attempts made yet!'
       end
     end
-        
-    
+
     def log_stats(duration, pl)
       puts  '######################################################################'
       print 'Gem Warrior'.colorize(:color => :white, :background => :black)
