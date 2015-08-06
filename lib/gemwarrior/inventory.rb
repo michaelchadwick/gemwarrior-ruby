@@ -71,7 +71,7 @@ module Gemwarrior
               self.weapon = nil
               return "The #{i.name} has been demoted to unequipped."
             else
-              ERROR_ITEM_UNEQUIP_NONWEAPON
+              return ERROR_ITEM_UNEQUIP_NONWEAPON
             end
           end
         end
