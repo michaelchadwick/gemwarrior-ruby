@@ -17,7 +17,7 @@ module Gemwarrior
     ## MESSAGES
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
-    SPLASH_MESSAGE          = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
+    SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
     WRAP_WIDTH              = 80
 
     attr_accessor :world, :eval
@@ -92,6 +92,7 @@ module Gemwarrior
       noun3_values = WordList.new(world.use_wordnik, 'noun-plural')
 
       puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
+      puts
     end
 
     def print_help
@@ -175,7 +176,12 @@ module Gemwarrior
       print_logo
 
       # main menu loop until new game or exit
-      run_main_menu unless world.new_game
+      if world.new_game
+        print_splash_message
+        print_fortune
+      else
+        run_main_menu
+      end
 
       # hook to do something right off the bat
       puts eval.evaluate(initialCommand) unless initialCommand.nil?
