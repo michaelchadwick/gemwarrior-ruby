@@ -180,30 +180,28 @@ module Gemwarrior
             end
           end
         end
-      elsif
-        if point.has_monster?(entity_name)
-          point.monsters_abounding.each do |m|
-            if m.name.downcase.eql?(entity_name.downcase)
-              if debug_mode
-                return m.describe
-              else
-                return m.description
-              end
+      elsif point.has_monster?(entity_name)
+        point.monsters_abounding.each do |m|
+          if m.name.downcase.eql?(entity_name.downcase)
+            if debug_mode
+              return m.describe
+            else
+              return m.description
             end
           end
         end
-      elsif
-        if point.has_boss?(entity_name)
-          point.bosses_abounding.each do |b|
-            if b.name.downcase.eql?(entity_name.downcase)
-              if debug_mode
-                return b.describe
-              else
-                return b.description
-              end
+      elsif point.has_boss?(entity_name)
+        point.bosses_abounding.each do |b|
+          if b.name.downcase.eql?(entity_name.downcase)
+            if debug_mode
+              return b.describe
+            else
+              return b.description
             end
           end
         end
+      elsif player.inventory.contains_item?(entity_name)
+        player.inventory.describe_item(entity_name)
       else
         ERROR_LOCATION_DESCRIBE_ENTITY_INVALID
       end

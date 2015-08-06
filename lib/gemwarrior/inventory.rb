@@ -8,10 +8,9 @@ module Gemwarrior
     ERROR_ITEM_REMOVE_INVALID     = 'Your inventory does not contain that item, so you cannot drop it.'
     ERROR_ITEM_ADD_UNTAKEABLE     = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
     ERROR_ITEM_ADD_INVALID        = 'That item does not exist here.'
-    ERROR_ITEM_DESCRIBE_INVALID   = 'You do not possess that.'
-    ERROR_ITEM_EQUIP_INVALID      = 'You do not have anything called that to equip.'
+    ERROR_ITEM_EQUIP_INVALID      = 'You do not possess anything called that to equip.'
     ERROR_ITEM_EQUIP_NONWEAPON    = 'That cannot be equipped as a weapon.'
-    ERROR_ITEM_UNEQUIP_INVALID    = 'You do not have anything called that to unequip.'
+    ERROR_ITEM_UNEQUIP_INVALID    = 'You do not possess anything called that to unequip.'
     ERROR_ITEM_UNEQUIP_NONWEAPON  = 'That cannot be unequipped.'
 
     attr_accessor :items, :weapon
@@ -41,7 +40,7 @@ module Gemwarrior
           end
         end
       else
-        ERROR_ITEM_DESCRIBE_INVALID
+        return false
       end
     end
 
@@ -54,7 +53,7 @@ module Gemwarrior
               self.weapon = i
               return "The #{i.name} has taken charge, and been equipped."
             else
-              ERROR_ITEM_EQUIP_NONWEAPON
+              return ERROR_ITEM_EQUIP_NONWEAPON
             end
           end
         end
