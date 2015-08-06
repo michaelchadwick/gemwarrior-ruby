@@ -47,8 +47,8 @@ module Gemwarrior
     def initialize(world)
       self.world = world
 
-      self.devcommands = %w(god beast list vars map stat teleport spawn levelbump)
-      self.devaliases = %w(gd bs ls v m s tp sp lb)
+      self.devcommands = %w(god beast list vars map stat teleport spawn levelbump restfight)
+      self.devaliases = %w(gd bs ls v m s tp sp lb rf)
       self.devextras = %w(st)
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
@@ -59,7 +59,8 @@ module Gemwarrior
         'Change player stat',
         'Teleport to coordinates (5 0 0) or location name (\'Home\')',
         'Spawn random monster',
-        'Bump your character to the next experience level'
+        'Bump your character to the next experience level',
+        'Rest, but ensure battle for testing'
       ]
 
       self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
@@ -247,6 +248,12 @@ module Gemwarrior
           end
         when 'levelbump', 'lb'
           world.player.update_stats({:reason => :level_bump, :value => 1})
+        when 'restfight', 'rf'
+          result = world.player.rest(world, nil, true)
+          
+          if result.eql?('death')
+            player_death_resurrection
+          end
         end
       end
 
@@ -290,7 +297,12 @@ module Gemwarrior
             end
           end
         end
-        world.player.rest(world, tent_uses)
+        
+        result = world.player.rest(world, tent_uses)
+        
+        if result.eql?('death')
+          player_death_resurrection
+        end
       when 'look', 'l'
         if param1
           world.describe_entity(world.location_by_coords(world.player.cur_coords), param1)
