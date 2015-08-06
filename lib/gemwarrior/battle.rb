@@ -75,9 +75,9 @@ module Gemwarrior
         if world.debug_mode || player.special_abilities.include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
-          print "???"
+          print '???'
         end
-        print " HP"
+        print ' HP'
         if world.debug_mode
           print " (LVL: #{monster.level})"
         end
@@ -117,7 +117,7 @@ module Gemwarrior
               return
             end
           else
-            puts "You miss entirely!".colorize(:yellow)
+            puts 'You miss entirely!'.colorize(:yellow)
           end
         when 'defend', 'd'
           puts 'You dig in and defend this round.'
@@ -129,7 +129,7 @@ module Gemwarrior
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
           puts "It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
           if world.debug_mode
-            puts "If defeated, will receive:"
+            puts 'If defeated, will receive:'
             puts " >> XP   : #{monster.xp}"
             puts " >> ROX  : #{monster.rox}"
             puts " >> ITEMS: #{monster.inventory.list_contents}"
@@ -142,7 +142,7 @@ module Gemwarrior
             print_escape_text
             return 'escaped'
           else
-            puts "You were not able to run away! :-(".colorize(:yellow)
+            puts 'You were not able to run away! :-('.colorize(:yellow)
           end
         else
           puts ERROR_ATTACK_OPTION_INVALID
@@ -192,12 +192,12 @@ module Gemwarrior
       if entity.eql?(monster)
         who_gets_wounded = "> You wound #{monster.name} for "
       else
-        who_gets_wounded = "> You are wounded for "
+        who_gets_wounded = '> You are wounded for '
       end
 
       print who_gets_wounded
       Animation::run({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })
-      print " point(s)!\n"
+      print ' point(s)!\n'
     end
 
     # MONSTER
@@ -241,7 +241,7 @@ module Gemwarrior
 
       if monster.is_boss
         # end game boss!
-        if monster.name.eql?("Emerald")
+        if monster.name.eql?('Emerald')
           Music::cue([
             {:freq_or_note => 'G3', :duration => 50},
             {:freq_or_note => 'A3', :duration => 50},
@@ -310,7 +310,7 @@ module Gemwarrior
     # STATUS TEXT
 
     def print_escape_text
-      Animation::run({ :phrase => "** POOF **", :oneline => true })
+      Animation::run({ :phrase => '** POOF **', :oneline => true })
     end
 
     def print_battle_line

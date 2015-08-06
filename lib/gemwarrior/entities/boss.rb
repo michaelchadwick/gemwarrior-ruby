@@ -8,7 +8,7 @@ module Gemwarrior
     attr_reader :win_text
 
     def win_text
-      win_text =  'You beat #{name}! You win! '
+      win_text =  "You beat #{name}! You win!"
       win_text << 'You become the true Gem Warrior, marry Queen Ruby, and have many fine, sparkling children. '
       win_text << 'Thank you for playing. Goodbye.'
       puts win_text

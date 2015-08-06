@@ -125,9 +125,9 @@ module Gemwarrior
       minutes = rand(1..59)
       seconds = rand(1..59)
 
-      hours_text = hours == 1 ? "hour" : "hours"
-      mins_text = minutes == 1 ? "minute" : "minutes"
-      secs_text = seconds == 1 ? "second" : "seconds"
+      hours_text = hours == 1 ? 'hour' : 'hours'
+      mins_text = minutes == 1 ? 'minute' : 'minutes'
+      secs_text = seconds == 1 ? 'second' : 'seconds'
 
       Animation::run({:phrase => '** Zzzzz **'})
 
@@ -148,7 +148,7 @@ module Gemwarrior
     end
 
     def modify_name
-      print "Enter new name: "
+      print 'Enter new name: '
 
       new_name = gets.chomp!
 
@@ -310,7 +310,7 @@ module Gemwarrior
 
     # CHARACTER
     def print_char_pic
-      char_pic = ""
+      char_pic = ''
       char_pic << "************\n"
       char_pic << "*    ()    *\n"
       char_pic << "*  \\-||-/  *\n"

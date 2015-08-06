@@ -89,7 +89,7 @@ module Gemwarrior
     def evaluate(input)
       case input
       # Ctrl-D or empty command
-      when nil, ""
+      when nil, ''
         return
       # real command
       else
@@ -536,7 +536,7 @@ module Gemwarrior
       print_separator
 
       if world.debug_mode
-        puts " DEBUG COMMANDS"
+        puts ' DEBUG COMMANDS'
         print_separator
         i = 0
         devcommands.each do |cmd|

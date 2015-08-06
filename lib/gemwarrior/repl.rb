@@ -45,7 +45,7 @@ module Gemwarrior
           begin
             input = read_line
             result = eval.evaluate(input)
-            if result.eql?("exit")
+            if result.eql?('exit')
               exit
             else
               puts result
@@ -72,9 +72,9 @@ module Gemwarrior
         ])
       end
 
-      puts "/-+-+-+ +-+-+-+-+-+-+-\\".colorize(:yellow)
+      puts '/-+-+-+ +-+-+-+-+-+-+-\\'.colorize(:yellow)
       puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
-      puts "\\-+-+-+ +-+-+-+-+-+-+-/".colorize(:yellow)
+      puts '\\-+-+-+ +-+-+-+-+-+-+-/'.colorize(:yellow)
       puts '[[[[[[[DEBUGGING]]]]]]]'.colorize(:white) if world.debug_mode
     end
 

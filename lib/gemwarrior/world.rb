@@ -29,10 +29,10 @@ module Gemwarrior
       puts "======================\n"
       puts "All Variables in World\n"
       puts "======================\n"
-      puts "#{list("players", true)}\n"
-      puts "#{list("monsters", true)}\n\n"
-      puts "#{list("items", true)}\n\n"
-      puts "#{list("locations", true)}\n"
+      puts "#{list('players', true)}\n"
+      puts "#{list('monsters', true)}\n\n"
+      puts "#{list('items', true)}\n\n"
+      puts "#{list('locations', true)}\n"
     end
 
     def print_map(floor)
@@ -144,7 +144,7 @@ module Gemwarrior
     end
 
     def describe(point)
-      desc_text = ""
+      desc_text = ''
       desc_text << "[ #{point.name} ]".colorize(:green)
 
       if debug_mode
@@ -282,23 +282,23 @@ module Gemwarrior
 
       location_data.each {|l|
         locations.push(Location.new({
-          :name                 => l["name"],
-          :description          => l["description"],
-          :danger_level         => l["danger_level"],
-          :monster_level_range  => l["monster_level_range"].nil? ? nil : l["monster_level_range"]["lo"]..l["monster_level_range"]["hi"],
+          :name                 => l['name'],
+          :description          => l['description'],
+          :danger_level         => l['danger_level'],
+          :monster_level_range  => l['monster_level_range'].nil? ? nil : l['monster_level_range']['lo']..l['monster_level_range']['hi'],
           :coords               => {
-                                    :x => l["coords"]["x"], 
-                                    :y => l["coords"]["y"],
-                                    :z => l["coords"]["z"]
+                                    :x => l['coords']['x'], 
+                                    :y => l['coords']['y'],
+                                    :z => l['coords']['z']
                                    },
           :locs_connected       => {
-                                    :north => l["locs_connected"]["north"], 
-                                    :east => l["locs_connected"]["east"], 
-                                    :south => l["locs_connected"]["south"], 
-                                    :west => l["locs_connected"]["west"]
+                                    :north => l['locs_connected']['north'], 
+                                    :east => l['locs_connected']['east'], 
+                                    :south => l['locs_connected']['south'], 
+                                    :west => l['locs_connected']['west']
                                    },
-          :items                => create_item_objects(l["items"]),
-          :bosses_abounding     => create_boss_objects(l["bosses_abounding"])
+          :items                => create_item_objects(l['items']),
+          :bosses_abounding     => create_boss_objects(l['bosses_abounding'])
         }))
       }
 

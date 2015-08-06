@@ -45,9 +45,9 @@ module Gemwarrior
       puts '>>"What are you in need of?"'
 
       loop do
-        puts " 1 - Herb"
-        puts " 2 - Dagger"
-        puts " x - leave"
+        puts ' 1 - Herb'
+        puts ' 2 - Dagger'
+        puts ' x - leave'
       
         choice = gets.chomp!
       
