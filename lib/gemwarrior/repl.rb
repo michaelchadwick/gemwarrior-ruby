@@ -18,6 +18,7 @@ module Gemwarrior
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
     SPLASH_MESSAGE          = 'Welcome to the land of *Jool*, where randomized fortune is just as likely as mayhem.'
+    WRAP_WIDTH              = 80
 
     attr_accessor :world, :eval
 
@@ -205,6 +206,10 @@ module Gemwarrior
     def read_line
       prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
       Readline.readline(prompt_text, true).to_s
+    end
+    
+    def puts(s='', width=WRAP_WIDTH)
+      super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
   end
 end
