@@ -188,7 +188,7 @@ module Gemwarrior
     end
 
     def prompt
-      prompt_template = "\n[LV:%3s][XP:%3s][ROX:%3s] -- [HP:%3s/%-3s][STM:%2s/%-2s] -- [%s @ %s]"
+      prompt_template = "\n[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [%s @ %s]"
       if world.debug_mode
         prompt_template += "[%s, %s, %s]"
       end
@@ -206,7 +206,8 @@ module Gemwarrior
       if world.debug_mode
         prompt_vars_arr.push(world.player.cur_coords[:x], world.player.cur_coords[:y], world.player.cur_coords[:z])
       end
-      puts (prompt_template % prompt_vars_arr).colorize(:yellow)
+      print (prompt_template % prompt_vars_arr).colorize(:yellow)
+      print "\n"
     end
 
     def read_line
