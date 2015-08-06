@@ -56,7 +56,7 @@ module Gemwarrior
       random_monster = nil
 
       loop do
-        random_monster = world.monsters[rand(0..world.monsters.length-1)]
+        random_monster = world.monsters[rand(0..world.monsters.length-1)].clone
 
         unless random_monster.is_boss
           break

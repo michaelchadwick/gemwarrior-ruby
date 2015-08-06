@@ -97,7 +97,7 @@ module Gemwarrior
 
     def rest(world, tent_uses = nil, ensure_fight = false)
       if ensure_fight
-        battle = Battle.new({:world => world, :player => self, :monster => world.monsters[rand(0..world.monsters.length-1)]})
+        battle = Battle.new({:world => world, :player => self, :monster => world.monsters[rand(0..world.monsters.length-1)].clone})
         result = battle.start(is_arena = false, is_event = true)
         if result.eql?('death')
           return 'death'
@@ -112,7 +112,7 @@ module Gemwarrior
         chance_of_ambush = rand(0..100)
 
         if chance_of_ambush < 25
-          battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)]})
+          battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)].clone})
           return battle.start(is_arena = false, is_event = true)
         end
       end
