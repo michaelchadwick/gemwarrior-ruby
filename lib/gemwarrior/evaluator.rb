@@ -19,6 +19,7 @@ module Gemwarrior
     ## ERRORS
     ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
 
+    ERROR_LOOK_AT_PARAM_MISSING         = 'You cannot just "look at". You gotta choose something to look at.'
     ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     ERROR_ATTACK_PARAM_MISSING          = 'You cannot just "attack". You gotta choose something to attack.'
@@ -305,6 +306,13 @@ module Gemwarrior
         end
       when 'look', 'l'
         if param1
+          if param1.eql?('at')
+            if param2
+              param1 = param2
+            else
+              return ERROR_LOOK_AT_PARAM_MISSING
+            end
+          end
           world.describe_entity(world.location_by_coords(world.player.cur_coords), param1)
         else
           world.describe(world.location_by_coords(world.player.cur_coords))
