@@ -35,7 +35,7 @@ module Gemwarrior
       at_exit do
         pl = world.player
         duration = clocker.stop
-        print_stats(duration, pl)
+        log_stats(duration, pl)
       end
 
       clocker.clock {
@@ -116,6 +116,7 @@ module Gemwarrior
       puts ' (N)ew Game'
       puts ' (A)bout'
       puts ' (H)elp'
+      puts ' (L)og'
       puts ' (E)xit'
       puts '======================='
       puts
@@ -145,6 +146,10 @@ module Gemwarrior
         puts choice
         print_help
         run_main_menu
+      when 'l'
+        puts choice
+        display_log
+        run_main_menu
       when 'e', 'x'
         puts choice
         puts MAIN_MENU_QUIT_MESSAGE
@@ -154,7 +159,18 @@ module Gemwarrior
       end
     end
     
-    def print_stats(duration, pl)
+    def get_log_file_path
+      "#{Dir.home}/.gemwarrior"
+    end
+    
+    def display_log
+      File.open(get_log_file_path).readlines.each do |line|
+        puts line
+      end
+    end
+        
+    
+    def log_stats(duration, pl)
       puts  '######################################################################'
       print 'Gem Warrior'.colorize(:color => :white, :background => :black)
       print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} minutes, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} seconds, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} milliseconds\n"
@@ -168,6 +184,11 @@ module Gemwarrior
       print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
       print "\n"
       puts '######################################################################'
+      
+      # log stats to file in home directory
+      File.open(get_log_file_path, 'a') do |f|
+        f.write "#{Time.now} #{pl.name.rjust(10)} - LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken}\n"
+      end
     end
 
     def setup_screen(initialCommand = nil)
