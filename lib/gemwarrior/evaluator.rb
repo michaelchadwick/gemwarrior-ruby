@@ -519,6 +519,7 @@ module Gemwarrior
       end
       world.player.cur_coords = world.location_coords_by_name('Home')
       world.describe(world.location_by_coords(world.player.cur_coords))
+      world.player.deaths += 1
     end
 
     def print_separator

@@ -15,7 +15,7 @@ module Gemwarrior
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, 
                   :god_mode, :beast_mode, :use_wordnik, :special_abilities,
-                  :monsters_killed, :items_taken, :movements_made, :rests_taken
+                  :monsters_killed, :items_taken, :movements_made, :rests_taken, :deaths
 
     def initialize(options)
       self.name               = generate_name
@@ -52,6 +52,7 @@ module Gemwarrior
       self.items_taken        = 0
       self.movements_made     = 0
       self.rests_taken        = 0
+      self.deaths             = 0
     end
 
     def check_self(debug_mode = false, show_pic = true)

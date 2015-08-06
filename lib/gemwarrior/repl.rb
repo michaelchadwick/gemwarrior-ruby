@@ -166,7 +166,7 @@ module Gemwarrior
     def display_log
       if File.exists?(get_log_file_path)
         File.open(get_log_file_path).readlines.each do |line|
-          puts line
+          print "#{line}"
         end
       else
         puts 'No attempts made yet!'
@@ -185,12 +185,14 @@ module Gemwarrior
       print "traveled #{pl.movements_made.to_s.colorize(:color => :white, :background => :black)} time(s)"
       print "\n".ljust(8)
       print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      print "\n".ljust(8)
+      print "died #{pl.deaths.to_s.colorize(:color => :white, :background => :black)} time(s)"
       print "\n"
       puts '######################################################################'
       
       # log stats to file in home directory
       File.open(get_log_file_path, 'a') do |f|
-        f.write "#{Time.now} #{pl.name.rjust(10)} - LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken}\n"
+        f.write "#{Time.now} #{pl.name.rjust(10)} - LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
 
