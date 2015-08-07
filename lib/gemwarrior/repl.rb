@@ -112,6 +112,7 @@ module Gemwarrior
     end
     
     def print_main_menu
+      puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
       puts ' (N)ew Game'
       puts ' (A)bout'
