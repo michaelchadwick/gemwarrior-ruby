@@ -197,7 +197,7 @@ module Gemwarrior
 
       print who_gets_wounded
       Animation::run({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })
-      print ' point(s)!\n'
+      print " point(s)!\n"
     end
 
     # MONSTER
