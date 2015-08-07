@@ -5,6 +5,7 @@ require 'readline'
 require 'os'
 require 'clocker'
 require 'io/console'
+require 'github_api'
 
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
@@ -19,6 +20,8 @@ module Gemwarrior
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
     WRAP_WIDTH              = 80
+    GITHUB_NAME             = 'michaelchadwick'
+    GITHUB_PROJECT          = 'gemwarrior'
 
     attr_accessor :world, :eval
 
@@ -118,9 +121,25 @@ module Gemwarrior
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (L)og'
+      puts ' (C)heck for Updates'
       puts ' (E)xit'
       puts '======================='
       puts
+    end
+    
+    def check_for_new_release
+      github = Github.new
+      gw_latest_release = github.repos.releases.list GITHUB_NAME, GITHUB_PROJECT
+      local_release = Gemwarrior::VERSION
+      remote_release = gw_latest_release[0].tag_name
+      remote_release[0] = ''
+      if remote_release > local_release
+        puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
+        puts
+      else
+        puts "You have the latest version. Fantastic!"
+        puts
+      end
     end
     
     def print_main_menu_prompt
@@ -150,6 +169,10 @@ module Gemwarrior
       when 'l'
         puts choice
         display_log
+        run_main_menu
+      when 'c'
+        puts choice
+        check_for_new_release
         run_main_menu
       when 'e', 'x'
         puts choice
@@ -201,6 +224,7 @@ module Gemwarrior
       # welcome player to game
       clear_screen
       print_logo
+
 
       # main menu loop until new game or exit
       if world.new_game

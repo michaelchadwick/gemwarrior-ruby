@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'matrext', '~> 0.4.8'
   spec.add_runtime_dependency 'clocker', '~> 0.1.2'
   spec.add_runtime_dependency 'feep', '~> 0.1.3'
+  spec.add_runtime_dependency 'github_api', '~> 0.12.4'
   
   # gems for future features
   #spec.add_runtime_dependency 'hr', '~> 0.0.2'
