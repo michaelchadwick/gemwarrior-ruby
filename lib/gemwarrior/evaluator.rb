@@ -433,7 +433,7 @@ module Gemwarrior
         if param1.nil?
           ERROR_DROP_PARAM_MISSING
         else
-          world.player.inventory.remove_item(param1)
+          world.player.inventory.drop_item(param1)
         end  
       when 'equip', 'e'
         if param1.nil?
@@ -520,6 +520,7 @@ module Gemwarrior
       world.player.cur_coords = world.location_coords_by_name('Home')
       world.describe(world.location_by_coords(world.player.cur_coords))
       world.player.deaths += 1
+      return
     end
 
     def print_separator

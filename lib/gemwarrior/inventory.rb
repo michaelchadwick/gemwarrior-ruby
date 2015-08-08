@@ -100,15 +100,19 @@ module Gemwarrior
     end
 
     def remove_item(item_name)
+      items.delete_at(items.map(&:name).index(item_name) || items.length)
+      unless self.weapon.nil?
+        self.weapon = nil if self.weapon.name.eql?(item_name)
+      end
+    end
+
+    def drop_item(item_name)
       if contains_item?(item_name)
         puts "Are you sure you want to permanently throw away #{item_name}? (Y/N)"
         answer = gets.downcase.chomp!
         
         if answer.eql?('y')
-          items.delete_at(items.map(&:name).index(item_name) || items.length)
-          unless self.weapon.nil?
-            self.weapon = nil if self.weapon.name.eql?(item_name)
-          end
+          remove_item(item_name)
         
           return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
         else
