@@ -26,21 +26,21 @@ Run the commands above and you'll be whisked away to Jool, ready to start or con
 
 ## Main Commands
 
-`> c` - character check for visual identity  
-`> i  [object]` - check your inventory (or an individual item within)  
-`> r` - take a load off and replenish hp  
-`> l  [object]` - look at current location and its items and monsters  
-`> t  [object]` - take an item from a location  
-`> u  [object]` - use an item from your inventory or current location
-`> d  [object]` - drop an item from your inventory  
-`> e  [object]` - equip an item in your inventory as a weapon  
-`> ue [object]` - unequip an item in your inventory  
-`> g  [direction]` - go in a direction, if possible  
-`> a  [monster]` - attack a monster  
-`> ch [attribute]` - change some things about yourself  
-`> h` - display available commands  
-`> q` - quit this nonsense w/ prompt  
-`> qq` - quit this nonsense w/o prompt  
+`> character` - character check for visual identity  
+`> inventory [object]` - check your inventory (or an individual item within)  
+`> rest` - take a load off and replenish hp  
+`> look      [object]` - look at current location and its items and monsters  
+`> take      [object]` - take an item from a location  
+`> use       [object]` - use an item from your inventory or current location  
+`> drop      [object]` - drop an item from your inventory  
+`> equip     [object]` - designate an item in your inventory your weapon  
+`> unequip   [object]` - stop using an item in your inventory as your weapon
+`> go        [direction]` - go in a direction, if possible (north|east|south|west work as shortcuts)
+`> attack    [monster]` - attack a monster  
+`> change    [attribute]` - change some things about yourself  
+`> help` - display available commands  
+`> quit` - quit this nonsense w/ prompt  
+`> quit!` - quit this nonsense w/o prompt  
 
 ## In Progress, Yanno
 

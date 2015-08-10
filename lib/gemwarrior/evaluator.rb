@@ -22,6 +22,7 @@ module Gemwarrior
     ERROR_LOOK_AT_PARAM_MISSING         = 'You cannot just "look at". You gotta choose something to look at.'
     ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_DIRECTION_PARAM_INVALID       = 'You cannot go to that place.'
     ERROR_ATTACK_PARAM_MISSING          = 'You cannot just "attack". You gotta choose something to attack.'
     ERROR_ATTACK_PARAM_INVALID          = 'That monster does not exist here or can\'t be attacked.'
     ERROR_TAKE_PARAM_MISSING            = 'You cannot just "take". You gotta choose something to take.'
@@ -64,8 +65,8 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands = %w(character inventory rest look take use drop equip unequip go attack change help quit quit!)
-      self.aliases = %w(c i r l t u d e ue g a ch h q qq)
+      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change help quit quit!)
+      self.aliases = %w(c i r l t u d eq ue g n e s w a ch h q qq)
       self.extras = %w(exit exit! x xx fight f)
       self.cmd_descriptions = [
         'Display character information',
@@ -78,6 +79,10 @@ module Gemwarrior
         'Equip item',
         'Unequip item',
         'Go in a direction',
+        'Go north (shortcut)',
+        'Go east (shortcut)',
+        'Go south (shortcut)',
+        'Go west (shortcut)',
         'Attack a monster',
         'Change something',
         'This help menu',
@@ -436,7 +441,7 @@ module Gemwarrior
         else
           world.player.inventory.drop_item(param1)
         end  
-      when 'equip', 'e'
+      when 'equip', 'eq'
         if param1.nil?
           ERROR_EQUIP_PARAM_MISSING
         else
@@ -454,13 +459,31 @@ module Gemwarrior
           GO_PARAMS
         else
           direction = param1
-          if world.can_move?(direction)
-            world.player.go(world.locations, param1, world.sound)
-            world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
-            world.describe(world.location_by_coords(world.player.cur_coords))
-          else
-            ERROR_GO_PARAM_INVALID
-          end
+          try_to_move_player(direction)
+        end
+      when 'n'
+        if param1
+          ERROR_DIRECTION_PARAM_INVALID
+        else
+          try_to_move_player('north')
+        end
+      when 'e'
+        if param1
+          ERROR_DIRECTION_PARAM_INVALID
+        else
+          try_to_move_player('east')
+        end
+      when 's'
+        if param1
+          ERROR_DIRECTION_PARAM_INVALID
+        else
+          try_to_move_player('south')
+        end
+      when 'w'
+        if param1
+          ERROR_DIRECTION_PARAM_INVALID
+        else
+          try_to_move_player('west')
         end
       when 'attack', 'a', 'fight', 'f'
         if param1.nil?
@@ -510,6 +533,16 @@ module Gemwarrior
     end
 
     private
+
+    def try_to_move_player(direction)
+      if world.can_move?(direction)
+        world.player.go(world.locations, direction, world.sound)
+        world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
+        world.describe(world.location_by_coords(world.player.cur_coords))
+      else
+        return ERROR_GO_PARAM_INVALID
+      end
+    end
 
     def player_death_resurrection
       puts 'Somehow, though, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
