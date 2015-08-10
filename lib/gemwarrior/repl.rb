@@ -30,8 +30,8 @@ module Gemwarrior
       self.eval   = evaluator
     end
 
-    def start(initialCommand = nil)
-      setup_screen(initialCommand)
+    def start(initial_command = nil, extra_command = nil)
+      setup_screen(initial_command, extra_command)
 
       clocker = Clocker.new
 
@@ -220,7 +220,7 @@ module Gemwarrior
       end
     end
 
-    def setup_screen(initialCommand = nil)
+    def setup_screen(initial_command = nil, extra_command = nil)
       # welcome player to game
       clear_screen
       print_logo
@@ -235,7 +235,8 @@ module Gemwarrior
       end
 
       # hook to do something right off the bat
-      puts eval.evaluate(initialCommand) unless initialCommand.nil?
+      puts eval.evaluate(initial_command) unless initial_command.nil?
+      puts eval.evaluate(extra_command) unless extra_command.nil?
     end
 
     def prompt

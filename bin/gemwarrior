@@ -9,42 +9,47 @@ GAME_NAME = 'Gem Warrior'
 
 def parse_options
   options = {
-    :debug_mode   => false, 
-    :god_mode     => false, 
-    :beast_mode   => false, 
-    :use_wordnik  => false, 
-    :sound        => false,
-    :new_game     => false
+    :beast_mode     => false, 
+    :debug_mode     => false, 
+    :god_mode       => false, 
+    :new_game       => false,
+    :sound          => false,
+    :use_wordnik    => false, 
+    :extra_command  => nil
   }
 
   optparse = OptionParser.new do |opts|
+    opts.on('-b', '--beast', 'Enable debug[beastmode]') do
+      options[:beast_mode] = true
+    end
+
+    opts.on('-d', '--debug', 'Enable debug commands in-game') do
+      options[:debug_mode] = true
+    end
+
+    opts.on('-g', '--god', 'Enable debug[godmode]') do
+      options[:god_mode] = true
+    end
+
+    opts.on('-n', '--new', 'Immediately start a new game, skipping main menu') do
+      options[:new_game] = true
+    end
+    
+    opts.on('-s', '--sound', 'Enable sound (experimental)') do
+      options[:sound] = true
+    end
+
     opts.on('-v', '--version', 'Display version number and exit') do
       puts "#{GAME_NAME} v#{Gemwarrior::VERSION}"
       exit
     end
 
-    opts.on('-d', '--debug', 'Turn debug on') do
-      options[:debug_mode] = true
-    end
-
-    opts.on('-g', '--god', 'Set godmode to true on load') do
-      options[:god_mode] = true
-    end
-
-    opts.on('-b', '--beast', 'Set beastmode to true on load') do
-      options[:beast_mode] = true
-    end
-
-    opts.on('-w', '--wordnik', 'Use Wordnik to generate more diverse, dynamic descriptors of entities') do
+    opts.on('-w', '--wordnik', 'Enable Wordnik to generate more diverse, dynamic descriptors of entities') do
       options[:use_wordnik] = true
     end
 
-    opts.on('-s', '--sound', 'Turn sound on') do
-      options[:sound] = true
-    end
-    
-    opts.on('-n', '--new', 'Immediately start a new game, skipping main menu') do
-      options[:new_game] = true
+    opts.on('-x', '--extra COMMAND', 'Run a command immediately upon beginning the game') do |xc|
+      options[:extra_command] = xc.to_s
     end
   end
 
@@ -65,7 +70,6 @@ end
 
 begin
   options = parse_options
-
   Gemwarrior::Game.new(options)
 rescue => error
   print_error(error)

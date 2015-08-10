@@ -39,6 +39,7 @@ module Gemwarrior
       world.use_wordnik     = options.fetch(:use_wordnik)
       world.sound           = options.fetch(:sound)
       world.new_game        = options.fetch(:new_game)
+      world.extra_command   = options.fetch(:extra_command)
 
       world.player = Player.new({
         :description        => PLAYER_DESC_DEFAULT,
@@ -66,7 +67,7 @@ module Gemwarrior
       self.repl = Repl.new(world, eval)
 
       # enter Jool!
-      repl.start('look')
+      repl.start('look', world.extra_command)
     end
 
   end
