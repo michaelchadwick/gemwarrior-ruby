@@ -19,21 +19,19 @@ As you travel you will discover sights and sounds of the land, all of which are 
 
 1. `ruby -v` should return `ruby 2.`something; else install [Ruby](https://www.ruby-lang.org)
 2. `gem -v` should return `2.`something; else install [RubyGems](https://rubygems.org)
-2. `gem install gemwarrior`  
+2. `(sudo) gem install gemwarrior`  
 3. `gemwarrior`
 
 Run the commands above and you'll be whisked away to Jool, ready to start or continue your quest to defeat Emerald and take back the coveted Shiny Thing(tm) that you will bring back to Queen Ruby (or will you...?).
 
-## In Progress, Yanno
-
-This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working console prompt, some commands (type `h` for a list), and a few locations exist already. Each time you start the game a new hero will be created with a randomized name, but you can change that with `> change name`.
+## Main Commands
 
 `> c` - character check for visual identity  
 `> i  [object]` - check your inventory (or an individual item within)  
-`> ls [entity_type]` - list entities in the game (monsters, items, locations)  
 `> r` - take a load off and replenish hp  
 `> l  [object]` - look at current location and its items and monsters  
 `> t  [object]` - take an item from a location  
+`> u  [object]` - use an item from your inventory or current location
 `> d  [object]` - drop an item from your inventory  
 `> e  [object]` - equip an item in your inventory as a weapon  
 `> ue [object]` - unequip an item in your inventory  
@@ -44,21 +42,10 @@ This is in super-hyper-turbo-edition pre-pre-pre-alpha right now, but a working 
 `> q` - quit this nonsense w/ prompt  
 `> qq` - quit this nonsense w/o prompt  
 
-To come:
+## In Progress, Yanno
 
-* ~~Ability to move between locations!~~
-* ~~Monsters!~~
-* ~~Ability to fight those monsters!~~
-* ~~Monsters to fight back!~~
-* ~~Items you can pick up!~~
-* ~~Main Boss and Win State!~~
-* Saving!
-* Loading of said saved state!
-* More locations to move between!
-* Randomized worlds!
-* Quests (maybe)!
-* Towns (maybe)!
-* Merchants (maybe)!
-* Sound FX!
-* Music!
-* Epic Length (whereby "Epic" I mean "maybe 30 minutes"?)!
+This is in beta testing right now, and if you wish to help out in an official way, please visit [the main Gem Warrior homepage](http://gw.codana.me).
+
+## Current Issues
+
+My old list of issues/features has been moved to the [Github issues section](https://github.com/michaelchadwick/gemwarrior/issues). Feel free to add any bugs you find while playing, or any requests for new features, over there.
