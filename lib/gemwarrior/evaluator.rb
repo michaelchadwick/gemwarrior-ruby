@@ -261,7 +261,8 @@ module Gemwarrior
       # normal commands
       case command
       when 'character', 'c'
-        world.player.check_self(world.debug_mode)
+        # bypass puts so it prints out with newlines properly
+        print world.player.check_self(world.debug_mode)
       when 'inventory', 'i'
         if param1
           world.player.inventory.describe_item(param1)

@@ -75,9 +75,8 @@ module Gemwarrior
       else
         abilities = Formatting::upstyle(special_abilities.collect { |x| x.to_s }).join(', ')
       end
-
       self_text =  "NAME      : #{self.name}\n"
-      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n"
+      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n" if debug_mode
       self_text << "WEAPON    : #{weapon_slot}\n"
       self_text << "LEVEL     : #{self.level}\n"
       self_text << "EXPERIENCE: #{self.xp}\n"
@@ -91,9 +90,15 @@ module Gemwarrior
         self_text << "BEAST_MODE: #{self.beast_mode}\n"
       end
 
-      self_text << "\n#{self.description}\n\n"
+      self_text << "\n"
 
-      self_text << "Current status - breathing, wearing clothing, and with a few other specific characteristics: face is #{self.face}, hands are #{self.hands}, and general mood is #{self.mood}.\n"
+      self_text << "[Your Story]\n#{self.description}"
+
+      self_text << "\n\n"
+
+      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
+      
+      self_text << "\n"
     end
 
     def rest(world, tent_uses = nil, ensure_fight = false)
