@@ -1,14 +1,15 @@
 # lib/gemwarrior/misc/music.rb
-# Music cue
+# Music cues using win32-sound
 
+require 'feep'
 require 'win32/sound'
-include Win32
 
 require_relative 'musical_notes'
 
 module Gemwarrior
-  module Music  
+  module Music
     def self.cue(sequence)
+      # if Windows, use superior win32-sound library
       if OS.windows?
         threads = []
 
@@ -16,10 +17,33 @@ module Gemwarrior
           sequence.each do |seq|
             seq[:frequencies].split(',').each do |note|
               threads << Thread.new {
-                Sound::play_freq(Notes::NOTE_FREQ[note], seq[:duration], 0.1)
+                Win32::Sound::play_freq(Notes::NOTE_FREQ[note], seq[:duration], 0.5)
               }
             end
             threads.each { |th| th.join }
+          end
+        }
+      # otherwise, use inferior feep library
+      else
+        feep_defaults = {
+          :frequencies  => '440', 
+          :waveform     => 'sine', 
+          :volume       => 0.3, 
+          :duration     => 500,
+          :notext       => true
+        }
+      
+        Thread.start {
+          sequence.each do |seq|
+            seq = feep_defaults.merge(seq)
+
+            Feep::Base.new({
+              :freq_or_note => seq[:frequencies], 
+              :waveform     => seq[:waveform], 
+              :volume       => seq[:volume], 
+              :duration     => seq[:duration],
+              :notext       => seq[:notext]
+            })
           end
         }
       end

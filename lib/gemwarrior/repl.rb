@@ -218,12 +218,7 @@ module Gemwarrior
       case choice
       when 'n'
         clear_screen
-        if world.sound
-          Music::cue([
-            {:frequencies => 'A3,E4,C#5,E5', :duration => 300},
-            {:frequencies => 'A3,E4,C#5,F#5', :duration => 600}
-          ])
-        end
+        play_intro_tune
         print_splash_message
         print_fortune
         return
@@ -291,7 +286,16 @@ module Gemwarrior
         f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
-
+    
+    def play_intro_tune
+      if world.sound
+        Music::cue([
+          {:frequencies => 'A3,E4,C#5,E5', :duration => 300},
+          {:frequencies => 'A3,E4,C#5,F#5', :duration => 600}
+        ])
+      end
+    end
+    
     def setup_screen(initial_command = nil, extra_command = nil)
       # welcome player to game
       clear_screen
@@ -299,6 +303,7 @@ module Gemwarrior
 
       # main menu loop until new game or exit
       if world.new_game
+        play_intro_tune
         print_splash_message
         print_fortune
       else
