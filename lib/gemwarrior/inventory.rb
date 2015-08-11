@@ -22,9 +22,9 @@ module Gemwarrior
 
     def list_contents
       if items.nil? || items.empty?
-        return contents_text = '[empty]'
+        return '[empty]'
       else
-        return contents_text = "#{items.map(&:name).join ', '}"
+        return "#{items.map(&:name).join ', '}"
       end
     end
 
@@ -110,10 +110,10 @@ module Gemwarrior
       if contains_item?(item_name)
         puts "Are you sure you want to permanently throw away #{item_name}? (Y/N)"
         answer = gets.downcase.chomp!
-        
+
         if answer.eql?('y')
           remove_item(item_name)
-        
+
           return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
         else
           return "You decide to keep #{item_name} for now."

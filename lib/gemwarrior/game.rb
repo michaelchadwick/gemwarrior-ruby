@@ -26,7 +26,7 @@ module Gemwarrior
     PLAYER_ROX_DEFAULT        = 0
     PLAYER_ROX_DEBUG          = 300
 
-    attr_accessor :world, :eval, :repl
+    attr_accessor :world, :evaluator, :repl
 
     def initialize(options)
       # create new world and player
@@ -65,8 +65,8 @@ module Gemwarrior
       update_options_file(world)
       
       # create the console
-      self.eval = Evaluator.new(world)
-      self.repl = Repl.new(self, world, eval)
+      self.evaluator  = Evaluator.new(world)
+      self.repl       = Repl.new(self, world, evaluator)
 
       # enter Jool!
       repl.start('look', world.extra_command)

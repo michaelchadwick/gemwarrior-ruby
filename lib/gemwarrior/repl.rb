@@ -12,7 +12,7 @@ require_relative 'misc/wordlist'
 require_relative 'evaluator'
 require_relative 'version'
 
-module Gemwarrior  
+module Gemwarrior
   class Repl
     # CONSTANTS
     ## MESSAGES
@@ -23,12 +23,12 @@ module Gemwarrior
     GITHUB_NAME             = 'michaelchadwick'
     GITHUB_PROJECT          = 'gemwarrior'
 
-    attr_accessor :game, :world, :eval
+    attr_accessor :game, :world, :evaluator
 
     def initialize(game, world, evaluator)
-      self.game   = game
-      self.world  = world
-      self.eval   = evaluator
+      self.game         = game
+      self.world        = world
+      self.evaluator    = evaluator
     end
 
     def start(initial_command = nil, extra_command = nil)
@@ -43,13 +43,13 @@ module Gemwarrior
         log_stats(duration, pl)
       end
 
-      clocker.clock {
+      clocker.clock do
         # main loop
         loop do
           prompt
           begin
             input = read_line
-            result = eval.evaluate(input)
+            result = evaluator.evaluate(input)
             if result.eql?('exit')
               exit
             else
@@ -61,7 +61,7 @@ module Gemwarrior
             exit
           end
         end
-      }
+      end
     end
 
     private
@@ -75,7 +75,7 @@ module Gemwarrior
       Readline.readline(prompt_text, true).to_s
     end
 
-    def puts(s='', width=WRAP_WIDTH)
+    def puts(s = '', width = WRAP_WIDTH)
       super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
 
@@ -87,10 +87,10 @@ module Gemwarrior
     end
 
     def print_splash_message
-      SPLASH_MESSAGE.length.times do print '=' end
+      SPLASH_MESSAGE.length.times { print '=' }
       puts
       puts SPLASH_MESSAGE
-      SPLASH_MESSAGE.length.times do print '=' end
+      SPLASH_MESSAGE.length.times { print '=' }
       puts
     end
 
@@ -110,7 +110,7 @@ module Gemwarrior
       puts
       puts 'Explore the land of Jool with the power of text, fighting enemies to improve your station, grabbing curious items that may or may not come in handy, and finally defeating Mr. Emerald himself to win the game.'
     end
-    
+
     def print_help_text
       puts 'Gem Warrior - Some Basic Help Commands'
       puts '======================================'
@@ -123,8 +123,8 @@ module Gemwarrior
       options = read_options_file
 
       puts
-      puts  'Gem Warrior Options'
-      puts  '======================='
+      puts 'Gem Warrior Options'
+      puts '======================='
       if options.nil?
         puts 'No options set yet.'
       else
@@ -134,17 +134,17 @@ module Gemwarrior
         options.each do |op|
           option = op[0]
           value = op[1].eql?('true') ? 'ON' : 'OFF'
-          
+
           print " #{count} #{option.ljust(12).upcase} : #{value}\n"
           count += 1
         end
       end
-      puts  '======================='
+      puts '======================='
       puts
-      puts  'Enter option number to toggle value, or any other key to return to main menu.'
+      puts 'Enter option number to toggle value, or any other key to return to main menu.'
       print 'Option? '
       answer = STDIN.getch
-      
+
       case answer
       when '1'
         print answer
@@ -163,7 +163,7 @@ module Gemwarrior
     end
 
     def display_log
-      if File.exists?(game.get_log_file_path)
+      if File.exist?(game.get_log_file_path)
         File.open(game.get_log_file_path).readlines.each do |line|
           print "#{line}"
         end
@@ -258,44 +258,43 @@ module Gemwarrior
           options << line.chomp.split('|')
         end
         return options
-      else
-        nil
       end
+      nil
     end
 
     def log_stats(duration, pl)
-      puts  '######################################################################'
-      print 'Gem Warrior'.colorize(:color => :white, :background => :black)
+      puts '######################################################################'
+      print 'Gem Warrior'.colorize(color: :white, background: :black)
       print " v#{Gemwarrior::VERSION}".colorize(:yellow)
-      print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} mins, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} secs, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} ms\n"
+      print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} mins, #{duration[:secs].to_s.colorize(color: :white, background: :black)} secs, and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
       puts  '----------------------------------------------------------------------'
-      print "Player killed #{pl.monsters_killed.to_s.colorize(:color => :white, :background => :black)} monster(s)"
+      print "Player killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
       print "\n".ljust(8)
-      print "picked up #{pl.items_taken.to_s.colorize(:color => :white, :background => :black)} item(s)"
+      print "picked up #{pl.items_taken.to_s.colorize(color: :white, background: :black)} item(s)"
       print "\n".ljust(8)
-      print "traveled #{pl.movements_made.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      print "traveled #{pl.movements_made.to_s.colorize(color: :white, background: :black)} time(s)"
       print "\n".ljust(8)
-      print "rested #{pl.rests_taken.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      print "rested #{pl.rests_taken.to_s.colorize(color: :white, background: :black)} time(s)"
       print "\n".ljust(8)
-      print "died #{pl.deaths.to_s.colorize(:color => :white, :background => :black)} time(s)"
+      print "died #{pl.deaths.to_s.colorize(color: :white, background: :black)} time(s)"
       print "\n"
       puts '######################################################################'
-      
+
       # log stats to file in home directory
       File.open(game.get_log_file_path, 'a') do |f|
         f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
-    
+
     def play_intro_tune
       if world.sound
         Music::cue([
-          {:frequencies => 'A3,E4,C#5,E5', :duration => 300},
-          {:frequencies => 'A3,E4,C#5,F#5', :duration => 600}
+          { frequencies: 'A3,E4,C#5,E5',  duration: 300},
+          { frequencies: 'A3,E4,C#5,F#5', duration: 600}
         ])
       end
     end
-    
+
     def setup_screen(initial_command = nil, extra_command = nil)
       # welcome player to game
       clear_screen
@@ -311,8 +310,8 @@ module Gemwarrior
       end
 
       # hook to do something right off the bat
-      puts eval.evaluate(initial_command) unless initial_command.nil?
-      puts eval.evaluate(extra_command) unless extra_command.nil?
+      puts evaluator.evaluate(initial_command) unless initial_command.nil?
+      puts evaluator.evaluate(extra_command) unless extra_command.nil?
     end
 
     def prompt
@@ -324,7 +323,7 @@ module Gemwarrior
         world.player.level,
         world.player.xp,
         world.player.rox,
-        world.player.hp_cur, 
+        world.player.hp_cur,
         world.player.hp_max,
         world.player.stam_cur,
         world.player.stam_max,

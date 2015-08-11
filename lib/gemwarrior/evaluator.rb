@@ -3,7 +3,7 @@
 
 require_relative 'arena'
 
-module Gemwarrior  
+module Gemwarrior
   class Evaluator
     # CONSTANTS
     ## MESSAGES
@@ -42,8 +42,8 @@ module Gemwarrior
     ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
 
-    attr_accessor :world, 
-                  :commands, :aliases, :extras, :cmd_descriptions, 
+    attr_accessor :world,
+                  :commands, :aliases, :extras, :cmd_descriptions,
                   :devcommands, :devaliases, :devextras, :devcmd_descriptions
 
     def initialize(world)
@@ -223,8 +223,8 @@ module Gemwarrior
                 z_coord = param3.to_i.to_s == param3 ? param3.to_i : world.player.cur_coords[:z]
 
                 # check to make sure new location exists
-                if world.location_by_coords({:x => x_coord, :y => y_coord, :z => z_coord})
-                  world.player.cur_coords = {:x => x_coord, :y => y_coord, :z => z_coord}
+                if world.location_by_coords(x: x_coord, y: y_coord, z: z_coord)
+                  world.player.cur_coords = {x: x_coord, y: y_coord, z: z_coord}
                 else
                   return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
                 end
@@ -248,15 +248,15 @@ module Gemwarrior
 
             # stats
             world.player.movements_made += 1
-            
-            Animation::run({:phrase => '** TELEPORT! **', :speed => :insane})
+
+            Animation::run(phrase: '** TELEPORT! **', speed: :insane)
             return world.describe(world.location_by_coords(world.player.cur_coords))
           end
         when 'levelbump', 'lb'
-          world.player.update_stats({:reason => :level_bump, :value => 1})
+          world.player.update_stats(reason: :level_bump, value: 1)
         when 'restfight', 'rf'
           result = world.player.rest(world, nil, true)
-          
+
           if result.eql?('death')
             player_death_resurrection
           end
@@ -278,7 +278,7 @@ module Gemwarrior
         tent_uses = 0
         player_inventory = world.player.inventory.items
         location_inventory = world.location_by_coords(world.player.cur_coords).items
-        
+
         if player_inventory.map(&:name).include?('tent')
           player_inventory.each do |i|
             if i.name.eql?('tent')
@@ -286,7 +286,7 @@ module Gemwarrior
                 result = i.use(world.player)
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
-                
+
                 puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
               end
             end
@@ -298,15 +298,15 @@ module Gemwarrior
                 result = i.use(world.player)
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
-                
+
                 puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
               end
             end
           end
         end
-        
+
         result = world.player.rest(world, tent_uses)
-        
+
         if result.eql?('death')
           player_death_resurrection
         end
@@ -405,7 +405,7 @@ module Gemwarrior
               world.player.heal_damage(result[:data])
               return
             when 'xp'
-              world.player.update_stats({:reason => :xp, :value => result[:data]})
+              world.player.update_stats(reason: :xp, value: result[:data])
               return
             when 'tent'
               world.player.rest(world, result[:data])
@@ -417,9 +417,9 @@ module Gemwarrior
                 world.print_map(world.player.cur_coords[:z])
               end
             when 'arena'
-              arena = Arena.new({:world => world, :player => world.player})
+              arena = Arena.new(world: world, player: world.player)
               result = arena.start
-              
+
               if result.eql?('death')
                 player_death_resurrection
               end
@@ -440,7 +440,7 @@ module Gemwarrior
           ERROR_DROP_PARAM_MISSING
         else
           world.player.inventory.drop_item(param1)
-        end  
+        end
       when 'equip', 'eq'
         if param1.nil?
           ERROR_EQUIP_PARAM_MISSING
@@ -493,7 +493,7 @@ module Gemwarrior
           if world.has_monster_to_attack?(monster_name)
             monster = world.location_by_coords(world.player.cur_coords).monster_by_name(monster_name)
             result = world.player.attack(world, monster)
-            
+
             if result.eql?('death')
               player_death_resurrection
             elsif result.eql?('exit')
@@ -518,9 +518,9 @@ module Gemwarrior
       when 'help', 'h'
         list_commands
       when 'quit', 'exit', 'q', 'x'
-        puts "You sure you want to quit? (y/n): "
+        puts 'You sure you want to quit? (y/n): '
         response = gets.chomp.downcase
-        if (response.eql?("y") || response.eql?("yes"))
+        if (response.eql?('y') || response.eql?('yes'))
           puts QUIT_MESSAGE
           return 'exit'
         else
@@ -570,7 +570,7 @@ module Gemwarrior
       print_separator
       commands.each do |cmd|
         puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{cmd_descriptions[i]}"
-        i = i + 1
+        i += 1
       end
       print_separator
 
@@ -580,7 +580,7 @@ module Gemwarrior
         i = 0
         devcommands.each do |cmd|
           puts " #{cmd.ljust(9)}, #{devaliases[i].ljust(2)} -- #{devcmd_descriptions[i]}"
-          i = i + 1
+          i += 1
         end
         print_separator
       end
@@ -596,7 +596,7 @@ module Gemwarrior
       end
 
       if commands_and_aliases.include?(command.downcase)
-        if tokens.size.between?(1,4)
+        if tokens.size.between?(1, 4)
           return true
         end
       elsif tokens.empty?

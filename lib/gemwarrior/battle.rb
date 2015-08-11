@@ -25,20 +25,20 @@ module Gemwarrior
     def start(is_arena = nil, is_event = nil)
       if world.sound
         Music::cue([
-          {:frequencies => 'G4',  :duration => 50},
-          {:frequencies => 'G#4',  :duration => 50},
-          {:frequencies => 'G4',  :duration => 50},
-          {:frequencies => 'G#4',  :duration => 50},
-          {:frequencies => 'G4',  :duration => 50},
-          {:frequencies => 'G#4',  :duration => 50}
+          { frequencies: 'G4',  duration: 50 },
+          { frequencies: 'G#4', duration: 50 },
+          { frequencies: 'G4',  duration: 50 },
+          { frequencies: 'G#4', duration: 50 },
+          { frequencies: 'G4',  duration: 50 },
+          { frequencies: 'G#4', duration: 50 }
         ])
       end
-          
+
       print_battle_line
 
       if is_arena
         print 'Your opponent is now...'
-        Animation::run({:phrase => "#{monster.name.upcase}!", :speed => :slow})
+        Animation::run(phrase: "#{monster.name.upcase}!", speed: slow)
       elsif is_event
         puts "You are attacked by #{monster.name}!"
       else
@@ -74,7 +74,7 @@ module Gemwarrior
         end
 
         puts
-        
+
         # print health info
         print "#{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
         if world.debug_mode
@@ -123,7 +123,7 @@ module Gemwarrior
           dmg = calculate_damage_to(monster)
           if dmg > 0
             if world.sound
-              Music::cue([{:frequencies => 'A4,E4,B5', :duration => 75}])
+              Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
             end
             take_damage(monster, dmg)
             if monster_dead?
@@ -132,7 +132,7 @@ module Gemwarrior
             end
           else
             if world.sound
-              Music::cue([{:frequencies => 'A4', :duration => 75}])
+              Music::cue([{ frequencies: 'A4', duration: 75 }])
             end
             puts 'You miss entirely!'.colorize(:yellow)
           end
@@ -173,16 +173,16 @@ module Gemwarrior
 
     private
 
-    # NEUTRAL   
+    # NEUTRAL
     def calculate_damage_to(entity)
       miss = rand(0..(100 + entity.defense))
-      if (miss < 15)
+      if miss < 15
         0
       else
         if entity.eql?(monster)
           # base attack range
           atk_range = player.atk_lo..player.atk_hi
-          
+
           # beast mode modifier
           if player.beast_mode
             atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
@@ -201,7 +201,7 @@ module Gemwarrior
           return rand(atk_range)
         else
           dmg = rand(monster.atk_lo..monster.atk_hi)
-          dmg = dmg - (entity.defense / 2) if player_is_defending
+          dmg -= (entity.defense / 2) if player_is_defending
           return dmg
         end
       end
@@ -218,7 +218,7 @@ module Gemwarrior
       end
 
       print who_gets_wounded
-      Animation::run({ :phrase => dmg.to_s, :speed => :slow, :oneline => true, :alpha => false, :random => false })
+      Animation::run({ phrase: dmg.to_s, speed: slow, oneline: true, alpha: false, random: false })
       print " point(s)!\n"
     end
 
@@ -239,16 +239,16 @@ module Gemwarrior
 
     def monster_attacks_player
       puts "#{monster.name} attacks you!"
-            
+
       dmg = calculate_damage_to(player)
       if dmg > 0
         if world.sound
-          Music::cue([{:frequencies => 'B4,E#5,A5', :duration => 75}])
+          Music::cue([{ frequencies: 'B4,E#5,A5', duration: 75 }])
         end
         take_damage(player, dmg)
       else
         if world.sound
-          Music::cue([{:frequencies => 'B4', :duration => 75}])
+          Music::cue([{ frequencies: 'B4', duration: 75 }])
         end
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
@@ -272,21 +272,21 @@ module Gemwarrior
         # end game boss!
         if monster.name.eql?('Emerald')
           Music::cue([
-            {:frequencies => 'G3',  :duration => 250},
-            {:frequencies => 'A3',  :duration => 50},
-            {:frequencies => 'B3',  :duration => 50},
-            {:frequencies => 'C4',  :duration => 50},
-            {:frequencies => 'D4',  :duration => 250},
-            {:frequencies => 'E4',  :duration => 50},
-            {:frequencies => 'F#4', :duration => 50},
-            {:frequencies => 'G4',  :duration => 50},
-            {:frequencies => 'A4',  :duration => 250},
-            {:frequencies => 'B4',  :duration => 50},
-            {:frequencies => 'C5',  :duration => 50},
-            {:frequencies => 'D5',  :duration => 50},
-            {:frequencies => 'E5',  :duration => 50},
-            {:frequencies => 'F#5', :duration => 50},
-            {:frequencies => 'G5',  :duration => 1000}
+            { frequencies: 'G3',  duration: 250 },
+            { frequencies: 'A3',  duration: 50 },
+            { frequencies: 'B3',  duration: 50 },
+            { frequencies: 'C4',  duration: 50 },
+            { frequencies: 'D4',  duration: 250 },
+            { frequencies: 'E4',  duration: 50 },
+            { frequencies: 'F#4', duration: 50 },
+            { frequencies: 'G4',  duration: 50 },
+            { frequencies: 'A4',  duration: 250 },
+            { frequencies: 'B4',  duration: 50 },
+            { frequencies: 'C5',  duration: 50 },
+            { frequencies: 'D5',  duration: 50 },
+            { frequencies: 'E5',  duration: 50 },
+            { frequencies: 'F#5', duration: 50 },
+            { frequencies: 'G5',  duration: 1000 }
           ])
           puts monster.defeated_text
           gets
@@ -296,7 +296,7 @@ module Gemwarrior
           puts " XP : #{monster.xp}".colorize(:green)
           puts " ROX: #{monster.rox}".colorize(:green)
           print_battle_line
-          player.update_stats({:reason => :monster, :value => monster})
+          player.update_stats(reason: monster, value: monster)
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
@@ -307,7 +307,7 @@ module Gemwarrior
           puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
         end
         print_battle_line
-        player.update_stats({:reason => :monster, :value => monster})
+        player.update_stats(reason: monster, value: monster)
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
     end
@@ -324,20 +324,20 @@ module Gemwarrior
     def player_death
       if world.sound
         Music::cue([
-          {:frequencies => 'D#5', :duration => 100},
-          {:frequencies => 'A4', :duration => 150},
-          {:frequencies => 'F#4', :duration => 200},
-          {:frequencies => 'F4', :duration => 1000}
+          { frequencies: 'D#5', duration: 100 },
+          { frequencies: 'A4',  duration: 150 },
+          { frequencies: 'F#4', duration: 200 },
+          { frequencies: 'F4',  duration: 1000 }
         ])
       end
-      
+
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       print_battle_line
     end
 
     def player_escape?(is_arena)
       unless is_arena
-        if (player.dexterity > monster.dexterity)
+        if player.dexterity > monster.dexterity
           return true
         else
           dex_diff = monster.dexterity - player.dexterity
@@ -355,7 +355,7 @@ module Gemwarrior
     # STATUS TEXT
 
     def print_escape_text
-      Animation::run({ :phrase => '** POOF **', :oneline => true })
+      Animation::run(phrase: '** POOF **', oneline: true)
     end
 
     def print_battle_line

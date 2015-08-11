@@ -28,9 +28,9 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
   spec.add_runtime_dependency 'feep', '~> 0.1.3'
   spec.add_runtime_dependency 'github_api', '~> 0.12.4'
-  
+
   # gems for future features
-  #spec.add_runtime_dependency 'hr', '~> 0.0.2'
+  # spec.add_runtime_dependency 'hr', '~> 0.0.2'
 
   spec.add_development_dependency 'pry-byebug', '~> 3.0'
   spec.add_development_dependency 'bundler', '~> 1.8'

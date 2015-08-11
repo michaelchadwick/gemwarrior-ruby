@@ -17,7 +17,7 @@ module Gemwarrior
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
 
-    attr_accessor :monsters, :locations, :player, 
+    attr_accessor :monsters, :locations, :player,
                   :debug_mode, :use_wordnik, :sound, :new_game, :extra_command
 
     def initialize
@@ -37,18 +37,18 @@ module Gemwarrior
     end
 
     def print_map(floor)
-      0.upto(WORLD_DIM_HEIGHT-1) do |count_y|
+      0.upto(WORLD_DIM_HEIGHT - 1) do |count_y|
         print '  '
-        0.upto(WORLD_DIM_WIDTH-1) do
+        0.upto(WORLD_DIM_WIDTH - 1) do
           print '---'
         end
         print "\n"
-        print "#{(WORLD_DIM_HEIGHT-1) - count_y} "
-        0.upto(WORLD_DIM_WIDTH-1) do |count_x|
+        print "#{(WORLD_DIM_HEIGHT - 1) - count_y} "
+        0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
           cur_map_coords = {
-            :x => count_x, 
-            :y => (WORLD_DIM_HEIGHT-1) - count_y, 
-            :z => floor.nil? ? self.player.cur_coords[:z] : floor.to_i
+            x: count_x,
+            y: (WORLD_DIM_HEIGHT - 1) - count_y,
+            z: floor.nil? ? self.player.cur_coords[:z] : floor.to_i
           }
           if self.player.cur_coords.eql?(cur_map_coords)
             print '|O|'
@@ -61,12 +61,12 @@ module Gemwarrior
         print "\n"
       end
       print '  '
-      0.upto(WORLD_DIM_WIDTH-1) do
+      0.upto(WORLD_DIM_WIDTH - 1) do
         print '---'
       end
       puts
       print '   '
-      0.upto(WORLD_DIM_WIDTH-1) do |count_x|
+      0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
         print "#{count_x}  "
       end
       if debug_mode
@@ -91,13 +91,13 @@ module Gemwarrior
           monsters.map { |m| print m.describe }
           return
         else
-          monster_text =  ">> monsters: #{monsters.map(&:name).join(', ')}"
+          ">> monsters: #{monsters.map(&:name).join(', ')}"
         end
       when 'items'
         item_count = 0
         locations.each do |l|
-          l.items.each do |i|
-            item_count = item_count + 1
+          l.items.each do
+            item_count += 1
           end
         end
         puts "[ITEMS](#{item_count})".colorize(:yellow)
@@ -172,7 +172,7 @@ module Gemwarrior
 
     def describe_entity(point, entity_name)
       entity_name.downcase!
-      
+
       if point.has_item?(entity_name)
         point.items.each do |i|
           if i.name.downcase.eql?(entity_name)
@@ -257,15 +257,15 @@ module Gemwarrior
       end
 
       self.monsters = [
-        Alexandrat.new, 
-        Amberoo.new, 
-        Amethystle.new, 
-        Apatiger.new, 
-        Aquamarine.new, 
-        Bloodstorm.new, 
-        Citrinaga.new, 
-        Coraliz.new, 
-        Cubicat.new, 
+        Alexandrat.new,
+        Amberoo.new,
+        Amethystle.new,
+        Apatiger.new,
+        Aquamarine.new,
+        Bloodstorm.new,
+        Citrinaga.new,
+        Coraliz.new,
+        Cubicat.new,
         Diaman.new,
         Emerald.new,
         Garynetty.new
@@ -281,27 +281,27 @@ module Gemwarrior
 
       location_data = YAML.load_file(LOCATION_DATA_FILE)
 
-      location_data.each {|l|
+      location_data.each do |l|
         locations.push(Location.new({
-          :name                 => l['name'],
-          :description          => l['description'],
-          :danger_level         => l['danger_level'],
-          :monster_level_range  => l['monster_level_range'].nil? ? nil : l['monster_level_range']['lo']..l['monster_level_range']['hi'],
-          :coords               => {
-                                    :x => l['coords']['x'], 
-                                    :y => l['coords']['y'],
-                                    :z => l['coords']['z']
-                                   },
-          :locs_connected       => {
-                                    :north => l['locs_connected']['north'], 
-                                    :east => l['locs_connected']['east'], 
-                                    :south => l['locs_connected']['south'], 
-                                    :west => l['locs_connected']['west']
-                                   },
-          :items                => create_item_objects(l['items']),
-          :bosses_abounding     => create_boss_objects(l['bosses_abounding'])
+          name:                 l['name'],
+          description:          l['description'],
+          danger_level:         l['danger_level'],
+          monster_level_range:  l['monster_level_range'].nil? ? nil : l['monster_level_range']['lo']..l['monster_level_range']['hi'],
+          coords:               {
+                                  x: l['coords']['x'], 
+                                  y: l['coords']['y'],
+                                  z: l['coords']['z']
+                                },
+          locs_connected:       {
+                                  north:  l['locs_connected']['north'], 
+                                  east:   l['locs_connected']['east'], 
+                                  south:  l['locs_connected']['south'], 
+                                  west:   l['locs_connected']['west']
+                                },
+          items:                create_item_objects(l['items']),
+          bosses_abounding:     create_boss_objects(l['bosses_abounding'])
         }))
-      }
+      end
 
       return locations
     end
