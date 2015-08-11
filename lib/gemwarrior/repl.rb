@@ -200,7 +200,8 @@ module Gemwarrior
     def log_stats(duration, pl)
       puts  '######################################################################'
       print 'Gem Warrior'.colorize(:color => :white, :background => :black)
-      print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} minutes, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} seconds, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} milliseconds\n"
+      print " v#{Gemwarrior::VERSION}".colorize(:yellow)
+      print " played for #{duration[:mins].to_s.colorize(:color => :white, :background => :black)} mins, #{duration[:secs].to_s.colorize(:color => :white, :background => :black)} secs, and #{duration[:ms].to_s.colorize(:color => :white, :background => :black)} ms\n"
       puts  '----------------------------------------------------------------------'
       print "Player killed #{pl.monsters_killed.to_s.colorize(:color => :white, :background => :black)} monster(s)"
       print "\n".ljust(8)
