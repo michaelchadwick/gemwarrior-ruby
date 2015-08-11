@@ -23,9 +23,10 @@ module Gemwarrior
     GITHUB_NAME             = 'michaelchadwick'
     GITHUB_PROJECT          = 'gemwarrior'
 
-    attr_accessor :world, :eval
+    attr_accessor :game, :world, :eval
 
-    def initialize(world, evaluator)
+    def initialize(game, world, evaluator)
+      self.game   = game
       self.world  = world
       self.eval   = evaluator
     end
@@ -38,6 +39,7 @@ module Gemwarrior
       at_exit do
         pl = world.player
         duration = clocker.stop
+        game.update_options_file(world)
         log_stats(duration, pl)
       end
 
@@ -66,6 +68,15 @@ module Gemwarrior
 
     def clear_screen
       OS.windows? ? system('cls') : system('clear')
+    end
+
+    def read_line
+      prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
+      Readline.readline(prompt_text, true).to_s
+    end
+
+    def puts(s='', width=WRAP_WIDTH)
+      super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
 
     def print_logo
@@ -98,23 +109,95 @@ module Gemwarrior
       puts
     end
 
-    def print_help
-      puts '* Basic functions: look, go, character, inventory, attack *'
-      puts '* Type \'help\' while in-game for complete list of commands *'
-      puts '* Most commands can be abbreviated to their first letter  *'
-      puts
-    end
-
     def print_about_text
       puts 'Gem Warrior - A Game of Fortune and Mayhem'
       puts '=========================================='
       puts 'Gem Warrior is a text adventure roguelike-lite as a RubyGem created by Michael Chadwick (mike@codana.me) and released as open-source on Github. Take on the task set by Queen Ruby to defeat the evil Emerald and get back the ShinyThing(tm) he stole for terrible, dastardly reasons.'
       puts
       puts 'Explore the land of Jool with the power of text, fighting enemies to improve your station, grabbing curious items that may or may not come in handy, and finally defeating Mr. Emerald himself to win the game.'
-      puts
     end
     
+    def print_help_text
+      puts 'Gem Warrior - Some Basic Help Commands'
+      puts '======================================'
+      puts '* Basic functions: look, go, character, inventory, attack *'
+      puts '* Type \'help\' while in-game for complete list of commands *'
+      puts '* Most commands can be abbreviated to their first letter  *'
+    end
+
+    def print_options
+      options = read_options_file
+
+      puts
+      puts  'Gem Warrior Options'
+      puts  '======================='
+      if options.nil?
+        puts 'No options set yet.'
+      else
+        puts 'Toggle whether sound is played, or Wordnik (system must have a working WORDNIK_API_KEY environment variable) is used to generate more dynamic descriptors of entities'
+        puts
+        count = 1
+        options.each do |op|
+          option = op[0]
+          value = op[1].eql?('true') ? 'ON' : 'OFF'
+          
+          print " #{count} #{option.ljust(12).upcase} : #{value}\n"
+          count += 1
+        end
+      end
+      puts  '======================='
+      puts
+      puts  'Enter option number to toggle value, or any other key to return to main menu.'
+      print 'Option? '
+      answer = STDIN.getch
+      
+      case answer
+      when '1'
+        print answer
+        world.sound = !world.sound
+        game.update_options_file(world)
+        print_options
+      when '2'
+        print answer
+        world.use_wordnik = !world.use_wordnik
+        game.update_options_file(world)
+        print_options
+      else
+        print answer
+        return
+      end
+    end
+
+    def display_log
+      if File.exists?(game.get_log_file_path)
+        File.open(game.get_log_file_path).readlines.each do |line|
+          print "#{line}"
+        end
+        puts
+      else
+        puts 'No attempts made yet!'
+        puts
+      end
+    end
+
+    def check_for_new_release
+      puts 'Checking releases...'
+      github = Github.new
+      gw_latest_release = github.repos.releases.list GITHUB_NAME, GITHUB_PROJECT
+      local_release = Gemwarrior::VERSION
+      remote_release = gw_latest_release[0].tag_name
+      remote_release[0] = ''
+      if remote_release > local_release
+        puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
+        puts
+      else
+        puts 'You have the latest version. Fantastic!'
+        puts
+      end
+    end
+
     def print_main_menu
+      puts
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
       puts ' (N)ew Game'
@@ -127,42 +210,10 @@ module Gemwarrior
       puts '======================='
       puts
     end
-    
-    def check_for_new_release
-      github = Github.new
-      gw_latest_release = github.repos.releases.list GITHUB_NAME, GITHUB_PROJECT
-      local_release = Gemwarrior::VERSION
-      remote_release = gw_latest_release[0].tag_name
-      remote_release[0] = ''
-      if remote_release > local_release
-        puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
-        puts
-      else
-        puts "You have the latest version. Fantastic!"
-        puts
-      end
-    end
-    
+
     def print_main_menu_prompt
       print '> '
     end
-
-    def print_options
-      options = read_options_file
-
-      puts  'Gem Warrior Options'
-      puts  '==================='
-      if read_options_file.nil?
-        puts 'No options set yet.'
-      else
-        options.each do |op|
-          print " #{op[0]}:#{op[1]}\n"
-        end
-      end
-      puts  '==================='
-      puts
-    end
-      
 
     def run_main_menu(show_choices = true)
       print_main_menu if show_choices
@@ -182,7 +233,7 @@ module Gemwarrior
         run_main_menu
       when 'h'
         puts choice
-        print_help
+        print_help_text
         run_main_menu
       when 'o'
         puts choice
@@ -205,33 +256,15 @@ module Gemwarrior
       end
     end
 
-    def get_options_file_path
-      "#{Dir.home}/.gemwarrior_ops"
-    end
-    
     def read_options_file
       options = []
-      if File.exists?(get_options_file_path)
-        File.open(get_options_file_path).readlines.each do |line|
-          options << line.split('|')
+      if File.exists?(game.get_options_file_path)
+        File.open(game.get_options_file_path).readlines.each do |line|
+          options << line.chomp.split('|')
         end
+        return options
       else
         nil
-      end
-    end
-
-    def get_log_file_path
-      "#{Dir.home}/.gemwarrior_log"
-    end
-    
-    def display_log
-      if File.exists?(get_log_file_path)
-        File.open(get_log_file_path).readlines.each do |line|
-          print "#{line}"
-        end
-        puts
-      else
-        puts 'No attempts made yet!'
       end
     end
 
@@ -254,7 +287,7 @@ module Gemwarrior
       puts '######################################################################'
       
       # log stats to file in home directory
-      File.open(get_log_file_path, 'a') do |f|
+      File.open(game.get_log_file_path, 'a') do |f|
         f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
@@ -263,7 +296,6 @@ module Gemwarrior
       # welcome player to game
       clear_screen
       print_logo
-
 
       # main menu loop until new game or exit
       if world.new_game
@@ -299,15 +331,6 @@ module Gemwarrior
       end
       print (prompt_template % prompt_vars_arr).colorize(:yellow)
       print "\n"
-    end
-
-    def read_line
-      prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
-      Readline.readline(prompt_text, true).to_s
-    end
-    
-    def puts(s='', width=WRAP_WIDTH)
-      super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
   end
 end

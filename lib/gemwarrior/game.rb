@@ -62,13 +62,30 @@ module Gemwarrior
         :use_wordnik        => options.fetch(:use_wordnik)
       })
 
+      # create options file if not existing
+      update_options_file(world)
+      
       # create the console
       self.eval = Evaluator.new(world)
-      self.repl = Repl.new(world, eval)
+      self.repl = Repl.new(self, world, eval)
 
       # enter Jool!
       repl.start('look', world.extra_command)
     end
 
+    def get_log_file_path
+      "#{Dir.home}/.gemwarrior_log"
+    end
+
+    def get_options_file_path
+      "#{Dir.home}/.gemwarrior_options"
+    end
+
+    def update_options_file(world)
+      File.open(get_options_file_path, 'w') do |f|
+        f.puts "sound|#{world.sound}"
+        f.puts "use_wordnik|#{world.use_wordnik}"
+      end
+    end
   end
 end
