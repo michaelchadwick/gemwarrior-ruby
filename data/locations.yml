@@ -1002,7 +1002,7 @@
 -
   name:                 'Sky Tower (Lounge)'
   description:          'Nothing but a simple couch, which looks very comfortable, exists in this corner of the tower.'
-  danger_level:         :moderate,
+  danger_level:         :moderate
   coords:
     x: 9
     y: 8
