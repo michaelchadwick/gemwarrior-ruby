@@ -163,8 +163,13 @@ module Gemwarrior
         0
       else
         if entity.eql?(monster)
+          # base attack range
+          atk_range = player.atk_lo..player.atk_hi
+          
+          # beast mode modifier
           if player.beast_mode
             atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
+          # level 3 ability modifier
           elsif player.special_abilities.include?(:rock_slide)
             lo_boost = rand(0..9)
 
@@ -173,10 +178,10 @@ module Gemwarrior
               hi_boost = lo_boost + rand(0..5)
               atk_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
             end
-          else
-            atk_range = player.atk_lo..player.atk_hi
           end
-          rand(atk_range)
+
+          # return attack range
+          return rand(atk_range)
         else
           dmg = rand(monster.atk_lo..monster.atk_hi)
           dmg = dmg - (entity.defense / 2) if player_is_defending
