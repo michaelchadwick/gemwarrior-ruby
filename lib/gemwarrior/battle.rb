@@ -23,6 +23,17 @@ module Gemwarrior
     end
 
     def start(is_arena = nil, is_event = nil)
+      if world.sound
+        Music::cue([
+          {:frequencies => 'G4',  :duration => 50},
+          {:frequencies => 'G#4',  :duration => 50},
+          {:frequencies => 'G4',  :duration => 50},
+          {:frequencies => 'G#4',  :duration => 50},
+          {:frequencies => 'G4',  :duration => 50},
+          {:frequencies => 'G#4',  :duration => 50}
+        ])
+      end
+          
       print_battle_line
 
       if is_arena
@@ -47,8 +58,8 @@ module Gemwarrior
       # main battle loop
       loop do
         if monster_dead?
-          monster_death
-          return
+          result = monster_death
+          return result
         elsif player_dead?
           player_death
           return 'death'
@@ -111,12 +122,18 @@ module Gemwarrior
           puts "You attack #{monster.name}#{player.cur_weapon_name}!"
           dmg = calculate_damage_to(monster)
           if dmg > 0
+            if world.sound
+              Music::cue([{:frequencies => 'A4,E4,B5', :duration => 75}])
+            end
             take_damage(monster, dmg)
             if monster_dead?
-              monster_death
-              return
+              result = monster_death
+              return result
             end
           else
+            if world.sound
+              Music::cue([{:frequencies => 'A4', :duration => 75}])
+            end
             puts 'You miss entirely!'.colorize(:yellow)
           end
         when 'defend', 'd'
@@ -222,10 +239,17 @@ module Gemwarrior
 
     def monster_attacks_player
       puts "#{monster.name} attacks you!"
+            
       dmg = calculate_damage_to(player)
       if dmg > 0
+        if world.sound
+          Music::cue([{:frequencies => 'B4,E#5,A5', :duration => 75}])
+        end
         take_damage(player, dmg)
       else
+        if world.sound
+          Music::cue([{:frequencies => 'B4', :duration => 75}])
+        end
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
     end
@@ -248,14 +272,21 @@ module Gemwarrior
         # end game boss!
         if monster.name.eql?('Emerald')
           Music::cue([
-            {:freq_or_note => 'G3', :duration => 50},
-            {:freq_or_note => 'A3', :duration => 50},
-            {:freq_or_note => 'B3', :duration => 50},
-            {:freq_or_note => 'C4', :duration => 50},
-            {:freq_or_note => 'D4', :duration => 50},
-            {:freq_or_note => 'E4', :duration => 50},
-            {:freq_or_note => 'F#4', :duration => 50},
-            {:freq_or_note => 'G4', :duration => 50}
+            {:frequencies => 'G3',  :duration => 250},
+            {:frequencies => 'A3',  :duration => 50},
+            {:frequencies => 'B3',  :duration => 50},
+            {:frequencies => 'C4',  :duration => 50},
+            {:frequencies => 'D4',  :duration => 250},
+            {:frequencies => 'E4',  :duration => 50},
+            {:frequencies => 'F#4', :duration => 50},
+            {:frequencies => 'G4',  :duration => 50},
+            {:frequencies => 'A4',  :duration => 250},
+            {:frequencies => 'B4',  :duration => 50},
+            {:frequencies => 'C5',  :duration => 50},
+            {:frequencies => 'D5',  :duration => 50},
+            {:frequencies => 'E5',  :duration => 50},
+            {:frequencies => 'F#5', :duration => 50},
+            {:frequencies => 'G5',  :duration => 1000}
           ])
           puts monster.defeated_text
           gets
@@ -291,6 +322,15 @@ module Gemwarrior
     end
 
     def player_death
+      if world.sound
+        Music::cue([
+          {:frequencies => 'D#5', :duration => 100},
+          {:frequencies => 'A4', :duration => 150},
+          {:frequencies => 'F#4', :duration => 200},
+          {:frequencies => 'F4', :duration => 1000}
+        ])
+      end
+      
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       print_battle_line
     end

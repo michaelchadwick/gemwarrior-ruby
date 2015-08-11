@@ -3,7 +3,6 @@
 
 require 'colorize'
 require 'matrext'
-require 'feep'
 
 require_relative 'entities/player'
 require_relative 'entities/items/herb'

@@ -496,6 +496,8 @@ module Gemwarrior
             
             if result.eql?('death')
               player_death_resurrection
+            elsif result.eql?('exit')
+              return 'exit'
             end
           else
             ERROR_ATTACK_PARAM_INVALID
@@ -545,7 +547,9 @@ module Gemwarrior
     end
 
     def player_death_resurrection
-      puts 'Somehow, though, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
+      puts 'Somehow, though, your adventure does not end here!'.colorize(:yellow)
+      puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)
+      puts 'A bit worse for the weary and somewhat poorer, but you are ALIVE!'.colorize(:yellow)
       world.player.hp_cur = 1
       world.player.rox -= (world.player.rox * 0.1).to_i
       if world.player.rox < 0
