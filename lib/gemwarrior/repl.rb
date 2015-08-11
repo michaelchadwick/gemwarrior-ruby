@@ -120,6 +120,7 @@ module Gemwarrior
       puts ' (N)ew Game'
       puts ' (A)bout'
       puts ' (H)elp'
+      puts ' (O)ptions'
       puts ' (L)og'
       puts ' (C)heck for Updates'
       puts ' (E)xit'
@@ -146,6 +147,23 @@ module Gemwarrior
       print '> '
     end
 
+    def print_options
+      options = read_options_file
+
+      puts  'Gem Warrior Options'
+      puts  '==================='
+      if read_options_file.nil?
+        puts 'No options set yet.'
+      else
+        options.each do |op|
+          print " #{op[0]}:#{op[1]}\n"
+        end
+      end
+      puts  '==================='
+      puts
+    end
+      
+
     def run_main_menu(show_choices = true)
       print_main_menu if show_choices
       print_main_menu_prompt if show_choices
@@ -166,6 +184,10 @@ module Gemwarrior
         puts choice
         print_help
         run_main_menu
+      when 'o'
+        puts choice
+        print_options
+        run_main_menu
       when 'l'
         puts choice
         display_log
@@ -183,8 +205,23 @@ module Gemwarrior
       end
     end
 
+    def get_options_file_path
+      "#{Dir.home}/.gemwarrior_ops"
+    end
+    
+    def read_options_file
+      options = []
+      if File.exists?(get_options_file_path)
+        File.open(get_options_file_path).readlines.each do |line|
+          options << line.split('|')
+        end
+      else
+        nil
+      end
+    end
+
     def get_log_file_path
-      "#{Dir.home}/.gemwarrior"
+      "#{Dir.home}/.gemwarrior_log"
     end
     
     def display_log
@@ -192,6 +229,7 @@ module Gemwarrior
         File.open(get_log_file_path).readlines.each do |line|
           print "#{line}"
         end
+        puts
       else
         puts 'No attempts made yet!'
       end
