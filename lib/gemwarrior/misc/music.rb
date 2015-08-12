@@ -7,22 +7,22 @@ module Gemwarrior
       # if Windows, use superior win32-sound library
       if OS.windows?
         require 'win32/sound'
-        threads = []
-
-        Thread.start {
+        require_relative 'musical_notes'
+        
+        Thread.start do
           sequence.each do |seq|
+            threads = []
             seq[:frequencies].split(',').each do |note|
-              threads << Thread.new {
+              threads << Thread.new do
                 Win32::Sound::play_freq(Notes::NOTE_FREQ[note], seq[:duration], 0.5)
-              }
+              end
             end
             threads.each { |th| th.join }
           end
-        }
+        end
       # otherwise, use inferior feep library
       else
         require 'feep'
-        require_relative 'musical_notes'
 
         feep_defaults = {
           frequencies:  '440',
@@ -32,7 +32,7 @@ module Gemwarrior
           notext:       true
         }
       
-        Thread.start {
+        Thread.start do
           sequence.each do |seq|
             seq = feep_defaults.merge(seq)
 
@@ -44,7 +44,7 @@ module Gemwarrior
               notext:       seq[:notext]
             })
           end
-        }
+        end
       end
     end
   end

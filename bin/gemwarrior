@@ -7,7 +7,7 @@ require_relative '../lib/gemwarrior/version'
 
 GAME_NAME = 'Gem Warrior'
 
-def parse_options
+def parse_options_cli
   options = {
     :beast_mode     => false, 
     :debug_mode     => false, 
@@ -68,8 +68,34 @@ def print_error(error)
   end
 end
 
+def get_options_file_path
+  "#{Dir.home}/.gemwarrior_options"
+end
+
+def read_options_file
+  options = []
+  if File.exist?(get_options_file_path)
+    File.open(get_options_file_path).readlines.each do |line|
+      options << line.chomp.split(':')
+    end
+    return options
+  end
+  nil
+end
+
 begin
-  options = parse_options
+  options = parse_options_cli
+
+  options_file = read_options_file
+  
+  unless options_file.nil?
+    sound_option = options_file[0][1].eql?('false') ? false : true
+    wordnik_option = options_file[1][1].eql?('false') ? false : true
+    
+    options[:sound] = sound_option
+    options[:use_wordnik] = wordnik_option
+  end
+  
   Gemwarrior::Game.new(options)
 rescue => error
   print_error(error)

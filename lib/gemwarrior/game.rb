@@ -82,8 +82,8 @@ module Gemwarrior
 
     def update_options_file(world)
       File.open(get_options_file_path, 'w') do |f|
-        f.puts "sound|#{world.sound}"
-        f.puts "use_wordnik|#{world.use_wordnik}"
+        f.puts "sound:#{world.sound}"
+        f.puts "use_wordnik:#{world.use_wordnik}"
       end
     end
   end

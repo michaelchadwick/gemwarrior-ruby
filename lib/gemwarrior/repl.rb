@@ -120,25 +120,14 @@ module Gemwarrior
     end
 
     def print_options
-      options = read_options_file
-
       puts
       puts 'Gem Warrior Options'.colorize(:yellow)
       puts '======================='.colorize(:yellow)
-      if options.nil?
-        puts 'No options set yet.'
-      else
-        puts 'Toggle whether sound is played, or Wordnik (system must have a working WORDNIK_API_KEY environment variable) is used to generate more dynamic descriptors of entities'
-        puts
-        count = 1
-        options.each do |op|
-          option = op[0]
-          value = op[1].eql?('true') ? 'ON' : 'OFF'
-
-          print " #{count} #{option.ljust(12).upcase} : #{value}\n"
-          count += 1
-        end
-      end
+      puts 'Toggle whether sound is played, or Wordnik (system must have a working WORDNIK_API_KEY environment variable) is used to generate more dynamic descriptors of entities'
+      puts
+      puts " (1) SOUND ENABLED: #{world.sound}"
+      puts " (2) USE WORDNIK  : #{world.use_wordnik}"
+      puts
       puts '======================='
       puts
       puts 'Enter option number to toggle value, or any other key to return to main menu.'
@@ -149,12 +138,10 @@ module Gemwarrior
       when '1'
         print answer
         world.sound = !world.sound
-        game.update_options_file(world)
         print_options
       when '2'
         print answer
         world.use_wordnik = !world.use_wordnik
-        game.update_options_file(world)
         print_options
       else
         print answer
@@ -245,21 +232,11 @@ module Gemwarrior
       when 'e', 'x'
         puts choice
         puts MAIN_MENU_QUIT_MESSAGE
-        exit(0)
+        game.update_options_file(world)
+        exit
       else
         run_main_menu(show_choices = false)
       end
-    end
-
-    def read_options_file
-      options = []
-      if File.exists?(game.get_options_file_path)
-        File.open(game.get_options_file_path).readlines.each do |line|
-          options << line.chomp.split('|')
-        end
-        return options
-      end
-      nil
     end
 
     def log_stats(duration, pl)
@@ -289,8 +266,8 @@ module Gemwarrior
     def play_intro_tune
       if world.sound
         Music::cue([
-          { frequencies: 'A3,E4,C#5,E5',  duration: 300},
-          { frequencies: 'A3,E4,C#5,F#5', duration: 600}
+          { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
+          { frequencies: 'A3,E4,C#5,F#5', duration: 600 }
         ])
       end
     end
