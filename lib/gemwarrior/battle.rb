@@ -296,7 +296,7 @@ module Gemwarrior
           puts " XP : #{monster.xp}".colorize(:green)
           puts " ROX: #{monster.rox}".colorize(:green)
           print_battle_line
-          player.update_stats(reason: monster, value: monster)
+          player.update_stats(reason: :monster, value: monster)
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
@@ -307,7 +307,7 @@ module Gemwarrior
           puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
         end
         print_battle_line
-        player.update_stats(reason: monster, value: monster)
+        player.update_stats(reason: :monster, value: monster)
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
     end
