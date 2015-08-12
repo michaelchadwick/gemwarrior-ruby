@@ -6,9 +6,12 @@ require_relative 'herb'
 require_relative 'dagger'
 
 module Gemwarrior
-  PLAYER_ROX_INSUFFICIENT = 'You do not have enough rox to purchase that item.'
-
   class SmallHole < Item
+    # CONSTANTS
+    PLAYER_ROX_INSUFFICIENT = '>> "Pity. You are a bit short on funds to purchase that item."'
+    PLAYER_ITEMS_ADDITIONAL = '>> "Anything else?"'
+    PLAYER_COMMAND_INVALID  = '>> "Huh?"'
+
     def initialize
       self.name         = 'small_hole'
       self.description  = 'Amongst the rubble of the alcove, a small hole, barely big enough for a rodent, exists in an absently-minded way near the bottom of the wall.'
@@ -33,7 +36,7 @@ module Gemwarrior
     def rat_shop(player)
       items_purchased = []
     
-      puts '>>"Hello, wanderer. Welcome to my establishment, as it were. Are you in need of anything?"'
+      puts '>> "Hello, wanderer. Welcome to my establishment, as it were. Are you in need of anything?"'
       puts
       puts 'The creature gently shoves a small slip of paper out of his hole and towards you. You take a peek and notice it has a list of things with prices on it.'
       puts
@@ -42,7 +45,7 @@ module Gemwarrior
       puts '(1) Herb     - 10  rox'
       puts '(2) Dagger   - 150 rox'
       puts
-      puts '>>"What are you in need of?"'
+      puts '>> "What are you in need of?"'
 
       loop do
         puts ' 1 - Herb'
@@ -56,8 +59,8 @@ module Gemwarrior
           if player.rox >= 10
             player.rox -= 10
             items_purchased.push(Herb.new)
-            puts '>>"Excellent choice."'
-            puts '>>"Anything else?"'
+            puts '>> "Excellent choice."'
+            puts PLAYER_ITEMS_ADDITIONAL
             next
           else
             puts PLAYER_ROX_INSUFFICIENT
@@ -67,18 +70,18 @@ module Gemwarrior
           if player.rox >= 150
             player.rox -= 150
             items_purchased.push(Dagger.new)
-            puts '>>"A fine blade, indeed."'
-            puts '>>"Anything else?"'
+            puts '>> "A fine blade, indeed."'
+            puts PLAYER_ITEMS_ADDITIONAL
             next
           else
             puts PLAYER_ROX_INSUFFICIENT
             next
           end
         when 'x'
-          puts '>>"If you need anything further, I\'m always in this hole..."'
+          puts '>> "If you need anything further, I\'m always in this hole..."'
           return { type: 'purchase', data: items_purchased }
         else
-          puts '>>"Huh?"'
+          puts PLAYER_COMMAND_INVALID
           next
         end
       end

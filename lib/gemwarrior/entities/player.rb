@@ -141,22 +141,29 @@ module Gemwarrior
 
       if tent_uses > 0
         if self.at_full_hp?
-          puts 'Despite feeling just fine, health-wise, you decide to set up camp for the ni--well, actually, after a few minutes you realize you don\'t need to sleep and pack things up again, ready to go.'
+          return 'Despite feeling just fine, health-wise, you decide to set up camp for the ni--well, actually, after a few minutes you realize you don\'t need to sleep and pack things up again, ready to go.'
         else
           Animation::run(phrase: REST_NOT_FULL_TEXT)
-          puts "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
           self.hp_cur = self.hp_max
+
+          status_text = "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
+          status_text << "\n>> You regain all of your hit points."
+
+          return status_text
         end
       else
         if self.at_full_hp?
           Animation::run(phrase: REST_FULL_TEXT)
-          puts 'You sit down on the ground, make some notes on the back of your hand, test the air, and then return to standing, back at it all again.'
+          return 'You sit down on the ground, make some notes on the back of your hand, test the air, and then return to standing, back at it all again.'
         else
           Animation::run(phrase: REST_NOT_FULL_TEXT)
-          puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
-        
           self.hp_cur = self.hp_cur.to_i + rand(10..15)
           self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
+
+          status_text = "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
+          status_text << "\n>> You regain a few hit points."
+
+          return status_text
         end
       end
     end

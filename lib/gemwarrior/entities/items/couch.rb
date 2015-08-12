@@ -18,7 +18,8 @@ module Gemwarrior
 
     def use(player = nil)
       if player.at_full_hp?
-        puts 'You come to rest on the impossibly soft surface of the furniture, but even after a few minutes of this seemingly heavenly hedonism you don\'t feel significantly better and decide to get up again.'
+        puts 'You "sit" on the impossibly soft surface of the furniture, but even after a few minutes of this seemingly heavenly hedonism you don\'t feel significantly better and decide to get up again.'
+        { type: nil, data: nil }
       else
         puts 'Your body comes to rest somewhere below the surface of the cloudy apparatus, almost as if it were floating *amongst* the couch. The feeling is heavenly, and you actually feel somewhat better after getting back up.'
         puts '>> You regain a hit point.'

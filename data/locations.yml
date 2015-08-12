@@ -1073,9 +1073,9 @@
     y: 8
     z: 1
   locs_connected:
-    north: true
+    north: false
     east:  true
-    south: false
+    south: true
     west:  false  
   monster_level_range:
     lo: 3

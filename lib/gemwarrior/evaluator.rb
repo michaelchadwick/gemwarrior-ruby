@@ -287,7 +287,7 @@ module Gemwarrior
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
 
-                puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
+                puts ">> tent can be used when resting #{i.number_of_uses} more time(s)."
               end
             end
           end
@@ -299,7 +299,7 @@ module Gemwarrior
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
 
-                puts "The tent can be used when resting #{i.number_of_uses} more time(s)."
+                puts ">> tent can be used when resting #{i.number_of_uses} more time(s)."
               end
             end
           end
@@ -309,6 +309,8 @@ module Gemwarrior
 
         if result.eql?('death')
           player_death_resurrection
+        else
+          result
         end
       when 'look', 'l'
         if param1
@@ -347,9 +349,9 @@ module Gemwarrior
                     if i.number_of_uses > 0
                       result = i.use(world.player)
                       i.number_of_uses -= 1
-                      puts "#{i.name} can be used #{i.number_of_uses} more time(s)."
+                      puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
                     else
-                      return "#{i.name} cannot be used anymore."
+                      return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
                     result = i.use(world.player)
@@ -370,9 +372,9 @@ module Gemwarrior
                     if i.number_of_uses > 0
                       result = i.use(world.player)
                       i.number_of_uses -= 1
-                      puts "#{i.name} can be used #{i.number_of_uses} more time(s)."
+                      puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
                     else
-                      return "#{i.name} cannot be used anymore."
+                      return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
                     result = i.use(world.player)
@@ -430,6 +432,7 @@ module Gemwarrior
               result[:data].each do |i|
                 world.player.inventory.items.push(i)
               end
+              return
             else
               return
             end
