@@ -18,7 +18,7 @@ module Gemwarrior
 
     def use(player = nil)
       puts 'You stretch out your hand and touch the waterfall. It stings you with its cold and forceful gushing. Your hand is now wet and rougher than before. In time, it will dry.'
-      {:type => 'dmg', :data => rand(0..1)}
+      { type: 'dmg', data: rand(0..1) }
     end
   end
 end

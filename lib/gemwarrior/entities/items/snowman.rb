@@ -5,6 +5,9 @@ require_relative '../item'
 
 module Gemwarrior
   class Snowman < Item
+    # CONSTANTS
+    USE_TEXT = '*** FOOOOSH ***'
+
     def initialize
       self.name         = 'snowman'
       self.description  = 'Standing solemnly in the snow, a man of snow solemnly stands.'
@@ -20,9 +23,9 @@ module Gemwarrior
       puts 'You go to touch the snowy softness of the snowman when it magically comes to life! The frozen homunculus grabs you by the wrist and tosses you to the ground, only to follow this up by jumping onto you with its full, freezing, force. Your body, and mind, go numb.'
       puts
 
-      Animation::run({ :phrase => '*** FOOOOSH ***' })
+      Animation::run(phrase: USE_TEXT)
 
-      {:type => 'move_dangerous', :data => 'Home'}
+      { type: 'move_dangerous', data: 'Home' }
     end
   end
 end

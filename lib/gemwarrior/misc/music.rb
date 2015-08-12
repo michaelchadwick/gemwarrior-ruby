@@ -25,11 +25,11 @@ module Gemwarrior
         require_relative 'musical_notes'
 
         feep_defaults = {
-          :frequencies  => '440',
-          :waveform     => 'sine',
-          :volume       => 0.3,
-          :duration     => 500,
-          :notext       => true
+          frequencies:  '440',
+          waveform:     'sine',
+          volume:       0.3,
+          duration:     500,
+          notext:       true
         }
       
         Thread.start {
@@ -37,11 +37,11 @@ module Gemwarrior
             seq = feep_defaults.merge(seq)
 
             Feep::Base.new({
-              :freq_or_note => seq[:frequencies],
-              :waveform     => seq[:waveform],
-              :volume       => seq[:volume],
-              :duration     => seq[:duration],
-              :notext       => seq[:notext]
+              freq_or_note: seq[:frequencies],
+              waveform:     seq[:waveform],
+              volume:       seq[:volume],
+              duration:     seq[:duration],
+              notext:       seq[:notext]
             })
           end
         }

@@ -76,7 +76,7 @@ module Gemwarrior
           end
         when 'x'
           puts '>>"If you need anything further, I\'m always in this hole..."'
-          return {:type => 'purchase', :data => items_purchased}
+          return { type: 'purchase', data: items_purchased }
         else
           puts '>>"Huh?"'
           next

@@ -26,7 +26,7 @@ module Gemwarrior
       # stats
       player.movements_made += 1
 
-      {:type => 'move', :data => 'Snow Fields (Southeast)'}
+      { type: 'move', data: 'Snow Fields (Southeast)' }
     end
   end
 end

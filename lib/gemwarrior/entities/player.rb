@@ -10,6 +10,11 @@ require_relative '../misc/wordlist'
 
 module Gemwarrior
   class Player < Creature
+    # CONSTANTS
+    LEVEL_UP_TEXT       = '** LEVEL UP! **'
+    REST_FULL_TEXT      = '** HMMMM **'
+    REST_NOT_FULL_TEXT  = '** ZZZZZ **'
+  
     include PlayerLevels
     include Formatting
 
@@ -103,7 +108,7 @@ module Gemwarrior
 
     def rest(world, tent_uses = nil, ensure_fight = false)
       if ensure_fight
-        battle = Battle.new({:world => world, :player => self, :monster => world.monsters[rand(0..world.monsters.length-1)].clone})
+        battle = Battle.new(world: world, player: self, monster: world.monsters[rand(0..world.monsters.length-1)].clone)
         result = battle.start(is_arena = false, is_event = true)
         if result.eql?('death')
           return 'death'
@@ -118,7 +123,7 @@ module Gemwarrior
         chance_of_ambush = rand(0..100)
 
         if chance_of_ambush < 25
-          battle = Battle.new({:world => world, :player => self, :monster => cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)].clone})
+          battle = Battle.new(world: world, player: self, monster: cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)].clone)
           return battle.start(is_arena = false, is_event = true)
         end
       end
@@ -138,16 +143,16 @@ module Gemwarrior
         if self.at_full_hp?
           puts 'Despite feeling just fine, health-wise, you decide to set up camp for the ni--well, actually, after a few minutes you realize you don\'t need to sleep and pack things up again, ready to go.'
         else
-          Animation::run({:phrase => '** Zzzzz **'})
+          Animation::run(phrase: REST_NOT_FULL_TEXT)
           puts "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
           self.hp_cur = self.hp_max
         end
       else
         if self.at_full_hp?
-          Animation::run({:phrase => '** Hmmmm **'})
+          Animation::run(phrase: REST_FULL_TEXT)
           puts 'You sit down on the ground, make some notes on the back of your hand, test the air, and then return to standing, back at it all again.'
         else
-          Animation::run({:phrase => '** Zzzzz **'})
+          Animation::run(phrase: REST_NOT_FULL_TEXT)
           puts "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
         
           self.hp_cur = self.hp_cur.to_i + rand(10..15)
@@ -183,30 +188,30 @@ module Gemwarrior
       case direction
       when 'north', 'n'
         self.cur_coords = {
-          :x => cur_coords[:x], 
-          :y => cur_coords[:y]+1,
-          :z => cur_coords[:z]
+          x: cur_coords[:x], 
+          y: cur_coords[:y]+1,
+          z: cur_coords[:z]
         }
         direction_text = '^^^'
       when 'east', 'e'
         self.cur_coords = {
-          :x => cur_coords[:x]+1, 
-          :y => cur_coords[:y],
-          :z => cur_coords[:z]
+          x: cur_coords[:x]+1, 
+          y: cur_coords[:y],
+          z: cur_coords[:z]
         }
         direction_text = '>>>'
       when 'south', 's'
         self.cur_coords = {
-          :x => cur_coords[:x], 
-          :y => cur_coords[:y]-1,
-          :z => cur_coords[:z]
+          x: cur_coords[:x], 
+          y: cur_coords[:y]-1,
+          z: cur_coords[:z]
         }
         direction_text = 'vvv'
       when 'west', 'w'
         self.cur_coords = {
-          :x => cur_coords[:x]-1, 
-          :y => cur_coords[:y],
-          :z => cur_coords[:z]
+          x: cur_coords[:x]-1, 
+          y: cur_coords[:y],
+          z: cur_coords[:z]
         }
         direction_text = '<<<'
       end
@@ -221,7 +226,7 @@ module Gemwarrior
     end
 
     def attack(world, monster)
-      battle = Battle.new({:world => world, :player => self, :monster => monster})
+      battle = Battle.new(world: world, player: self, monster: monster)
       result = battle.start
       if result.eql?('death')
         return 'death'
@@ -280,7 +285,7 @@ module Gemwarrior
       new_player_level = PlayerLevels::check_level(self.xp)
 
       if new_player_level > old_player_level
-        Animation::run({:phrase => '** LEVEL UP! **'})
+        Animation::run(phrase: LEVEL_UP_TEXT)
         new_stats = PlayerLevels::get_level_stats(new_player_level)
 
         self.level = new_stats[:level]
@@ -312,10 +317,10 @@ module Gemwarrior
     def player_death
       if world.sound
         Music::cue([
-          {:frequencies => 'D#5', :duration => 100},
-          {:frequencies => 'A4', :duration => 150},
-          {:frequencies => 'F#4', :duration => 200},
-          {:frequencies => 'F4', :duration => 1000}
+          { frequencies: 'D#5', duration: 100 },
+          { frequencies: 'A4',  duration: 150 },
+          { frequencies: 'F#4', duration: 200 },
+          { frequencies: 'F4',  duration: 1000 }
         ])
       end
       
@@ -328,12 +333,12 @@ module Gemwarrior
     def print_traveling_text(direction_text, sound)
       if sound
         Music::cue([
-          {:frequencies => 'C4', :duration => 75},
-          {:frequencies => 'D4', :duration => 75},
-          {:frequencies => 'E4', :duration => 75}
+          { frequencies: 'C4', duration: 75 },
+          { frequencies: 'D4', duration: 75 },
+          { frequencies: 'E4', duration: 75 }
         ])
       end
-      Animation::run({:oneline => false, :phrase => "* #{direction_text} *"})
+      Animation::run(phrase: "* #{direction_text} *", oneline: false)
     end
 
     # CHARACTER

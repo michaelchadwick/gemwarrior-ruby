@@ -19,7 +19,7 @@ module Gemwarrior
     def use(player = nil)
       puts 'You unfold the piece of worn canvas, and study the markings upon it.'
 
-      {:type => 'action', :data => 'map'}
+      { type: 'action', data: 'map' }
     end
   end
 end

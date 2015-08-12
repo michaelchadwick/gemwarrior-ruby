@@ -41,24 +41,24 @@ module Gemwarrior
       world.extra_command   = options.fetch(:extra_command)
 
       world.player = Player.new({
-        :description        => PLAYER_DESC_DEFAULT,
-        :level              => start_stats[:level],
-        :xp                 => start_stats[:xp_start],
-        :hp_cur             => start_stats[:hp_max],
-        :hp_max             => start_stats[:hp_max],
-        :stam_cur           => start_stats[:stam_max],
-        :stam_max           => start_stats[:stam_max],
-        :atk_lo             => start_stats[:atk_lo],
-        :atk_hi             => start_stats[:atk_hi],
-        :defense            => start_stats[:defense],
-        :dexterity          => start_stats[:dexterity],
-        :inventory          => world.debug_mode ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
-        :rox                => world.debug_mode ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
-        :cur_coords         => world.location_coords_by_name('Home'),
+        description:  PLAYER_DESC_DEFAULT,
+        level:        start_stats[:level],
+        xp:           start_stats[:xp_start],
+        hp_cur:       start_stats[:hp_max],
+        hp_max:       start_stats[:hp_max],
+        stam_cur:     start_stats[:stam_max],
+        stam_max:     start_stats[:stam_max],
+        atk_lo:       start_stats[:atk_lo],
+        atk_hi:       start_stats[:atk_hi],
+        defense:      start_stats[:defense],
+        dexterity:    start_stats[:dexterity],
+        inventory:    world.debug_mode ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
+        rox:          world.debug_mode ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
+        cur_coords:   world.location_coords_by_name('Home'),
 
-        :god_mode           => options.fetch(:god_mode),
-        :beast_mode         => options.fetch(:beast_mode),
-        :use_wordnik        => options.fetch(:use_wordnik)
+        god_mode:     options.fetch(:god_mode),
+        beast_mode:   options.fetch(:beast_mode),
+        use_wordnik:  options.fetch(:use_wordnik)
       })
 
       # create options file if not existing

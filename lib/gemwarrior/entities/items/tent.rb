@@ -18,7 +18,7 @@ module Gemwarrior
     end
 
     def use(player = nil)
-      {:type => 'tent', :data => self.number_of_uses}
+      { type: 'tent', data: self.number_of_uses }
     end
   end
 end

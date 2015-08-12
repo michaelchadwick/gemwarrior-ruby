@@ -4,7 +4,10 @@
 require_relative '../item'
 
 module Gemwarrior
-  class Pedestal < Item  
+  class Pedestal < Item
+    # CONSTANTS
+    USE_TEXT = '*** WHOOOOOSH ***'
+  
     attr_accessor :switches
 
     def initialize
@@ -98,14 +101,14 @@ module Gemwarrior
             # stats
             player.movements_made += 1
             
-            Animation::run({ :phrase => '*** WHOOOOOSH ***' })
-            return {:type => 'move', :data => 'Sky Tower (Entryway)'}
+            Animation::run(phrase: USE_TEXT)
+            return { type: 'move', data: 'Sky Tower (Entryway)' }
           else
             puts 'You attempt to push the large gem, but it puts up quite the resistance, and nothing much else happens. Your attention once again returns to the pedestal and its switches.'.colorize(:red)
           end
         when '8'
           puts 'You step away from the mysterious pedestal.'
-          return {:type => nil, :data => nil}
+          return { type: nil, data: nil }
         else
           next
         end

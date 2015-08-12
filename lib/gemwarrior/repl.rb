@@ -104,16 +104,16 @@ module Gemwarrior
     end
 
     def print_about_text
-      puts 'Gem Warrior - A Game of Fortune and Mayhem'
-      puts '=========================================='
+      puts 'Gem Warrior - A Game of Fortune and Mayhem'.colorize(:yellow)
+      puts '=========================================='.colorize(:yellow)
       puts 'Gem Warrior is a text adventure roguelike-lite as a RubyGem created by Michael Chadwick (mike@codana.me) and released as open-source on Github. Take on the task set by Queen Ruby to defeat the evil Emerald and get back the ShinyThing(tm) he stole for terrible, dastardly reasons.'
       puts
       puts 'Explore the land of Jool with the power of text, fighting enemies to improve your station, grabbing curious items that may or may not come in handy, and finally defeating Mr. Emerald himself to win the game.'
     end
 
     def print_help_text
-      puts 'Gem Warrior - Some Basic Help Commands'
-      puts '======================================'
+      puts 'Gem Warrior - Some Basic Help Commands'.colorize(:yellow)
+      puts '======================================'.colorize(:yellow)
       puts '* Basic functions: look, go, character, inventory, attack *'
       puts '* Type \'help\' while in-game for complete list of commands *'
       puts '* Most commands can be abbreviated to their first letter  *'
@@ -123,8 +123,8 @@ module Gemwarrior
       options = read_options_file
 
       puts
-      puts 'Gem Warrior Options'
-      puts '======================='
+      puts 'Gem Warrior Options'.colorize(:yellow)
+      puts '======================='.colorize(:yellow)
       if options.nil?
         puts 'No options set yet.'
       else

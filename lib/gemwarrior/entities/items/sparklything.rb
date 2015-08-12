@@ -19,7 +19,7 @@ module Gemwarrior
     def use(player = nil)
       puts 'Everything, and I mean *everything*, begins to sparkle. Huh.'
       puts
-      {:type => nil, :data => nil}
+      { type: nil, data: nil }
     end
   end
 end

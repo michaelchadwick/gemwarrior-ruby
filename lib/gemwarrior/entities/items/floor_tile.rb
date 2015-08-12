@@ -4,6 +4,9 @@
 require_relative '../item'
 
 module Gemwarrior
+  # CONSTANTS
+  MOVE_TEXT = '*** SHOOOOOM ***'
+
   class FloorTile < Item
     def initialize
       self.name         = 'floor_tile'
@@ -23,9 +26,9 @@ module Gemwarrior
       # stats
       player.movements_made += 1
 
-      Animation::run({ :phrase => '*** SHOOOOOM ***' })
+      Animation::run(phrase: MOVE_TEXT)
 
-      {:type => 'move', :data => 'Rock Piles'}
+      { type: 'move', data: 'Rock Piles' }
     end
   end
 end

@@ -7,7 +7,7 @@ module Gemwarrior
   class Location < Entity
     # CONSTANTS
     ## HASHES
-    DANGER_LEVEL = {:none => 0, :low => 15, :moderate => 30, :high => 55, :assured => 100}
+    DANGER_LEVEL = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
 
     ## ERRORS
     ERROR_LOCATION_ITEM_REMOVE_INVALID      = 'That item cannot be removed as it does not exist here.'

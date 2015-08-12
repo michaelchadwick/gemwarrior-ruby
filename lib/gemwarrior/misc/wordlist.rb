@@ -55,19 +55,19 @@ module Gemwarrior
 
         json_return = HTTP.get(
           url, 
-          :params => { 
-            :hasDictionaryDef => true,  
-            :includePartOfSpeech => type, 
-            :minCorpusCount => 1, 
-            :maxCorpusCount => -1, 
-            :minDictionaryCount => 1,
-            :maxDictionaryCount => -1,
-            :minLength => 5,
-            :maxLength => 12,
-            :sortBy => 'alpha',
-            :sortOrder => 'asc',
-            :limit => limit,
-            :api_key => api_key
+          params: { 
+            hasDictionaryDef:     true,
+            includePartOfSpeech:  type,
+            minCorpusCount:       1,
+            maxCorpusCount:       -1,
+            minDictionaryCount:   1,
+            maxDictionaryCount:   -1,
+            minLength:            5,
+            maxLength:            12,
+            sortBy:               'alpha',
+            sortOrder:            'asc',
+            limit:                limit,
+            api_key:              api_key
           }
         )
 

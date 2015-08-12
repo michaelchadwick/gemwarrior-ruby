@@ -18,7 +18,7 @@ module Gemwarrior
 
     def use(player = nil)
       puts 'You pull the trigger on the gun, but realize there are no bullets in it. So, it does not do much except cause a barely audible *click* sound.'
-      {:type => nil, :data => nil}
+      { type: nil, data: nil }
     end
   end
 end

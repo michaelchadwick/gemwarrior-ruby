@@ -11,7 +11,7 @@ module Gemwarrior
     BEAST_MODE_ATTACK           = 100
 
     ## MESSAGES
-    TEXT_ESCAPE                 = 'POOF'
+    ESCAPE_TEXT                 = '** POOF **'
 
     attr_accessor :world, :player, :monster, :player_is_defending
 
@@ -38,7 +38,7 @@ module Gemwarrior
 
       if is_arena
         print 'Your opponent is now...'
-        Animation::run(phrase: "#{monster.name.upcase}!", speed: slow)
+        Animation::run(phrase: "#{monster.name.upcase}!", speed: :slow)
       elsif is_event
         puts "You are attacked by #{monster.name}!"
       else
@@ -218,7 +218,7 @@ module Gemwarrior
       end
 
       print who_gets_wounded
-      Animation::run({ phrase: dmg.to_s, speed: slow, oneline: true, alpha: false, random: false })
+      Animation::run(phrase: dmg.to_s, speed: :slow, oneline: true, alpha: false, random: false)
       print " point(s)!\n"
     end
 
@@ -355,7 +355,7 @@ module Gemwarrior
     # STATUS TEXT
 
     def print_escape_text
-      Animation::run(phrase: '** POOF **', oneline: true)
+      Animation::run(phrase: ESCAPE_TEXT, oneline: true)
     end
 
     def print_battle_line
