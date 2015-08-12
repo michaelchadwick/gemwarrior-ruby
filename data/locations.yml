@@ -746,7 +746,7 @@
  
 - 
   name:                 'Plains (Arena Entrance)'
-  description:          'Well above the noise of the raging river nearby, the din of the mighty Arena reaches its near fever-pitch just outside. The door, and battle, beckons.'
+  description:          'Well above the noise of the raging river nearby, the din of the mighty Arena to the east reaches its near fever-pitch just outside. The door, and battle, beckons.'
   danger_level:         :low
   coords:
     x: 7
@@ -822,14 +822,14 @@
     north: true
     east:  false
     south: true
-    west: false  
+    west:  false
   monster_level_range:
     lo: 3
     hi: 5
 
 -
   name:                 'Plains (North of Bridge)'
-  description:          'North of the river feels similar to south of the river, as you continue to be surrounded by grass and grass and, well, grass.'
+  description:          'North of the river feels similar to south of the river, as you continue to be surrounded by grass and grass and, well, grass. A path to the east stretches out into a valley.'
   danger_level:         :low
   coords:
     x: 4
@@ -837,12 +837,136 @@
     z: 0
   locs_connected:
     north: false
-    east:  false
+    east:  true
     south: true
-    west: true  
+    west:  true
   monster_level_range:
     lo: 2
     hi: 3
+    
+-
+  name:                 'Peridover Valley (Outskirts)'
+  description:          'The road slopes down slightly here, but in the near distance you can see that it slopes way more slopily.'
+  danger_level:         :low
+  coords:
+    x: 5
+    y: 5
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'Peridover Valley (Central)'
+  description:          'The Peridover Valley is in full effect here, sloping down into a reverse plateau. Bones of wild animals litter the area.'
+  danger_level:         :moderate
+  coords:
+    x: 6
+    y: 5
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 3
+    hi: 4
+
+-
+  name:                 'Peridover Valley (Outskirts)'
+  description:          'Sloping way down to the west, but leveling off here, a din of civilization calls from the north.'
+  danger_level:         :low
+  coords:
+    x: 7
+    y: 5
+    z: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true
+  monster_level_range:
+    lo: 2
+    hi: 3
+
+-
+  name:                 'South of Spinelia'
+  description:          'Northwardly, you can hear general town noise, such as people scuffling, nattering, and more or less existing in a people kind of way.'
+  danger_level:         :low
+  coords:
+    x: 7
+    y: 6
+    z: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: true
+    west:  false
+  monster_level_range:
+    lo: 1
+    hi: 2
+
+-
+  name:                 'Spinelia (Southwest)'
+  description:          'Near the front entrance to Spinelia is the market corner. Merchants are all around, hawking wares and giving those nearby walking stares.'
+  danger_level:         :none
+  coords:
+    x: 7
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  true
+    south: true
+    west:  false
+
+-
+  name:                 'Spinelia (Southeast)'
+  description:          'The southeast of Spinelia contains a bunch of people, just kind of hanging out.'
+  danger_level:         :none
+  coords:
+    x: 8
+    y: 7
+    z: 0
+  locs_connected:
+    north: true
+    east:  false
+    south: false
+    west:  true
+
+-
+  name:                 'Spinelia (Northeast)'
+  description:          'Northeasternly speaking, Spinelia contains a pen with a few animals calmly eating food, and not really having much impact on their environment.'
+  danger_level:         :none
+  coords:
+    x: 8
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  false
+    south: true
+    west:  true
+
+-
+  name:                 'Spinelia (Northwest)'
+  description:          'Residences line the northwest corner of Spinela, each one similar to each other, made of granite and stone, featuring a single window and a single door. One particular house''s hallmark appears to be a rather fanciful woman leaning on its facade, looking shifty.'
+  danger_level:         :none
+  coords:
+    x: 7
+    y: 8
+    z: 0
+  locs_connected:
+    north: false
+    east:  true
+    south: true
+    west:  false
 
 -
   name:                 'Rock Piles'
@@ -856,7 +980,7 @@
     north: false
     east:  true
     south: false
-    west:  false  
+    west:  false
   monster_level_range:
     lo: 3
     hi: 4
@@ -871,12 +995,12 @@
   coords:
     x: 8
     y: 6
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  true
     south: false
-    west:  true  
+    west:  true
   monster_level_range:
     lo: 3
     hi: 4
@@ -890,7 +1014,7 @@
   coords:
     x: 8
     y: 7
-    z: 0
+    z: 1
   locs_connected:
     north: false
     east:  false
@@ -911,7 +1035,7 @@
   coords:
     x: 7
     y: 6
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  true
@@ -930,7 +1054,7 @@
   coords:
     x: 7
     y: 7
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  false
@@ -947,7 +1071,7 @@
   coords:
     x: 7
     y: 8
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  true
@@ -966,7 +1090,7 @@
   coords:
     x: 8
     y: 8
-    z: 0
+    z: 1
   locs_connected:
     north: false
     east:  true
@@ -985,7 +1109,7 @@
   coords:
     x: 8
     y: 9
-    z: 0
+    z: 1
   locs_connected:
     north: false
     east:  false
@@ -1006,7 +1130,7 @@
   coords:
     x: 9
     y: 8
-    z: 0
+    z: 1
   locs_connected:
     north: false
     east:  false
@@ -1025,7 +1149,7 @@
   coords:
     x: 9
     y: 7
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  false
@@ -1042,7 +1166,7 @@
   coords:
     x: 9
     y: 6
-    z: 0
+    z: 1
   locs_connected:
     north: true
     east:  false
