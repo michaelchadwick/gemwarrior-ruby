@@ -50,8 +50,8 @@ module Gemwarrior
       self.world = world
 
       self.devcommands = %w(god beast list vars map stat teleport spawn levelbump restfight)
-      self.devaliases = %w(gd bs ls v m s tp sp lb rf)
-      self.devextras = %w(st)
+      self.devaliases = %w(gd bs ls v m st tp sp lb rf)
+      self.devextras = %w()
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
         'Toggle beast mode (i.e. super strength)',
@@ -127,7 +127,7 @@ module Gemwarrior
           end
         when 'map', 'm'
           world.print_map(param1)
-        when 'stat', 'st', 's'
+        when 'stat', 'st'
           if param1.nil?
             puts ERROR_DEBUG_STAT_PARAM_MISSING
             return DEBUG_STAT_PARAMS

@@ -221,7 +221,7 @@
     north: true
     east:  true
     south: false
-    west:  false
+    west:  true
   monster_level_range:
     lo: 3
     hi: 4
