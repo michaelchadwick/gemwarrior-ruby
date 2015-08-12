@@ -66,10 +66,12 @@ module Gemwarrior
       end
 
       weapon_slot = ''
+      atk_lo = self.atk_lo
+      atk_hi = self.atk_hi
       if has_weapon_equipped?
         weapon_slot = inventory.weapon.name
-        self.atk_lo = inventory.weapon.atk_lo
-        self.atk_hi = inventory.weapon.atk_hi
+        atk_lo += inventory.weapon.atk_lo
+        atk_hi += inventory.weapon.atk_hi
       else
         weapon_slot = '(unarmed)'
       end
@@ -86,7 +88,7 @@ module Gemwarrior
       self_text << "LEVEL     : #{self.level}\n"
       self_text << "EXPERIENCE: #{self.xp}\n"
       self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
-      self_text << "ATTACK    : #{self.atk_lo}-#{self.atk_hi}\n"
+      self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "DEFENSE   : #{self.defense}\n"
       self_text << "ABILITIES : #{abilities}\n"

@@ -8,8 +8,8 @@ module Gemwarrior
     def initialize
       self.name         = 'dagger'
       self.description  = 'Flint that has been sharpened to a point, attached to a block of smooth granite by thin rope. Truly a work of art.'
-      self.atk_lo       = 2
-      self.atk_hi       = 4
+      self.atk_lo       = 1
+      self.atk_hi       = 3
       self.takeable     = true
       self.useable      = false
       self.equippable   = true

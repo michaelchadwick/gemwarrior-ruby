@@ -8,8 +8,8 @@ module Gemwarrior
     def initialize
       self.name         = 'stone'
       self.description  = 'A small, sharp mega pebble, suitable for tossing in amusement, and perhaps combat.'
-      self.atk_lo       = 2
-      self.atk_hi       = 3
+      self.atk_lo       = 1
+      self.atk_hi       = 2
       self.takeable     = true
       self.useable      = false
       self.equippable   = true

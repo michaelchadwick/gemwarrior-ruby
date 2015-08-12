@@ -8,8 +8,8 @@ module Gemwarrior
     def initialize
       self.name         = 'opalaser'
       self.description  = 'Gleaming with supernatural light, this object feels alien, yet familiar.'
-      self.atk_lo       = 10
-      self.atk_hi       = 12
+      self.atk_lo       = 9
+      self.atk_hi       = 11
       self.takeable     = true
       self.useable      = true
       self.equippable   = true

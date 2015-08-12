@@ -181,7 +181,15 @@ module Gemwarrior
       else
         if entity.eql?(monster)
           # base attack range
-          atk_range = player.atk_lo..player.atk_hi
+          base_atk_lo = player.atk_lo
+          base_atk_hi = player.atk_hi
+          
+          if player.has_weapon_equipped?
+            base_atk_lo += player.inventory.weapon.atk_lo
+            base_atk_hi += player.inventory.weapon.atk_hi
+          end
+          
+          atk_range = base_atk_lo..base_atk_hi
 
           # beast mode modifier
           if player.beast_mode

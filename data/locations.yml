@@ -925,6 +925,8 @@
     east:  true
     south: true
     west:  false
+  items:
+  - WareHawker
 
 -
   name:                 'Spinelia (Southeast)'

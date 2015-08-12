@@ -8,6 +8,8 @@ require_relative 'dagger'
 module Gemwarrior
   class SmallHole < Item
     # CONSTANTS
+    PRICE_HERB              = 10
+    PRICE_DAGGER            = 150
     PLAYER_ROX_INSUFFICIENT = '>> "Pity. You are a bit short on funds to purchase that item."'
     PLAYER_ITEMS_ADDITIONAL = '>> "Anything else?"'
     PLAYER_COMMAND_INVALID  = '>> "Huh?"'
@@ -25,25 +27,26 @@ module Gemwarrior
     
     def use(player = nil)
       puts 'You lower yourself to the ground and attempt to peer in the hole in the wall. Just as you begin to think this is a fruitless endeavor, a pair of bright, beady eyes manifest, and an unexpectedly low voice begins speaking to you:'
-      
+      puts
+
       rat_shop(player)
     end
-    
+
     def reuse(player = nil)
       rat_shop(player)
     end
-      
+
     def rat_shop(player)
       items_purchased = []
-    
+
       puts '>> "Hello, wanderer. Welcome to my establishment, as it were. Are you in need of anything?"'
       puts
       puts 'The creature gently shoves a small slip of paper out of his hole and towards you. You take a peek and notice it has a list of things with prices on it.'
       puts
       puts 'Rockney\'s Hole in the Wall'
       puts '--------------------------'
-      puts '(1) Herb     - 10  rox'
-      puts '(2) Dagger   - 150 rox'
+      puts "(1) Herb     - #{PRICE_HERB}  rox"
+      puts "(2) Dagger   - #{PRICE_DAGGER} rox"
       puts
       puts '>> "What are you in need of?"'
 
@@ -51,9 +54,10 @@ module Gemwarrior
         puts ' 1 - Herb'
         puts ' 2 - Dagger'
         puts ' x - leave'
-      
+        print 'Option? '
+
         choice = gets.chomp!
-      
+
         case choice
         when '1'
           if player.rox >= 10
