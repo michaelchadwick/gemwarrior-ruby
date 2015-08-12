@@ -17,6 +17,16 @@ def parse_options_cli
     :use_wordnik    => false, 
     :extra_command  => nil
   }
+  
+  options_file = read_options_file
+  
+  unless options_file.nil?
+    sound_option = options_file[0][1].eql?('false') ? false : true
+    wordnik_option = options_file[1][1].eql?('false') ? false : true
+    
+    options[:sound] = sound_option
+    options[:use_wordnik] = wordnik_option
+  end
 
   optparse = OptionParser.new do |opts|
     opts.on('-b', '--beast', 'Enable debug[beastmode]') do
@@ -86,16 +96,6 @@ end
 begin
   options = parse_options_cli
 
-  options_file = read_options_file
-  
-  unless options_file.nil?
-    sound_option = options_file[0][1].eql?('false') ? false : true
-    wordnik_option = options_file[1][1].eql?('false') ? false : true
-    
-    options[:sound] = sound_option
-    options[:use_wordnik] = wordnik_option
-  end
-  
   Gemwarrior::Game.new(options)
 rescue => error
   print_error(error)
