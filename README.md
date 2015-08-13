@@ -13,12 +13,12 @@ You take up the mantle of **1.upto(rand(5..10)) {print rand(65..90).chr}**, a gi
 
 Start in your poor, super lame cottage, where you live alone, subsisting off the sale of polished rocks you scavenge all day for in the neighboring caves. Once tasked with your quest, travel throughout the land of Jool, eventually reaching the sky tower that Emerald resides in with his stolen goods, laughing to himself, occasionally.
 
-As you travel you will discover sights and sounds of the land, all of which are new to you because you don't really get out much. Visit towns with merchants willing to trade coin for wares they bought off of other adventurers who didn't last the previous attempts at thwartion. Sleep in makeshift huts to regain your health and magic points (or the ground, if that's all that's available), which are conveniently located in your peripheral vision (i.e. the console window). Eventually, if you're skilled (and I actually code it in), you'll reach **Emerald's Sky Tower**, part him from his **ShinyThing<sup>tm</sup>**, and then do what is "right".
+As you travel you will discover sights and sounds of the land, all of which are new to you because you don't really get out much. Visit towns with merchants willing to trade coin for wares they bought off of other adventurers who didn't last the previous attempts at thwartion. Sleep in a tent (or on the ground, if that's all that's available) to regain your enumerated status points, which are conveniently located in your peripheral vision (i.e. the console window). Eventually, if you're skilled, you'll reach **Emerald's Sky Tower**, part him from his **ShinyThing<sup>tm</sup>**, and then do what is "right".
 
 ## How to Get to Jool
 
-1. `ruby -v` should return `ruby 2.`something; else install [Ruby](https://www.ruby-lang.org)
-2. `gem -v` should return `2.`something; else install [RubyGems](https://rubygems.org)
+1. `ruby -v` should return `ruby 2.something`; else install [Ruby](https://www.ruby-lang.org)
+2. `gem -v` should return `2.something`; else install [RubyGems](https://rubygems.org)
 2. `(sudo) gem install gemwarrior`  
 3. `gemwarrior`
 
@@ -26,26 +26,27 @@ Run the commands above and you'll be whisked away to Jool, ready to start or con
 
 ## Main Commands
 
-`> character` - character check for visual identity  
-`> inventory [object]` - check your inventory (or an individual item within)  
-`> rest` - take a load off and replenish hp  
-`> look      [object]` - look at current location and its items and monsters  
-`> take      [object]` - take an item from a location  
-`> use       [object]` - use an item from your inventory or current location  
-`> drop      [object]` - drop an item from your inventory  
-`> equip     [object]` - designate an item in your inventory your weapon  
-`> unequip   [object]` - stop using an item in your inventory as your weapon
+`> character`             - character check for visual identity  
+`> inventory [object]`    - check your inventory (or an individual item within)  
+`> rest`                  - take a load off and replenish hp  
+`> look      [object]`    - look at current location and its items and monsters  
+`> take      [object]`    - take an item from a location  
+`> use       [object]`    - use an item from your inventory or current location  
+`> drop      [object]`    - drop an item from your inventory  
+`> equip     [object]`    - designate an item in your inventory your weapon  
+`> unequip   [object]`    - stop using an item in your inventory as your weapon
 `> go        [direction]` - go in a direction, if possible (north|east|south|west work as shortcuts)
-`> attack    [monster]` - attack a monster  
+`> attack    [monster]`   - attack a monster  
 `> change    [attribute]` - change some things about yourself  
-`> help` - display available commands  
-`> quit` - quit this nonsense w/ prompt  
-`> quit!` - quit this nonsense w/o prompt  
+`> help`                  - display available commands  
+`> version`               - display current game version
+`> quit`                  - quit this nonsense w/ prompt  
+`> quit!`                 - quit this nonsense w/o prompt  
 
 ## In Progress, Yanno
 
-This is in beta testing right now, and if you wish to help out in an official way, please visit [the main Gem Warrior homepage](http://gw.codana.me).
+Gem Warrior is in heavy beta testing right now, and if you wish to help out in an official way, please visit [the main Gem Warrior homepage](http://gw.codana.me) for more information.
 
-## Current Issues
+## Current Issues/Requests
 
-My old list of issues/features has been moved to the [Github issues section](https://github.com/michaelchadwick/gemwarrior/issues). Feel free to add any bugs you find while playing, or any requests for new features, over there.
+The old list of issues/features has been moved to the [Github issues section](https://github.com/michaelchadwick/gemwarrior/issues). Feel free to go there to add any bugs you find while playing or any requests for new features.
