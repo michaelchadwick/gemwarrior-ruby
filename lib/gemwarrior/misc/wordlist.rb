@@ -4,6 +4,8 @@
 require 'http'
 require 'json'
 
+require_relative '../game_options'
+
 module Gemwarrior
   class WordList
     STATIC_ADJECTIVE_VALUES = [
@@ -19,10 +21,9 @@ module Gemwarrior
       'accentuate', 'accompany', 'blatter', 'bully', 'collide', 'crusade', 'disallow', 'entitle', 'infest', 'lateral', 'micturate', 'mourn', 'munge', 'numb', 'outdraw', 'overstep', 'plummet', 'refill', 'refurnish', 'reroute', 'rumple', 'scupper', 'smoosh', 'spifflicate', 'straighten', 'synthesize', 'terrorize', 'unshift', 'vociferate'
     ]
 
-    attr_accessor :use_wordnik, :type, :limit, :words, :error
+    attr_accessor :type, :limit, :words, :error
 
-    def initialize(use_wordnik = false, type = 'noun', limit = 10)
-      self.use_wordnik  = use_wordnik
+    def initialize(type = 'noun', limit = 10)
       self.type         = type
       self.limit        = limit
       self.words        = populate_words(type, limit)
@@ -45,7 +46,7 @@ module Gemwarrior
       url = 'http://api.wordnik.com:80/v4/words.json/randomWords'
       api_key = ENV['WORDNIK_API_KEY']
 
-      unless api_key.nil? || use_wordnik == false
+      unless api_key.nil? || GameOptions.data['use_wordnik'] == false
         case type
         when 'noun', 'noun-plural', 'adjective', 'verb'
         else

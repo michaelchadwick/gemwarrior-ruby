@@ -2,6 +2,7 @@
 # Monster battle
 
 require_relative 'misc/player_levels'
+require_relative 'game_options'
 
 module Gemwarrior
   class Battle
@@ -23,16 +24,14 @@ module Gemwarrior
     end
 
     def start(is_arena = nil, is_event = nil)
-      if world.sound_enabled
-        Music::cue([
-          { frequencies: 'G4',  duration: 50 },
-          { frequencies: 'G#4', duration: 50 },
-          { frequencies: 'G4',  duration: 50 },
-          { frequencies: 'G#4', duration: 50 },
-          { frequencies: 'G4',  duration: 50 },
-          { frequencies: 'G#4', duration: 50 }
-        ], world.sound_volume)
-      end
+      Music::cue([
+        { frequencies: 'G4',  duration: 50 },
+        { frequencies: 'G#4', duration: 50 },
+        { frequencies: 'G4',  duration: 50 },
+        { frequencies: 'G#4', duration: 50 },
+        { frequencies: 'G4',  duration: 50 },
+        { frequencies: 'G#4', duration: 50 }
+      ])
 
       print_battle_line
 
@@ -77,21 +76,17 @@ module Gemwarrior
 
         # print health info
         print "#{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
-        if world.debug_mode
-          print " (LVL: #{player.level})"
-        end
+        print " (LVL: #{player.level})" if GameOptions.data['debug_mode']
         print "\n"
 
         print "#{monster.name.upcase.ljust(12)} :: "
-        if world.debug_mode || player.special_abilities.include?(:rocking_vision)
+        if GameOptions.data['debug_mode'] || player.special_abilities.include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
           print '???'
         end
         print ' HP'
-        if world.debug_mode
-          print " (LVL: #{monster.level})"
-        end
+        print " (LVL: #{monster.level})" if GameOptions.data['debug_mode']
         print "\n"
         puts
 
@@ -122,18 +117,16 @@ module Gemwarrior
           puts "You attack #{monster.name}#{player.cur_weapon_name}!"
           dmg = calculate_damage_to(monster)
           if dmg > 0
-            if world.sound_enabled
-              Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }], world.sound_volume)
-            end
+            Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
+
             take_damage(monster, dmg)
             if monster_dead?
               result = monster_death
               return result
             end
           else
-            if world.sound_enabled
-              Music::cue([{ frequencies: 'A4', duration: 75 }], world.sound_volume)
-            end
+            Music::cue([{ frequencies: 'A4', duration: 75 }])
+
             puts 'You miss entirely!'.colorize(:yellow)
           end
         when 'defend', 'd'
@@ -145,7 +138,7 @@ module Gemwarrior
           print "#{monster.name}".colorize(:white)
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
           puts "It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
-          if world.debug_mode
+          if GameOptions.data['debug_mode']
             puts 'If defeated, will receive:'
             puts " >> XP   : #{monster.xp}"
             puts " >> ROX  : #{monster.rox}"
@@ -192,7 +185,7 @@ module Gemwarrior
           atk_range = base_atk_lo..base_atk_hi
 
           # beast mode modifier
-          if player.beast_mode
+          if GameOptions.data['beast_mode']
             atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
           # level 3 ability modifier
           elsif player.special_abilities.include?(:rock_slide)
@@ -250,14 +243,12 @@ module Gemwarrior
 
       dmg = calculate_damage_to(player)
       if dmg > 0
-        if world.sound_enabled
-          Music::cue([{ frequencies: 'B4,E#5,A5', duration: 75 }], world.sound_volume)
-        end
+        Music::cue([{ frequencies: 'B4,E#5,A5', duration: 75 }])
+
         take_damage(player, dmg)
       else
-        if world.sound_enabled
-          Music::cue([{ frequencies: 'B4', duration: 75 }], world.sound_volume)
-        end
+        Music::cue([{ frequencies: 'B4', duration: 75 }])
+
         puts "#{monster.name} misses entirely!".colorize(:yellow)
       end
     end
@@ -279,25 +270,24 @@ module Gemwarrior
       if monster.is_boss
         # end game boss!
         if monster.name.eql?('Emerald')
-          if world.sound_enabled
-            Music::cue([
-              { frequencies: 'G3',  duration: 250 },
-              { frequencies: 'A3',  duration: 50 },
-              { frequencies: 'B3',  duration: 50 },
-              { frequencies: 'C4',  duration: 50 },
-              { frequencies: 'D4',  duration: 250 },
-              { frequencies: 'E4',  duration: 50 },
-              { frequencies: 'F#4', duration: 50 },
-              { frequencies: 'G4',  duration: 50 },
-              { frequencies: 'A4',  duration: 250 },
-              { frequencies: 'B4',  duration: 50 },
-              { frequencies: 'C5',  duration: 50 },
-              { frequencies: 'D5',  duration: 50 },
-              { frequencies: 'E5',  duration: 50 },
-              { frequencies: 'F#5', duration: 50 },
-              { frequencies: 'G5',  duration: 1000 }
-            ], world.sound_volume)
-          end
+          Music::cue([
+            { frequencies: 'G3',  duration: 250 },
+            { frequencies: 'A3',  duration: 50 },
+            { frequencies: 'B3',  duration: 50 },
+            { frequencies: 'C4',  duration: 50 },
+            { frequencies: 'D4',  duration: 250 },
+            { frequencies: 'E4',  duration: 50 },
+            { frequencies: 'F#4', duration: 50 },
+            { frequencies: 'G4',  duration: 50 },
+            { frequencies: 'A4',  duration: 250 },
+            { frequencies: 'B4',  duration: 50 },
+            { frequencies: 'C5',  duration: 50 },
+            { frequencies: 'D5',  duration: 50 },
+            { frequencies: 'E5',  duration: 50 },
+            { frequencies: 'F#5', duration: 50 },
+            { frequencies: 'G5',  duration: 1000 }
+          ])
+
           puts monster.defeated_text
           gets
           return 'exit'
@@ -324,23 +314,14 @@ module Gemwarrior
 
     # PLAYER
     def player_near_death?
-      ((player.hp_cur.to_f / player.hp_max.to_f) < 0.10 && !player.god_mode)
+      ((player.hp_cur.to_f / player.hp_max.to_f) < 0.10 && !GameOptions.data['god_mode'])
     end
 
     def player_dead?
-      (player.hp_cur <= 0 && !player.god_mode)
+      (player.hp_cur <= 0 && !GameOptions.data['god_mode'])
     end
 
     def player_death
-      if world.sound_enabled
-        Music::cue([
-          { frequencies: 'D#5', duration: 100 },
-          { frequencies: 'A4',  duration: 150 },
-          { frequencies: 'F#4', duration: 200 },
-          { frequencies: 'F4',  duration: 1000 }
-        ], world.sound_volume)
-      end
-
       puts "You are dead, slain by the #{monster.name}!".colorize(:red)
       print_battle_line
     end

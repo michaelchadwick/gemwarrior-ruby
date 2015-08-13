@@ -2,6 +2,7 @@
 # Place in the game
 
 require_relative 'entity'
+require_relative '../game_options'
 
 module Gemwarrior
   class Location < Entity
@@ -28,11 +29,11 @@ module Gemwarrior
       self.checked_for_monsters = false
     end
 
-    def status(debug_mode = false)
+    def status
       status_text =  name.ljust(30).upcase.colorize(:green)
       status_text << coords.values.to_a.to_s.colorize(:white)
-      status_text << " DL[#{danger_level.to_s.ljust(8)}] ".colorize(:white) if debug_mode
-      status_text << " MLR[#{monster_level_range.to_s.ljust(6)}] ".colorize(:white) if debug_mode
+      status_text << " DL[#{danger_level.to_s.ljust(8)}] ".colorize(:white) if GameOptions.data['debug_mode']
+      status_text << " MLR[#{monster_level_range.to_s.ljust(6)}] ".colorize(:white) if GameOptions.data['debug_mode']
       status_text << "\n#{description}\n".colorize(:white)
     end
 

@@ -10,6 +10,7 @@ require 'github_api'
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
 require_relative 'evaluator'
+require_relative 'game_options'
 require_relative 'version'
 
 module Gemwarrior
@@ -31,15 +32,15 @@ module Gemwarrior
       self.evaluator    = evaluator
     end
 
-    def start(initial_command = nil, extra_command = nil)
-      setup_screen(initial_command, extra_command)
+    def start(initial_command, extra_command, new_game)
+      setup_screen(initial_command, extra_command, new_game)
 
       clocker = Clocker.new
 
       at_exit do
         pl = world.player
         duration = clocker.stop
-        game.update_options_file(world)
+        game.update_options_file
         log_stats(duration, pl)
       end
 
@@ -71,7 +72,7 @@ module Gemwarrior
     end
 
     def read_line
-      prompt_text = world.debug_mode ? ' GW[D]> ' : ' GW> '
+      prompt_text = GameOptions.data['debug_mode'] ? ' GW[D]> ' : ' GW> '
       Readline.readline(prompt_text, true).to_s
     end
 
@@ -83,7 +84,7 @@ module Gemwarrior
       puts '/-+-+-+ +-+-+-+-+-+-+-\\'.colorize(:yellow)
       puts '|G|E|M| |W|A|R|R|I|O|R|'.colorize(:yellow)
       puts '\\-+-+-+ +-+-+-+-+-+-+-/'.colorize(:yellow)
-      puts '[[[[[[[DEBUGGING]]]]]]]'.colorize(:white) if world.debug_mode
+      puts '[[[[[[[DEBUGGING]]]]]]]'.colorize(:white) if GameOptions.data['debug_mode']
     end
 
     def print_splash_message
@@ -95,9 +96,9 @@ module Gemwarrior
     end
 
     def print_fortune
-      noun1_values = WordList.new(world.use_wordnik, 'noun-plural')
-      noun2_values = WordList.new(world.use_wordnik, 'noun-plural')
-      noun3_values = WordList.new(world.use_wordnik, 'noun-plural')
+      noun1_values = WordList.new('noun-plural')
+      noun2_values = WordList.new('noun-plural')
+      noun3_values = WordList.new('noun-plural')
 
       puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
       puts
@@ -125,9 +126,9 @@ module Gemwarrior
       puts '======================='.colorize(:yellow)
       puts 'Toggle whether sound is played, what the game\'s volume is, or whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set)'
       puts
-      puts " (1) SOUND ENABLED : #{world.sound_enabled}"
-      puts " (2) SOUND VOLUME  : #{world.sound_volume}"
-      puts " (3) USE WORDNIK   : #{world.use_wordnik}"
+      puts " (1) SOUND ENABLED : #{GameOptions.data['sound_enabled']}"
+      puts " (2) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
+      puts " (3) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
       puts
       puts '======================='
       puts
@@ -138,7 +139,7 @@ module Gemwarrior
       case answer
       when '1'
         print answer
-        world.sound_enabled = !world.sound_enabled
+        GameOptions.data['sound_enabled'] = !GameOptions.data['sound_enabled']
         print_options
       when '2'
         print answer
@@ -146,14 +147,14 @@ module Gemwarrior
         print 'Enter a volume from 0.0 to 1.0: '
         new_vol = gets.chomp.to_f.abs
         if new_vol >= 0.0 and new_vol <= 1.0
-          world.sound_volume = new_vol
+          GameOptions.data['sound_volume'] = new_vol
         else
           puts 'Not a valid volume.'
         end
         print_options
       when '3'
         print answer
-        world.use_wordnik = !world.use_wordnik
+        GameOptions.data['use_wordnik']= !GameOptions.data['use_wordnik']
         print_options
       else
         print answer
@@ -162,8 +163,8 @@ module Gemwarrior
     end
 
     def display_log
-      if File.exist?(game.get_log_file_path)
-        File.open(game.get_log_file_path).readlines.each do |line|
+      if File.exist?(GameOptions.data['log_file_path'])
+        File.open(GameOptions.data['log_file_path']).readlines.each do |line|
           print "#{line}"
         end
         puts
@@ -244,7 +245,7 @@ module Gemwarrior
       when 'e', 'x'
         puts choice
         puts MAIN_MENU_QUIT_MESSAGE
-        game.update_options_file(world)
+        game.update_options_file
         exit
       else
         run_main_menu(show_choices = false)
@@ -270,27 +271,25 @@ module Gemwarrior
       puts '######################################################################'
 
       # log stats to file in home directory
-      File.open(game.get_log_file_path, 'a') do |f|
+      File.open(GameOptions.data['log_file_path'], 'a') do |f|
         f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
 
     def play_intro_tune
-      if world.sound_enabled
-        Music::cue([
-          { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
-          { frequencies: 'A3,E4,C#5,F#5', duration: 600 }
-        ], world.sound_volume)
-      end
+      Music::cue([
+        { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
+        { frequencies: 'A3,E4,C#5,F#5', duration: 600 }
+      ])
     end
 
-    def setup_screen(initial_command = nil, extra_command = nil)
+    def setup_screen(initial_command = nil, extra_command = nil, new_game = false)
       # welcome player to game
       clear_screen
       print_logo
 
       # main menu loop until new game or exit
-      if world.new_game
+      if new_game
         play_intro_tune
         print_splash_message
         print_fortune
@@ -305,7 +304,7 @@ module Gemwarrior
 
     def prompt
       prompt_template = "\n[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [%s @ %s]"
-      if world.debug_mode
+      if GameOptions.data['debug_mode']
         prompt_template += "[%s, %s, %s]"
       end
       prompt_vars_arr = [
@@ -319,7 +318,7 @@ module Gemwarrior
         world.player.name,
         world.location_by_coords(world.player.cur_coords).name
       ]
-      if world.debug_mode
+      if GameOptions.data['debug_mode']
         prompt_vars_arr.push(world.player.cur_coords[:x], world.player.cur_coords[:y], world.player.cur_coords[:z])
       end
       print (prompt_template % prompt_vars_arr).colorize(:yellow)

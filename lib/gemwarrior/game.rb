@@ -13,6 +13,7 @@ require_relative 'world'
 require_relative 'evaluator'
 require_relative 'repl'
 require_relative 'inventory'
+require_relative 'game_options'
 
 module Gemwarrior
   class Game
@@ -29,17 +30,18 @@ module Gemwarrior
     attr_accessor :world, :evaluator, :repl
 
     def initialize(options)
+      # set game options
+      GameOptions.add 'beast_mode', options.fetch(:beast_mode)
+      GameOptions.add 'debug_mode', options.fetch(:debug_mode)
+      GameOptions.add 'god_mode', options.fetch(:god_mode)
+      GameOptions.add 'sound_enabled', options.fetch(:sound_enabled)
+      GameOptions.add 'sound_volume', options.fetch(:sound_volume)
+      GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
+      
       # create new world and player
-      self.world            = World.new
+      start_stats  = PlayerLevels::get_level_stats(1)
 
-      start_stats = PlayerLevels::get_level_stats(1)
-
-      world.debug_mode      = options.fetch(:debug_mode)
-      world.sound_enabled   = options.fetch(:sound_enabled)
-      world.sound_volume    = options.fetch(:sound_volume)
-      world.use_wordnik     = options.fetch(:use_wordnik)
-      world.new_game        = options.fetch(:new_game)
-      world.extra_command   = options.fetch(:extra_command)
+      self.world   = World.new
 
       world.player = Player.new({
         description:  PLAYER_DESC_DEFAULT,
@@ -53,39 +55,27 @@ module Gemwarrior
         atk_hi:       start_stats[:atk_hi],
         defense:      start_stats[:defense],
         dexterity:    start_stats[:dexterity],
-        inventory:    world.debug_mode ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
-        rox:          world.debug_mode ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
-        cur_coords:   world.location_coords_by_name('Home'),
-
-        god_mode:     options.fetch(:god_mode),
-        beast_mode:   options.fetch(:beast_mode),
-        use_wordnik:  options.fetch(:use_wordnik)
+        inventory:    GameOptions.data['debug_mode'] ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
+        rox:          GameOptions.data['debug_mode'] ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
+        cur_coords:   world.location_coords_by_name('Home')
       })
 
       # create options file if not existing
-      update_options_file(world)
+      update_options_file
       
       # create the console
       self.evaluator  = Evaluator.new(world)
       self.repl       = Repl.new(self, world, evaluator)
 
       # enter Jool!
-      repl.start('look', world.extra_command)
+      repl.start('look', options.fetch(:extra_command),  options.fetch(:new_game))
     end
 
-    def get_log_file_path
-      "#{Dir.home}/.gemwarrior_log"
-    end
-
-    def get_options_file_path
-      "#{Dir.home}/.gemwarrior_options"
-    end
-
-    def update_options_file(world)
-      File.open(get_options_file_path, 'w') do |f|
-        f.puts "sound_enabled:#{world.sound_enabled}"
-        f.puts "sound_volume:#{world.sound_volume}"
-        f.puts "use_wordnik:#{world.use_wordnik}"
+    def update_options_file
+      File.open(GameOptions.data['options_file_path'], 'w') do |f|
+        f.puts "sound_enabled:#{GameOptions.data['sound_enabled']}"
+        f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
+        f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
       end
     end
   end

@@ -3,6 +3,7 @@
 
 require_relative 'creature'
 require_relative '../battle'
+require_relative '../game_options'
 require_relative '../misc/formatting'
 require_relative '../misc/name_generator'
 require_relative '../misc/player_levels'
@@ -18,18 +19,16 @@ module Gemwarrior
     include PlayerLevels
     include Formatting
 
-    attr_accessor :stam_cur, :stam_max, :cur_coords, 
-                  :god_mode, :beast_mode, :use_wordnik, :special_abilities,
+    attr_accessor :stam_cur, :stam_max, :cur_coords, :special_abilities,
                   :monsters_killed, :items_taken, :movements_made, :rests_taken, :deaths
 
     def initialize(options)
       self.name               = generate_name
       self.description        = options.fetch(:description)
-      self.use_wordnik        = options.fetch(:use_wordnik)
 
-      self.face               = generate_face(use_wordnik)
-      self.hands              = generate_hands(use_wordnik)
-      self.mood               = generate_mood(use_wordnik)
+      self.face               = generate_face
+      self.hands              = generate_hands
+      self.mood               = generate_mood
 
       self.level              = options.fetch(:level)
       self.xp                 = options.fetch(:xp)
@@ -47,10 +46,6 @@ module Gemwarrior
       self.stam_cur           = options.fetch(:stam_cur)
       self.stam_max           = options.fetch(:stam_max)
       self.cur_coords         = options.fetch(:cur_coords)
-
-      self.god_mode           = options.fetch(:god_mode)
-      self.beast_mode         = options.fetch(:beast_mode)
-      
       self.special_abilities  = []
 
       self.monsters_killed    = 0
@@ -60,7 +55,7 @@ module Gemwarrior
       self.deaths             = 0
     end
 
-    def check_self(debug_mode = false, show_pic = true)
+    def check_self(show_pic = true)
       unless show_pic == false
         print_char_pic
       end
@@ -83,7 +78,7 @@ module Gemwarrior
         abilities = Formatting::upstyle(special_abilities.collect { |x| x.to_s }).join(', ')
       end
       self_text =  "NAME      : #{self.name}\n"
-      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n" if debug_mode
+      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n" if GameOptions.data['debug_mode']
       self_text << "WEAPON    : #{weapon_slot}\n"
       self_text << "LEVEL     : #{self.level}\n"
       self_text << "EXPERIENCE: #{self.xp}\n"
@@ -92,9 +87,10 @@ module Gemwarrior
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "DEFENSE   : #{self.defense}\n"
       self_text << "ABILITIES : #{abilities}\n"
-      if debug_mode
-        self_text << "GOD_MODE  : #{self.god_mode}\n"
-        self_text << "BEAST_MODE: #{self.beast_mode}\n"
+      
+      if GameOptions.data['debug_mode']
+        self_text << "GOD_MODE  : #{GameOptions.data['god_mode']}\n"
+        self_text << "BEAST_MODE: #{GameOptions.data['beast_mode']}\n"
       end
 
       self_text << "\n"
@@ -162,7 +158,7 @@ module Gemwarrior
           self.hp_cur = self.hp_cur.to_i + rand(10..15)
           self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
 
-          status_text = "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new(world.use_wordnik, 'noun-plural').get_random_value}."
+          status_text = "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new('noun-plural').get_random_value}."
           status_text << "\n>> You regain a few hit points."
 
           return status_text
@@ -193,7 +189,7 @@ module Gemwarrior
       inventory.list_contents
     end 
 
-    def go(locations, direction, sound)
+    def go(locations, direction)
       case direction
       when 'north', 'n'
         self.cur_coords = {
@@ -224,7 +220,7 @@ module Gemwarrior
         }
         direction_text = '<<<'
       end
-      print_traveling_text(direction_text, sound)
+      print_traveling_text(direction_text)
 
       # stats
       self.movements_made += 1
@@ -330,14 +326,12 @@ module Gemwarrior
     end
 
     # TRAVEL
-    def print_traveling_text(direction_text, sound_enabled, sound_volume)
-      if sound_enabled
-        Music::cue([
-          { frequencies: 'C4', duration: 75 },
-          { frequencies: 'D4', duration: 75 },
-          { frequencies: 'E4', duration: 75 }
-        ], sound_volume)
-      end
+    def print_traveling_text(direction_text)
+      Music::cue([
+        { frequencies: 'C4', duration: 75 },
+        { frequencies: 'D4', duration: 75 },
+        { frequencies: 'E4', duration: 75 }
+      ])
       Animation::run(phrase: "* #{direction_text} *", oneline: false)
     end
 
@@ -363,18 +357,18 @@ module Gemwarrior
       NameGenerator.new('fantasy').generate_name
     end
 
-    def generate_face(use_wordnik)
-      face_descriptors = WordList.new(use_wordnik, 'adjective')
+    def generate_face
+      face_descriptors = WordList.new('adjective')
       face_descriptors.get_random_value
     end
 
-    def generate_hands(use_wordnik)
-      hand_descriptors = WordList.new(use_wordnik, 'adjective')
+    def generate_hands
+      hand_descriptors = WordList.new('adjective')
       hand_descriptors.get_random_value
     end
 
-    def generate_mood(use_wordnik)
-      mood_descriptors = WordList.new(use_wordnik, 'adjective')
+    def generate_mood
+      mood_descriptors = WordList.new('adjective')
       mood_descriptors.get_random_value
     end
   end

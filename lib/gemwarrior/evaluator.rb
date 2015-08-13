@@ -2,6 +2,7 @@
 # Evaluates prompt input
 
 require_relative 'arena'
+require_relative 'game_options'
 
 module Gemwarrior
   class Evaluator
@@ -110,12 +111,12 @@ module Gemwarrior
       param3 = tokens[3]
 
       # dev commands
-      if world.debug_mode
+      if GameOptions.data['debug_mode']
         case command
         when 'god', 'gd'
-          return world.player.god_mode = !world.player.god_mode
+          return GameOptions.data['god_mode'] = !GameOptions.data['god_mode']
         when 'beast', 'bs'
-          return world.player.beast_mode = !world.player.beast_mode
+          return GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
         when 'vars', 'v'
           world.print_vars
         when 'list', 'ls'
@@ -267,7 +268,7 @@ module Gemwarrior
       case command
       when 'character', 'c'
         # bypass puts so it prints out with newlines properly
-        print world.player.check_self(world.debug_mode)
+        print world.player.check_self(GameOptions.data['debug_mode'])
       when 'inventory', 'i'
         if param1
           world.player.inventory.describe_item(param1)
@@ -541,7 +542,7 @@ module Gemwarrior
 
     def try_to_move_player(direction)
       if world.can_move?(direction)
-        world.player.go(world.locations, direction, world.sound_enabled, world.sound_volume)
+        world.player.go(world.locations, direction, GameOptions.data['sound_enabled'], GameOptions.data['sound_volume'])
         world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
         world.describe(world.location_by_coords(world.player.cur_coords))
       else
@@ -550,15 +551,13 @@ module Gemwarrior
     end
 
     def player_death_resurrection
-      if world.sound_enabled
-        Music::cue([
-          { frequencies: 'D#5', duration: 100 },
-          { frequencies: 'A4',  duration: 150 },
-          { frequencies: 'F#4', duration: 200 },
-          { frequencies: 'F4',  duration: 1000 }
-        ], world.sound_volume)
-      end
-      
+      Music::cue([
+        { frequencies: 'D#5', duration: 100 },
+        { frequencies: 'A4',  duration: 150 },
+        { frequencies: 'F#4', duration: 200 },
+        { frequencies: 'F4',  duration: 1000 }
+      ])
+
       puts 'Somehow, though, your adventure does not end here!'.colorize(:yellow)
       puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)
       puts 'A bit worse for the weary and somewhat poorer, but you are ALIVE!'.colorize(:yellow)
@@ -586,7 +585,7 @@ module Gemwarrior
       end
       print_separator
 
-      if world.debug_mode
+      if GameOptions.data['debug_mode']
         puts ' DEBUG COMMANDS'
         print_separator
         i = 0
@@ -603,7 +602,7 @@ module Gemwarrior
       command = tokens[0]
       commands_and_aliases = commands | aliases | extras
 
-      if world.debug_mode
+      if GameOptions.data['debug_mode']
         commands_and_aliases = commands_and_aliases | devcommands | devaliases | devextras
       end
 

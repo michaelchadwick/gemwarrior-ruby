@@ -3,6 +3,7 @@
 
 require 'yaml'
 
+require_relative 'game_options'
 require_relative 'entities/item'
 require_relative 'entities/location'
 
@@ -17,9 +18,7 @@ module Gemwarrior
     ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
 
-    attr_accessor :monsters, :locations, :player,
-                  :debug_mode, :sound_enabled, :sound_volume,
-                  :use_wordnik, :new_game, :extra_command
+    attr_accessor :monsters, :locations, :player
 
     def initialize
       self.monsters   = init_monsters
@@ -70,7 +69,7 @@ module Gemwarrior
       0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
         print "#{count_x}  "
       end
-      if debug_mode
+      if GameOptions.data['debug_mode']
         puts
         puts
         puts "Current level: #{player.cur_coords[:z]}"
@@ -117,7 +116,7 @@ module Gemwarrior
       when 'locations'
         puts "[LOCATIONS](#{locations.length})".colorize(:yellow)
         if details
-          locations.map { |l| print l.status(self.debug_mode) }
+          locations.map { |l| print l.status }
           return
         else
           ">> #{locations.map(&:name).join(', ')}"
@@ -149,7 +148,7 @@ module Gemwarrior
       desc_text = ''
       desc_text << "[>>> #{point.name.upcase} <<<]".colorize(:cyan)
 
-      if debug_mode
+      if GameOptions.data['debug_mode']
         desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
       end
 
@@ -163,7 +162,7 @@ module Gemwarrior
       desc_text << "\n >> Thing(s):   #{point.list_items.join(', ')}".colorize(:white) unless point.list_items.empty?
       desc_text << "\n >> Path(s):    #{point.list_paths.join(', ')}".colorize(:white)
 
-      if debug_mode
+      if GameOptions.data['debug_mode']
         desc_text << "\n >>> Actionable words: "
         desc_text << point.list_actionable_words.colorize(:white)
       end
@@ -177,7 +176,7 @@ module Gemwarrior
       if point.has_item?(entity_name)
         point.items.each do |i|
           if i.name.downcase.eql?(entity_name)
-            if debug_mode
+            if GameOptions.data['debug_mode']
               return i.describe
             else
               return i.description
@@ -187,7 +186,7 @@ module Gemwarrior
       elsif point.has_monster?(entity_name)
         point.monsters_abounding.each do |m|
           if m.name.downcase.eql?(entity_name)
-            if debug_mode
+            if GameOptions.data['debug_mode']
               return m.describe
             else
               return m.description
@@ -197,7 +196,7 @@ module Gemwarrior
       elsif point.has_boss?(entity_name)
         point.bosses_abounding.each do |b|
           if b.name.downcase.eql?(entity_name)
-            if debug_mode
+            if GameOptions.data['debug_mode']
               return b.describe
             else
               return b.description

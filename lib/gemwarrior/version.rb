@@ -1,4 +1,4 @@
-# lib/gemwarrior/misc/version.rb
+# lib/gemwarrior/version.rb
 # Version of Gem Warrior
 
 module Gemwarrior

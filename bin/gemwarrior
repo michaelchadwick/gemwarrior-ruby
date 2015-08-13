@@ -3,20 +3,23 @@
 require 'optparse'
 
 require_relative '../lib/gemwarrior/game'
+require_relative '../lib/gemwarrior/game_options'
 require_relative '../lib/gemwarrior/version'
+
+include Gemwarrior
 
 GAME_NAME = 'Gem Warrior'
 
 def parse_options_cli
   options = {
-    :beast_mode     => false, 
-    :debug_mode     => false, 
-    :god_mode       => false, 
-    :new_game       => false,
-    :sound_enabled  => false,
-    :sound_volume   => 0.3,
-    :use_wordnik    => false, 
-    :extra_command  => nil
+    beast_mode:     false, 
+    debug_mode:     false, 
+    god_mode:       false, 
+    new_game:       false,
+    sound_enabled:  false,
+    sound_volume:   0.3,
+    use_wordnik:    false, 
+    extra_command:  nil
   }
 
   options_file = read_options_file
@@ -74,21 +77,17 @@ end
 def print_error(error)
   case error
   when OptionParser::InvalidOption
-    puts "#{$GAME_NAME}: illegal option #{error.args.join(' ')}"
+    puts "#{GAME_NAME}: illegal option #{error.args.join(' ')}"
   else
     puts "An unexpected error occurred while running #{GAME_NAME}:"
     puts "  #{error}\n"
   end
 end
 
-def get_options_file_path
-  "#{Dir.home}/.gemwarrior_options"
-end
-
 def read_options_file
-  if File.exist?(get_options_file_path)
+  if File.exist?(GameOptions.data['options_file_path'])
     options = []
-    File.open(get_options_file_path).readlines.each do |line|
+    File.open(GameOptions.data['options_file_path']).readlines.each do |line|
       options << line.chomp.split(':')
     end
     return options
@@ -97,6 +96,9 @@ def read_options_file
 end
 
 begin
+  GameOptions.add 'log_file_path', "#{Dir.home}/.gemwarrior_log"
+  GameOptions.add 'options_file_path', "#{Dir.home}/.gemwarrior_options"
+  
   options = parse_options_cli
 
   Gemwarrior::Game.new(options)
