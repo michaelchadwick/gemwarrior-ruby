@@ -541,7 +541,7 @@ module Gemwarrior
 
     def try_to_move_player(direction)
       if world.can_move?(direction)
-        world.player.go(world.locations, direction, world.sound)
+        world.player.go(world.locations, direction, world.sound_enabled, world.sound_volume)
         world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
         world.describe(world.location_by_coords(world.player.cur_coords))
       else
@@ -550,6 +550,15 @@ module Gemwarrior
     end
 
     def player_death_resurrection
+      if world.sound_enabled
+        Music::cue([
+          { frequencies: 'D#5', duration: 100 },
+          { frequencies: 'A4',  duration: 150 },
+          { frequencies: 'F#4', duration: 200 },
+          { frequencies: 'F4',  duration: 1000 }
+        ], world.sound_volume)
+      end
+      
       puts 'Somehow, though, your adventure does not end here!'.colorize(:yellow)
       puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)
       puts 'A bit worse for the weary and somewhat poorer, but you are ALIVE!'.colorize(:yellow)

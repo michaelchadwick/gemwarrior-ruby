@@ -324,28 +324,19 @@ module Gemwarrior
     private
 
     def player_death
-      if world.sound
-        Music::cue([
-          { frequencies: 'D#5', duration: 100 },
-          { frequencies: 'A4',  duration: 150 },
-          { frequencies: 'F#4', duration: 200 },
-          { frequencies: 'F4',  duration: 1000 }
-        ])
-      end
-      
       puts 'Your actions have reduced you to death.'.colorize(:red)
       puts 'Somehow, however, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
       return 'death'
     end
 
     # TRAVEL
-    def print_traveling_text(direction_text, sound)
-      if sound
+    def print_traveling_text(direction_text, sound_enabled, sound_volume)
+      if sound_enabled
         Music::cue([
           { frequencies: 'C4', duration: 75 },
           { frequencies: 'D4', duration: 75 },
           { frequencies: 'E4', duration: 75 }
-        ])
+        ], sound_volume)
       end
       Animation::run(phrase: "* #{direction_text} *", oneline: false)
     end

@@ -18,7 +18,8 @@ module Gemwarrior
     ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
 
     attr_accessor :monsters, :locations, :player,
-                  :debug_mode, :use_wordnik, :sound, :new_game, :extra_command
+                  :debug_mode, :sound_enabled, :sound_volume,
+                  :use_wordnik, :new_game, :extra_command
 
     def initialize
       self.monsters   = init_monsters

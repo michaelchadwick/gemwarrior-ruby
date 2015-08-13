@@ -123,23 +123,35 @@ module Gemwarrior
       puts
       puts 'Gem Warrior Options'.colorize(:yellow)
       puts '======================='.colorize(:yellow)
-      puts 'Toggle whether sound is played, or Wordnik (system must have a working WORDNIK_API_KEY environment variable) is used to generate more dynamic descriptors of entities'
+      puts 'Toggle whether sound is played, what the game\'s volume is, or whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set)'
       puts
-      puts " (1) SOUND ENABLED: #{world.sound}"
-      puts " (2) USE WORDNIK  : #{world.use_wordnik}"
+      puts " (1) SOUND ENABLED : #{world.sound_enabled}"
+      puts " (2) SOUND VOLUME  : #{world.sound_volume}"
+      puts " (3) USE WORDNIK   : #{world.use_wordnik}"
       puts
       puts '======================='
       puts
-      puts 'Enter option number to toggle value, or any other key to return to main menu.'
+      puts 'Enter option number to change value, or any other key to return to main menu.'
       print 'Option? '
       answer = STDIN.getch
 
       case answer
       when '1'
         print answer
-        world.sound = !world.sound
+        world.sound_enabled = !world.sound_enabled
         print_options
       when '2'
+        print answer
+        print "\n"
+        print 'Enter a volume from 0.0 to 1.0: '
+        new_vol = gets.chomp.to_f.abs
+        if new_vol >= 0.0 and new_vol <= 1.0
+          world.sound_volume = new_vol
+        else
+          puts 'Not a valid volume.'
+        end
+        print_options
+      when '3'
         print answer
         world.use_wordnik = !world.use_wordnik
         print_options
@@ -264,11 +276,11 @@ module Gemwarrior
     end
 
     def play_intro_tune
-      if world.sound
+      if world.sound_enabled
         Music::cue([
           { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
           { frequencies: 'A3,E4,C#5,F#5', duration: 600 }
-        ])
+        ], world.sound_volume)
       end
     end
 

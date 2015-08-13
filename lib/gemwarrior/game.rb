@@ -35,8 +35,9 @@ module Gemwarrior
       start_stats = PlayerLevels::get_level_stats(1)
 
       world.debug_mode      = options.fetch(:debug_mode)
+      world.sound_enabled   = options.fetch(:sound_enabled)
+      world.sound_volume    = options.fetch(:sound_volume)
       world.use_wordnik     = options.fetch(:use_wordnik)
-      world.sound           = options.fetch(:sound)
       world.new_game        = options.fetch(:new_game)
       world.extra_command   = options.fetch(:extra_command)
 
@@ -82,7 +83,8 @@ module Gemwarrior
 
     def update_options_file(world)
       File.open(get_options_file_path, 'w') do |f|
-        f.puts "sound:#{world.sound}"
+        f.puts "sound_enabled:#{world.sound_enabled}"
+        f.puts "sound_volume:#{world.sound_volume}"
         f.puts "use_wordnik:#{world.use_wordnik}"
       end
     end

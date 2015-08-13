@@ -13,19 +13,22 @@ def parse_options_cli
     :debug_mode     => false, 
     :god_mode       => false, 
     :new_game       => false,
-    :sound          => false,
+    :sound_enabled  => false,
+    :sound_volume   => 0.3,
     :use_wordnik    => false, 
     :extra_command  => nil
   }
-  
+
   options_file = read_options_file
   
   unless options_file.nil?
-    sound_option = options_file[0][1].eql?('false') ? false : true
-    wordnik_option = options_file[1][1].eql?('false') ? false : true
+    sound_enabled_option    = options_file[0][1].eql?('false') ? false : true
+    sound_volume_option     = options_file[1][1].to_f
+    use_wordnik_option      = options_file[2][1].eql?('false') ? false : true
     
-    options[:sound] = sound_option
-    options[:use_wordnik] = wordnik_option
+    options[:sound_enabled] = sound_enabled_option
+    options[:sound_volume]  = sound_volume_option
+    options[:use_wordnik]   = use_wordnik_option
   end
 
   optparse = OptionParser.new do |opts|
@@ -46,7 +49,7 @@ def parse_options_cli
     end
     
     opts.on('-s', '--sound', 'Enable sound (experimental)') do
-      options[:sound] = true
+      options[:sound_enabled] = true
     end
 
     opts.on('-v', '--version', 'Display version number and exit') do
@@ -73,7 +76,7 @@ def print_error(error)
   when OptionParser::InvalidOption
     puts "#{$GAME_NAME}: illegal option #{error.args.join(' ')}"
   else
-    puts "An unexpected error occurred while running #{$GAME_NAME}:"
+    puts "An unexpected error occurred while running #{GAME_NAME}:"
     puts "  #{error}\n"
   end
 end
@@ -83,8 +86,8 @@ def get_options_file_path
 end
 
 def read_options_file
-  options = []
   if File.exist?(get_options_file_path)
+    options = []
     File.open(get_options_file_path).readlines.each do |line|
       options << line.chomp.split(':')
     end
