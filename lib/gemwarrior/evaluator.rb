@@ -51,7 +51,7 @@ module Gemwarrior
       self.world = world
 
       self.devcommands = %w(god beast list vars map stat teleport spawn levelbump restfight)
-      self.devaliases = %w(gd bs ls v m st tp sp lb rf)
+      self.devaliases = %w(gd bs ls vs m st tp sp lb rf)
       self.devextras = %w()
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
@@ -66,9 +66,9 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change help quit quit!)
-      self.aliases = %w(c i r l t u d eq ue g n e s w a ch h q qq)
-      self.extras = %w(exit exit! x xx fight f)
+      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change version help quit quit!)
+      self.aliases = %w(c i r l t u d eq ue g n e s w a ch v h q qq)
+      self.extras = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
         'Look in your inventory',
@@ -86,6 +86,7 @@ module Gemwarrior
         'Go west (shortcut)',
         'Attack a monster',
         'Change something',
+        'Display game version',
         'This help menu',
         'Quit w/ confirmation (also exit/x)',
         'Quit w/o confirmation (also exit!/xx)'
@@ -117,7 +118,7 @@ module Gemwarrior
           return GameOptions.data['god_mode'] = !GameOptions.data['god_mode']
         when 'beast', 'bs'
           return GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
-        when 'vars', 'v'
+        when 'vars', 'vs'
           world.print_vars
         when 'list', 'ls'
           if param1.nil?
@@ -519,8 +520,10 @@ module Gemwarrior
             ERROR_CHANGE_PARAM_INVALID
           end
         end
-      when 'help', 'h'
+      when 'help', 'h', '?', '??', '???'
         list_commands
+      when 'version', 'v'
+        Gemwarrior::VERSION
       when 'quit', 'exit', 'q', 'x'
         puts 'You sure you want to quit? (y/n): '
         response = gets.chomp.downcase
