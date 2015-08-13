@@ -97,6 +97,7 @@ end
 
 begin
   GameOptions.add 'log_file_path', "#{Dir.home}/.gemwarrior_log"
+  GameOptions.add 'save_file_path', "#{Dir.home}/.gemwarrior_save"
   GameOptions.add 'options_file_path', "#{Dir.home}/.gemwarrior_options"
   
   options = parse_options_cli

@@ -161,15 +161,25 @@ module Gemwarrior
       end
     end
 
-    def display_log
-      if File.exist?(GameOptions.data['log_file_path'])
+    def display_record_of_attempts
+      if File.exist?(GameOptions.data['log_file_path']) and !File.zero?(GameOptions.data['log_file_path'])
         File.open(GameOptions.data['log_file_path']).readlines.each do |line|
           print "#{line}"
         end
-        puts
+        if GameOptions.data['debug_mode']
+          print 'Clear record of attempts (y/n)? '
+          answer = gets.chomp.downcase
+
+          case answer
+          when 'y'
+            File.truncate(GameOptions.data['log_file_path'], 0)
+            puts 'Record of attempts: erased!'
+          end
+
+          puts
+        end
       else
         puts 'No attempts made yet!'
-        puts
       end
     end
 
@@ -197,7 +207,7 @@ module Gemwarrior
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (O)ptions'
-      puts ' (L)og'
+      puts ' (R)ecord of Attempts'
       puts ' (C)heck for Updates'
       puts ' (E)xit'
       puts '======================='
@@ -233,9 +243,9 @@ module Gemwarrior
         puts choice
         print_options
         run_main_menu
-      when 'l'
+      when 'r'
         puts choice
-        display_log
+        display_record_of_attempts
         run_main_menu
       when 'c'
         puts choice
@@ -322,6 +332,12 @@ module Gemwarrior
       end
       print (prompt_template % prompt_vars_arr).colorize(:yellow)
       print "\n"
+    end
+
+    def command_exists?(cmd)
+      ENV['PATH'].split(File::PATH_SEPARATOR).collect { |d| 
+        Dir.entries d if Dir.exist? d 
+      }.flatten.include?(cmd)
     end
   end
 end
