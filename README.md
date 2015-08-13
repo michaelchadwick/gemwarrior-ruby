@@ -34,12 +34,12 @@ Run the commands above and you'll be whisked away to Jool, ready to start or con
 `> use       [object]`    - use an item from your inventory or current location  
 `> drop      [object]`    - drop an item from your inventory  
 `> equip     [object]`    - designate an item in your inventory your weapon  
-`> unequip   [object]`    - stop using an item in your inventory as your weapon
-`> go        [direction]` - go in a direction, if possible (north|east|south|west work as shortcuts)
+`> unequip   [object]`    - stop using an item in your inventory as your weapon  
+`> go        [direction]` - go in a direction, if possible (north|east|south|west work as shortcuts)  
 `> attack    [monster]`   - attack a monster  
 `> change    [attribute]` - change some things about yourself  
 `> help`                  - display available commands  
-`> version`               - display current game version
+`> version`               - display current game version  
 `> quit`                  - quit this nonsense w/ prompt  
 `> quit!`                 - quit this nonsense w/o prompt  
 
