@@ -4,7 +4,6 @@
 module Gemwarrior
   class Inventory
     # CONSTANTS
-    ## ERRORS
     ERROR_ITEM_REMOVE_INVALID     = 'Your inventory does not contain that item, so you cannot drop it.'
     ERROR_ITEM_ADD_UNTAKEABLE     = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
     ERROR_ITEM_ADD_INVALID        = 'That item does not exist here.'

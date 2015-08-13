@@ -4,10 +4,10 @@
 require_relative '../item'
 
 module Gemwarrior
-  # CONSTANTS
-  MOVE_TEXT = '*** SHOOOOOM ***'
-
   class FloorTile < Item
+    # CONSTANTS
+    MOVE_TEXT = '*** SHOOOOOM ***'
+
     def initialize
       self.name         = 'floor_tile'
       self.description  = 'One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable, even.'

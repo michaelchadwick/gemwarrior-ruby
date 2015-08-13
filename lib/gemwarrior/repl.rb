@@ -16,7 +16,6 @@ require_relative 'version'
 module Gemwarrior
   class Repl
     # CONSTANTS
-    ## MESSAGES
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'

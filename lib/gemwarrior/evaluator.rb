@@ -7,7 +7,6 @@ require_relative 'game_options'
 module Gemwarrior
   class Evaluator
     # CONSTANTS
-    ## MESSAGES
     PROGRAM_NAME                        = 'Gem Warrior'
     QUIT_MESSAGE                        = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
     RESUME_MESSAGE                      = 'Back to adventuring!'.colorize(:green)
@@ -17,9 +16,7 @@ module Gemwarrior
     DEBUG_LIST_PARAMS                   = 'Options: monsters, items, locations'
     DEBUG_STAT_PARAMS                   = 'Options: atk_lo, atk_hi, strength, dexterity'
 
-    ## ERRORS
     ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
-
     ERROR_LOOK_AT_PARAM_MISSING         = 'You cannot just "look at". You gotta choose something to look at.'
     ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'

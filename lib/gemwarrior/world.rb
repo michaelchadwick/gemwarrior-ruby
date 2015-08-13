@@ -10,13 +10,11 @@ require_relative 'entities/location'
 module Gemwarrior
   class World
     # CONSTANTS
-    LOCATION_DATA_FILE  = File.expand_path('../../../data/locations.yml', __FILE__)
-    WORLD_DIM_WIDTH     = 10
-    WORLD_DIM_HEIGHT    = 10
-
-    ## ERRORS
-    ERROR_LIST_PARAM_INVALID = 'That is not something that can be listed.'
-    ERROR_LOCATION_DESCRIBE_ENTITY_INVALID  = 'You do not see that here.'
+    LOCATION_DATA_FILE            = File.expand_path('../../../data/locations.yml', __FILE__)
+    ERROR_LIST_PARAM_INVALID      = 'That is not something that can be listed.'
+    ERROR_DESCRIBE_ENTITY_INVALID = 'You do not see that here.'
+    WORLD_DIM_WIDTH               = 10
+    WORLD_DIM_HEIGHT              = 10
 
     attr_accessor :monsters, :locations, :player
 
@@ -206,7 +204,7 @@ module Gemwarrior
       elsif player.inventory.contains_item?(entity_name)
         player.inventory.describe_item(entity_name)
       else
-        ERROR_LOCATION_DESCRIBE_ENTITY_INVALID
+        ERROR_DESCRIBE_ENTITY_INVALID
       end
     end
 

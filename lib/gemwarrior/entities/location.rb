@@ -7,11 +7,8 @@ require_relative '../game_options'
 module Gemwarrior
   class Location < Entity
     # CONSTANTS
-    ## HASHES
-    DANGER_LEVEL = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
-
-    ## ERRORS
-    ERROR_LOCATION_ITEM_REMOVE_INVALID      = 'That item cannot be removed as it does not exist here.'
+    DANGER_LEVEL              = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
+    ERROR_ITEM_REMOVE_INVALID = 'That item cannot be removed as it does not exist here.'
 
     attr_accessor :coords, :locs_connected, :danger_level, :monster_level_range, :items, 
                   :monsters_abounding, :bosses_abounding, :checked_for_monsters
@@ -61,7 +58,7 @@ module Gemwarrior
       if has_item?(item_name)
         items.reject! { |item| item.name == item_name }
       else
-        ERROR_LOCATION_ITEM_REMOVE_INVALID
+        ERROR_ITEM_REMOVE_INVALID
       end
     end
 

@@ -7,11 +7,8 @@ require_relative 'game_options'
 module Gemwarrior
   class Battle
     # CONSTANTS
-    ## ERRORS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     BEAST_MODE_ATTACK           = 100
-
-    ## MESSAGES
     ESCAPE_TEXT                 = '** POOF **'
 
     attr_accessor :world, :player, :monster, :player_is_defending
