@@ -32,9 +32,17 @@ Gem::Specification.new do |spec|
   # gems for future features
   # spec.add_runtime_dependency 'hr', '~> 0.0.2'
 
-  spec.add_development_dependency 'pry-byebug', '~> 3.0'
   spec.add_development_dependency 'bundler', '~> 1.8'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
+  
   spec.add_development_dependency 'rubocop', '~> 0.29'
+
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec-nc'
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'pry-remote'
+  spec.add_development_dependency 'pry-nav'
+  spec.add_development_dependency 'pry-byebug', '~> 3.0'
 end
