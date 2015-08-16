@@ -9,6 +9,8 @@ module Gemwarrior
     MOVE_TEXT = '*** SHOOOOOM ***'
 
     def initialize
+      super
+
       self.name         = 'floor_tile'
       self.description  = 'One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable, even.'
       self.atk_lo       = nil
@@ -16,7 +18,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

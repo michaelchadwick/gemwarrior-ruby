@@ -20,7 +20,7 @@ module Gemwarrior
     include PlayerLevels
 
     # CONSTANTS
-    PLAYER_DESC_DEFAULT       = 'Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes.'
+    PLAYER_DESC_DEFAULT       = "Picked to do battle against a wizened madman for a shiny something\nor other for world-saving purposes."
     PLAYER_INVENTORY_DEFAULT  = Inventory.new
     PLAYER_INVENTORY_DEBUG    = Inventory.new([Herb.new])
     PLAYER_ROX_DEFAULT        = 0

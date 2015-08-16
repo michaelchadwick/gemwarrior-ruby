@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Rope < Item
     def initialize
+      super
+
       self.name         = 'rope'
       self.description  = 'For some reason, a sturdy rope hangs down from a small opening in the metal tunnel\'s ceiling. It appears to hold your weight when taut.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

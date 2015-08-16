@@ -15,6 +15,8 @@ module Gemwarrior
     PLAYER_COMMAND_INVALID  = '>> "That means nothing to me."'
 
     def initialize
+      super
+
       self.name         = 'ware_hawker'
       self.description  = 'A literal anthropomorphic hawk has set up shop behind a crudely-made table. Some wares are scattered atop its surface, seemingly within anyone\'s grasp, but the hawk\'s piercing eyes seem to belie this observation.'
       self.atk_lo       = nil
@@ -22,7 +24,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

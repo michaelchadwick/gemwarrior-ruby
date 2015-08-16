@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Opalaser < Item
     def initialize
+      super
+
       self.name         = 'opalaser'
       self.description  = 'Gleaming with supernatural light, this object feels alien, yet familiar.'
       self.atk_lo       = 9
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = true
       self.equippable   = true
-      self.equipped     = false
     end
 
     def use(player = nil)

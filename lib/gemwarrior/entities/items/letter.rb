@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Letter < Item
     def initialize
+      super
+
       self.name         = 'letter'
       self.description  = 'A single page of thin paper, folded at the middle, with some excellent penmanship impressed upon it.'
       self.atk_lo       = nil
@@ -13,8 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
-      self.used         = false
     end
 
     def use(player = nil)

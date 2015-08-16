@@ -15,6 +15,8 @@ module Gemwarrior
     PLAYER_COMMAND_INVALID  = '>> "Huh?"'
 
     def initialize
+      super
+
       self.name         = 'small_hole'
       self.description  = 'Amongst the rubble of the alcove, a small hole, barely big enough for a rodent, exists in an absently-minded way near the bottom of the wall.'
       self.atk_lo       = nil
@@ -22,7 +24,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
     
     def use(player = nil)

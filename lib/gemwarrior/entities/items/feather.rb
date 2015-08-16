@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Feather < Item
     def initialize
+      super
+
       self.name         = 'feather'
       self.description  = 'A blue and green feather. It is soft and tender, unlike the craven bird that probably shed it.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = false
       self.equippable   = false
-      self.equipped     = false
     end
   end
 end

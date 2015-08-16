@@ -37,10 +37,10 @@ module Gemwarrior
       clocker = Clocker.new
 
       at_exit do
-        pl = world.player
-        duration = clocker.stop
+        world.duration = clocker.stop
         game.update_options_file
-        log_stats(duration, pl)
+        log_stats(world.duration, world.player)
+        save_game(world)
       end
 
       clocker.clock do
@@ -161,19 +161,19 @@ module Gemwarrior
       end
     end
 
-    def display_record_of_attempts
+    def display_log_of_attempts
       if File.exist?(GameOptions.data['log_file_path']) and !File.zero?(GameOptions.data['log_file_path'])
         File.open(GameOptions.data['log_file_path']).readlines.each do |line|
           print "#{line}"
         end
         if GameOptions.data['debug_mode']
-          print 'Clear record of attempts (y/n)? '
+          print 'Clear log of attempts (y/n)? '
           answer = gets.chomp.downcase
 
           case answer
           when 'y'
             File.truncate(GameOptions.data['log_file_path'], 0)
-            puts 'Record of attempts: erased!'
+            puts 'Log of attempts: erased!'
           end
 
           puts
@@ -204,10 +204,11 @@ module Gemwarrior
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
       puts ' (N)ew Game'
+      puts ' (R)esume Game' if save_file_exist?
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (O)ptions'
-      puts ' (R)ecord of Attempts'
+      puts ' (L)og of Attempts'
       puts ' (C)heck for Updates'
       puts ' (E)xit'
       puts '======================='
@@ -226,11 +227,24 @@ module Gemwarrior
 
       case choice
       when 'n'
-        clear_screen
-        play_intro_tune
-        print_splash_message
-        print_fortune
-        return
+        if overwrite_save?
+          clear_screen
+          play_intro_tune
+          print_splash_message
+          print_fortune
+          return
+        else
+          run_main_menu
+        end
+      when 'r'
+        if save_file_exist?
+          result = resume_game
+          if result.nil?
+            run_main_menu
+          elsif
+            self.world = result
+          end
+        end
       when 'a'
         puts choice
         print_about_text
@@ -243,9 +257,9 @@ module Gemwarrior
         puts choice
         print_options
         run_main_menu
-      when 'r'
+      when 'l'
         puts choice
-        display_record_of_attempts
+        display_log_of_attempts
         run_main_menu
       when 'c'
         puts choice
@@ -262,10 +276,13 @@ module Gemwarrior
     end
 
     def log_stats(duration, pl)
+      # display stats upon exit
       puts '######################################################################'
       print 'Gem Warrior'.colorize(color: :white, background: :black)
       print " v#{Gemwarrior::VERSION}".colorize(:yellow)
-      print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} mins, #{duration[:secs].to_s.colorize(color: :white, background: :black)} secs, and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
+      print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} min(s),"
+      print " #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s),"
+      print " and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
       puts  '----------------------------------------------------------------------'
       print "Player killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
       print "\n".ljust(8)
@@ -283,6 +300,91 @@ module Gemwarrior
       File.open(GameOptions.data['log_file_path'], 'a') do |f|
         f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
+    end
+
+    def save_game(world)
+      mode = GameOptions.data['save_file_mode']
+      puts 'Saving game...'
+      
+      if mode.eql? 'Y'
+        File.open(GameOptions.data['save_file_yaml_path'], 'w+') do |f|
+          f.write YAML::dump(world)
+        end
+      elsif mode.eql? 'M'
+        File.open(GameOptions.data['save_file_bin_path'], 'w+') do |f|
+          f.write Marshal::dump(world)
+        end
+      else
+        puts 'Error: Save file mode not set. Game not saved.'
+        return
+      end
+      puts 'Game saved!'
+    end
+
+    def save_file_exist?
+      mode = GameOptions.data['save_file_mode']
+      if mode.eql? 'Y'
+        File.exist?(GameOptions.data['save_file_yaml_path'])
+      elsif mode.eql? 'M'
+        File.exist?(GameOptions.data['save_file_bin_path'])
+      else
+        false
+      end
+    end
+   
+    def resume_game
+      mode = GameOptions.data['save_file_mode']
+      puts 'Resuming game...'
+
+      if save_file_exist?
+        if mode.eql? 'Y'
+          if File.exist?(GameOptions.data['save_file_yaml_path'])
+            File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
+              binding.pry
+              return YAML::load(f)
+            end
+          else
+            puts 'No save file exists.'
+            nil
+          end
+        elsif mode.eql? 'M'
+          if File.exist?(GameOptions.data['save_file_marshal_path'])
+            File.open(GameOptions.data['save_file_marshal_path'], 'r') do |f|
+              return Marshal::load(f)
+            end
+          else
+            puts 'No save file exists.'
+            nil
+          end
+        end
+      end
+    end
+    
+    def overwrite_save?
+      mode = GameOptions.data['save_file_mode']
+      save_file_path = ''
+      
+      if mode.eql? 'Y'
+        save_file_path = GameOptions.data['save_file_yaml_path']
+      elsif mode.eql? 'M'
+        save_file_path = GameOptions.data['save_file_marshal_path']
+      end
+      
+      if File.exist?(save_file_path)
+        print 'Overwrite existing save file? (y/n) '
+        answer = gets.chomp.downcase
+          
+        case answer
+        when 'y'
+          puts 'New game started! Press any key to continue.'
+          gets
+          return true
+        else
+          puts 'New game aborted.'
+          return false
+        end
+      end
+      true
     end
 
     def play_intro_tune

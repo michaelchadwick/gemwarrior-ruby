@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Waterfall < Item
     def initialize
+      super
+
       self.name         = 'waterfall'
       self.description  = 'Gallons of murky, sparkling water fall downward from an unknown spot in the sky, ending in a pool on the ground, yet never overflowing.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

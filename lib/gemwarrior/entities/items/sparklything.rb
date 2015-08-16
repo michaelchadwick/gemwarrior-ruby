@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class SparklyThing < Item
     def initialize
+      super
+
       self.name         = 'Sparkly Thing(tm)'
       self.description  = 'The sparkling that this thing does is unimaginably brilliant.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

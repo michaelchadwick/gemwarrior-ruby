@@ -9,6 +9,8 @@ module Gemwarrior
     USE_TEXT = '** ZZZZZ **'
 
     def initialize
+      super
+
       self.name         = 'bed'
       self.description  = 'The place where you sleep when you are not adventuring.'
       self.atk_lo       = nil
@@ -16,7 +18,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

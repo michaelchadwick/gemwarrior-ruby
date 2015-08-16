@@ -9,6 +9,8 @@ module Gemwarrior
     USE_TEXT = '*** FOOOOSH ***'
 
     def initialize
+      super
+
       self.name         = 'snowman'
       self.description  = 'Standing solemnly in the snow, a man of snow solemnly stands.'
       self.atk_lo       = nil
@@ -16,7 +18,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

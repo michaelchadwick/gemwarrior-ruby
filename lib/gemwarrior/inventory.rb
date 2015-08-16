@@ -1,6 +1,8 @@
 # lib/gemwarrior/inventory.rb
 # Collection of items a creature possesses
 
+require_relative 'game_options'
+
 module Gemwarrior
   class Inventory
     # CONSTANTS
@@ -35,7 +37,11 @@ module Gemwarrior
       if contains_item?(item_name)
         items.each do |i|
           if i.name.eql?(item_name)
-            return i.description
+            if GameOptions.data['debug_mode']
+              return i.describe
+            else
+              return i.description
+            end
           end
         end
       else

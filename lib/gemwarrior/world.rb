@@ -16,12 +16,13 @@ module Gemwarrior
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
-    attr_accessor :monsters, :locations, :player
+    attr_accessor :monsters, :locations, :player, :duration
 
     def initialize
       self.monsters   = init_monsters
       self.locations  = init_locations
       self.player     = nil
+      self.duration   = nil
     end
 
     def print_vars

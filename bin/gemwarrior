@@ -8,7 +8,12 @@ require_relative '../lib/gemwarrior/version'
 
 include Gemwarrior
 
-GAME_NAME = 'Gem Warrior'
+GAME_NAME         = 'Gem Warrior'
+GW_HOME_DIRECTORY = "#{Dir.home}/.gemwarrior"
+GW_SAVE_FILE_YAML = "#{Dir.home}/.gemwarrior/gw_sav.yaml"
+GW_SAVE_FILE_BIN  = "#{Dir.home}/.gemwarrior/gw_sav.dat"
+GW_OPTS_FILE      = "#{Dir.home}/.gemwarrior/gw_opts"
+GW_LOG_FILE       = "#{Dir.home}/.gemwarrior/gw_log"
 
 def parse_options_cli
   options = {
@@ -95,11 +100,19 @@ def read_options_file
   nil
 end
 
+def init_config
+  Dir.mkdir(GW_HOME_DIRECTORY) unless Dir.exist?(GW_HOME_DIRECTORY)
+
+  GameOptions.add 'save_file_mode', 'Y'
+  GameOptions.add 'save_file_yaml_path',  GW_SAVE_FILE_YAML
+  GameOptions.add 'save_file_bin_path',   GW_SAVE_FILE_BIN
+  GameOptions.add 'log_file_path',        GW_LOG_FILE
+  GameOptions.add 'options_file_path',    GW_OPTS_FILE
+end
+
 begin
-  GameOptions.add 'log_file_path', "#{Dir.home}/.gemwarrior_log"
-  GameOptions.add 'save_file_path', "#{Dir.home}/.gemwarrior_save"
-  GameOptions.add 'options_file_path', "#{Dir.home}/.gemwarrior_options"
-  
+  init_config
+
   options = parse_options_cli
 
   Gemwarrior::Game.new(options)

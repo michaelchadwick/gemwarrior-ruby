@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Stalactite < Item
     def initialize
+      super
+
       self.name         = 'stalactite'
       self.description  = 'Long protrusion of cave adornment, broken off and fallen to the ground, where the stalagmites sneer at it from.'
       self.atk_lo       = 2
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = false
       self.equippable   = true
-      self.equipped     = false
     end
   end
 end

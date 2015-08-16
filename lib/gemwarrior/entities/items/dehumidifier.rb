@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Dehumidifier < Item
     def initialize
+      super
+
       self.name         = 'dehumidifier'
       self.description  = 'Petals the color of clear sky and a stem of bright white. A most curious plant.'
       self.atk_lo       = 2
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = true
       self.useable      = false
       self.equippable   = true
-      self.equipped     = false
     end
   end
 end

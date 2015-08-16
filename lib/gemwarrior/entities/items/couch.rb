@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Couch < Item
     def initialize
+      super
+
       self.name         = 'couch'
       self.description  = 'Ever wanted to sit on a cloud? Now is your chance.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

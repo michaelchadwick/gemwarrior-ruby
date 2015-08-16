@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class Spear < Item
     def initialize
+      super
+
       self.name         = 'spear'
       self.description  = 'Sharp spikes atop a steel ball, affixed to a sturdy wooden handle. You could do damage with this.'
       self.atk_lo       = 3
@@ -14,7 +16,6 @@ module Gemwarrior
       self.useable      = true
       self.consumable   = false
       self.equippable   = true
-      self.equipped     = false
     end
     
     def use(player = nil)

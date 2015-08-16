@@ -11,6 +11,8 @@ module Gemwarrior
     attr_accessor :switches
 
     def initialize
+      super
+
       self.name         = 'pedestal'
       self.description  = 'A pedestal about 4 feet in height rises up from the ground, with six switches arranged vertically above a large gem affixed to the top. The switches each have a word next to them in some language that looks familiar yet strange. Each letter is made of some kind of ink crudely splashed on stone, and each can be moved to arrange them in a different fashion than they are now. The large gem glitters with utter brilliance.'
       self.atk_lo       = nil
@@ -18,7 +20,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
       self.switches     = init_switches
     end
 

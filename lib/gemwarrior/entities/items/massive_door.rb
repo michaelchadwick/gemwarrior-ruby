@@ -6,6 +6,8 @@ require_relative '../item'
 module Gemwarrior
   class MassiveDoor < Item
     def initialize
+      super
+
       self.name         = 'massive_door'
       self.description  = 'Translucent, but not transparent, this door constructed of condensed water vapor is like nothing you have ever seen. It has no keyhole, but it does have a stone-shaped depression floating centrally within it.'
       self.atk_lo       = nil
@@ -13,7 +15,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

@@ -10,6 +10,8 @@ module Gemwarrior
     ARENA_MASTER_NAME = 'Iolita'
 
     def initialize
+      super
+
       self.name         = 'arena_master'
       self.description  = 'She wears simple clothing, but carries herself with an air of authority. You think she may be the person to talk with if you want to engage in battle.'
       self.atk_lo       = nil
@@ -17,7 +19,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

@@ -9,6 +9,8 @@ module Gemwarrior
     NEEDED_ITEMS = ['dehumidifier', 'feather', 'gun', 'stalactite']
 
     def initialize
+      super
+
       self.name         = 'pond'
       self.description  = 'This tiny pool of water self-ripples every minute or so. Small, floating insects buzz around merrily. A small plaque lays at the foot, reading: "If the right objects curious doth possess, touch the water\'s surface and you\'ll get redress."'
       self.atk_lo       = nil
@@ -16,7 +18,6 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
-      self.equipped     = false
     end
 
     def use(player = nil)

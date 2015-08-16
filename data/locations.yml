@@ -92,7 +92,7 @@
   
 -
   name:                 'Metal Tunnel (South Entrance)'
-  description:          'You are in a tightly-enclosed tunnel running under the ground. The walls are made of shiny, smooth material you think may be some kindof metal. It is claustrophobic, to say the least.'
+  description:          'You are in a tightly-enclosed tunnel running under the ground. The walls are made of shiny, smooth material you think may be some kind of metal. It is claustrophobic, to say the least.'
   danger_level:         :moderate
   coords:
     x: 8
