@@ -40,7 +40,7 @@ module Gemwarrior
         world.duration = clocker.stop
         game.update_options_file
         log_stats(world.duration, world.player)
-        save_game(world)
+        #save_game(world)
       end
 
       clocker.clock do
@@ -204,7 +204,7 @@ module Gemwarrior
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
       puts ' (N)ew Game'
-      puts ' (R)esume Game' if save_file_exist?
+      #puts ' (R)esume Game' if save_file_exist?
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (O)ptions'
@@ -227,15 +227,16 @@ module Gemwarrior
 
       case choice
       when 'n'
-        if overwrite_save?
+        #if overwrite_save?
           clear_screen
           play_intro_tune
           print_splash_message
           print_fortune
           return
-        else
-          run_main_menu
-        end
+        #else
+        #  run_main_menu
+        #end
+=begin
       when 'r'
         if save_file_exist?
           result = resume_game
@@ -245,6 +246,7 @@ module Gemwarrior
             self.world = result
           end
         end
+=end
       when 'a'
         puts choice
         print_about_text
@@ -340,7 +342,6 @@ module Gemwarrior
         if mode.eql? 'Y'
           if File.exist?(GameOptions.data['save_file_yaml_path'])
             File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-              binding.pry
               return YAML::load(f)
             end
           else
