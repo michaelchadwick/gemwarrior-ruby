@@ -112,9 +112,11 @@ module Gemwarrior
       if GameOptions.data['debug_mode']
         case command
         when 'god', 'gd'
-          return GameOptions.data['god_mode'] = !GameOptions.data['god_mode']
+          GameOptions.data['god_mode'] = !GameOptions.data['god_mode']
+          return "God mode set to #{GameOptions.data['god_mode']}"
         when 'beast', 'bs'
-          return GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
+          GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
+          return "Beast mode set to #{GameOptions.data['beast_mode']}"
         when 'vars', 'vs'
           world.print_vars
         when 'list', 'ls'
