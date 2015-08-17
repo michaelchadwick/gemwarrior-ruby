@@ -24,6 +24,7 @@ module Gemwarrior
       self.takeable     = false
       self.useable      = true
       self.equippable   = false
+      self.talkable     = true
     end
 
     def use(player = nil)
@@ -54,7 +55,7 @@ module Gemwarrior
         puts ' 2 - Spear'
         puts ' x - leave'
         print '[HAWK]> '
-        choice = gets.chomp!
+        choice = gets.chomp.downcase
 
         case choice
         when '1'

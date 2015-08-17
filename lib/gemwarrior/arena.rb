@@ -30,11 +30,11 @@ module Gemwarrior
         arena_monsters_vanquished += 1
 
         puts
-        puts 'Do you wish to continue fighting in the Arena? (Y/N)'
+        print 'Do you wish to continue fighting in the Arena? (y/n) '
         answer = gets.chomp.downcase
 
         case answer
-        when 'yes', 'y'
+        when 'y', 'yes'
           next
         else
           bonus_rox = arena_monsters_vanquished * 25

@@ -210,7 +210,7 @@ module Gemwarrior
           answer = gets.chomp.downcase
 
           case answer
-          when 'y'
+          when 'y', 'yes'
             File.truncate(GameOptions.data['log_file_path'], 0)
             puts 'Log of attempts: erased!'
           end
@@ -418,7 +418,7 @@ module Gemwarrior
         answer = gets.chomp.downcase
           
         case answer
-        when 'y'
+        when 'y', 'yes'
           puts 'New game started! Press any key to continue.'
           gets
           return true

@@ -113,10 +113,11 @@ module Gemwarrior
 
     def drop_item(item_name)
       if contains_item?(item_name)
-        puts "Are you sure you want to permanently throw away #{item_name}? (Y/N)"
-        answer = gets.downcase.chomp!
+        print "Are you sure you want to permanently throw away #{item_name}? (y/n) "
+        answer = gets.chomp.downcase
 
-        if answer.eql?('y')
+        case answer
+        when 'y', 'yes'
           remove_item(item_name)
 
           return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."

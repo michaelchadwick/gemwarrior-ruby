@@ -14,10 +14,13 @@ module Gemwarrior
     GO_PARAMS                           = 'Options: north, east, south, west'
     CHANGE_PARAMS                       = 'Options: name'
     DEBUG_LIST_PARAMS                   = 'Options: monsters, items, locations'
-    DEBUG_STAT_PARAMS                   = 'Options: atk_lo, atk_hi, strength, dexterity'
+    DEBUG_STAT_PARAMS                   = 'Options: hp_cur, atk_lo, atk_hi, experience, rox, strength, dexterity, defense, inventory'
 
     ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
     ERROR_LOOK_AT_PARAM_MISSING         = 'You cannot just "look at". You gotta choose something to look at.'
+    ERROR_TALK_PARAM_INVALID            = 'Are you talking to yourself? That person is not here.'
+    ERROR_TALK_PARAM_UNTALKABLE         = 'That cannnot be conversed with.'
+    ERROR_TALK_TO_PARAM_MISSING         = 'You cannot just "talk to". You gotta choose someone to talk to.'
     ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
     ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
     ERROR_DIRECTION_PARAM_INVALID       = 'You cannot go to that place.'
@@ -57,14 +60,14 @@ module Gemwarrior
         'List all the variables in the world',
         'Show a map of the world',
         'Change player stat',
-        'Teleport to coordinates (5 0 0) or location name (\'Home\')',
+        'Teleport to coordinates (5 0 0) or name (\'Home\')',
         'Spawn random monster',
-        'Bump your character to the next experience level',
+        'Bump your character to the next level',
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
-      self.aliases = %w(c i r l t u d eq ue g n e s w a ch v cu h q qq)
+      self.commands = %w(character inventory rest look take talk use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
+      self.aliases = %w(c i r l t tk u d eq ue g n e s w a ch v cu h q qq)
       self.extras = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
@@ -72,6 +75,7 @@ module Gemwarrior
         'Take a load off and regain HP',
         'Look around your current location',
         'Take item',
+        'Talk to person',
         'Use item (in inventory or environment)',
         'Drop item',
         'Equip item',
@@ -81,11 +85,11 @@ module Gemwarrior
         'Go east (shortcut)',
         'Go south (shortcut)',
         'Go west (shortcut)',
-        'Attack a monster',
+        'Attack a monster (also fight)',
         'Change something',
         'Display game version',
         'Check for newer game releases',
-        'This help menu',
+        'This help menu (also ?)',
         'Quit w/ confirmation (also exit/x)',
         'Quit w/o confirmation (also exit!/xx)'
       ]
@@ -172,12 +176,21 @@ module Gemwarrior
                   end
                 end
               end
-            when 'dexterity', 'dex', 'd'
+            when 'dexterity', 'dex'
               unless param2.nil?
                 param2 = param2.to_i
                 if param2.is_a? Numeric
                   if param2 >= 0
                     world.player.dexterity = param2
+                  end
+                end
+              end
+            when 'defense', 'def'
+              unless param2.nil?
+                param2 = param2.to_i
+                if param2.is_a? Numeric
+                  if param2 >= 0
+                    world.player.defense = param2
                   end
                 end
               end
@@ -333,6 +346,62 @@ module Gemwarrior
         else
           world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param1, world.player)
         end
+      when 'talk', 'tk'
+        if param1.nil?
+          return ERROR_USE_PARAM_MISSING
+        elsif param1.eql?('to')
+          if param2
+            param1 = param2
+          else
+            return ERROR_TALK_TO_PARAM_MISSING
+          end
+        end
+        
+        person_name = param1
+        result = nil
+
+        player_inventory = world.player.inventory.items
+        location = world.location_by_coords(world.player.cur_coords)
+        location_inventory = location.items
+
+        if player_inventory.map(&:name).include?(person_name)
+          player_inventory.each do |person|
+            if person.name.eql?(person_name)
+              if person.talkable
+                result = person.use(world.player)
+              else
+                return ERROR_TALK_PARAM_UNTALKABLE
+              end
+            end
+          end
+        elsif location_inventory.map(&:name).include?(person_name)
+          location_inventory.each do |person|
+            if person.name.eql?(person_name)
+              if person.talkable
+                result = person.use(world.player)
+              else
+                return ERROR_TALK_PARAM_UNTALKABLE
+              end
+            end
+          end
+        end
+
+        return ERROR_TALK_PARAM_INVALID if result.nil?
+
+        case result[:type]
+        when 'arena'
+          arena_result = Arena.new(world: world, player: world.player)
+          arena_result = arena.start
+
+          if arena_result.eql?('death')
+            player_death_resurrection
+          end
+        when 'purchase'
+          result[:data].each do |i|
+            world.player.inventory.items.push(i)
+          end
+          return
+        end
       when 'use', 'u'
         if param1.nil?
           ERROR_USE_PARAM_MISSING
@@ -341,7 +410,8 @@ module Gemwarrior
           result = nil
 
           player_inventory = world.player.inventory.items
-          location_inventory = world.location_by_coords(world.player.cur_coords).items
+          location = world.location_by_coords(world.player.cur_coords)
+          location_inventory = location.items
 
           if player_inventory.map(&:name).include?(item_name)
             player_inventory.each do |i|
@@ -380,7 +450,7 @@ module Gemwarrior
                     end
                   elsif i.consumable
                     result = i.use(world.player)
-                    world.player.inventory.remove_item(i.name)
+                    location.remove_item(i.name)
                   else
                     result = i.use(world.player)
                   end
@@ -527,7 +597,9 @@ module Gemwarrior
       when 'quit', 'exit', 'q', 'x'
         print 'You sure you want to quit? (y/n) '
         response = gets.chomp.downcase
-        if (response.eql?('y') || response.eql?('yes'))
+        
+        case answer
+        when 'y', 'yes'
           puts QUIT_MESSAGE
           return 'exit'
         else
@@ -582,8 +654,10 @@ module Gemwarrior
     def list_commands
       i = 0
       print_separator
+      puts ' COMMAND     | ALIAS | DESCRIPTION '
+      print_separator
       commands.each do |cmd|
-        puts " #{cmd.ljust(9)}, #{aliases[i].ljust(2)} -- #{cmd_descriptions[i]}"
+        puts " #{cmd.ljust(11)} | #{aliases[i].ljust(5)} | #{cmd_descriptions[i]}"
         i += 1
       end
       print_separator
@@ -593,7 +667,7 @@ module Gemwarrior
         print_separator
         i = 0
         devcommands.each do |cmd|
-          puts " #{cmd.ljust(9)}, #{devaliases[i].ljust(2)} -- #{devcmd_descriptions[i]}"
+          puts " #{cmd.ljust(11)} | #{devaliases[i].ljust(5)} | #{devcmd_descriptions[i]}"
           i += 1
         end
         print_separator

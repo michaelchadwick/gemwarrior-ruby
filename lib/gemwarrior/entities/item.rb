@@ -6,13 +6,14 @@ require_relative 'entity'
 module Gemwarrior
   class Item < Entity
     attr_accessor :atk_lo, :atk_hi, :takeable, :useable, :equippable, :equipped,
-                  :consumable, :use, :used, :number_of_uses
+                  :consumable, :use, :used, :number_of_uses, :talkable
 
     def initialize
       self.equipped       = false
       self.consumable     = false
       self.used           = false
       self.number_of_uses = nil
+      self.talkable       = false
     end
 
     def use(inventory = nil)
@@ -28,6 +29,7 @@ module Gemwarrior
       status_text << "EQUIPPABLE? #{equippable}\n".colorize(:white)
       status_text << "CONSUMABLE? #{consumable}\n".colorize(:white)
       status_text << "NUMBER OF USES? #{number_of_uses}\n".colorize(:white) unless number_of_uses.nil?
+      status_text << "TALKABLE? #{talkable}\n".colorize(:white)
       status_text << "\n"
     end
   end

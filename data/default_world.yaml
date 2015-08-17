@@ -1556,6 +1556,7 @@ locations:
     consumable: false
     used: false
     number_of_uses: 
+    talkable: true
     name: arena_master
     description: She wears simple clothing, but carries herself with an air of authority.
       You think she may be the person to talk with if you want to engage in battle.
@@ -1761,6 +1762,7 @@ locations:
     consumable: false
     used: false
     number_of_uses: 
+    talkable: true
     name: ware_hawker
     description: A literal anthropomorphic hawk has set up shop behind a crudely-made
       table. Some wares are scattered atop its surface, seemingly within anyone's

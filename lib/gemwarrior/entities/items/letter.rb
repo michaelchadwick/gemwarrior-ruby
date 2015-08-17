@@ -19,13 +19,11 @@ module Gemwarrior
 
     def use(player = nil)
       if self.used
-        puts 'Do you want to read the letter again? (Y/N)'
-        print '> '
+        print 'Do you want to read the letter again? (y/n) '
+        answer = gets.chomp.downcase
 
-        choice = STDIN.getch
-
-        case choice
-        when 'y'
+        case answer
+        when 'y', 'yes'
           print "\n"
           print_letter(player)
         else
