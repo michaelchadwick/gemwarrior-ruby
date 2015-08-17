@@ -19,7 +19,6 @@ module Gemwarrior
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
-    WRAP_WIDTH              = 80
     GITHUB_NAME             = 'michaelchadwick'
     GITHUB_PROJECT          = 'gemwarrior'
 
@@ -77,7 +76,7 @@ module Gemwarrior
       Readline.readline(prompt_text, true).to_s
     end
 
-    def puts(s = '', width = WRAP_WIDTH)
+    def puts(s = '', width = GameOptions.data['wrap_width'])
       super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
 

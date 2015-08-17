@@ -1,11 +1,10 @@
 # lib/gemwarrior/entities/entity.rb
 # Base class for an interactable object
 
+require_relative '../game_options'
+
 module Gemwarrior
   class Entity
-    # CONSTANTS
-    WRAP_WIDTH = 80
-
     attr_accessor :name, :description
 
     def status
@@ -13,7 +12,7 @@ module Gemwarrior
       status_text << "#{description}\n".colorize(:white)
     end
 
-    def puts(s = '', width = WRAP_WIDTH)
+    def puts(s = '', width = GameOptions.data['wrap_width'])
       super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
   end

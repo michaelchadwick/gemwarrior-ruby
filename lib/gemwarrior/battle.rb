@@ -9,7 +9,7 @@ module Gemwarrior
     # CONSTANTS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     BEAST_MODE_ATTACK           = 100
-    ESCAPE_TEXT                 = '** POOF **'
+    ESCAPE_TEXT                 = '  ** POOF **'
 
     attr_accessor :world, :player, :monster, :player_is_defending
 
@@ -30,23 +30,24 @@ module Gemwarrior
         { frequencies: 'G#4', duration: 50 }
       ])
 
-      print_battle_line
+      # begin battle!
+      print_battle_header unless is_arena
 
       if is_arena
-        print 'Your opponent is now...'
+        print '  Your opponent is now...'
         Animation::run(phrase: "#{monster.name.upcase}!", speed: :slow)
       elsif is_event
-        puts "You are attacked by #{monster.name}!"
+        puts "  You are ambushed by #{monster.name}!".colorize(:yellow)
       else
-        puts "You decide to attack #{monster.name}!"
+        puts "  You decide to attack #{monster.name}!"
       end
 
-      puts "#{monster.name} cries out: \"#{monster.battlecry}\"".colorize(:yellow)
+      puts "  #{monster.name} cries out: \"#{monster.battlecry}\""
 
       # first strike!
       unless is_arena
         if monster_strikes_first?(is_event)
-          puts "#{monster.name} strikes first!".colorize(:yellow)
+          puts "  #{monster.name} strikes first!".colorize(:yellow)
           monster_attacks_player
         end
       end
@@ -63,20 +64,20 @@ module Gemwarrior
 
         # check for near death
         if player_near_death?
-          puts "You are almost dead!\n".colorize(:yellow)
+          puts "  You are almost dead!\n".colorize(:yellow)
         end
         if monster_near_death?
-          puts "#{monster.name} is almost dead!\n".colorize(:yellow)
+          puts "  #{monster.name} is almost dead!\n".colorize(:yellow)
         end
 
         puts
 
         # print health info
-        print "#{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
+        print "  #{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
         print " (LVL: #{player.level})" if GameOptions.data['debug_mode']
         print "\n"
 
-        print "#{monster.name.upcase.ljust(12)} :: "
+        print "  #{monster.name.upcase.ljust(12)} :: "
         if GameOptions.data['debug_mode'] || player.special_abilities.include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
@@ -90,8 +91,8 @@ module Gemwarrior
         self.player_is_defending = false
 
         # battle options prompt
-        puts 'What do you do?'
-        print '['.colorize(:yellow)
+        puts '  What do you do?'
+        print '  ['.colorize(:yellow)
         print 'F'.colorize(:green)
         print 'ight/'.colorize(:yellow)
         print 'A'.colorize(:green)
@@ -105,13 +106,13 @@ module Gemwarrior
         print 'R'.colorize(:green)
         print 'un]'.colorize(:yellow)
         print "\n"
-
+        print '  [BATTLE]> '
         player_action = STDIN.gets.chomp.downcase
 
         # player action
         case player_action
         when 'fight', 'f', 'attack', 'a'
-          puts "You attack #{monster.name}#{player.cur_weapon_name}!"
+          puts "  You attack #{monster.name}#{player.cur_weapon_name}!"
           dmg = calculate_damage_to(monster)
           if dmg > 0
             Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
@@ -124,32 +125,33 @@ module Gemwarrior
           else
             Music::cue([{ frequencies: 'A4', duration: 75 }])
 
-            puts 'You miss entirely!'.colorize(:yellow)
+            puts '  You miss entirely!'.colorize(:yellow)
           end
         when 'defend', 'd'
-          puts 'You dig in and defend this round.'
+          puts '  You dig in and defend this round.'
           self.player_is_defending = true
         when 'pass', 'p'
-          puts 'You decide to pass your turn for some reason. Brave!'
+          puts '  You decide to pass your turn for some reason. Brave!'
         when 'look', 'l'
-          print "#{monster.name}".colorize(:white)
+          print "  #{monster.name}".colorize(:white)
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
-          puts "It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
+          puts "  It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
           if GameOptions.data['debug_mode']
-            puts 'If defeated, will receive:'
-            puts " >> XP   : #{monster.xp}"
-            puts " >> ROX  : #{monster.rox}"
-            puts " >> ITEMS: #{monster.inventory.list_contents}"
+            puts '  If defeated, will receive:'
+            puts "  >> XP   : #{monster.xp}"
+            puts "  >> ROX  : #{monster.rox}"
+            puts "  >> ITEMS: #{monster.inventory.list_contents}"
             next
           end
         when 'run', 'r'
           if player_escape?(is_arena)
             monster.hp_cur = monster.hp_max
-            puts "You successfully elude #{monster.name}!".colorize(:green)
+            puts "  You successfully elude #{monster.name}!".colorize(:green)
             print_escape_text
+            print_battle_line
             return 'escaped'
           else
-            puts 'You were not able to run away! :-('.colorize(:yellow)
+            puts '  You were not able to run away! :-('.colorize(:yellow)
           end
         else
           puts ERROR_ATTACK_OPTION_INVALID
@@ -207,17 +209,19 @@ module Gemwarrior
 
     def take_damage(entity, dmg)
       entity.hp_cur = entity.hp_cur.to_i - dmg.to_i
-      who_gets_wounded = ''
+      who_gets_wounded_start = ''
 
       if entity.eql?(monster)
-        who_gets_wounded = "> You wound #{monster.name} for "
+        who_gets_wounded_start = "  > You wound #{monster.name} for "
+        who_gets_wounded_end   = " point(s)!\n".colorize(:green)
       else
-        who_gets_wounded = '> You are wounded for '
+        who_gets_wounded_start = '  > You are wounded for '.colorize(:red)
+        who_gets_wounded_end   = " point(s)!\n".colorize(:red)
       end
 
-      print who_gets_wounded
+      print who_gets_wounded_start
       Animation::run(phrase: dmg.to_s, speed: :slow, oneline: true, alpha: false, random: false)
-      print " point(s)!\n"
+      print who_gets_wounded_end
     end
 
     # MONSTER
@@ -236,7 +240,7 @@ module Gemwarrior
     end
 
     def monster_attacks_player
-      puts "#{monster.name} attacks you!"
+      puts "  #{monster.name} attacks you!".colorize(:yellow)
 
       dmg = calculate_damage_to(player)
       if dmg > 0
@@ -246,7 +250,7 @@ module Gemwarrior
       else
         Music::cue([{ frequencies: 'B4', duration: 75 }])
 
-        puts "#{monster.name} misses entirely!".colorize(:yellow)
+        puts "  #{monster.name} misses entirely!".colorize(:yellow)
       end
     end
 
@@ -259,7 +263,7 @@ module Gemwarrior
     end
 
     def monster_death
-      puts "You have defeated #{monster.name}!\n".colorize(:green)
+      puts "  YOU HAVE DEFEATED #{monster.name.upcase}!\n".colorize(:green)
 
       # stats
       world.player.monsters_killed += 1
@@ -289,19 +293,19 @@ module Gemwarrior
           gets
           return 'exit'
         else
-          puts 'You just beat a boss monster. Way to go!'
-          puts " XP : #{monster.xp}".colorize(:green)
-          puts " ROX: #{monster.rox}".colorize(:green)
+          puts '  You just beat a boss monster. Way to go!'
+          puts "   XP : #{monster.xp}".colorize(:green)
+          puts "   ROX: #{monster.rox}".colorize(:green)
           print_battle_line
           player.update_stats(reason: :monster, value: monster)
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
-        puts 'You get the following spoils of war:'
-        puts " XP   : #{monster.xp}".colorize(:green)
-        puts " ROX  : #{monster.rox}".colorize(:green)
+        puts '  You get the following spoils of war:'
+        puts "   XP   : #{monster.xp}".colorize(:green)
+        puts "   ROX  : #{monster.rox}".colorize(:green)
         unless monster.inventory.nil?
-          puts " ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
+          puts "   ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
         end
         print_battle_line
         player.update_stats(reason: :monster, value: monster)
@@ -319,7 +323,7 @@ module Gemwarrior
     end
 
     def player_death
-      puts "You are dead, slain by the #{monster.name}!".colorize(:red)
+      puts "  You are dead, slain by the #{monster.name}!".colorize(:red)
       print_battle_line
     end
 
@@ -330,6 +334,8 @@ module Gemwarrior
         else
           dex_diff = monster.dexterity - player.dexterity
           rand_dex = rand(0..dex_diff)
+          rand_dex += rand(0..1) # slight extra chance modifier
+
           if rand_dex % 2 > 0
             return true
           else
@@ -341,13 +347,19 @@ module Gemwarrior
     end
 
     # STATUS TEXT
-
     def print_escape_text
-      Animation::run(phrase: ESCAPE_TEXT, oneline: true)
+      Animation::run(phrase: ESCAPE_TEXT, oneline: false)
     end
 
     def print_battle_line
-      puts '******************************'
+      GameOptions.data['wrap_width'].times { print '*'.colorize(background: :red, color: :white) }
+      print "\n"
+    end
+
+    def print_battle_header
+      print_battle_line
+      puts ' BATTLE BEGINS!'.ljust(GameOptions.data['wrap_width']).colorize(background: :red, color: :white)
+      print_battle_line
     end
   end
 end
