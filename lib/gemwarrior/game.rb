@@ -29,6 +29,7 @@ module Gemwarrior
       GameOptions.add 'debug_mode', options.fetch(:debug_mode)
       GameOptions.add 'god_mode', options.fetch(:god_mode)
       GameOptions.add 'sound_enabled', options.fetch(:sound_enabled)
+      GameOptions.add 'sound_system', options.fetch(:sound_system)
       GameOptions.add 'sound_volume', options.fetch(:sound_volume)
       GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
 
@@ -63,6 +64,7 @@ module Gemwarrior
     def update_options_file
       File.open(GameOptions.data['options_file_path'], 'w') do |f|
         f.puts "sound_enabled:#{GameOptions.data['sound_enabled']}"
+        f.puts "sound_system:#{GameOptions.data['sound_system']}"
         f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
         f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
       end

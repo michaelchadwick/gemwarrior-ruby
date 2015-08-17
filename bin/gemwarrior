@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'os'
 
 require_relative '../lib/gemwarrior/game'
 require_relative '../lib/gemwarrior/game_options'
@@ -25,6 +26,7 @@ def parse_options_cli
     new_skip:       false,
     resume_skip:    false,
     sound_enabled:  false,
+    sound_system:   nil,
     sound_volume:   0.3,
     use_wordnik:    false, 
     extra_command:  nil
@@ -34,10 +36,12 @@ def parse_options_cli
   
   unless options_file.nil?
     sound_enabled_option    = options_file[0][1].eql?('false') ? false : true
-    sound_volume_option     = options_file[1][1].to_f
-    use_wordnik_option      = options_file[2][1].eql?('false') ? false : true
-    
+    sound_system_selected   = options_file[1][1]
+    sound_volume_option     = options_file[2][1].to_f
+    use_wordnik_option      = options_file[3][1].eql?('false') ? false : true
+
     options[:sound_enabled] = sound_enabled_option
+    options[:sound_system]  = sound_system_selected
     options[:sound_volume]  = sound_volume_option
     options[:use_wordnik]   = use_wordnik_option
   end
@@ -110,7 +114,10 @@ end
 def init_config
   Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
 
-  GameOptions.add 'save_file_mode', 'Y'
+  sound_system_default = OS.windows? ? 'win32-sound' : 'feep'
+  
+  GameOptions.add 'sound_system',             sound_system_default
+  GameOptions.add 'save_file_mode',           'Y'
   GameOptions.add 'default_world_path_yaml',  GW_DEFAULT_WORLD_YAML
   GameOptions.add 'default_world_path_bin',   GW_DEFAULT_WORLD_BIN
   GameOptions.add 'save_file_yaml_path',      GW_SAVE_FILE_YAML

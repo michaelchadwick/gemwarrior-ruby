@@ -8,7 +8,7 @@ module Gemwarrior
     def self.cue(sequence)
       if GameOptions.data['sound_enabled']
         # if Windows, use superior win32-sound library
-        if OS.windows?
+        if GameOptions.data['sound_system'].eql?('win32-sound')
           require 'win32/sound'
           require_relative 'musical_notes'
         
@@ -24,7 +24,7 @@ module Gemwarrior
             end
           end
         # otherwise, use inferior feep library
-        else
+        elsif GameOptions.data['sound_system'].eql?('feep')
           require 'feep'
 
           feep_defaults = {

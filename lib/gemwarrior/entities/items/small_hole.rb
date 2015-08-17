@@ -55,7 +55,7 @@ module Gemwarrior
         puts ' 1 - Herb'
         puts ' 2 - Dagger'
         puts ' x - leave'
-        print 'Option? '
+        print '[ROCKNEY]>? '
 
         choice = gets.chomp!
 

@@ -53,7 +53,7 @@ module Gemwarrior
         puts ' 1 - Mace'
         puts ' 2 - Spear'
         puts ' x - leave'
-        print 'Option? '
+        print '[HAWK]> '
         choice = gets.chomp!
 
         case choice

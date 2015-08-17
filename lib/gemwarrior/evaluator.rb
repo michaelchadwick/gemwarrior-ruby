@@ -63,8 +63,8 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change version help quit quit!)
-      self.aliases = %w(c i r l t u d eq ue g n e s w a ch v h q qq)
+      self.commands = %w(character inventory rest look take use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
+      self.aliases = %w(c i r l t u d eq ue g n e s w a ch v cu h q qq)
       self.extras = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
@@ -84,6 +84,7 @@ module Gemwarrior
         'Attack a monster',
         'Change something',
         'Display game version',
+        'Check for newer game releases',
         'This help menu',
         'Quit w/ confirmation (also exit/x)',
         'Quit w/o confirmation (also exit!/xx)'
@@ -256,7 +257,7 @@ module Gemwarrior
         when 'levelbump', 'lb'
           world.player.update_stats(reason: :level_bump, value: 1)
         when 'restfight', 'rf'
-          result = world.player.rest(world, nil, true)
+          result = world.player.rest(world, 0, true)
 
           if result.eql?('death')
             player_death_resurrection
@@ -414,8 +415,6 @@ module Gemwarrior
               world.player.rest(world, result[:data])
             when 'action'
               case result[:data]
-              when 'rest'
-                world.player.rest(world)
               when 'map'
                 world.print_map(world.player.cur_coords[:z])
               end
@@ -523,6 +522,8 @@ module Gemwarrior
         list_commands
       when 'version', 'v'
         Gemwarrior::VERSION
+      when 'checkupdate', 'cu'
+        'checkupdate'
       when 'quit', 'exit', 'q', 'x'
         print 'You sure you want to quit? (y/n) '
         response = gets.chomp.downcase

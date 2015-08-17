@@ -52,6 +52,8 @@ module Gemwarrior
             result = evaluator.evaluate(input)
             if result.eql?('exit')
               exit
+            elsif result.eql?('checkupdate')
+              check_for_new_release
             else
               puts result
             end
@@ -123,16 +125,18 @@ module Gemwarrior
       puts
       puts 'Gem Warrior Options'.colorize(:yellow)
       puts '======================='.colorize(:yellow)
-      puts 'Toggle whether sound is played, what the game\'s volume is, or whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set)'
+      puts 'Change whether sound is played, which sound system to use, what game volume is, or whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set)'
       puts
       puts " (1) SOUND ENABLED : #{GameOptions.data['sound_enabled']}"
-      puts " (2) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
-      puts " (3) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
+      puts " (2) SOUND SYSTEM  : #{GameOptions.data['sound_system']}"
+      puts " (3) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
+      puts " (4) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
       puts
       puts '======================='
       puts
       puts 'Enter option number to change value, or any other key to return to main menu.'
-      print 'Option? '
+      print '[GAME_OPTIONS]> '
+
       answer = STDIN.getch
 
       case answer
@@ -143,6 +147,11 @@ module Gemwarrior
       when '2'
         print answer
         print "\n"
+        print_sound_system_selection
+        print_options
+      when '3'
+        print answer
+        print "\n"
         print 'Enter a volume from 0.0 to 1.0: '
         new_vol = gets.chomp.to_f.abs
         if new_vol >= 0.0 and new_vol <= 1.0
@@ -151,7 +160,7 @@ module Gemwarrior
           puts 'Not a valid volume.'
         end
         print_options
-      when '3'
+      when '4'
         print answer
         GameOptions.data['use_wordnik']= !GameOptions.data['use_wordnik']
         print_options
@@ -161,6 +170,36 @@ module Gemwarrior
       end
     end
 
+    def print_sound_system_selection
+      puts
+      puts 'Sound System Selection'.colorize(:yellow)
+      puts '========================'.colorize(:yellow)
+      puts
+      print ' (1) WIN32-SOUND '
+      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('win32-sound')
+      print "\n"
+      print ' (2) FEEP        '
+      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('feep')
+      print "\n"
+      puts 
+      puts 'Enter option number to select sound system, or any other key to exit.'
+      puts 'Note: win32-sound only works on Windows and will break the game is sound is enabled on non-Windows machines. Feep is cross-platform, but very slow and buggy, so use at your discretion!'
+      puts
+      print '[SOUND_SYSTEM]> '
+      answer = STDIN.getch.chomp.downcase
+      
+      case answer
+      when '1'
+        GameOptions.add 'sound_system', 'win32-sound'
+        print_sound_system_selection
+      when '2'
+        GameOptions.add 'sound_system', 'feep'
+        print_sound_system_selection
+      else
+        return
+      end
+    end
+    
     def display_log_of_attempts
       if File.exist?(GameOptions.data['log_file_path']) and !File.zero?(GameOptions.data['log_file_path'])
         File.open(GameOptions.data['log_file_path']).readlines.each do |line|
@@ -184,12 +223,19 @@ module Gemwarrior
     end
 
     def check_for_new_release
+      new_release_available = false
       puts 'Checking releases...'
       remote_release = Gems.versions('gemwarrior').first['number']
       local_release = Gemwarrior::VERSION
 
-      if remote_release != local_release
-        puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
+      0.upto(2) do |i|
+        if remote_release.split('.')[i].to_i > local_release.split('.')[i].to_i
+          new_release_available = true
+        end
+      end
+
+      if new_release_available
+        puts "GW v#{remote_release} available! Please exit and run 'gem update' before continuing."
         puts
       else
         puts 'You have the latest version. Fantastic!'
