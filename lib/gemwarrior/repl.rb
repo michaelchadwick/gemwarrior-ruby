@@ -5,7 +5,7 @@ require 'readline'
 require 'os'
 require 'clocker'
 require 'io/console'
-require 'github_api'
+require 'gems'
 
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
@@ -185,12 +185,10 @@ module Gemwarrior
 
     def check_for_new_release
       puts 'Checking releases...'
-      github = Github.new
-      gw_latest_release = github.repos.releases.list GITHUB_NAME, GITHUB_PROJECT
-      local_release = Gemwarrior::VERSION
-      remote_release = gw_latest_release[0].tag_name
-      remote_release[0] = ''
-      if remote_release > local_release
+      remote_version = Gems.versions('gemwarrior').first['number']
+      local_version = Gemwarrior::VERSION
+
+      if remote_release != local_release
         puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
         puts
       else
