@@ -185,8 +185,8 @@ module Gemwarrior
 
     def check_for_new_release
       puts 'Checking releases...'
-      remote_version = Gems.versions('gemwarrior').first['number']
-      local_version = Gemwarrior::VERSION
+      remote_release = Gems.versions('gemwarrior').first['number']
+      local_release = Gemwarrior::VERSION
 
       if remote_release != local_release
         puts "GW v#{remote_release} available! Please (E)xit and run 'gem update' before continuing."
