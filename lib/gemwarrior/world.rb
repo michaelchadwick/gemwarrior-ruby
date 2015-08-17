@@ -1,29 +1,22 @@
 # lib/gemwarrior/world.rb
 # World where the locations, monsters, items, etc. exist
 
-require 'yaml'
-
 require_relative 'game_options'
+require_relative 'inventory'
 require_relative 'entities/item'
+require_relative 'entities/items/herb'
 require_relative 'entities/location'
+require_relative 'entities/player'
 
 module Gemwarrior
   class World
     # CONSTANTS
-    LOCATION_DATA_FILE            = File.expand_path('../../../data/locations.yml', __FILE__)
     ERROR_LIST_PARAM_INVALID      = 'That is not something that can be listed.'
     ERROR_DESCRIBE_ENTITY_INVALID = 'You do not see that here.'
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
     attr_accessor :monsters, :locations, :player, :duration
-
-    def initialize
-      self.monsters   = init_monsters
-      self.locations  = init_locations
-      self.player     = nil
-      self.duration   = nil
-    end
 
     def print_vars
       puts "======================\n"
@@ -156,14 +149,14 @@ module Gemwarrior
 
       point.populate_monsters(self.monsters) unless point.checked_for_monsters?
 
-      desc_text << "\n >> Monster(s): #{point.list_monsters.join(', ')}".colorize(:yellow) unless point.list_monsters.empty?
-      desc_text << "\n >> Boss(es):   #{point.list_bosses.join(', ')}".colorize(:red) unless point.list_bosses.empty?
-      desc_text << "\n >> Thing(s):   #{point.list_items.join(', ')}".colorize(:white) unless point.list_items.empty?
-      desc_text << "\n >> Path(s):    #{point.list_paths.join(', ')}".colorize(:white)
+      desc_text << "\n >> Monster(s):  #{point.list_monsters.join(', ')}".colorize(:yellow) unless point.list_monsters.empty?
+      desc_text << "\n >> Boss(es):    #{point.list_bosses.join(', ')}".colorize(:red) unless point.list_bosses.empty?
+      desc_text << "\n >> Thing(s):    #{point.list_items.join(', ')}".colorize(:white) unless point.list_items.empty?
+      desc_text << "\n >> Path(s):     #{point.list_paths.join(', ')}".colorize(:white)
 
       if GameOptions.data['debug_mode']
-        desc_text << "\n >>> Actionable words: "
-        desc_text << point.list_actionable_words.colorize(:white)
+        desc_text << "\n >>> Actionable: ".colorize(color: :red, background: :grey)
+        desc_text << point.list_actionable_words.colorize(color: :white, background: :grey)
       end
 
       return desc_text
@@ -223,86 +216,6 @@ module Gemwarrior
       end
 
       return false
-    end
-
-    private
-
-    def create_item_objects(item_names)
-      items = []
-      unless item_names.nil?
-        item_names.each do |name|
-          items.push(eval(name).new)
-        end
-      end
-      return items
-    end
-
-    def create_boss_objects(bosses_names)
-      bosses = []
-      unless bosses_names.nil?
-        bosses_names.each do |name|
-          bosses.push(eval(name).new)
-        end
-      end
-      return bosses
-    end
-
-    def init_monsters
-      Dir.glob(File.expand_path('../entities/monsters/*.rb', __FILE__)).each do |item|
-        require_relative item
-      end
-      Dir.glob(File.expand_path('../entities/monsters/bosses/*.rb', __FILE__)).each do |item|
-        require_relative item
-      end
-
-      self.monsters = [
-        Alexandrat.new,
-        Amberoo.new,
-        Amethystle.new,
-        Apatiger.new,
-        Aquamarine.new,
-        Bloodstorm.new,
-        Citrinaga.new,
-        Coraliz.new,
-        Cubicat.new,
-        Diaman.new,
-        Emerald.new,
-        Garynetty.new
-      ]
-    end
-
-    def init_locations
-      Dir.glob(File.expand_path('../entities/items/*.rb', __FILE__)).each do |item|
-        require_relative item
-      end
-
-      locations = []
-
-      location_data = YAML.load_file(LOCATION_DATA_FILE)
-
-      location_data.each do |l|
-        locations.push(Location.new({
-          name:                 l['name'],
-          description:          l['description'],
-          danger_level:         l['danger_level'],
-          monster_level_range:  l['monster_level_range'].nil? ? nil : l['monster_level_range']['lo']..l['monster_level_range']['hi'],
-          coords:               {
-                                  x: l['coords']['x'],
-                                  y: l['coords']['y'],
-                                  z: l['coords']['z']
-                                },
-          locs_connected:       {
-                                  north:  l['locs_connected']['north'],
-                                  east:   l['locs_connected']['east'],
-                                  south:  l['locs_connected']['south'],
-                                  west:   l['locs_connected']['west']
-                                },
-          items:                create_item_objects(l['items']),
-          bosses_abounding:     create_boss_objects(l['bosses_abounding'])
-        }))
-      end
-
-      return locations
     end
   end
 end

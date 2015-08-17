@@ -20,39 +20,23 @@ module Gemwarrior
     include Formatting
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, :special_abilities,
-                  :monsters_killed, :items_taken, :movements_made, :rests_taken, :deaths
+                  :monsters_killed, :items_taken, :movements_made,    
+                  :rests_taken, :deaths
 
-    def initialize(options)
-      self.name               = generate_name
-      self.description        = options.fetch(:description)
+    def generate_name
+      NameGenerator.new('fantasy').generate_name
+    end
 
-      self.face               = generate_face
-      self.hands              = generate_hands
-      self.mood               = generate_mood
+    def generate_face
+      WordList.new('adjective').get_random_value
+    end
 
-      self.level              = options.fetch(:level)
-      self.xp                 = options.fetch(:xp)
-      self.hp_cur             = options.fetch(:hp_cur)
-      self.hp_max             = options.fetch(:hp_max)
-      self.atk_lo             = options.fetch(:atk_lo)
-      self.atk_hi             = options.fetch(:atk_hi)
+    def generate_hands
+      WordList.new('adjective').get_random_value
+    end
 
-      self.defense            = options.fetch(:defense)
-      self.dexterity          = options.fetch(:dexterity)
-
-      self.inventory          = options.fetch(:inventory)
-      self.rox                = options.fetch(:rox)
-
-      self.stam_cur           = options.fetch(:stam_cur)
-      self.stam_max           = options.fetch(:stam_max)
-      self.cur_coords         = options.fetch(:cur_coords)
-      self.special_abilities  = []
-
-      self.monsters_killed    = 0
-      self.items_taken        = 0
-      self.movements_made     = 0
-      self.rests_taken        = 0
-      self.deaths             = 0
+    def generate_mood
+      WordList.new('adjective').get_random_value
     end
 
     def check_self(show_pic = true)
@@ -77,20 +61,21 @@ module Gemwarrior
       else
         abilities = Formatting::upstyle(special_abilities.collect { |x| x.to_s }).join(', ')
       end
+
       self_text =  "NAME      : #{self.name}\n"
-      self_text << "POSITION  : #{self.cur_coords.values.to_a}\n" if GameOptions.data['debug_mode']
-      self_text << "WEAPON    : #{weapon_slot}\n"
       self_text << "LEVEL     : #{self.level}\n"
       self_text << "EXPERIENCE: #{self.xp}\n"
       self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
+      self_text << "WEAPON    : #{weapon_slot}\n"
       self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "DEFENSE   : #{self.defense}\n"
       self_text << "ABILITIES : #{abilities}\n"
       
       if GameOptions.data['debug_mode']
-        self_text << "GOD_MODE  : #{GameOptions.data['god_mode']}\n"
-        self_text << "BEAST_MODE: #{GameOptions.data['beast_mode']}\n"
+        self_text << "  POSITION  : #{self.cur_coords.values.to_a}\n"
+        self_text << "  GOD_MODE  : #{GameOptions.data['god_mode']}\n"
+        self_text << "  BEAST_MODE: #{GameOptions.data['beast_mode']}\n"
       end
 
       self_text << "\n"
@@ -99,7 +84,7 @@ module Gemwarrior
 
       self_text << "\n\n"
 
-      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
+      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and\nfeeling, generally, #{self.mood.colorize(:yellow)}."
       
       self_text << "\n"
     end
@@ -225,10 +210,6 @@ module Gemwarrior
       # stats
       self.movements_made += 1
     end
-    
-    def at_full_hp?
-      self.hp_cur == self.hp_max
-    end
 
     def attack(world, monster)
       battle = Battle.new(world: world, player: self, monster: monster)
@@ -317,6 +298,10 @@ module Gemwarrior
       end
     end
 
+    def at_full_hp?
+      self.hp_cur == self.hp_max
+    end
+
     private
 
     def player_death
@@ -325,7 +310,6 @@ module Gemwarrior
       return 'death'
     end
 
-    # TRAVEL
     def print_traveling_text(direction_text)
       Music::cue([
         { frequencies: 'C4', duration: 75 },
@@ -335,7 +319,6 @@ module Gemwarrior
       Animation::run(phrase: "* #{direction_text} *", oneline: false)
     end
 
-    # CHARACTER
     def print_char_pic
       char_pic = ''
       char_pic << "************\n"
@@ -350,26 +333,6 @@ module Gemwarrior
 
     def print_battle_line
       puts '**************************************'
-    end
-
-    # INIT
-    def generate_name
-      NameGenerator.new('fantasy').generate_name
-    end
-
-    def generate_face
-      face_descriptors = WordList.new('adjective')
-      face_descriptors.get_random_value
-    end
-
-    def generate_hands
-      hand_descriptors = WordList.new('adjective')
-      hand_descriptors.get_random_value
-    end
-
-    def generate_mood
-      mood_descriptors = WordList.new('adjective')
-      mood_descriptors.get_random_value
     end
   end
 end

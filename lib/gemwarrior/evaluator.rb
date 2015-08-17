@@ -524,7 +524,7 @@ module Gemwarrior
       when 'version', 'v'
         Gemwarrior::VERSION
       when 'quit', 'exit', 'q', 'x'
-        puts 'You sure you want to quit? (y/n): '
+        print 'You sure you want to quit? (y/n) '
         response = gets.chomp.downcase
         if (response.eql?('y') || response.eql?('yes'))
           puts QUIT_MESSAGE

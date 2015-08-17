@@ -31,16 +31,16 @@ module Gemwarrior
       self.evaluator    = evaluator
     end
 
-    def start(initial_command, extra_command, new_game)
-      setup_screen(initial_command, extra_command, new_game)
+    def start(initial_command, extra_command, new_skip, resume_skip)
+      setup_screen(initial_command, extra_command, new_skip, resume_skip)
 
       clocker = Clocker.new
 
       at_exit do
-        world.duration = clocker.stop
+        update_duration(clocker.stop)
         game.update_options_file
         log_stats(world.duration, world.player)
-        #save_game(world)
+        save_game(world)
       end
 
       clocker.clock do
@@ -167,7 +167,7 @@ module Gemwarrior
           print "#{line}"
         end
         if GameOptions.data['debug_mode']
-          print 'Clear log of attempts (y/n)? '
+          print 'Clear log of attempts? (y/n) '
           answer = gets.chomp.downcase
 
           case answer
@@ -204,7 +204,7 @@ module Gemwarrior
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
       puts ' (N)ew Game'
-      #puts ' (R)esume Game' if save_file_exist?
+      puts ' (R)esume Game' if save_file_exist?
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (O)ptions'
@@ -227,16 +227,15 @@ module Gemwarrior
 
       case choice
       when 'n'
-        #if overwrite_save?
+        if overwrite_save?
           clear_screen
           play_intro_tune
           print_splash_message
           print_fortune
           return
-        #else
-        #  run_main_menu
-        #end
-=begin
+        else
+          run_main_menu
+        end
       when 'r'
         if save_file_exist?
           result = resume_game
@@ -244,9 +243,10 @@ module Gemwarrior
             run_main_menu
           elsif
             self.world = result
+            self.evaluator = Evaluator.new(self.world)
+            return
           end
         end
-=end
       when 'a'
         puts choice
         print_about_text
@@ -286,14 +286,14 @@ module Gemwarrior
       print " #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s),"
       print " and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
       puts  '----------------------------------------------------------------------'
-      print "Player killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
-      print "\n".ljust(8)
+      print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
+      print "\n".ljust(12)
       print "picked up #{pl.items_taken.to_s.colorize(color: :white, background: :black)} item(s)"
-      print "\n".ljust(8)
+      print "\n".ljust(12)
       print "traveled #{pl.movements_made.to_s.colorize(color: :white, background: :black)} time(s)"
-      print "\n".ljust(8)
+      print "\n".ljust(12)
       print "rested #{pl.rests_taken.to_s.colorize(color: :white, background: :black)} time(s)"
-      print "\n".ljust(8)
+      print "\n".ljust(12)
       print "died #{pl.deaths.to_s.colorize(color: :white, background: :black)} time(s)"
       print "\n"
       puts '######################################################################'
@@ -307,13 +307,13 @@ module Gemwarrior
     def save_game(world)
       mode = GameOptions.data['save_file_mode']
       puts 'Saving game...'
-      
+
       if mode.eql? 'Y'
-        File.open(GameOptions.data['save_file_yaml_path'], 'w+') do |f|
+        File.open(GameOptions.data['save_file_yaml_path'], 'w') do |f|
           f.write YAML::dump(world)
         end
       elsif mode.eql? 'M'
-        File.open(GameOptions.data['save_file_bin_path'], 'w+') do |f|
+        File.open(GameOptions.data['save_file_bin_path'], 'w') do |f|
           f.write Marshal::dump(world)
         end
       else
@@ -338,29 +338,27 @@ module Gemwarrior
       mode = GameOptions.data['save_file_mode']
       puts 'Resuming game...'
 
-      if save_file_exist?
-        if mode.eql? 'Y'
-          if File.exist?(GameOptions.data['save_file_yaml_path'])
-            File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-              return YAML::load(f)
-            end
-          else
-            puts 'No save file exists.'
-            nil
+      if mode.eql? 'Y'
+        if File.exist?(GameOptions.data['save_file_yaml_path'])
+          File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
+            return YAML::load(f)
           end
-        elsif mode.eql? 'M'
-          if File.exist?(GameOptions.data['save_file_marshal_path'])
-            File.open(GameOptions.data['save_file_marshal_path'], 'r') do |f|
-              return Marshal::load(f)
-            end
-          else
-            puts 'No save file exists.'
-            nil
+        else
+          puts 'No save file exists.'
+          nil
+        end
+      elsif mode.eql? 'M'
+        if File.exist?(GameOptions.data['save_file_marshal_path'])
+          File.open(GameOptions.data['save_file_marshal_path'], 'r') do |f|
+            return Marshal::load(f)
           end
+        else
+          puts 'No save file exists.'
+          nil
         end
       end
     end
-    
+
     def overwrite_save?
       mode = GameOptions.data['save_file_mode']
       save_file_path = ''
@@ -388,6 +386,26 @@ module Gemwarrior
       true
     end
 
+    def update_duration(new_duration)
+      new_mins = new_duration[:mins]
+      new_secs = new_duration[:secs]
+      new_ms   = new_duration[:ms]
+
+      world.duration[:mins] += new_mins
+      world.duration[:secs] += new_secs
+      world.duration[:ms]   += new_ms
+
+      if world.duration[:ms] > 1000
+        world.duration[:secs] += world.duration[:ms] / 1000
+        world.duration[:ms] = world.duration[:ms] % 1000
+      end
+
+      if world.duration[:secs] > 60
+        world.duration[:mins] += world.duration[:secs] / 60
+        world.duration[:secs] = world.duration[:secs] % 60
+      end
+    end
+
     def play_intro_tune
       Music::cue([
         { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
@@ -395,16 +413,24 @@ module Gemwarrior
       ])
     end
 
-    def setup_screen(initial_command = nil, extra_command = nil, new_game = false)
+    def setup_screen(initial_command = nil, extra_command = nil, new_skip = false, resume_skip = false)
       # welcome player to game
       clear_screen
       print_logo
 
       # main menu loop until new game or exit
-      if new_game
+      if new_skip
         play_intro_tune
         print_splash_message
         print_fortune
+      elsif resume_skip
+        result = resume_game
+        if result.nil?
+          run_main_menu
+        elsif
+          self.world = result
+          self.evaluator = Evaluator.new(self.world)
+        end
       else
         run_main_menu
       end

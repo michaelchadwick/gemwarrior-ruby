@@ -4,9 +4,6 @@
 require 'colorize'
 require 'matrext'
 
-require_relative 'entities/player'
-require_relative 'entities/items/herb'
-require_relative 'misc/player_levels'
 require_relative 'misc/animation'
 require_relative 'misc/music'
 require_relative 'world'
@@ -17,16 +14,14 @@ require_relative 'game_options'
 
 module Gemwarrior
   class Game
-    include PlayerLevels
-
     # CONSTANTS
-    PLAYER_DESC_DEFAULT       = "Picked to do battle against a wizened madman for a shiny something\nor other for world-saving purposes."
-    PLAYER_INVENTORY_DEFAULT  = Inventory.new
-    PLAYER_INVENTORY_DEBUG    = Inventory.new([Herb.new])
-    PLAYER_ROX_DEFAULT        = 0
-    PLAYER_ROX_DEBUG          = 300
+    INVENTORY_DEFAULT             = Inventory.new
+    INVENTORY_DEBUG               = Inventory.new([Herb.new])
+    ROX_DEFAULT                   = 0
+    ROX_DEBUG                     = 300
 
-    attr_accessor :world, :evaluator, :repl
+    attr_accessor :world, :evaluator, :repl,
+                  :monsters, :items
 
     def initialize(options)
       # set game options
@@ -36,38 +31,33 @@ module Gemwarrior
       GameOptions.add 'sound_enabled', options.fetch(:sound_enabled)
       GameOptions.add 'sound_volume', options.fetch(:sound_volume)
       GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
+
+      # add classes for monsters and items to game
+      init_monsters
+      init_items
+
+      # create new world based on default template
+      self.world               = init_world
       
-      # create new world and player
-      start_stats  = PlayerLevels::get_level_stats(1)
-
-      self.world   = World.new
-
-      world.player = Player.new({
-        description:  PLAYER_DESC_DEFAULT,
-        level:        start_stats[:level],
-        xp:           start_stats[:xp_start],
-        hp_cur:       start_stats[:hp_max],
-        hp_max:       start_stats[:hp_max],
-        stam_cur:     start_stats[:stam_max],
-        stam_max:     start_stats[:stam_max],
-        atk_lo:       start_stats[:atk_lo],
-        atk_hi:       start_stats[:atk_hi],
-        defense:      start_stats[:defense],
-        dexterity:    start_stats[:dexterity],
-        inventory:    GameOptions.data['debug_mode'] ? PLAYER_INVENTORY_DEBUG : PLAYER_INVENTORY_DEFAULT,
-        rox:          GameOptions.data['debug_mode'] ? PLAYER_ROX_DEBUG : PLAYER_ROX_DEFAULT,
-        cur_coords:   world.location_coords_by_name('Home')
-      })
+      # update some player aspects to make more dynamic
+      world.player.name        = world.player.generate_name
+      world.player.face        = world.player.generate_face
+      world.player.hands       = world.player.generate_hands
+      world.player.mood        = world.player.generate_mood
+      world.player.inventory   = GameOptions.data['debug_mode'] ? INVENTORY_DEBUG : INVENTORY_DEFAULT
+      world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
+      
+      world.duration           = { mins: 0, secs: 0, ms: 0 }
 
       # create options file if not existing
       update_options_file
-      
+
       # create the console
       self.evaluator  = Evaluator.new(world)
       self.repl       = Repl.new(self, world, evaluator)
 
       # enter Jool!
-      repl.start('look', options.fetch(:extra_command),  options.fetch(:new_game))
+      repl.start('look', options.fetch(:extra_command),  options.fetch(:new_skip), options.fetch(:resume_skip))
     end
 
     def update_options_file
@@ -75,6 +65,60 @@ module Gemwarrior
         f.puts "sound_enabled:#{GameOptions.data['sound_enabled']}"
         f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
         f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
+      end
+    end
+
+    private
+
+    def init_monsters
+      Dir.glob(File.expand_path('../entities/monsters/*.rb', __FILE__)).each do |item|
+        require_relative item
+      end
+      Dir.glob(File.expand_path('../entities/monsters/bosses/*.rb', __FILE__)).each do |item|
+        require_relative item
+      end
+
+      self.monsters = [
+        Alexandrat.new,
+        Amberoo.new,
+        Amethystle.new,
+        Apatiger.new,
+        Aquamarine.new,
+        Bloodstorm.new,
+        Citrinaga.new,
+        Coraliz.new,
+        Cubicat.new,
+        Diaman.new,
+        Emerald.new,
+        Garynetty.new
+      ]
+    end
+
+    def init_items
+      Dir.glob(File.expand_path('../entities/items/*.rb', __FILE__)).each do |item|
+        require_relative item
+      end
+    end
+
+    def init_world
+      mode = GameOptions.data['save_file_mode']
+
+      if mode.eql?('Y')
+        if File.exist?(GameOptions.data['default_world_path_yaml'])
+          File.open(GameOptions.data['default_world_path_yaml'], 'r') do |f|
+            return YAML::load(f)
+          end
+        else
+          puts "Error: cannot load #{GameOptions.data['default_world_path_yaml']}."
+        end
+      else
+        if File.exist?(GameOptions.data['default_world_path_bin'])
+          File.open(GameOptions.data['default_world_path_bin'], 'r') do |f|
+            return Marshal::load(f)
+          end
+        else
+          puts "Error: cannot load #{GameOptions.data['default_world_path_bin']}."
+        end
       end
     end
   end

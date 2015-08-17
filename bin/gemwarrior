@@ -8,19 +8,22 @@ require_relative '../lib/gemwarrior/version'
 
 include Gemwarrior
 
-GAME_NAME         = 'Gem Warrior'
-GW_HOME_DIRECTORY = "#{Dir.home}/.gemwarrior"
-GW_SAVE_FILE_YAML = "#{Dir.home}/.gemwarrior/gw_sav.yaml"
-GW_SAVE_FILE_BIN  = "#{Dir.home}/.gemwarrior/gw_sav.dat"
-GW_OPTS_FILE      = "#{Dir.home}/.gemwarrior/gw_opts"
-GW_LOG_FILE       = "#{Dir.home}/.gemwarrior/gw_log"
+GAME_NAME             = 'Gem Warrior'
+GW_HOME               = "#{Dir.home}/.gemwarrior"
+GW_SAVE_FILE_YAML     = "#{GW_HOME}/gw_sav.yaml"
+GW_SAVE_FILE_BIN      = "#{GW_HOME}/gw_sav.dat"
+GW_OPTS_FILE          = "#{GW_HOME}/gw_opts"
+GW_LOG_FILE           = "#{GW_HOME}/gw_log"
+GW_DEFAULT_WORLD_YAML = File.expand_path('../../data/default_world.yaml', __FILE__)
+GW_DEFAULT_WORLD_BIN  = File.expand_path('../../data/default_world.bin', __FILE__)
 
 def parse_options_cli
   options = {
     beast_mode:     false, 
     debug_mode:     false, 
     god_mode:       false, 
-    new_game:       false,
+    new_skip:       false,
+    resume_skip:    false,
     sound_enabled:  false,
     sound_volume:   0.3,
     use_wordnik:    false, 
@@ -53,9 +56,13 @@ def parse_options_cli
     end
 
     opts.on('-n', '--new', 'Immediately start a new game, skipping main menu') do
-      options[:new_game] = true
+      options[:new_skip] = true
     end
-    
+
+    opts.on('-r', '--resume', 'Immediately resume the saved game, skipping main menu') do
+      options[:resume_skip] = true
+    end
+
     opts.on('-s', '--sound', 'Enable sound (experimental)') do
       options[:sound_enabled] = true
     end
@@ -101,13 +108,15 @@ def read_options_file
 end
 
 def init_config
-  Dir.mkdir(GW_HOME_DIRECTORY) unless Dir.exist?(GW_HOME_DIRECTORY)
+  Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
 
   GameOptions.add 'save_file_mode', 'Y'
-  GameOptions.add 'save_file_yaml_path',  GW_SAVE_FILE_YAML
-  GameOptions.add 'save_file_bin_path',   GW_SAVE_FILE_BIN
-  GameOptions.add 'log_file_path',        GW_LOG_FILE
-  GameOptions.add 'options_file_path',    GW_OPTS_FILE
+  GameOptions.add 'default_world_path_yaml',  GW_DEFAULT_WORLD_YAML
+  GameOptions.add 'default_world_path_bin',   GW_DEFAULT_WORLD_BIN
+  GameOptions.add 'save_file_yaml_path',      GW_SAVE_FILE_YAML
+  GameOptions.add 'save_file_bin_path',       GW_SAVE_FILE_BIN
+  GameOptions.add 'log_file_path',            GW_LOG_FILE
+  GameOptions.add 'options_file_path',        GW_OPTS_FILE
 end
 
 begin

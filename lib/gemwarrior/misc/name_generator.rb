@@ -17,7 +17,7 @@ class NameGenerator
   # load sample names
   def get_name_set(type)
     names = []
-    names_data = YAML.load_file(File.expand_path("../../../../data/#{type}_names.yml", __FILE__))
+    names_data = YAML.load_file(File.expand_path("../../../../data/#{type}_names.yaml", __FILE__))
     names_data.each do |n|
       names.push(n)
     end

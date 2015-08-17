@@ -1,0 +1,2336 @@
+--- !ruby/object:Gemwarrior::World
+monsters:
+- !ruby/object:Gemwarrior::Alexandrat
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  name: alexandrat
+  description: Tiny, but fierce, color-changing rodent.
+  face: ugly
+  hands: gnarled
+  mood: unchipper
+  level: 1
+  hp_cur: 3
+  hp_max: 3
+  atk_lo: 1
+  atk_hi: 1
+  defense: 1
+  dexterity: 3
+  rox: 3
+  xp: 2
+  battlecry: Bitey, bitey!
+- !ruby/object:Gemwarrior::Amberoo
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - &1 !ruby/object:Gemwarrior::Herb
+      equipped: false
+      consumable: true
+      used: false
+      number_of_uses: 
+      name: herb
+      description: Green and leafy, this wild herb looks edible.
+      atk_lo: 
+      atk_hi: 
+      takeable: true
+      useable: true
+      equippable: false
+    weapon: 
+  name: amberoo
+  description: Fossilized and jumping around like an adorably dangerous threat from
+    the past.
+  face: punchy
+  hands: balled
+  mood: jumpy
+  level: 1
+  hp_cur: 2
+  hp_max: 2
+  atk_lo: 1
+  atk_hi: 2
+  defense: 2
+  dexterity: 4
+  rox: 2
+  xp: 1
+  battlecry: I'm hoppin' mad!
+- !ruby/object:Gemwarrior::Amethystle
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - *1
+    weapon: 
+  name: amethystle
+  description: Sober and contemplative, it moves with purplish tentacles swaying in
+    the breeze.
+  face: sharp
+  hands: loose
+  mood: mesmerizing
+  level: 2
+  hp_cur: 4
+  hp_max: 4
+  atk_lo: 3
+  atk_hi: 5
+  defense: 2
+  dexterity: 2
+  rox: 6
+  xp: 2
+  battlecry: You've found yourself in quite the thorny issue!
+- !ruby/object:Gemwarrior::Apatiger
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  name: apatiger
+  description: Apathetic about most everything as it lazes around, save for eating
+    you.
+  face: calloused
+  hands: soft
+  mood: apathetic
+  level: 4
+  hp_cur: 12
+  hp_max: 12
+  atk_lo: 6
+  atk_hi: 6
+  defense: 7
+  dexterity: 5
+  rox: 12
+  xp: 8
+  battlecry: Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!
+- !ruby/object:Gemwarrior::Aquamarine
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  name: aquamarine
+  description: It is but one of the few, the proud, the underwater.
+  face: strained
+  hands: hairy
+  mood: tempered
+  level: 4
+  hp_cur: 11
+  hp_max: 11
+  atk_lo: 5
+  atk_hi: 7
+  defense: 4
+  dexterity: 5
+  rox: 11
+  xp: 8
+  battlecry: Attention! You are about to get smashed!
+- !ruby/object:Gemwarrior::Bloodstorm
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - *1
+    weapon: 
+  name: bloodstorm
+  description: A literal swirling, maniacal vortex of human hemoglobin.
+  face: bloody
+  hands: bloody
+  mood: boiling
+  level: 6
+  hp_cur: 15
+  hp_max: 15
+  atk_lo: 7
+  atk_hi: 16
+  defense: 6
+  dexterity: 6
+  rox: 12
+  xp: 11
+  battlecry: "/swirls"
+- !ruby/object:Gemwarrior::Citrinaga
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  name: citrinaga
+  description: Refreshing in its shiny, gleaming effectiveness at ending your life.
+  face: shiny
+  hands: glistening
+  mood: staid
+  level: 5
+  hp_cur: 15
+  hp_max: 15
+  atk_lo: 7
+  atk_hi: 8
+  defense: 7
+  dexterity: 7
+  rox: 15
+  xp: 13
+  battlecry: Slice and dice so nice!
+- !ruby/object:Gemwarrior::Coraliz
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  name: coraliz
+  description: Small blue lizard that slithers around, nipping at your ankles.
+  face: spotted
+  hands: slippery
+  mood: emotionless
+  level: 6
+  hp_cur: 12
+  hp_max: 12
+  atk_lo: 7
+  atk_hi: 18
+  defense: 6
+  dexterity: 9
+  rox: 16
+  xp: 6
+  battlecry: Where am I? You'll never guess!
+- !ruby/object:Gemwarrior::Cubicat
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - *1
+    weapon: 
+  name: cubicat
+  description: Perfectly geometrically cubed feline, fresh from its woven enclosure,
+    claws at the ready.
+  face: striking
+  hands: grippy
+  mood: salacious
+  level: 8
+  hp_cur: 16
+  hp_max: 16
+  atk_lo: 11
+  atk_hi: 23
+  defense: 7
+  dexterity: 9
+  rox: 18
+  xp: 13
+  battlecry: I don't really care, as long as you die!
+- !ruby/object:Gemwarrior::Diaman
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - *1
+    weapon: 
+  name: diaman
+  description: Crystalline structure in the form of a man, lumbering toward you, with
+    outstretched, edged pincers.
+  face: bright
+  hands: jagged
+  mood: adamant
+  level: 8
+  hp_cur: 23
+  hp_max: 23
+  atk_lo: 8
+  atk_hi: 21
+  defense: 6
+  dexterity: 9
+  rox: 24
+  xp: 9
+  battlecry: Precious human, prepare to be lost to the annals of time!
+- !ruby/object:Gemwarrior::Emerald
+  name: Emerald
+  description: A wily, beefy, tower of a man, champion of both wisdom and strength,
+    sporting a constant glint in his eyes.
+  face: gleaming
+  hands: tantalizing
+  mood: enraged
+  level: 15
+  hp_cur: 38
+  hp_max: 38
+  atk_lo: 16
+  atk_hi: 43
+  defense: 5
+  dexterity: 10
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items:
+    - !ruby/object:Gemwarrior::SparklyThing
+      equipped: false
+      consumable: false
+      used: false
+      number_of_uses: 
+      name: Sparkly Thing(tm)
+      description: The sparkling that this thing does is unimaginably brilliant.
+      atk_lo: 
+      atk_hi: 
+      takeable: true
+      useable: true
+      equippable: false
+    weapon: 
+  rox: 32
+  xp: 26
+  battlecry: 'Ha ha ha ha ha! Prepare yourself: today your whole life crumbles!'
+  is_boss: true
+  defeated_text: "<^><^><^><^><^><^><^><^><^><^>\nYou beat Emerald! You win!\nYou
+    receive the \e[0;35;49mSparklyThing(tm)\e[0m and become the true \e[0;33;49mGem
+    Warrior\e[0m!\nYou decide to ignore \e[0;31;49mQueen Ruby\e[0m and take your spoils
+    back home\nwhere you live out the rest of your days staring at it, wondering\nwhat
+    it was all about.\n\nThank you for playing. Goodbye.\n<^><^><^><^><^><^><^><^><^><^>\n"
+- !ruby/object:Gemwarrior::Garynetty
+  name: Garynetty
+  description: Conservative, yet odd, the Garynetty is not messing around.
+  face: irregular
+  hands: sharp
+  mood: abrasive
+  level: 12
+  hp_cur: 30
+  hp_max: 30
+  atk_lo: 25
+  atk_hi: 36
+  defense: 8
+  dexterity: 10
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  rox: 34
+  xp: 38
+  battlecry: "...?!"
+  is_boss: true
+locations:
+- !ruby/object:Gemwarrior::Location
+  name: Home
+  description: The little, unimportant, decrepit hut that you live in.
+  coords: &2
+    :x: 5
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :none
+  monster_level_range: 
+  items:
+  - !ruby/object:Gemwarrior::Bed
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: bed
+    description: The place where you sleep when you are not adventuring.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::Letter
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: letter
+    description: A single page of thin paper, folded at the middle, with some excellent
+      penmanship impressed upon it.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::Stone
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: stone
+    description: A small, sharp mega pebble, suitable for tossing in amusement, and
+      perhaps combat.
+    atk_lo: 1
+    atk_hi: 2
+    takeable: true
+    useable: true
+    equippable: true
+  - !ruby/object:Gemwarrior::Tent
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 5
+    name: tent
+    description: A magical, two-room suite pops up when you flick this otherwise folded
+      piece of canvas just right, perfect for a night's rest.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Cave (Entrance)
+  description: A nearby, dank entrance to a cavern, surely filled with stacktites,
+    stonemites, and rocksites.
+  coords:
+    :x: 6
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 2
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Cave (Antechamber)
+  description: Now inside the cavern, you confirm there are stacktites, stonemites,
+    rocksites, and even some pebblejites.
+  coords:
+    :x: 7
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Stalactite
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: stalactite
+    description: Long protrusion of cave adornment, broken off and fallen to the ground,
+      where the stalagmites sneer at it from.
+    atk_lo: 2
+    atk_hi: 3
+    takeable: true
+    useable: false
+    equippable: true
+  - !ruby/object:Gemwarrior::Stonemite
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: stonemite
+    description: Stubby cave debris that is neat to look at, as it is off-grey and
+      sparkly, but the size makes it unusable as anything but skipping on a lake.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Cave (Nook)
+  description: A depression in the cave wall casts a shadow over a small rock shelf.
+  coords:
+    :x: 7
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Cave (Dropoff)
+  description: Caves do not usually feature sudden chasms spilling down into an unknowable
+    void, but this one does.
+  coords:
+    :x: 8
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Ladder
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: ladder
+    description: Rickety and crudely-fashioned, this ladder descends down into the
+      dropoff, hopefully heading towards something...anything.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel (South Entrance)
+  description: You are in a tightly-enclosed tunnel running under the ground. The
+    walls are made of shiny, smooth material you think may be some kind of metal.
+    It is claustrophobic, to say the least.
+  coords:
+    :x: 8
+    :y: 1
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 8
+    :y: 2
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 8
+    :y: 3
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 8
+    :y: 4
+    :z: -1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 7
+    :y: 4
+    :z: -1
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 6
+    :y: 4
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 6
+    :y: 5
+    :z: -1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 5
+    :y: 5
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Tunnel Alcove
+  description: A moderately-sized alcove seems to have been blown out of the side
+    of tunnel here, almost as if an actual bomb detonated, the remainder of the wall
+    a mix of rock and wires.
+  coords:
+    :x: 4
+    :y: 5
+    :z: -1
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::SmallHole
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: small_hole
+    description: Amongst the rubble of the alcove, a small hole, barely big enough
+      for a rodent, exists in an absently-minded way near the bottom of the wall.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 5
+    :y: 6
+    :z: -1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Metal Tunnel (North Entrance)
+  description: The walls of this underground tunnel shine, as if some otherworldly
+    light source emanates directly from them. It is cold and narrow and you are not
+    sure you are a huge fan of it.
+  coords:
+    :x: 5
+    :y: 7
+    :z: -1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Rope
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: rope
+    description: For some reason, a sturdy rope hangs down from a small opening in
+      the metal tunnel's ceiling. It appears to hold your weight when taut.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (Southeast)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 5
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (South-Southeast)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 4
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (South)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 3
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (South-Southwest)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 2
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (Southwest)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 1
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (Northwest)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 1
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Snowman
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: snowman
+    description: Standing solemnly in the snow, a man of snow solemnly stands.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (North-Northwest)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 2
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (North)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 3
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (North-Northeast)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 4
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Snow Fields (Northeast)
+  description: It is as if the color palette for this still and frozen scene before
+    you consisted only of whites, off-whites, and vanilla.
+  coords:
+    :x: 5
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 6
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Cave (Causeway)
+  description: Paths lead north and west as a dank, musty smell permeates your sinuses.
+  coords:
+    :x: 8
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Map
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: map
+    description: The land of Jool is contained on this piece of canvas, in a useful,
+      if not very detailed, manner.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Forest (Southeast)
+  description: Trees exist here, in droves.
+  coords:
+    :x: 4
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 3
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Tree
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: tree
+    description: A mighty representation of nature, older than your father's father's
+      second great-uncle.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Forest (Northeast)
+  description: You see much foliage.
+  coords:
+    :x: 4
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Forest (Northwest)
+  description: The amount of leaves and branches and trunks you can see boggles the
+    mind.
+  coords:
+    :x: 3
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 3
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Feather
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: feather
+    description: A blue and green feather. It is soft and tender, unlike the craven
+      bird that probably shed it.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Forest (Southwest)
+  description: While you continue to be impressed at the sheer size of this forest,
+    a clearing appears to open up to the west.
+  coords:
+    :x: 3
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (Southeast)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 2
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 13
+    hp_cur: 45
+    hp_max: 45
+    atk_lo: 27
+    atk_hi: 33
+    defense: 9
+    dexterity: 10
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 29
+    xp: 41
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (East)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 2
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 13
+    hp_cur: 40
+    hp_max: 40
+    atk_lo: 31
+    atk_hi: 34
+    defense: 9
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 26
+    xp: 50
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (Central)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 1
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 15
+    hp_cur: 52
+    hp_max: 52
+    atk_lo: 34
+    atk_hi: 40
+    defense: 7
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 34
+    xp: 45
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (South)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 1
+    :y: 0
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 12
+    hp_cur: 33
+    hp_max: 33
+    atk_lo: 26
+    atk_hi: 31
+    defense: 9
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 27
+    xp: 37
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (West)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 0
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 14
+    hp_cur: 44
+    hp_max: 44
+    atk_lo: 30
+    atk_hi: 41
+    defense: 9
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 41
+    xp: 52
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (Northwest)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 0
+    :y: 2
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 12
+    hp_cur: 37
+    hp_max: 37
+    atk_lo: 28
+    atk_hi: 32
+    defense: 9
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 24
+    xp: 44
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Pain Quarry (North)
+  description: Horrible terribleness emanates from this desolate land of unkind misery.
+  coords:
+    :x: 1
+    :y: 2
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :assured
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 20
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Garynetty
+    name: Garynetty
+    description: Conservative, yet odd, the Garynetty is not messing around.
+    face: irregular
+    hands: sharp
+    mood: abrasive
+    level: 12
+    hp_cur: 37
+    hp_max: 37
+    atk_lo: 29
+    atk_hi: 32
+    defense: 7
+    dexterity: 12
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items: []
+      weapon: 
+    rox: 32
+    xp: 45
+    battlecry: "...?!"
+    is_boss: true
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (Outskirts)
+  description: A lot of grass and nothing, stretching out northward.
+  coords:
+    :x: 5
+    :y: 1
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (Fields)
+  description: Now you are plum smack dab in the middle of rolling fields.
+  coords:
+    :x: 5
+    :y: 2
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (South of River)
+  description: A raging river borders the northern side of this bucolic vista. Much
+    raucous noise comes from the east.
+  coords:
+    :x: 5
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (South-Southeast)
+  description: The river continues to flow north of you, as plains stretch out all
+    around. The noise from the east is quite loud, and a building can be seen in the
+    near distance.
+  coords:
+    :x: 6
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (Arena Entrance)
+  description: Well above the noise of the raging river nearby, the din of the mighty
+    Arena to the east reaches its near fever-pitch just outside. The door, and battle,
+    beckons.
+  coords:
+    :x: 7
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::ArenaDoor
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: arena_door
+    description: The Arena is massive, with its numerous columns and stone walls stretching
+      to the sky, but its entrance door is no slouch, keeping apace. Made of reinforced
+      granite and impossible to break down, it nevertheless opens for you while battles
+      are in session.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Arena
+  description: Dangerous and risky, the Arena allows would-be monster-slayers and
+    adventurers fight against an infinite number of beasts in order to test their
+    mettle and improve their skill...for a small fee, of course.
+  coords:
+    :x: 8
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :none
+  monster_level_range: 
+  items:
+  - !ruby/object:Gemwarrior::ArenaMaster
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: arena_master
+    description: She wears simple clothing, but carries herself with an air of authority.
+      You think she may be the person to talk with if you want to engage in battle.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (South of Bridge)
+  description: To the north of these fields lies a bridge that may be crossable.
+  coords:
+    :x: 4
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (Hut)
+  description: A straw hut sits alone, curiously, in a patch of grass, sticks, and
+    straw.
+  coords:
+    :x: 3
+    :y: 3
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :none
+  monster_level_range: 
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: River Bridge
+  description: Sturdy and safe, this bridge will get you across the otherwise unpassable
+    river you see below.
+  coords:
+    :x: 4
+    :y: 4
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 5
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Plains (North of Bridge)
+  description: North of the river feels similar to south of the river, as you continue
+    to be surrounded by grass and grass and, well, grass. A path to the east stretches
+    out into a valley.
+  coords:
+    :x: 4
+    :y: 5
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Peridover Valley (Outskirts)
+  description: The road slopes down slightly here, but in the near distance you can
+    see that it slopes way more slopily.
+  coords:
+    :x: 5
+    :y: 5
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Peridover Valley (Central)
+  description: The Peridover Valley is in full effect here, sloping down into a reverse
+    plateau. Bones of wild animals litter the area.
+  coords:
+    :x: 6
+    :y: 5
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Peridover Valley (Outskirts)
+  description: Sloping way down to the west, but leveling off here, a din of civilization
+    calls from the north.
+  coords:
+    :x: 7
+    :y: 5
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 2
+    end: 3
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: South of Spinelia
+  description: Northwardly, you can hear general town noise, such as people scuffling,
+    nattering, and more or less existing in a people kind of way.
+  coords:
+    :x: 7
+    :y: 6
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :low
+  monster_level_range: !ruby/range
+    begin: 1
+    end: 2
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Spinelia (Southwest)
+  description: Near the front entrance to Spinelia is the market corner. Merchants
+    are all around, hawking wares and giving those nearby walking stares.
+  coords:
+    :x: 7
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :none
+  monster_level_range: 
+  items:
+  - !ruby/object:Gemwarrior::WareHawker
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: ware_hawker
+    description: A literal anthropomorphic hawk has set up shop behind a crudely-made
+      table. Some wares are scattered atop its surface, seemingly within anyone's
+      grasp, but the hawk's piercing eyes seem to belie this observation.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Spinelia (Southeast)
+  description: The southeast of Spinelia contains a bunch of people, just kind of
+    hanging out.
+  coords:
+    :x: 8
+    :y: 7
+    :z: 0
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :none
+  monster_level_range: 
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Spinelia (Northeast)
+  description: Northeasternly speaking, Spinelia contains a pen with a few animals
+    calmly eating food, and not really having much impact on their environment.
+  coords:
+    :x: 8
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :none
+  monster_level_range: 
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Spinelia (Northwest)
+  description: Residences line the northwest corner of Spinela, each one similar to
+    each other, made of granite and stone, featuring a single window and a single
+    door. One particular house's hallmark appears to be a rather fanciful woman leaning
+    on its facade, looking shifty.
+  coords:
+    :x: 7
+    :y: 8
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :none
+  monster_level_range: 
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Rock Piles
+  description: Piles of rocks, both big and small, are placed here and there, a testament
+    to someone's surely back-breaking labor.
+  coords:
+    :x: 3
+    :y: 5
+    :z: 0
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Gun
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: gun
+    description: Pew pew goes this firearm, you suspect.
+    atk_lo: 2
+    atk_hi: 4
+    takeable: true
+    useable: true
+    equippable: true
+  - !ruby/object:Gemwarrior::Pedestal
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: pedestal
+    description: A pedestal about 4 feet in height rises up from the ground, with
+      six switches arranged vertically above a large gem affixed to the top. The switches
+      each have a word next to them in some language that looks familiar yet strange.
+      Each letter is made of some kind of ink crudely splashed on stone, and each
+      can be moved to arrange them in a different fashion than they are now. The large
+      gem glitters with utter brilliance.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+    switches:
+    - - alexandrat
+      - antdxlarea
+      - 
+    - - iolita
+      - alitoi
+      - 
+    - - emerald
+      - eelmrda
+      - 
+    - - amberoo
+      - raoobem
+      - 
+    - - ruby
+      - ruyb
+      - 
+    - - rockney
+      - eyrcnok
+      - 
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Entryway)
+  description: You feel unsettled as you gaze upon the wondrous proportions of Emerald's
+    home.
+  coords:
+    :x: 8
+    :y: 6
+    :z: 1
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::FloorTile
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: floor_tile
+    description: One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable,
+      even.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Cloud Garden)
+  description: A perfectly-maintained array of wispy flowers and other ethereal plantlife
+    contained within a cumulonimbus barrier.
+  coords:
+    :x: 8
+    :y: 7
+    :z: 1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Flower
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: flower
+    description: Petals the color of clear sky and a stem of bright white. A most
+      curious plant.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  - !ruby/object:Gemwarrior::Keystone
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: keystone
+    description: Certainly greater than the sum of its parts, this smallish stone
+      glows faintly and feels slick to the touch.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  - !ruby/object:Gemwarrior::Pond
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: pond
+    description: 'This tiny pool of water self-ripples every minute or so. Small,
+      floating insects buzz around merrily. A small plaque lays at the foot, reading:
+      "If the right objects curious doth possess, touch the water''s surface and you''ll
+      get redress."'
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Armory)
+  description: Weapons of all kinds litter the ground and are hung on hooks from the
+    wall. Tower assailants beware/rejoice!
+  coords:
+    :x: 7
+    :y: 6
+    :z: 1
+  locs_connected:
+    :north: true
+    :east: true
+    :south: false
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Dehumidifier
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: dehumidifier
+    description: Petals the color of clear sky and a stem of bright white. A most
+      curious plant.
+    atk_lo: 2
+    atk_hi: 4
+    takeable: true
+    useable: false
+    equippable: true
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (West Hallway)
+  description: The hallway seems to stretch on for days.
+  coords:
+    :x: 7
+    :y: 7
+    :z: 1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Waterfalls)
+  description: The seemingly neverending deluge of water causes this room to be quite
+    loud, yet pretty.
+  coords:
+    :x: 7
+    :y: 8
+    :z: 1
+  locs_connected:
+    :north: false
+    :east: true
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Waterfall
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: waterfall
+    description: Gallons of murky, sparkling water fall downward from an unknown spot
+      in the sky, ending in a pool on the ground, yet never overflowing.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Massive Door)
+  description: Before you lies a massive collection of cumulus clouds that form into
+    a seemingly impenetrable door, beyond which may well be your doom.
+  coords:
+    :x: 8
+    :y: 8
+    :z: 1
+  locs_connected:
+    :north: false
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 4
+    end: 5
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::MassiveDoor
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: massive_door
+    description: Translucent, but not transparent, this door constructed of condensed
+      water vapor is like nothing you have ever seen. It has no keyhole, but it does
+      have a stone-shaped depression floating centrally within it.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Throne Room)
+  description: There, on a mighty seat made of broken dreams, sits Emerald himself,
+    staring at you coldly, silently.
+  coords:
+    :x: 8
+    :y: 9
+    :z: 1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :high
+  monster_level_range: !ruby/range
+    begin: 5
+    end: 7
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Throne
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: throne
+    description: Made of what appears to be unfulfilled desires and latent, flawed
+      happiness, the well-crafted seat still looks kinda comfy.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Emerald
+    name: Emerald
+    description: A wily, beefy, tower of a man, champion of both wisdom and strength,
+      sporting a constant glint in his eyes.
+    face: gleaming
+    hands: tantalizing
+    mood: enraged
+    level: 15
+    hp_cur: 32
+    hp_max: 32
+    atk_lo: 28
+    atk_hi: 44
+    defense: 5
+    dexterity: 9
+    inventory: !ruby/object:Gemwarrior::Inventory
+      items:
+      - !ruby/object:Gemwarrior::SparklyThing
+        equipped: false
+        consumable: false
+        used: false
+        number_of_uses: 
+        name: Sparkly Thing(tm)
+        description: The sparkling that this thing does is unimaginably brilliant.
+        atk_lo: 
+        atk_hi: 
+        takeable: true
+        useable: true
+        equippable: false
+      weapon: 
+    rox: 35
+    xp: 22
+    battlecry: 'Ha ha ha ha ha! Prepare yourself: today your whole life crumbles!'
+    is_boss: true
+    defeated_text: "<^><^><^><^><^><^><^><^><^><^>\nYou beat Emerald! You win!\nYou
+      receive the \e[0;35;49mSparklyThing(tm)\e[0m and become the true \e[0;33;49mGem
+      Warrior\e[0m!\nYou decide to ignore \e[0;31;49mQueen Ruby\e[0m and take your
+      spoils back home\nwhere you live out the rest of your days staring at it, wondering\nwhat
+      it was all about.\n\nThank you for playing. Goodbye.\n<^><^><^><^><^><^><^><^><^><^>\n"
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Lounge)
+  description: Nothing but a simple couch, which looks very comfortable, exists in
+    this corner of the tower.
+  coords:
+    :x: 9
+    :y: 8
+    :z: 1
+  locs_connected:
+    :north: false
+    :east: false
+    :south: true
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Couch
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: couch
+    description: Ever wanted to sit on a cloud? Now is your chance.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (East Hallway)
+  description: Longish and neverending is what you might say about this stretch of
+    the tower.
+  coords:
+    :x: 9
+    :y: 7
+    :z: 1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: true
+    :west: false
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items: []
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Sky Tower (Kitchen)
+  description: This kitchen looks well-used, as appliances abound, and leftover food
+    sits atop counters.
+  coords:
+    :x: 9
+    :y: 6
+    :z: 1
+  locs_connected:
+    :north: true
+    :east: false
+    :south: false
+    :west: true
+  danger_level: :moderate
+  monster_level_range: !ruby/range
+    begin: 3
+    end: 4
+    excl: false
+  items:
+  - !ruby/object:Gemwarrior::Apple
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: apple
+    description: Reddish-orangeish in color, this fruit looks sweet, but it is heavy
+      and feels more like a rock you would sooner not bite into.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  - !ruby/object:Gemwarrior::Cup
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: cup
+    description: A nice stone mug, perfect for putting things into and then using
+      to carry such things from place to place.
+    atk_lo: 
+    atk_hi: 
+    takeable: true
+    useable: false
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+player: !ruby/object:Gemwarrior::Player
+  name: Player
+  description: |-
+    Picked to do battle against a wizened madman for a shiny something
+    or other for world-saving purposes.
+  face: facey
+  hands: handsy
+  mood: moody
+  level: 1
+  xp: 0
+  hp_cur: 30
+  hp_max: 30
+  atk_lo: 1
+  atk_hi: 2
+  defense: 5
+  dexterity: 5
+  inventory: !ruby/object:Gemwarrior::Inventory
+    items: []
+    weapon: 
+  rox: 0
+  stam_cur: 20
+  stam_max: 20
+  cur_coords: *2
+  special_abilities: []
+  monsters_killed: 0
+  items_taken: 0
+  movements_made: 0
+  rests_taken: 0
+  deaths: 0
+duration:
