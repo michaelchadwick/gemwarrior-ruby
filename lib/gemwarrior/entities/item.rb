@@ -26,6 +26,7 @@ module Gemwarrior
       status_text << "ATTACK: #{atk_lo}-#{atk_hi} \n".colorize(:white) unless atk_lo.nil?
       status_text << "TAKEABLE? #{takeable}\n".colorize(:white)
       status_text << "USEABLE? #{useable}\n".colorize(:white)
+      status_text << "USED? #{used}\n".colorize(:white)
       status_text << "EQUIPPABLE? #{equippable}\n".colorize(:white)
       status_text << "CONSUMABLE? #{consumable}\n".colorize(:white)
       status_text << "NUMBER OF USES? #{number_of_uses}\n".colorize(:white) unless number_of_uses.nil?
