@@ -27,7 +27,7 @@ def parse_options_cli
     new_skip:       false,
     resume_skip:    false,
     sound_enabled:  false,
-    sound_system:   nil,
+    sound_system:   'feep',
     sound_volume:   0.3,
     use_wordnik:    false, 
     extra_command:  nil
