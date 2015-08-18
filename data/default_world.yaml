@@ -1777,7 +1777,7 @@ locations:
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: Spinelia (Southeast)
-  description: The southeast of Spinelia contains a bunch of people, just kind of
+  description: The southeast of Spinelia contains a few people, just kind of
     hanging out.
   coords:
     :x: 8
@@ -1790,7 +1790,38 @@ locations:
     :west: true
   danger_level: :none
   monster_level_range: 
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::ThinMan
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: thin_man
+    description: An almost shockingly gaunt man is sitting on the ground, resting against a wall. He   
+      wears a patchwork quilt of a hat, and his slender frame is covered by a simple brown tunic. His feet 
+      point comically toward the sky in brown boots while his head dips down slightly, eyes watching 
+      something in the distance you can't see.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::DrunkMan
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: drunk_man
+    description: Some supernatural force is surely keeping this obviously smashed individual from 
+      toppling over to the ground. The inebriated fellow somehow continues to stumble about in a small 
+      circle near a smattering of shipping crates, looking simultaneously dazed and cheerful.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
@@ -1809,13 +1840,52 @@ locations:
     :west: true
   danger_level: :none
   monster_level_range: 
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::Pig
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: pig
+    description: Dirty, eating slop, but still kind of cute. Yep, this is a pig.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::Cow
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: cow
+    description: Grazing on some fake grass, unperturbed, this black and white herd animal looks bored.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::Goat
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: goat
+    description: The scruff is strong with this one as it chews through what appears to be a recent mystery novel most likely thrown into the pen by a passerby.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: Spinelia (Northwest)
-  description: Residences line the northwest corner of Spinela, each one similar to
+  description: Residences line the northwest corner of Spinelia, each one similar to
     each other, made of granite and stone, featuring a single window and a single
     door. One particular house's hallmark appears to be a rather fanciful woman leaning
     on its facade, looking shifty.
@@ -1830,7 +1900,22 @@ locations:
     :west: false
   danger_level: :none
   monster_level_range: 
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::ShiftyWoman
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: true
+    name: shifty_woman
+    description: Sharply dressed with impeccable style, you still can't shake the feeling that this 
+      otherwise ordinary woman is up to something. It might be the way she almost impulsively looks 
+      back and forth along the town street while rubbing her hands together menacingly.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
