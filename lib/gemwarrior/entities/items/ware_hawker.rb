@@ -2,8 +2,8 @@
 # Item::WareHawker
 
 require_relative '../item'
-require_relative 'herb'
-require_relative 'dagger'
+require_relative 'mace'
+require_relative 'spear'
 
 module Gemwarrior
   class WareHawker < Item
