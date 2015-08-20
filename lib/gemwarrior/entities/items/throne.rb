@@ -9,7 +9,7 @@ module Gemwarrior
       super
 
       self.name         = 'throne'
-      self.description  = 'Made of what appears to be unfulfilled desires and latent, flawed happiness, the well-crafted seat still looks kinda comfy.'
+      self.description  = 'Made of what appears to be unfulfilled desires and latent, flawed happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald sits in it, glaring at you.'
       self.atk_lo       = nil
       self.atk_hi       = nil
       self.takeable     = false

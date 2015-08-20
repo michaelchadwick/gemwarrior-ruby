@@ -331,6 +331,8 @@ module Gemwarrior
       puts  '----------------------------------------------------------------------'
       print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
       print "\n".ljust(12)
+      print "killed #{pl.bosses_killed.to_s.colorize(color: :white, background: :black)} boss(es)"
+      print "\n".ljust(12)
       print "picked up #{pl.items_taken.to_s.colorize(color: :white, background: :black)} item(s)"
       print "\n".ljust(12)
       print "traveled #{pl.movements_made.to_s.colorize(color: :white, background: :black)} time(s)"
@@ -343,7 +345,7 @@ module Gemwarrior
 
       # log stats to file in home directory
       File.open(GameOptions.data['log_file_path'], 'a') do |f|
-        f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} KIL:#{pl.monsters_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
+        f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} MK:#{pl.monsters_killed} BK:#{pl.bosses_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
 

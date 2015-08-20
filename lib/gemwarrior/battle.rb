@@ -3,6 +3,7 @@
 
 require_relative 'misc/player_levels'
 require_relative 'game_options'
+require_relative 'entities/items/sparkly_thing'
 
 module Gemwarrior
   class Battle
@@ -212,7 +213,7 @@ module Gemwarrior
       who_gets_wounded_start = ''
 
       if entity.eql?(monster)
-        who_gets_wounded_start = "  > You wound #{monster.name} for "
+        who_gets_wounded_start = "  > You wound #{monster.name} for ".colorize(:green)
         who_gets_wounded_end   = " point(s)!\n".colorize(:green)
       else
         who_gets_wounded_start = '  > You are wounded for '.colorize(:red)
@@ -265,35 +266,16 @@ module Gemwarrior
     def monster_death
       puts "  YOU HAVE DEFEATED #{monster.name.upcase}!\n".colorize(:green)
 
-      # stats
-      world.player.monsters_killed += 1
-
       if monster.is_boss
+        world.player.bosses_killed += 1
         # end game boss!
         if monster.name.eql?('Emerald')
-          Music::cue([
-            { frequencies: 'G3',  duration: 250 },
-            { frequencies: 'A3',  duration: 50 },
-            { frequencies: 'B3',  duration: 50 },
-            { frequencies: 'C4',  duration: 50 },
-            { frequencies: 'D4',  duration: 250 },
-            { frequencies: 'E4',  duration: 50 },
-            { frequencies: 'F#4', duration: 50 },
-            { frequencies: 'G4',  duration: 50 },
-            { frequencies: 'A4',  duration: 250 },
-            { frequencies: 'B4',  duration: 50 },
-            { frequencies: 'C5',  duration: 50 },
-            { frequencies: 'D5',  duration: 50 },
-            { frequencies: 'E5',  duration: 50 },
-            { frequencies: 'F#5', duration: 50 },
-            { frequencies: 'G5',  duration: 1000 }
-          ])
-
-          puts monster.defeated_text
-          gets
-          return 'exit'
+          # game ending: initiate
+          return monster.initiate_ending(world)
         else
           puts '  You just beat a boss monster. Way to go!'
+          puts
+          puts '  You get the following spoils of war:'
           puts "   XP : #{monster.xp}".colorize(:green)
           puts "   ROX: #{monster.rox}".colorize(:green)
           print_battle_line
@@ -301,6 +283,8 @@ module Gemwarrior
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
+        world.player.monsters_killed += 1
+        
         puts '  You get the following spoils of war:'
         puts "   XP   : #{monster.xp}".colorize(:green)
         puts "   ROX  : #{monster.rox}".colorize(:green)

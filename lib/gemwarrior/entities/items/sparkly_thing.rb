@@ -8,7 +8,7 @@ module Gemwarrior
     def initialize
       super
 
-      self.name         = 'Sparkly Thing(tm)'
+      self.name         = 'sparkly_thing'
       self.description  = 'The sparkling that this thing does is unimaginably brilliant.'
       self.atk_lo       = nil
       self.atk_hi       = nil

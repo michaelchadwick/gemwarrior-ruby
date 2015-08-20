@@ -20,7 +20,7 @@ module Gemwarrior
     include Formatting
 
     attr_accessor :stam_cur, :stam_max, :cur_coords, :special_abilities,
-                  :monsters_killed, :items_taken, :movements_made,    
+                  :monsters_killed, :bosses_killed, :items_taken, :movements_made,    
                   :rests_taken, :deaths
 
     def generate_name
@@ -214,12 +214,18 @@ module Gemwarrior
     end
 
     def attack(world, monster)
-      battle = Battle.new(world: world, player: self, monster: monster)
-      result = battle.start
-      if result.eql?('death')
-        return 'death'
-      elsif result.eql?('exit')
-        return 'exit'
+      if monster.is_dead
+        { type: 'message', data: 'That monster is now dead forever and cannot be attacked. You must have done them a good one.' }
+      else
+        battle = Battle.new(world: world, player: self, monster: monster)
+        result = battle.start
+        if result.eql?('death')
+          return 'death'
+        elsif result.eql?('exit')
+          return 'exit'
+        else
+          return result
+        end
       end
     end
 

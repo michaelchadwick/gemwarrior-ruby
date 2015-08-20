@@ -39,7 +39,7 @@ module Gemwarrior
 
       # create new world based on default template
       self.world               = init_world
-      
+
       # update some player aspects to make more dynamic
       world.player.name        = world.player.generate_name
       world.player.face        = world.player.generate_face
@@ -49,6 +49,7 @@ module Gemwarrior
       world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
       
       world.duration           = { mins: 0, secs: 0, ms: 0 }
+      world.emerald_beaten     = false
 
       # create options file if not existing
       update_options_file

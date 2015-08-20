@@ -16,7 +16,7 @@ module Gemwarrior
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
-    attr_accessor :monsters, :locations, :player, :duration
+    attr_accessor :monsters, :locations, :player, :duration, :emerald_beaten
 
     def print_vars
       puts "======================\n"

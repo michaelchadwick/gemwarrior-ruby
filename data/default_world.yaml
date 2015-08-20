@@ -232,7 +232,7 @@ monsters:
       consumable: false
       used: false
       number_of_uses: 
-      name: Sparkly Thing(tm)
+      name: sparkly_thing
       description: The sparkling that this thing does is unimaginably brilliant.
       atk_lo: 
       atk_hi: 
@@ -249,6 +249,7 @@ monsters:
     Warrior\e[0m!\nYou decide to ignore \e[0;31;49mQueen Ruby\e[0m and take your spoils
     back home\nwhere you live out the rest of your days staring at it, wondering\nwhat
     it was all about.\n\nThank you for playing. Goodbye.\n<^><^><^><^><^><^><^><^><^><^>\n"
+  is_dead: false
 - !ruby/object:Gemwarrior::Garynetty
   name: Garynetty
   description: Conservative, yet odd, the Garynetty is not messing around.
@@ -2240,7 +2241,8 @@ locations:
     number_of_uses: 
     name: throne
     description: Made of what appears to be unfulfilled desires and latent, flawed
-      happiness, the well-crafted seat still looks kinda comfy.
+      happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald
+      sits in it, glaring at you.
     atk_lo: 
     atk_hi: 
     takeable: false
@@ -2250,8 +2252,9 @@ locations:
   bosses_abounding:
   - !ruby/object:Gemwarrior::Emerald
     name: Emerald
-    description: A wily, beefy, tower of a man, champion of both wisdom and strength,
-      sporting a constant glint in his eyes.
+    description: A wily, beefy, tower of a man, Emerald looks to be a champion of
+      both wisdom, from what you've heard, AND strength, from what you plainly see.
+      He sports a permanent scowl as he faces you, dead-on.
     face: gleaming
     hands: tantalizing
     mood: enraged
@@ -2269,7 +2272,7 @@ locations:
         consumable: false
         used: false
         number_of_uses: 
-        name: Sparkly Thing(tm)
+        name: sparkly_thing
         description: The sparkling that this thing does is unimaginably brilliant.
         atk_lo: 
         atk_hi: 
@@ -2279,13 +2282,10 @@ locations:
       weapon: 
     rox: 35
     xp: 22
-    battlecry: 'Ha ha ha ha ha! Prepare yourself: today your whole life crumbles!'
+    battlecry: 'You have come for the SparklyThing(tm), I see. To that I say: Ha ha
+      ha ha ha! Prepare yourself fool: today your whole life crumbles!'
     is_boss: true
-    defeated_text: "<^><^><^><^><^><^><^><^><^><^>\nYou beat Emerald! You win!\nYou
-      receive the \e[0;35;49mSparklyThing(tm)\e[0m and become the true \e[0;33;49mGem
-      Warrior\e[0m!\nYou decide to ignore \e[0;31;49mQueen Ruby\e[0m and take your
-      spoils back home\nwhere you live out the rest of your days staring at it, wondering\nwhat
-      it was all about.\n\nThank you for playing. Goodbye.\n<^><^><^><^><^><^><^><^><^><^>\n"
+    is_dead: false
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: Sky Tower (Lounge)
@@ -2391,6 +2391,37 @@ locations:
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
+- !ruby/object:Gemwarrior::Location
+  name: Queen Room
+  description: Your surroundings contain four walls with no windows, a vaulted ceiling above, and a tile floor below, all immaculately decorated. A small throne lies before you with a woman sitting on it. You must be in the presence of Queen Ruby herself.
+  coords:
+    :x: 5
+    :y: 5
+    :z: 2
+  locs_connected:
+    :north: false
+    :east: false
+    :south: false
+    :west: false
+  danger_level: :none
+  monster_level_range: 
+  items:
+  - !ruby/object:Gemwarrior::QueenRuby
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: queen_ruby
+    description: Queen Ruby glimmers like she was made from the substance of her name. She wears a wan smile, and her hands are delicately intertwined as she sits patiently.
+    atk_lo: 
+    atk_hi: 
+    takeable: false
+    useable: true
+    equippable: false
+    talkable: true
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
 player: !ruby/object:Gemwarrior::Player
   name: Player
   description: |-
@@ -2416,8 +2447,10 @@ player: !ruby/object:Gemwarrior::Player
   cur_coords: *2
   special_abilities: []
   monsters_killed: 0
+  bosses_killed: 0
   items_taken: 0
   movements_made: 0
   rests_taken: 0
   deaths: 0
+emerald_beaten: false
 duration:
