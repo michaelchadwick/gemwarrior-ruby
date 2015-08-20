@@ -81,8 +81,8 @@ def parse_options_cli
       options[:use_wordnik] = true
     end
 
-    opts.on('-x', '--extra COMMAND', 'Run a command immediately upon beginning the game') do |xc|
-      options[:extra_command] = xc.to_s
+    opts.on('-x', '--extra COMMAND,PARAM1,PARAM2,PARAM3', String, 'Run a command, with optional params, immediately upon beginning the game') do |xc|
+      options[:extra_command] = xc.gsub(',',' ')
     end
   end
 
