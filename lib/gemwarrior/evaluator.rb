@@ -282,7 +282,7 @@ module Gemwarrior
       case command
       when 'character', 'c'
         # bypass puts so it prints out with newlines properly
-        print world.player.check_self(GameOptions.data['debug_mode'])
+        print world.player.check_self
       when 'inventory', 'i'
         if param1
           world.player.inventory.describe_item(param1)
@@ -571,6 +571,16 @@ module Gemwarrior
               player_death_resurrection
             elsif result.eql?('exit')
               return 'exit'
+            end
+
+            unless result.nil?
+              case result[:type]
+              when 'message'
+                result[:data]
+              when 'move'
+                world.player.cur_coords = world.location_coords_by_name(result[:data])
+                world.describe(world.location_by_coords(world.player.cur_coords))
+              end
             end
           else
             ERROR_ATTACK_PARAM_INVALID
