@@ -27,7 +27,7 @@ module Gemwarrior
       desc_text =  "\"#{name_display}\"\n".colorize(:yellow)
       desc_text << "(#{name})\n".colorize(:green)
       desc_text << "#{description}\n".colorize(:white)
-      desc_text << "ATTACK_RANGE: #{atk_lo}-#{atk_hi} \n".colorize(:white)
+      desc_text << "ATTACK_RANGE: #{atk_lo}-#{atk_hi}\n".colorize(:white)
       desc_text << "TAKEABLE?     #{takeable}\n".colorize(:white)
       desc_text << "USEABLE?      #{useable}\n".colorize(:white)
       desc_text << "EQUIPPABLE?   #{equippable}\n".colorize(:white)

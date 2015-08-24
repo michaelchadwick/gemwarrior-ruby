@@ -9,6 +9,8 @@ module Gemwarrior
                   :is_armor
 
     def initialize
+      super
+
       self.defense  = 0
       self.is_armor = true
     end

@@ -37,15 +37,15 @@ module Gemwarrior
       GameOptions.add 'sound_system', options.fetch(:sound_system)
       GameOptions.add 'sound_volume', options.fetch(:sound_volume)
       GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
-      binding.pry
+
       # add classes for creatures, monsters, people, items, weapons, and armor to game
       # also add them to the global GameAssets
       init_creatures
       init_monsters
       init_people
       init_items
-      init_armor
       init_weapons
+      init_armor
 
       # create new world based on default template
       self.world               = init_world
@@ -121,17 +121,17 @@ module Gemwarrior
       end
     end
 
-    def init_armor
-      Dir.glob(File.expand_path('../entities/armor/*.rb', __FILE__)).each do |armor|
-        require_relative armor
-        GameArmor.add(file_to_class(armor))
-      end
-    end
-
     def init_weapons
       Dir.glob(File.expand_path('../entities/weapons/*.rb', __FILE__)).each do |weapon|
         require_relative weapon
         GameWeapons.add(file_to_class(weapon))
+      end
+    end
+
+    def init_armor
+      Dir.glob(File.expand_path('../entities/armor/*.rb', __FILE__)).each do |armor|
+        require_relative armor
+        GameArmor.add(file_to_class(armor))
       end
     end
 

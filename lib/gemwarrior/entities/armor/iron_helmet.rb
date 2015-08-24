@@ -4,7 +4,7 @@
 require_relative '../armor'
 
 module Gemwarrior
-  class IronHelment < Armor
+  class IronHelmet < Armor
     def initialize
       super
 
