@@ -2,6 +2,7 @@
 # World where the locations, monsters, items, etc. exist
 
 require_relative 'game_options'
+require_relative 'game_assets'
 require_relative 'inventory'
 require_relative 'entities/item'
 require_relative 'entities/items/herb'
@@ -16,16 +17,180 @@ module Gemwarrior
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
-    attr_accessor :monsters, :locations, :player, :duration, :emerald_beaten
+    attr_accessor :monsters, :locations, :weapons, :player, :duration, :emerald_beaten
 
-    def print_vars
+    def describe(point)
+      desc_text = "[>>> #{point.name.upcase} <<<]".colorize(:cyan)
+
+      if GameOptions.data['debug_mode']
+        desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
+      end
+
+      desc_text << "\n"
+      desc_text << point.description
+
+      point.populate_monsters(GameMonsters.data) unless point.checked_for_monsters?
+
+      desc_text << "\n >> Monster(s):  #{point.list_monsters.join(', ')}".colorize(:yellow) unless point.list_monsters.empty?
+      desc_text << "\n >> Boss(es):    #{point.list_bosses.join(', ')}".colorize(:red) unless point.list_bosses.empty?
+      desc_text << "\n >> Thing(s):    #{point.list_items.join(', ')}".colorize(:white) unless point.list_items.empty?
+      desc_text << "\n >> Path(s):     #{point.list_paths.join(', ')}".colorize(:white)
+
+      if GameOptions.data['debug_mode']
+        desc_text << "\n >>> Actionable: ".colorize(color: :red, background: :grey)
+        desc_text << point.list_actionable_words.colorize(color: :white, background: :grey)
+      end
+
+      desc_text
+    end
+
+    def describe_entity(point, entity_name)
+      entity_name.downcase!
+
+      if point.contains_item?(entity_name)
+        point.items.each do |i|
+          if i.name.downcase.eql?(entity_name)
+            if GameOptions.data['debug_mode']
+              return i.describe_detailed
+            else
+              return i.describe
+            end
+          end
+        end
+      elsif point.has_monster?(entity_name)
+        point.monsters_abounding.each do |m|
+          if m.name.downcase.eql?(entity_name)
+            if GameOptions.data['debug_mode']
+              return m.describe_detailed
+            else
+              return m.describe
+            end
+          end
+        end
+      elsif point.has_boss?(entity_name)
+        point.bosses_abounding.each do |b|
+          if b.name.downcase.eql?(entity_name)
+            if GameOptions.data['debug_mode']
+              return b.describe_detailed
+            else
+              return b.describe
+            end
+          end
+        end
+      elsif player.inventory.contains_item?(entity_name)
+        player.inventory.describe_item(entity_name)
+      else
+        ERROR_DESCRIBE_ENTITY_INVALID
+      end
+    end
+
+    def list(param, details = false)
+      case param
+      when 'players'
+        puts '[PLAYERS]'.colorize(:yellow)
+        if details
+          player.check_self(false)
+        else
+          ">> players: #{player.name}"
+        end
+      when 'creatures'
+        puts "[CREATURES](#{GameCreatures.data.length})".colorize(:yellow)
+        if details
+          GameCreatures.data.map { |c| print c.describe_detailed }
+          return
+        else
+          ">> creatures: #{GameCreatures.data.map(&:name).join(', ')}"
+        end
+      when 'items'
+        puts "[ITEMS](#{GameItems.data.length})".colorize(:yellow)
+        if details
+          GameItems.data.map { |i| print i.describe_detailed }
+          return
+        else
+          ">> items: #{GameItems.data.map(&:name).join(', ')}"
+        end
+      when 'locations'
+        puts "[LOCATIONS](#{locations.length})".colorize(:yellow)
+        if details
+          locations.map { |l| print l.describe_detailed }
+          return
+        else
+          ">> locations: #{locations.map(&:name).join(', ')}"
+        end
+      when 'monsters'
+        puts "[MONSTERS](#{GameMonsters.data.length})".colorize(:yellow)
+        if details
+          GameMonsters.data.map { |m| print m.describe_detailed }
+          return
+        else
+          ">> monsters: #{GameMonsters.data.map(&:name).join(', ')}"
+        end
+      when 'people'
+        puts "[PEOPLE](#{GamePeople.data.length})".colorize(:yellow)
+        if details
+          GamePeople.data.map { |p| print p.describe_detailed }
+          return
+        else
+          ">> people: #{GamePeople.data.map(&:name).join(', ')}"
+        end
+      when 'weapons'
+        puts "[WEAPONS](#{GameWeapons.data.length})".colorize(:yellow)
+        if details
+          GameWeapons.data.map { |w| print w.describe_detailed }
+          return
+        else
+          ">> weapons: #{GameWeapons.data.map(&:name).join(', ')}"
+        end
+      else
+        ERROR_LIST_PARAM_INVALID
+      end
+    end
+
+    def location_by_coords(coords)
+      locations.each do |l|
+        if l.coords.eql?(coords)
+          return l
+        end
+      end
+      return nil
+    end
+
+    def location_coords_by_name(name)
+      locations.each do |l|
+        if l.name.downcase.eql?(name.downcase) or l.name_display.downcase.eql?(name.downcase)
+          return l.coords
+        end
+      end
+      return nil
+    end
+
+    def can_move?(direction)
+      location_by_coords(player.cur_coords).has_loc_to_the?(direction)
+    end
+
+    def has_monster_to_attack?(monster_name)
+      possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
+
+      possible_combatants.each do |combatant|
+        if combatant.downcase.eql?(monster_name.downcase)
+          return true
+        end
+      end
+
+      return false
+    end
+
+    def print_vars(show_details = false)
       puts "======================\n"
       puts "All Variables in World\n"
       puts "======================\n"
-      puts "#{list('players', true)}\n"
-      puts "#{list('monsters', true)}\n\n"
-      puts "#{list('items', true)}\n\n"
-      puts "#{list('locations', true)}\n"
+      puts "#{list('players', show_details)}\n\n"
+      puts "#{list('creatures', show_details)}\n\n"
+      puts "#{list('monsters', show_details)}\n\n"
+      puts "#{list('items', show_details)}\n\n"
+      puts "#{list('weapons', show_details)}\n\n"
+      puts "#{list('locations', show_details)}\n"
+      puts
     end
 
     def print_map(floor)
@@ -70,152 +235,6 @@ module Gemwarrior
         puts '|O| = player'
       end
       return
-    end
-
-    def list(param, details = false)
-      case param
-      when 'players'
-        puts '[PLAYERS]'
-        player.check_self(false)
-      when 'monsters'
-        puts "[MONSTERS](#{monsters.length})".colorize(:yellow)
-        if details
-          monsters.map { |m| print m.describe }
-          return
-        else
-          ">> monsters: #{monsters.map(&:name).join(', ')}"
-        end
-      when 'items'
-        item_count = 0
-        locations.each do |l|
-          l.items.each do
-            item_count += 1
-          end
-        end
-        puts "[ITEMS](#{item_count})".colorize(:yellow)
-        if details
-          locations.each do |l|
-            l.items.map { |i| print i.describe }
-          end
-          return
-        else
-          item_list = []
-          locations.each do |l|
-            l.items.map { |i| item_list << i.name }
-          end
-          ">> #{item_list.sort.join(', ')}"
-        end
-      when 'locations'
-        puts "[LOCATIONS](#{locations.length})".colorize(:yellow)
-        if details
-          locations.map { |l| print l.status }
-          return
-        else
-          ">> #{locations.map(&:name).join(', ')}"
-        end
-      else
-        ERROR_LIST_PARAM_INVALID
-      end
-    end
-
-    def location_by_coords(coords)
-      locations.each do |l|
-        if l.coords.eql?(coords)
-          return l
-        end
-      end
-      return nil
-    end
-
-    def location_coords_by_name(name)
-      locations.each do |l|
-        if l.name.downcase.eql?(name.downcase)
-          return l.coords
-        end
-      end
-      return nil
-    end
-
-    def describe(point)
-      desc_text = ''
-      desc_text << "[>>> #{point.name.upcase} <<<]".colorize(:cyan)
-
-      if GameOptions.data['debug_mode']
-        desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)
-      end
-
-      desc_text << "\n"
-      desc_text << point.description.colorize(:green)
-
-      point.populate_monsters(self.monsters) unless point.checked_for_monsters?
-
-      desc_text << "\n >> Monster(s):  #{point.list_monsters.join(', ')}".colorize(:yellow) unless point.list_monsters.empty?
-      desc_text << "\n >> Boss(es):    #{point.list_bosses.join(', ')}".colorize(:red) unless point.list_bosses.empty?
-      desc_text << "\n >> Thing(s):    #{point.list_items.join(', ')}".colorize(:white) unless point.list_items.empty?
-      desc_text << "\n >> Path(s):     #{point.list_paths.join(', ')}".colorize(:white)
-
-      if GameOptions.data['debug_mode']
-        desc_text << "\n >>> Actionable: ".colorize(color: :red, background: :grey)
-        desc_text << point.list_actionable_words.colorize(color: :white, background: :grey)
-      end
-
-      return desc_text
-    end
-
-    def describe_entity(point, entity_name)
-      entity_name.downcase!
-
-      if point.has_item?(entity_name)
-        point.items.each do |i|
-          if i.name.downcase.eql?(entity_name)
-            if GameOptions.data['debug_mode']
-              return i.describe
-            else
-              return i.description
-            end
-          end
-        end
-      elsif point.has_monster?(entity_name)
-        point.monsters_abounding.each do |m|
-          if m.name.downcase.eql?(entity_name)
-            if GameOptions.data['debug_mode']
-              return m.describe
-            else
-              return m.description
-            end
-          end
-        end
-      elsif point.has_boss?(entity_name)
-        point.bosses_abounding.each do |b|
-          if b.name.downcase.eql?(entity_name)
-            if GameOptions.data['debug_mode']
-              return b.describe
-            else
-              return b.description
-            end
-          end
-        end
-      elsif player.inventory.contains_item?(entity_name)
-        player.inventory.describe_item(entity_name)
-      else
-        ERROR_DESCRIBE_ENTITY_INVALID
-      end
-    end
-
-    def can_move?(direction)
-      location_by_coords(player.cur_coords).has_loc_to_the?(direction)
-    end
-
-    def has_monster_to_attack?(monster_name)
-      possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
-
-      possible_combatants.each do |combatant|
-        if combatant.downcase.eql?(monster_name.downcase)
-          return true
-        end
-      end
-
-      return false
     end
   end
 end

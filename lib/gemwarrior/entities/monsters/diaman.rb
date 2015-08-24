@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/diaman.rb
-# Diaman monster
+# Entity::Creature::Monster::Diaman
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'diaman'
+      self.name_display = 'Diaman'
       self.description  = 'Crystalline structure in the form of a man, lumbering toward you, with outstretched, edged pincers.'
+      self.battlecry    = 'Precious human, prepare to be lost to the annals of time!'
       self.face         = 'bright'
       self.hands        = 'jagged'
       self.mood         = 'adamant'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = 'Precious human, prepare to be lost to the annals of time!'
     end
   end
 end

@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/citrinaga.rb
-# Citrinaga monster
+# Entity::Creature::Monster::Citrinaga
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'citrinaga'
+      self.name_display = 'Citrinaga'
       self.description  = 'Refreshing in its shiny, gleaming effectiveness at ending your life.'
+      self.battlecry    = 'Slice and dice so nice!'
       self.face         = 'shiny'
       self.hands        = 'glistening'
       self.mood         = 'staid'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 3))
-
-      self.battlecry    = 'Slice and dice so nice!'
     end
   end
 end

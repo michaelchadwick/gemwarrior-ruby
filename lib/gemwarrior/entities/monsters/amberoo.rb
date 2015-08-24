@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/amberoo.rb
-# Amberoo monster
+# Entity::Creature::Monster::Amberoo
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'amberoo'
+      self.name_display = 'Amberoo'
       self.description  = 'Fossilized and jumping around like an adorably dangerous threat from the past.'
+      self.battlecry    = 'I\'m hoppin\' mad!'
       self.face         = 'punchy'
       self.hands        = 'balled'
       self.mood         = 'jumpy'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = 'I\'m hoppin\' mad!'
     end
   end
 end

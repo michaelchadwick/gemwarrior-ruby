@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/letter.rb
-# Item::Letter
+# Entity::Item::Letter
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'letter'
+      self.name_display = 'Letter'
       self.description  = 'A single page of thin paper, folded at the middle, with some excellent penmanship impressed upon it.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

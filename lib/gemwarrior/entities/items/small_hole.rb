@@ -1,9 +1,9 @@
 # lib/gemwarrior/entities/items/small_hole.rb
-# Item::SmallHole
+# Entity::Item::SmallHole
 
 require_relative '../item'
 require_relative 'herb'
-require_relative 'dagger'
+require_relative '../weapons/dagger'
 
 module Gemwarrior
   class SmallHole < Item
@@ -18,27 +18,26 @@ module Gemwarrior
       super
 
       self.name         = 'small_hole'
+      self.name_display = 'Small Hole'
       self.description  = 'Amongst the rubble of the alcove, a small hole, barely big enough for a rodent, exists in an absently-minded way near the bottom of the wall.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
-    
+
     def use(player = nil)
-      puts 'You lower yourself to the ground and attempt to peer in the hole in the wall. Just as you begin to think this is a fruitless endeavor, a pair of bright, beady eyes manifest, and an unexpectedly low voice begins speaking to you:'
-      puts
+      if !self.used
+        puts 'You lower yourself to the ground and attempt to peer in the hole in the wall. Just as you begin to think this is a fruitless endeavor, a pair of bright, beady eyes manifest, and an unexpectedly low voice begins speaking to you:'
+        puts
+      end
 
       rat_shop(player)
     end
 
-    def reuse(player = nil)
-      rat_shop(player)
-    end
+    private
 
     def rat_shop(player)
       items_purchased = []
+
+      herb = Herb.new
+      dagger = Dagger.new
 
       puts '>> "Hello, wanderer. Welcome to my establishment, as it were. Are you in need of anything?"'
       puts
@@ -46,8 +45,9 @@ module Gemwarrior
       puts
       puts 'Rockney\'s Hole in the Wall'
       puts '--------------------------'
-      puts "(1) Herb     - #{PRICE_HERB}  rox"
+      puts "(1) Herb     - #{PRICE_HERB} rox"
       puts "(2) Dagger   - #{PRICE_DAGGER} rox"
+      puts "    Attack: +#{dagger.atk_lo}-#{dagger.atk_hi} (current: #{player.atk_lo}-#{player.atk_hi})"
       puts
       puts '>> "What are you in need of?"'
 

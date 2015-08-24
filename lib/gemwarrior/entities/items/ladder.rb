@@ -1,23 +1,19 @@
 # lib/gemwarrior/entities/items/ladder.rb
-# Item::Ladder
+# Entity::Item::Ladder
 
 require_relative '../item'
 
 module Gemwarrior
   class Ladder < Item
     # CONSTANTS
-    USE_TEXT = '*** THUMP ***'
+    USE_TEXT = '** THUMP **'
 
     def initialize
       super
 
       self.name         = 'ladder'
+      self.name_display = 'Ladder'
       self.description  = 'Rickety and crudely-fashioned, this ladder descends down into the dropoff, hopefully heading towards something...anything.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)
@@ -32,7 +28,7 @@ module Gemwarrior
       puts 'The last couple of steps are more slippery than you anticipated, so you end up fumbling them, falling a few feet onto the hard ground below. When you regain your composure, you notice your conveyance for descending is now far above you and it is, unfortunately, your closest known exit.'
       puts
 
-      { type: 'move_dangerous', data: 'Metal Tunnel (South Entrance)' }
+      { type: 'move_dangerous', data: 'metal_tunnel-south_entrance' }
     end
   end
 end

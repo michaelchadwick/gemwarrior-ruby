@@ -1,43 +1,49 @@
 # lib/gemwarrior/entities/monster.rb
-# Monster creature
+# Entity::Creature::Monster
 
 require_relative 'creature'
 require_relative 'items/herb'
+require_relative 'items/bullet'
 
 module Gemwarrior
   class Monster < Creature
-    INVENTORY_ITEMS_DEFAULT = [Herb.new]
+    ITEM_POOL = [Herb.new, Bullet.new]
 
-    attr_accessor :inventory, :battlecry, :is_boss, :is_dead
+    attr_accessor :battlecry, 
+                  :is_boss, 
+                  :is_dead
 
     def initialize
-      if [true, false].sample
-        self.inventory = Inventory.new([INVENTORY_ITEMS_DEFAULT[rand(0..INVENTORY_ITEMS_DEFAULT.length-1)]])
-      else
-        self.inventory = Inventory.new
-      end
+      super
+
+      self.inventory  = Inventory.new
+      self.is_dead    = false
+      3.times do
+        if [true, false].sample
+          self.inventory.add_item(ITEM_POOL[rand(0..ITEM_POOL.length-1)])
+        end
+      end  
     end
 
-    def describe
-      status_text =  name.upcase.colorize(:green)
-      status_text << '(BOSS)'.ljust(13).colorize(:yellow) if is_boss
-      status_text << "\n"
-      status_text << "#{description}".colorize(:white)
-      status_text << "\n"
-
-      status_text << "DEAD? #{is_dead}\n" unless is_dead.nil?
-      status_text << "LVL  : #{level}\n".colorize(:white)
-      status_text << "HP   : #{hp_cur}/#{hp_max}\n".colorize(:white)
-      status_text << "ATK  : #{atk_lo}-#{atk_hi}\n".colorize(:white)
-      status_text << "DEF  : #{defense}\n".colorize(:white)
-      status_text << "DEX  : #{dexterity}\n".colorize(:white)
-      status_text << "ROX  : #{rox}\n".colorize(:white)
-      status_text << "XP   : #{xp}\n".colorize(:white)
-      status_text << "FACE : #{face}\n".colorize(:white)
-      status_text << "HANDS: #{hands}\n".colorize(:white)
-      status_text << "MOOD : #{mood}\n".colorize(:white)
-      status_text << "INV  : #{inventory.list_contents}".colorize(:white)
-      status_text << "\n"
+    def describe_detailed
+      desc_text =  "\"#{name_display}\"".colorize(:yellow)
+      desc_text << '(BOSS)'.ljust(13).colorize(:yellow) if is_boss
+      desc_text << "\n"
+      desc_text << "(#{name})\n".colorize(:green)
+      desc_text << "#{description}\n".colorize(:white)
+      desc_text << "DEAD?  #{is_dead}\n"
+      desc_text << "FACE : #{face}\n".colorize(:white)
+      desc_text << "HANDS: #{hands}\n".colorize(:white)
+      desc_text << "MOOD : #{mood}\n".colorize(:white)
+      desc_text << "LVL  : #{level}\n".colorize(:white)
+      desc_text << "XP   : #{xp}\n".colorize(:white)
+      desc_text << "HP   : #{hp_cur}/#{hp_max}\n".colorize(:white)
+      desc_text << "ATK  : #{atk_lo}-#{atk_hi}\n".colorize(:white)
+      desc_text << "DEF  : #{defense}\n".colorize(:white)
+      desc_text << "DEX  : #{dexterity}\n".colorize(:white)
+      desc_text << "ROX  : #{rox}\n".colorize(:white)
+      desc_text << "INV  : #{inventory.list_contents}\n".colorize(:white)
+      desc_text
     end
   end
 end

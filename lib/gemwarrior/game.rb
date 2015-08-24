@@ -5,12 +5,14 @@ require 'colorize'
 require 'matrext'
 
 require_relative 'misc/animation'
+require_relative 'misc/formatting'
 require_relative 'misc/music'
 require_relative 'world'
 require_relative 'evaluator'
 require_relative 'repl'
 require_relative 'inventory'
 require_relative 'game_options'
+require_relative 'game_assets'
 
 module Gemwarrior
   class Game
@@ -20,8 +22,11 @@ module Gemwarrior
     ROX_DEFAULT                   = 0
     ROX_DEBUG                     = 300
 
-    attr_accessor :world, :evaluator, :repl,
-                  :monsters, :items
+    attr_accessor :world, 
+                  :evaluator, 
+                  :repl,
+                  :monsters, 
+                  :weapons
 
     def initialize(options)
       # set game options
@@ -32,10 +37,15 @@ module Gemwarrior
       GameOptions.add 'sound_system', options.fetch(:sound_system)
       GameOptions.add 'sound_volume', options.fetch(:sound_volume)
       GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
-
-      # add classes for monsters and items to game
+      binding.pry
+      # add classes for creatures, monsters, people, items, weapons, and armor to game
+      # also add them to the global GameAssets
+      init_creatures
       init_monsters
+      init_people
       init_items
+      init_armor
+      init_weapons
 
       # create new world based on default template
       self.world               = init_world
@@ -73,33 +83,55 @@ module Gemwarrior
 
     private
 
-    def init_monsters
-      Dir.glob(File.expand_path('../entities/monsters/*.rb', __FILE__)).each do |item|
-        require_relative item
-      end
-      Dir.glob(File.expand_path('../entities/monsters/bosses/*.rb', __FILE__)).each do |item|
-        require_relative item
-      end
+    # convert an entity filename to a class so it can be added to game asset singleton registry
+    def file_to_class(filename)
+      filename_to_string = Formatting::upstyle(filename.split('/').last.split('.')[0], no_space = true)
+      string_to_class = Gemwarrior.const_get(filename_to_string).new
+    end
 
-      self.monsters = [
-        Alexandrat.new,
-        Amberoo.new,
-        Amethystle.new,
-        Apatiger.new,
-        Aquamarine.new,
-        Bloodstorm.new,
-        Citrinaga.new,
-        Coraliz.new,
-        Cubicat.new,
-        Diaman.new,
-        Emerald.new,
-        Garynetty.new
-      ]
+    def init_creatures
+      Dir.glob(File.expand_path('../entities/creatures/*.rb', __FILE__)).each do |creature|
+        require_relative creature
+        GameCreatures.add(file_to_class(creature))
+      end
+    end
+
+    def init_monsters
+      Dir.glob(File.expand_path('../entities/monsters/*.rb', __FILE__)).each do |monster|
+        require_relative monster
+        GameMonsters.add(file_to_class(monster))
+      end
+      Dir.glob(File.expand_path('../entities/monsters/bosses/*.rb', __FILE__)).each do |boss|
+        require_relative boss
+        GameMonsters.add(file_to_class(boss))
+      end
+    end
+
+    def init_people
+      Dir.glob(File.expand_path('../entities/people/*.rb', __FILE__)).each do |person|
+        require_relative person
+        GamePeople.add(file_to_class(person))
+      end
     end
 
     def init_items
       Dir.glob(File.expand_path('../entities/items/*.rb', __FILE__)).each do |item|
         require_relative item
+        GameItems.add(file_to_class(item))
+      end
+    end
+
+    def init_armor
+      Dir.glob(File.expand_path('../entities/armor/*.rb', __FILE__)).each do |armor|
+        require_relative armor
+        GameArmor.add(file_to_class(armor))
+      end
+    end
+
+    def init_weapons
+      Dir.glob(File.expand_path('../entities/weapons/*.rb', __FILE__)).each do |weapon|
+        require_relative weapon
+        GameWeapons.add(file_to_class(weapon))
       end
     end
 

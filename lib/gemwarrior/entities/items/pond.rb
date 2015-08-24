@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/pond.rb
-# Item::Pond
+# Entity::Item::Pond
 
 require_relative '../item'
 
@@ -12,12 +12,8 @@ module Gemwarrior
       super
 
       self.name         = 'pond'
+      self.name_display = 'Pond'
       self.description  = 'This tiny pool of water self-ripples every minute or so. Small, floating insects buzz around merrily. A small plaque lays at the foot, reading: "If the right objects curious doth possess, touch the water\'s surface and you\'ll get redress."'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

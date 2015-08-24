@@ -1,278 +1,8 @@
 --- !ruby/object:Gemwarrior::World
-monsters:
-- !ruby/object:Gemwarrior::Alexandrat
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  name: alexandrat
-  description: Tiny, but fierce, color-changing rodent.
-  face: ugly
-  hands: gnarled
-  mood: unchipper
-  level: 1
-  hp_cur: 3
-  hp_max: 3
-  atk_lo: 1
-  atk_hi: 1
-  defense: 1
-  dexterity: 3
-  rox: 3
-  xp: 2
-  battlecry: Bitey, bitey!
-- !ruby/object:Gemwarrior::Amberoo
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - &1 !ruby/object:Gemwarrior::Herb
-      equipped: false
-      consumable: true
-      used: false
-      number_of_uses: 
-      name: herb
-      description: Green and leafy, this wild herb looks edible.
-      atk_lo: 
-      atk_hi: 
-      takeable: true
-      useable: true
-      equippable: false
-    weapon: 
-  name: amberoo
-  description: Fossilized and jumping around like an adorably dangerous threat from
-    the past.
-  face: punchy
-  hands: balled
-  mood: jumpy
-  level: 1
-  hp_cur: 2
-  hp_max: 2
-  atk_lo: 1
-  atk_hi: 2
-  defense: 2
-  dexterity: 4
-  rox: 2
-  xp: 1
-  battlecry: I'm hoppin' mad!
-- !ruby/object:Gemwarrior::Amethystle
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - *1
-    weapon: 
-  name: amethystle
-  description: Sober and contemplative, it moves with purplish tentacles swaying in
-    the breeze.
-  face: sharp
-  hands: loose
-  mood: mesmerizing
-  level: 2
-  hp_cur: 4
-  hp_max: 4
-  atk_lo: 3
-  atk_hi: 5
-  defense: 2
-  dexterity: 2
-  rox: 6
-  xp: 2
-  battlecry: You've found yourself in quite the thorny issue!
-- !ruby/object:Gemwarrior::Apatiger
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  name: apatiger
-  description: Apathetic about most everything as it lazes around, save for eating
-    you.
-  face: calloused
-  hands: soft
-  mood: apathetic
-  level: 4
-  hp_cur: 12
-  hp_max: 12
-  atk_lo: 6
-  atk_hi: 6
-  defense: 7
-  dexterity: 5
-  rox: 12
-  xp: 8
-  battlecry: Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!
-- !ruby/object:Gemwarrior::Aquamarine
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  name: aquamarine
-  description: It is but one of the few, the proud, the underwater.
-  face: strained
-  hands: hairy
-  mood: tempered
-  level: 4
-  hp_cur: 11
-  hp_max: 11
-  atk_lo: 5
-  atk_hi: 7
-  defense: 4
-  dexterity: 5
-  rox: 11
-  xp: 8
-  battlecry: Attention! You are about to get smashed!
-- !ruby/object:Gemwarrior::Bloodstorm
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - *1
-    weapon: 
-  name: bloodstorm
-  description: A literal swirling, maniacal vortex of human hemoglobin.
-  face: bloody
-  hands: bloody
-  mood: boiling
-  level: 6
-  hp_cur: 15
-  hp_max: 15
-  atk_lo: 7
-  atk_hi: 16
-  defense: 6
-  dexterity: 6
-  rox: 12
-  xp: 11
-  battlecry: "/swirls"
-- !ruby/object:Gemwarrior::Citrinaga
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  name: citrinaga
-  description: Refreshing in its shiny, gleaming effectiveness at ending your life.
-  face: shiny
-  hands: glistening
-  mood: staid
-  level: 5
-  hp_cur: 15
-  hp_max: 15
-  atk_lo: 7
-  atk_hi: 8
-  defense: 7
-  dexterity: 7
-  rox: 15
-  xp: 13
-  battlecry: Slice and dice so nice!
-- !ruby/object:Gemwarrior::Coraliz
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  name: coraliz
-  description: Small blue lizard that slithers around, nipping at your ankles.
-  face: spotted
-  hands: slippery
-  mood: emotionless
-  level: 6
-  hp_cur: 12
-  hp_max: 12
-  atk_lo: 7
-  atk_hi: 18
-  defense: 6
-  dexterity: 9
-  rox: 16
-  xp: 6
-  battlecry: Where am I? You'll never guess!
-- !ruby/object:Gemwarrior::Cubicat
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - *1
-    weapon: 
-  name: cubicat
-  description: Perfectly geometrically cubed feline, fresh from its woven enclosure,
-    claws at the ready.
-  face: striking
-  hands: grippy
-  mood: salacious
-  level: 8
-  hp_cur: 16
-  hp_max: 16
-  atk_lo: 11
-  atk_hi: 23
-  defense: 7
-  dexterity: 9
-  rox: 18
-  xp: 13
-  battlecry: I don't really care, as long as you die!
-- !ruby/object:Gemwarrior::Diaman
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - *1
-    weapon: 
-  name: diaman
-  description: Crystalline structure in the form of a man, lumbering toward you, with
-    outstretched, edged pincers.
-  face: bright
-  hands: jagged
-  mood: adamant
-  level: 8
-  hp_cur: 23
-  hp_max: 23
-  atk_lo: 8
-  atk_hi: 21
-  defense: 6
-  dexterity: 9
-  rox: 24
-  xp: 9
-  battlecry: Precious human, prepare to be lost to the annals of time!
-- !ruby/object:Gemwarrior::Emerald
-  name: Emerald
-  description: A wily, beefy, tower of a man, champion of both wisdom and strength,
-    sporting a constant glint in his eyes.
-  face: gleaming
-  hands: tantalizing
-  mood: enraged
-  level: 15
-  hp_cur: 38
-  hp_max: 38
-  atk_lo: 16
-  atk_hi: 43
-  defense: 5
-  dexterity: 10
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items:
-    - !ruby/object:Gemwarrior::SparklyThing
-      equipped: false
-      consumable: false
-      used: false
-      number_of_uses: 
-      name: sparkly_thing
-      description: The sparkling that this thing does is unimaginably brilliant.
-      atk_lo: 
-      atk_hi: 
-      takeable: true
-      useable: true
-      equippable: false
-    weapon: 
-  rox: 32
-  xp: 26
-  battlecry: 'Ha ha ha ha ha! Prepare yourself: today your whole life crumbles!'
-  is_boss: true
-  defeated_text: "<^><^><^><^><^><^><^><^><^><^>\nYou beat Emerald! You win!\nYou
-    receive the \e[0;35;49mSparklyThing(tm)\e[0m and become the true \e[0;33;49mGem
-    Warrior\e[0m!\nYou decide to ignore \e[0;31;49mQueen Ruby\e[0m and take your spoils
-    back home\nwhere you live out the rest of your days staring at it, wondering\nwhat
-    it was all about.\n\nThank you for playing. Goodbye.\n<^><^><^><^><^><^><^><^><^><^>\n"
-  is_dead: false
-- !ruby/object:Gemwarrior::Garynetty
-  name: Garynetty
-  description: Conservative, yet odd, the Garynetty is not messing around.
-  face: irregular
-  hands: sharp
-  mood: abrasive
-  level: 12
-  hp_cur: 30
-  hp_max: 30
-  atk_lo: 25
-  atk_hi: 36
-  defense: 8
-  dexterity: 10
-  inventory: !ruby/object:Gemwarrior::Inventory
-    items: []
-    weapon: 
-  rox: 34
-  xp: 38
-  battlecry: "...?!"
-  is_boss: true
 locations:
 - !ruby/object:Gemwarrior::Location
-  name: Home
+  name: home
+  name_display: Home
   description: The little, unimportant, decrepit hut that you live in.
   coords: &2
     :x: 5
@@ -292,10 +22,10 @@ locations:
     used: false
     number_of_uses: 
     name: bed
+    name_display: Bed
     description: The place where you sleep when you are not adventuring.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   - !ruby/object:Gemwarrior::Letter
@@ -304,10 +34,9 @@ locations:
     used: false
     number_of_uses: 
     name: letter
+    name_display: Letter
     description: A single page of thin paper, folded at the middle, with some excellent
       penmanship impressed upon it.
-    atk_lo: 
-    atk_hi: 
     takeable: true
     useable: true
     equippable: false
@@ -317,23 +46,24 @@ locations:
     used: false
     number_of_uses: 
     name: stone
-    description: A small, sharp mega pebble, suitable for tossing in amusement, and
-      perhaps combat.
+    name_display: Stone
+    description: A small, yet quite sharp, sedimentary pebble, suitable for tossing in
+      amusement, and perhaps combat.
     atk_lo: 1
     atk_hi: 2
     takeable: true
     useable: true
     equippable: true
+    is_weapon: true
   - !ruby/object:Gemwarrior::Tent
     equipped: false
     consumable: false
     used: false
     number_of_uses: 5
     name: tent
+    name_display: Tent
     description: A magical, two-room suite pops up when you flick this otherwise folded
       piece of canvas just right, perfect for a night's rest.
-    atk_lo: 
-    atk_hi: 
     takeable: true
     useable: true
     equippable: false
@@ -341,7 +71,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Cave (Entrance)
+  name: cave-entrance
+  name_display: Cave (Entrance)
   description: A nearby, dank entrance to a cavern, surely filled with stacktites,
     stonemites, and rocksites.
   coords:
@@ -363,7 +94,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Cave (Antechamber)
+  name: cave-antechamber
+  name_display: Cave (Antechamber)
   description: Now inside the cavern, you confirm there are stacktites, stonemites,
     rocksites, and even some pebblejites.
   coords:
@@ -387,11 +119,13 @@ locations:
     used: false
     number_of_uses: 
     name: stalactite
+    name_display: Stalactite
     description: Long protrusion of cave adornment, broken off and fallen to the ground,
       where the stalagmites sneer at it from.
     atk_lo: 2
     atk_hi: 3
     takeable: true
+    talkable: false
     useable: false
     equippable: true
   - !ruby/object:Gemwarrior::Stonemite
@@ -400,18 +134,19 @@ locations:
     used: false
     number_of_uses: 
     name: stonemite
+    name_display: Stonemite
     description: Stubby cave debris that is neat to look at, as it is off-grey and
       sparkly, but the size makes it unusable as anything but skipping on a lake.
-    atk_lo: 
-    atk_hi: 
     takeable: true
     useable: false
     equippable: false
+    is_weapon: true
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Cave (Nook)
+  name: cave-nook
+  name_display: Cave (Nook)
   description: A depression in the cave wall casts a shadow over a small rock shelf.
   coords:
     :x: 7
@@ -432,7 +167,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Cave (Dropoff)
+  name: cave-dropoff
+  name_display: Cave (Dropoff)
   description: Caves do not usually feature sudden chasms spilling down into an unknowable
     void, but this one does.
   coords:
@@ -456,18 +192,19 @@ locations:
     used: false
     number_of_uses: 
     name: ladder
+    name_display: Ladder
     description: Rickety and crudely-fashioned, this ladder descends down into the
       dropoff, hopefully heading towards something...anything.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel (South Entrance)
+  name: metal_tunnel-south_entrance
+  name_display: Metal Tunnel (South Entrance)
   description: You are in a tightly-enclosed tunnel running under the ground. The
     walls are made of shiny, smooth material you think may be some kind of metal.
     It is claustrophobic, to say the least.
@@ -490,7 +227,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-8_2
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -513,7 +251,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-8_3
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -536,7 +275,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-8_4
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -559,7 +299,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-7_4
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -582,7 +323,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-6_4
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -605,7 +347,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-6_5
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -628,7 +371,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-5_5
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -651,7 +395,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Tunnel Alcove
+  name: tunnel_alcove
+  name_display: Tunnel Alcove
   description: A moderately-sized alcove seems to have been blown out of the side
     of tunnel here, almost as if an actual bomb detonated, the remainder of the wall
     a mix of rock and wires.
@@ -676,18 +421,19 @@ locations:
     used: false
     number_of_uses: 
     name: small_hole
+    name_display: Small Hole
     description: Amongst the rubble of the alcove, a small hole, barely big enough
       for a rodent, exists in an absently-minded way near the bottom of the wall.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel
+  name: metal_tunnel-5_6
+  name_display: Metal Tunnel
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -710,7 +456,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Metal Tunnel (North Entrance)
+  name: metal_tunnel-north_entrance
+  name_display: Metal Tunnel (North Entrance)
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -735,18 +482,19 @@ locations:
     used: false
     number_of_uses: 
     name: rope
+    name_display: Rope
     description: For some reason, a sturdy rope hangs down from a small opening in
       the metal tunnel's ceiling. It appears to hold your weight when taut.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (Southeast)
+  name: snow_fields-southeast
+  name_display: Snow Fields (Southeast)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -768,7 +516,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (South-Southeast)
+  name: snow_fields-south_southeast
+  name_display: Snow Fields (South-Southeast)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -790,7 +539,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (South)
+  name: snow_fields-south
+  name_display: Snow Fields (South)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -812,7 +562,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (South-Southwest)
+  name: snow_fields-south_southwest
+  name_display: Snow Fields (South-Southwest)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -834,7 +585,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (Southwest)
+  name: snow_fields-southwest
+  name_display: Snow Fields (Southwest)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -856,7 +608,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (Northwest)
+  name: snow_fields-northwest
+  name_display: Snow Fields (Northwest)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -880,17 +633,18 @@ locations:
     used: false
     number_of_uses: 
     name: snowman
+    name_display: Snowman
     description: Standing solemnly in the snow, a man of snow solemnly stands.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (North-Northwest)
+  name: snow_fields-north_northwest
+  name_display: Snow Fields (North-Northwest)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -912,7 +666,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (North)
+  name: snow_fields-north
+  name_display: Snow Fields (North)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -934,7 +689,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (North-Northeast)
+  name: snow_fields-north_northeast
+  name_display: Snow Fields (North-Northeast)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -956,7 +712,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Snow Fields (Northeast)
+  name: snow_fields-northeast
+  name_display: Snow Fields (Northeast)
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -978,7 +735,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Cave (Causeway)
+  name: cave-causeway
+  name_display: Cave (Causeway)
   description: Paths lead north and west as a dank, musty smell permeates your sinuses.
   coords:
     :x: 8
@@ -1001,18 +759,19 @@ locations:
     used: false
     number_of_uses: 
     name: map
+    name_display: Map
     description: The land of Jool is contained on this piece of canvas, in a useful,
       if not very detailed, manner.
-    atk_lo: 
-    atk_hi: 
     takeable: true
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Forest (Southeast)
+  name: forest-southeast
+  name_display: Forest (Southeast)
   description: Trees exist here, in droves.
   coords:
     :x: 4
@@ -1035,18 +794,19 @@ locations:
     used: false
     number_of_uses: 
     name: tree
+    name_display: Tree
     description: A mighty representation of nature, older than your father's father's
       second great-uncle.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: false
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Forest (Northeast)
+  name: forest-northeast
+  name_display: Forest (Northeast)
   description: You see much foliage.
   coords:
     :x: 4
@@ -1067,7 +827,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Forest (Northwest)
+  name: forest-northwest
+  name_display: Forest (Northwest)
   description: The amount of leaves and branches and trunks you can see boggles the
     mind.
   coords:
@@ -1091,18 +852,19 @@ locations:
     used: false
     number_of_uses: 
     name: feather
+    name_display: Feather
     description: A blue and green feather. It is soft and tender, unlike the craven
       bird that probably shed it.
-    atk_lo: 
-    atk_hi: 
     takeable: true
+    talkable: false
     useable: false
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Forest (Southwest)
+  name: forest-southwest
+  name_display: Forest (Southwest)
   description: While you continue to be impressed at the sheer size of this forest,
     a clearing appears to open up to the west.
   coords:
@@ -1124,7 +886,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (Southeast)
+  name: pain_quarry-southeast
+  name_display: Pain Quarry (Southeast)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 2
@@ -1144,7 +907,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1165,7 +929,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (East)
+  name: pain_quarry-east
+  name_display: Pain Quarry (East)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 2
@@ -1185,7 +950,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1206,7 +972,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (Central)
+  name: pain_quarry-central
+  name_display: Pain Quarry (Central)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -1226,7 +993,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1247,7 +1015,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (South)
+  name: pain_quarry-south
+  name_display: Pain Quarry (South)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -1267,7 +1036,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1288,7 +1058,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (West)
+  name: pain_quarry-west
+  name_display: Pain Quarry (West)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 0
@@ -1308,7 +1079,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1329,7 +1101,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (Northwest)
+  name: pain_quarry-northwest
+  name_display: Pain Quarry (Northwest)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 0
@@ -1349,7 +1122,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1370,7 +1144,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Pain Quarry (North)
+  name: pain_quarry-north
+  name_display: Pain Quarry (North)
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -1390,7 +1165,8 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
-    name: Garynetty
+    name: garynetty
+    name_display: Garynetty
     description: Conservative, yet odd, the Garynetty is not messing around.
     face: irregular
     hands: sharp
@@ -1411,7 +1187,8 @@ locations:
     is_boss: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (Outskirts)
+  name: plains-outskirts
+  name_display: Plains (Outskirts)
   description: A lot of grass and nothing, stretching out northward.
   coords:
     :x: 5
@@ -1432,7 +1209,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (Fields)
+  name: plains-fields
+  name_display: Plains (Fields)
   description: Now you are plum smack dab in the middle of rolling fields.
   coords:
     :x: 5
@@ -1453,7 +1231,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (South of River)
+  name: plains-south_of_river
+  name_display: Plains (South of River)
   description: A raging river borders the northern side of this bucolic vista. Much
     raucous noise comes from the east.
   coords:
@@ -1475,7 +1254,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (South-Southeast)
+  name: plains-south_southeast
+  name_display: Plains (South-Southeast)
   description: The river continues to flow north of you, as plains stretch out all
     around. The noise from the east is quite loud, and a building can be seen in the
     near distance.
@@ -1498,7 +1278,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (Arena Entrance)
+  name: plains-arena_entrance
+  name_display: Plains (Arena Entrance)
   description: Well above the noise of the raging river nearby, the din of the mighty
     Arena to the east reaches its near fever-pitch just outside. The door, and battle,
     beckons.
@@ -1523,20 +1304,21 @@ locations:
     used: false
     number_of_uses: 
     name: arena_door
+    name_display: Arena Door
     description: The Arena is massive, with its numerous columns and stone walls stretching
       to the sky, but its entrance door is no slouch, keeping apace. Made of reinforced
       granite and impossible to break down, it nevertheless opens for you while battles
       are in session.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: false
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Arena
+  name: arena
+  name_display: Arena
   description: Dangerous and risky, the Arena allows would-be monster-slayers and
     adventurers fight against an infinite number of beasts in order to test their
     mettle and improve their skill...for a small fee, of course.
@@ -1559,10 +1341,9 @@ locations:
     number_of_uses: 
     talkable: true
     name: arena_master
+    name_display: Arena Master
     description: She wears simple clothing, but carries herself with an air of authority.
       You think she may be the person to talk with if you want to engage in battle.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1570,7 +1351,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (South of Bridge)
+  name: plains-south_of_bridge
+  name_display: Plains (South of Bridge)
   description: To the north of these fields lies a bridge that may be crossable.
   coords:
     :x: 4
@@ -1591,7 +1373,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (Hut)
+  name: plains-hut
+  name_display: Plains (Hut)
   description: A straw hut sits alone, curiously, in a patch of grass, sticks, and
     straw.
   coords:
@@ -1610,7 +1393,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: River Bridge
+  name: river_bridge
+  name_display: River Bridge
   description: Sturdy and safe, this bridge will get you across the otherwise unpassable
     river you see below.
   coords:
@@ -1632,7 +1416,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Plains (North of Bridge)
+  name: plains-north_of_bridge
+  name_display: Plains (North of Bridge)
   description: North of the river feels similar to south of the river, as you continue
     to be surrounded by grass and grass and, well, grass. A path to the east stretches
     out into a valley.
@@ -1655,7 +1440,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Peridover Valley (Outskirts)
+  name: peridover_valley-outskirts_west
+  name_display: Peridover Valley (Outskirts (West))
   description: The road slopes down slightly here, but in the near distance you can
     see that it slopes way more slopily.
   coords:
@@ -1677,7 +1463,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Peridover Valley (Central)
+  name: peridover_valley-central
+  name_display: Peridover Valley (Central)
   description: The Peridover Valley is in full effect here, sloping down into a reverse
     plateau. Bones of wild animals litter the area.
   coords:
@@ -1699,7 +1486,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Peridover Valley (Outskirts)
+  name: peridover_valley-outskirts_east
+  name_display: Peridover Valley (Outskirts (East))
   description: Sloping way down to the west, but leveling off here, a din of civilization
     calls from the north.
   coords:
@@ -1721,7 +1509,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: South of Spinelia
+  name: south_of_spinelia
+  name_display: South of Spinelia
   description: Northwardly, you can hear general town noise, such as people scuffling,
     nattering, and more or less existing in a people kind of way.
   coords:
@@ -1743,7 +1532,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Spinelia (Southwest)
+  name: spinelia-southwest
+  name_display: Spinelia (Southwest)
   description: Near the front entrance to Spinelia is the market corner. Merchants
     are all around, hawking wares and giving those nearby walking stares.
   coords:
@@ -1765,11 +1555,10 @@ locations:
     number_of_uses: 
     talkable: true
     name: ware_hawker
+    name_display: Ware Hawker
     description: A literal anthropomorphic hawk has set up shop behind a crudely-made
       table. Some wares are scattered atop its surface, seemingly within anyone's
       grasp, but the hawk's piercing eyes seem to belie this observation.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1777,7 +1566,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Spinelia (Southeast)
+  name: spinelia-southeast
+  name_display: Spinelia (Southeast)
   description: The southeast of Spinelia contains a few people, just kind of
     hanging out.
   coords:
@@ -1799,12 +1589,11 @@ locations:
     number_of_uses: 
     talkable: true
     name: thin_man
+    name_display: Thin Man
     description: An almost shockingly gaunt man is sitting on the ground, resting against a wall. He   
       wears a patchwork quilt of a hat, and his slender frame is covered by a simple brown tunic. His feet 
       point comically toward the sky in brown boots while his head dips down slightly, eyes watching 
       something in the distance you can't see.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1815,11 +1604,10 @@ locations:
     number_of_uses: 
     talkable: true
     name: drunk_man
+    name_display: Drunk Man
     description: Some supernatural force is surely keeping this obviously smashed individual from 
       toppling over to the ground. The inebriated fellow somehow continues to stumble about in a small 
       circle near a smattering of shipping crates, looking simultaneously dazed and cheerful.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1827,7 +1615,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Spinelia (Northeast)
+  name: spinelia-northeast
+  name_display: Spinelia (Northeast)
   description: Northeasternly speaking, Spinelia contains a pen with a few animals
     calmly eating food, and not really having much impact on their environment.
   coords:
@@ -1849,9 +1638,8 @@ locations:
     number_of_uses: 
     talkable: true
     name: pig
+    name_display: Pig
     description: Dirty, eating slop, but still kind of cute. Yep, this is a pig.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1862,9 +1650,8 @@ locations:
     number_of_uses: 
     talkable: true
     name: cow
+    name_display: Cow
     description: Grazing on some fake grass, unperturbed, this black and white herd animal looks bored.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1875,9 +1662,8 @@ locations:
     number_of_uses: 
     talkable: true
     name: goat
+    name_display: Goat
     description: The scruff is strong with this one as it chews through what appears to be a recent mystery novel most likely thrown into the pen by a passerby.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1885,7 +1671,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Spinelia (Northwest)
+  name: spinelia-northwest
+  name_display: Spinelia (Northwest)
   description: Residences line the northwest corner of Spinelia, each one similar to
     each other, made of granite and stone, featuring a single window and a single
     door. One particular house's hallmark appears to be a rather fanciful woman leaning
@@ -1909,11 +1696,10 @@ locations:
     number_of_uses: 
     talkable: true
     name: shifty_woman
+    name: Shifty Woman
     description: Sharply dressed with impeccable style, you still can't shake the feeling that this 
       otherwise ordinary woman is up to something. It might be the way she almost impulsively looks 
       back and forth along the town street while rubbing her hands together menacingly.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -1921,7 +1707,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Rock Piles
+  name: rock_piles
+  name_display: Rock Piles
   description: Piles of rocks, both big and small, are placed here and there, a testament
     to someone's surely back-breaking labor.
   coords:
@@ -1945,27 +1732,30 @@ locations:
     used: false
     number_of_uses: 
     name: gun
-    description: Pew pew goes this firearm, you suspect.
+    name_display: Gun
+    description: Pew pew goes this firearm, you suspect (if it has bullets).
     atk_lo: 2
     atk_hi: 4
     takeable: true
+    talkable: false
     useable: true
     equippable: true
+    is_weapon: true
   - !ruby/object:Gemwarrior::Pedestal
     equipped: false
     consumable: false
     used: false
     number_of_uses: 
     name: pedestal
+    name_display: Pedestal
     description: A pedestal about 4 feet in height rises up from the ground, with
       six switches arranged vertically above a large gem affixed to the top. The switches
       each have a word next to them in some language that looks familiar yet strange.
       Each letter is made of some kind of ink crudely splashed on stone, and each
       can be moved to arrange them in a different fashion than they are now. The large
       gem glitters with utter brilliance.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
     switches:
@@ -1991,7 +1781,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Entryway)
+  name: sky_tower-entryway
+  name_display: Sky Tower (Entryway)
   description: You feel unsettled as you gaze upon the wondrous proportions of Emerald's
     home.
   coords:
@@ -2015,10 +1806,9 @@ locations:
     used: false
     number_of_uses: 
     name: floor_tile
+    name_display: Floor Tile
     description: One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable,
       even.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -2026,7 +1816,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Cloud Garden)
+  name: sky_tower-cloud_garden
+  name_display: Sky Tower (Cloud Garden)
   description: A perfectly-maintained array of wispy flowers and other ethereal plantlife
     contained within a cumulonimbus barrier.
   coords:
@@ -2050,11 +1841,11 @@ locations:
     used: false
     number_of_uses: 
     name: flower
+    name_display: Flower
     description: Petals the color of clear sky and a stem of bright white. A most
       curious plant.
-    atk_lo: 
-    atk_hi: 
     takeable: true
+    talkable: false
     useable: false
     equippable: false
   - !ruby/object:Gemwarrior::Keystone
@@ -2063,11 +1854,11 @@ locations:
     used: false
     number_of_uses: 
     name: keystone
+    name_display: Keystone
     description: Certainly greater than the sum of its parts, this smallish stone
       glows faintly and feels slick to the touch.
-    atk_lo: 
-    atk_hi: 
     takeable: true
+    talkable: false
     useable: false
     equippable: false
   - !ruby/object:Gemwarrior::Pond
@@ -2076,20 +1867,21 @@ locations:
     used: false
     number_of_uses: 
     name: pond
+    name_display: Pond
     description: 'This tiny pool of water self-ripples every minute or so. Small,
       floating insects buzz around merrily. A small plaque lays at the foot, reading:
       "If the right objects curious doth possess, touch the water''s surface and you''ll
       get redress."'
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Armory)
+  name: sky_tower-armory
+  name_display: Sky Tower (Armory)
   description: Weapons of all kinds litter the ground and are hung on hooks from the
     wall. Tower assailants beware/rejoice!
   coords:
@@ -2113,18 +1905,18 @@ locations:
     used: false
     number_of_uses: 
     name: dehumidifier
+    name_display: Dehumidifier
     description: Petals the color of clear sky and a stem of bright white. A most
       curious plant.
-    atk_lo: 2
-    atk_hi: 4
     takeable: true
+    talkable: false
     useable: false
-    equippable: true
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (West Hallway)
+  name: sky_tower-west_hallway
+  name_display: Sky Tower (West Hallway)
   description: The hallway seems to stretch on for days.
   coords:
     :x: 7
@@ -2145,7 +1937,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Waterfalls)
+  name: sky_tower-waterfalls
+  name_display: Sky Tower (Waterfalls)
   description: The seemingly neverending deluge of water causes this room to be quite
     loud, yet pretty.
   coords:
@@ -2169,18 +1962,19 @@ locations:
     used: false
     number_of_uses: 
     name: waterfall
+    name_display: Waterfall
     description: Gallons of murky, sparkling water fall downward from an unknown spot
       in the sky, ending in a pool on the ground, yet never overflowing.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Massive Door)
+  name: sky_tower-massive_door
+  name_display: Sky Tower (Massive Door)
   description: Before you lies a massive collection of cumulus clouds that form into
     a seemingly impenetrable door, beyond which may well be your doom.
   coords:
@@ -2204,19 +1998,20 @@ locations:
     used: false
     number_of_uses: 
     name: massive_door
+    name_display: Massive Door
     description: Translucent, but not transparent, this door constructed of condensed
       water vapor is like nothing you have ever seen. It has no keyhole, but it does
       have a stone-shaped depression floating centrally within it.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Throne Room)
+  name: sky_tower-throne_room
+  name_display: Sky Tower (Throne Room)
   description: There, on a mighty seat made of broken dreams, sits Emerald himself,
     staring at you coldly, silently.
   coords:
@@ -2240,12 +2035,12 @@ locations:
     used: false
     number_of_uses: 
     name: throne
+    name_display: Throne
     description: Made of what appears to be unfulfilled desires and latent, flawed
       happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald
       sits in it, glaring at you.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: true
     useable: false
     equippable: false
   monsters_abounding: []
@@ -2273,9 +2068,8 @@ locations:
         used: false
         number_of_uses: 
         name: sparkly_thing
+        name_display: SparklyThing(tm)
         description: The sparkling that this thing does is unimaginably brilliant.
-        atk_lo: 
-        atk_hi: 
         takeable: true
         useable: true
         equippable: false
@@ -2288,7 +2082,8 @@ locations:
     is_dead: false
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Lounge)
+  name: sky_tower-lounge
+  name_display: Sky Tower (Lounge)
   description: Nothing but a simple couch, which looks very comfortable, exists in
     this corner of the tower.
   coords:
@@ -2312,17 +2107,18 @@ locations:
     used: false
     number_of_uses: 
     name: couch
+    name_display: Couch
     description: Ever wanted to sit on a cloud? Now is your chance.
-    atk_lo: 
-    atk_hi: 
     takeable: false
+    talkable: false
     useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (East Hallway)
+  name: sky_tower-east_hallway
+  name_display: Sky Tower (East Hallway)
   description: Longish and neverending is what you might say about this stretch of
     the tower.
   coords:
@@ -2344,7 +2140,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Sky Tower (Kitchen)
+  name: sky_tower-kitchen
+  name_display: Sky Tower (Kitchen)
   description: This kitchen looks well-used, as appliances abound, and leftover food
     sits atop counters.
   coords:
@@ -2368,10 +2165,9 @@ locations:
     used: false
     number_of_uses: 
     name: apple
+    name_display: Apple
     description: Reddish-orangeish in color, this fruit looks sweet, but it is heavy
       and feels more like a rock you would sooner not bite into.
-    atk_lo: 
-    atk_hi: 
     takeable: true
     useable: false
     equippable: false
@@ -2381,18 +2177,19 @@ locations:
     used: false
     number_of_uses: 
     name: cup
+    name_display: Cup
     description: A nice stone mug, perfect for putting things into and then using
       to carry such things from place to place.
-    atk_lo: 
-    atk_hi: 
     takeable: true
+    talkable: false
     useable: false
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: Queen Room
+  name: queen_room
+  name_display: Queen Room
   description: Your surroundings contain four walls with no windows, a vaulted ceiling above, and a tile floor below, all immaculately decorated. A small throne lies before you with a woman sitting on it. You must be in the presence of Queen Ruby herself.
   coords:
     :x: 5
@@ -2413,8 +2210,6 @@ locations:
     number_of_uses: 
     name: queen_ruby
     description: Queen Ruby glimmers like she was made from the substance of her name. She wears a wan smile, and her hands are delicately intertwined as she sits patiently.
-    atk_lo: 
-    atk_hi: 
     takeable: false
     useable: true
     equippable: false
@@ -2425,8 +2220,7 @@ locations:
 player: !ruby/object:Gemwarrior::Player
   name: Player
   description: |-
-    Picked to do battle against a wizened madman for a shiny something
-    or other for world-saving purposes.
+    Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes.
   face: facey
   hands: handsy
   mood: moody

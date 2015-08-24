@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/apatiger.rb
-# Apatiger monster
+# Entity::Creature::Monster::Apatiger
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'apatiger'
+      self.name_display = 'Apatiger'
       self.description  = 'Apathetic about most everything as it lazes around, save for eating you.'
+      self.battlecry    = 'Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!'
       self.face         = 'calloused'
       self.hands        = 'soft'
       self.mood         = 'apathetic'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = 'Gggggggggrrrrrrrrrrrrrrrrooooooooooowwwwwwwwwwwwlllllllll!'
     end
   end
 end

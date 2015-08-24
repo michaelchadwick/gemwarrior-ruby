@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/tree.rb
-# Item::Tree
+# Entity::Item::Tree
 
 require_relative '../item'
 
@@ -9,12 +9,8 @@ module Gemwarrior
       super
 
       self.name         = 'tree'
+      self.name_display = 'Tree'
       self.description  = 'A mighty representation of nature, older than your father\'s father\'s second great-uncle.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = false
-      self.equippable   = false
     end
   end
 end

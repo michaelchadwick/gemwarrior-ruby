@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/bed.rb
-# Item::Bed
+# Entity::Item::Bed
 
 require_relative '../item'
 
@@ -12,12 +12,8 @@ module Gemwarrior
       super
 
       self.name         = 'bed'
+      self.name_display = 'Bed'
       self.description  = 'The place where you sleep when you are not adventuring.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)
@@ -27,8 +23,8 @@ module Gemwarrior
       else
         Animation::run(phrase: USE_TEXT)
         puts 'You unmake the bed, get under the covers, close your eyes, and begin to think about all the things you need to do today. You realize sleep is not one of them and quickly get back up, remake the bed, and get on about your day.'
-        puts '>> You regain a few hit points.'
-        { type: 'rest', data: 5 }
+        puts '>> You regain a few hit points.'.colorize(:green)
+        { type: 'rest', data: rand(5..7) }
       end
     end
   end

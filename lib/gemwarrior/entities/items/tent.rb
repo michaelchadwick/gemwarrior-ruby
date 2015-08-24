@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/tent.rb
-# Item::Tent
+# Entity::Item::Tent
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name           = 'tent'
+      self.name_display   = 'Tent'
       self.description    = 'A magical, two-room suite pops up when you flick this otherwise folded piece of canvas just right, perfect for a night\'s rest.'
-      self.atk_lo         = nil
-      self.atk_hi         = nil
       self.takeable       = true
-      self.useable        = true
-      self.equippable     = false
       self.number_of_uses = 5
     end
 

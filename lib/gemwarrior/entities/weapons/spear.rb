@@ -1,23 +1,20 @@
-# lib/gemwarrior/entities/items/spear.rb
-# Item::Spear
+# lib/gemwarrior/entities/weapons/spear.rb
+# Entity::Item::Weapon::Spear
 
-require_relative '../item'
+require_relative '../weapon'
 
 module Gemwarrior
-  class Spear < Item
+  class Spear < Weapon
     def initialize
       super
 
       self.name         = 'spear'
+      self.name_display = 'Spear'
       self.description  = 'Sharp spikes atop a steel ball, affixed to a sturdy wooden handle. You could do damage with this.'
       self.atk_lo       = 3
       self.atk_hi       = 7
-      self.takeable     = true
-      self.useable      = true
-      self.consumable   = false
-      self.equippable   = true
     end
-    
+
     def use(player = nil)
       puts 'This spear does, indeed, appear to strike fear upon that which is near.'
       { type: nil, data: nil }

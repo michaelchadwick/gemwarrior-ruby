@@ -17,7 +17,7 @@ module Gemwarrior
   class Repl
     # CONSTANTS
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
-    MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:yellow)
+    MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:red)
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
     GITHUB_NAME             = 'michaelchadwick'
     GITHUB_PROJECT          = 'gemwarrior'
@@ -48,7 +48,7 @@ module Gemwarrior
           prompt
           begin
             input = read_line
-            result = evaluator.evaluate(input)
+            result = evaluator.parse(input)
             if result.eql?('exit')
               exit
             elsif result.eql?('checkupdate')
@@ -198,7 +198,7 @@ module Gemwarrior
         return
       end
     end
-    
+
     def display_log_of_attempts
       if File.exist?(GameOptions.data['log_file_path']) and !File.zero?(GameOptions.data['log_file_path'])
         File.open(GameOptions.data['log_file_path']).readlines.each do |line|
@@ -345,7 +345,7 @@ module Gemwarrior
 
       # log stats to file in home directory
       File.open(GameOptions.data['log_file_path'], 'a') do |f|
-        f.write "#{Time.now} #{pl.name.rjust(10)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} MK:#{pl.monsters_killed} BK:#{pl.bosses_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
+        f.write "#{Time.now} #{pl.name.rjust(13)} - V:#{Gemwarrior::VERSION} LV:#{pl.level} XP:#{pl.xp} $:#{pl.rox} MK:#{pl.monsters_killed} BK:#{pl.bosses_killed} ITM:#{pl.items_taken} MOV:#{pl.movements_made} RST:#{pl.rests_taken} DTH:#{pl.deaths}\n"
       end
     end
 
@@ -378,7 +378,7 @@ module Gemwarrior
         false
       end
     end
-   
+
     def resume_game
       mode = GameOptions.data['save_file_mode']
       puts 'Resuming game...'
@@ -481,14 +481,19 @@ module Gemwarrior
       end
 
       # hook to do something right off the bat
-      puts evaluator.evaluate(initial_command) unless initial_command.nil?
-      puts evaluator.evaluate(extra_command) unless extra_command.nil?
+      puts evaluator.parse(initial_command) unless initial_command.nil?
+      puts evaluator.parse(extra_command) unless extra_command.nil?
     end
 
     def prompt
-      prompt_template = "\n[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [%s @ %s]"
+      prompt_template =  "\n"
+      prompt_template =  "[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [".colorize(:yellow)
+      prompt_template += "%s".colorize(:green)
+      prompt_template += " @ ".colorize(:yellow)
+      prompt_template += "%s".colorize(:cyan)
+      prompt_template += "]".colorize(:yellow)
       if GameOptions.data['debug_mode']
-        prompt_template += "[%s, %s, %s]"
+        prompt_template += "[%s, %s, %s]".colorize(:yellow)
       end
       prompt_vars_arr = [
         world.player.level,
@@ -499,12 +504,12 @@ module Gemwarrior
         world.player.stam_cur,
         world.player.stam_max,
         world.player.name,
-        world.location_by_coords(world.player.cur_coords).name
+        world.location_by_coords(world.player.cur_coords).name_display
       ]
       if GameOptions.data['debug_mode']
         prompt_vars_arr.push(world.player.cur_coords[:x], world.player.cur_coords[:y], world.player.cur_coords[:z])
       end
-      print (prompt_template % prompt_vars_arr).colorize(:yellow)
+      print (prompt_template % prompt_vars_arr)
       print "\n"
     end
 

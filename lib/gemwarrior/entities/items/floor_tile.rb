@@ -1,23 +1,19 @@
 # lib/gemwarrior/entities/items/floor_tile.rb
-# Item::FloorTile
+# Entity::Item::FloorTile
 
 require_relative '../item'
 
 module Gemwarrior
   class FloorTile < Item
     # CONSTANTS
-    MOVE_TEXT = '*** SHOOOOOM ***'
+    MOVE_TEXT = '** SHOOOOOM **'
 
     def initialize
       super
 
       self.name         = 'floor_tile'
+      self.name_display = 'Floor Tile'
       self.description  = 'One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable, even.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

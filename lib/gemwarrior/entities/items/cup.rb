@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/cup.rb
-# Item::Cup
+# Entity::Item::Cup
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'cup'
+      self.name_display = 'Cup'
       self.description  = 'A nice stone mug, perfect for putting things into and then using to carry such things from place to place.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = false
-      self.equippable   = false
     end
   end
 end

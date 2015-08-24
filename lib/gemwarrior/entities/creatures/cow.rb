@@ -1,21 +1,19 @@
-# lib/gemwarrior/entities/items/cow.rb
-# Item::Cow
+# lib/gemwarrior/entities/creatures/cow.rb
+# Entity::Creature::Cow
 
-require_relative '../item'
+require_relative '../creature'
 
 module Gemwarrior
-  class Cow < Item
+  class Cow < Creature
     def initialize
       super
 
       self.name         = 'cow'
+      self.name_display = 'Cow'
       self.description  = 'Grazing on some fake grass, unperturbed, this black and white herd animal looks bored.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
+      self.face         = 'blank'
+      self.hands        = 'stampy'
+      self.mood         = 'reserved'
     end
 
     def use(player = nil)

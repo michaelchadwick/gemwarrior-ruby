@@ -1,16 +1,18 @@
-# lib/gemwarrior/entities/items/ware_hawker.rb
-# Item::WareHawker
+# lib/gemwarrior/entities/people/ware_hawker.rb
+# Entity::Creature::Person::WareHawker
 
-require_relative '../item'
-require_relative 'mace'
-require_relative 'spear'
+require_relative '../person'
+require_relative '../weapons/mace'
+require_relative '../weapons/spear'
+require_relative '../armor/iron_helmet'
 
 module Gemwarrior
-  class WareHawker < Item
+  class WareHawker < Person
     # CONSTANTS
+    PRICE_IRON_HELMET       = 100
     PRICE_MACE              = 200
     PRICE_SPEAR             = 250
-    PLAYER_ROX_INSUFFICIENT = '>> "Are you seriously wasting my time? You are testing me, human."'
+    PLAYER_ROX_INSUFFICIENT = '>> "Are you seriously wasting my time? Quit testing me, human."'
     PLAYER_ITEMS_ADDITIONAL = '>> "Will there be something else?"'
     PLAYER_COMMAND_INVALID  = '>> "That means nothing to me."'
 
@@ -18,47 +20,63 @@ module Gemwarrior
       super
 
       self.name         = 'ware_hawker'
+      self.name_display = 'Ware Hawker'
       self.description  = 'A literal anthropomorphic hawk has set up shop behind a crudely-made table. Some wares are scattered atop its surface, seemingly within anyone\'s grasp, but the hawk\'s piercing eyes seem to belie this observation.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
       self.talkable     = true
     end
 
     def use(player = nil)
-      puts 'You greet the hawk, mentioning that you are interested in the objects presented. The hawk speaks in a beautiful, yet commanding, tone:'
-      puts
-
+      if !self.used
+        puts 'You greet the hawk, mentioning that you are interested in the objects presented. The hawk speaks in a beautiful, yet commanding, tone:'
+        puts
+      end
+      
       hawk_shop(player)
     end
 
-    def reuse(player = nil)
-      hawk_shop(player)
-    end
+    private
 
     def hawk_shop(player)
       items_purchased = []
-    
+
+      iron_helmet = IronHelmet.new
+      mace = Mace.new
+      spear = Spear.new
+
       puts '>> "I hope you have rox, human. My time is amenable to business transactions, not idle chit chat. What do you want?"'
       puts
       puts 'A feathered arm quickly moves across the table in an arc suggesting to you that a choice is to be made. Each object has a price tag underneath it, painstakingly written in ink.'
       puts
-      puts "(1) Mace     - #{PRICE_MACE} rox"
-      puts "(2) Spear    - #{PRICE_SPEAR} rox"
+      puts "(1) Iron Helmet - #{PRICE_IRON_HELMET} rox"
+      puts "    Defense: +#{iron_helmet.defense} (current: #{player.defense})"
+      puts "(2) Mace        - #{PRICE_MACE} rox"
+      puts "    Attack: +#{mace.atk_lo}-#{mace.atk_hi} (current: #{player.atk_lo}-#{player.atk_hi})"
+      puts "(3) Spear       - #{PRICE_SPEAR} rox"
+      puts "    Attack: +#{spear.atk_lo}-#{spear.atk_hi} (current: #{player.atk_lo}-#{player.atk_hi})"
       puts
       puts '>> "Choose. Now.'
 
       loop do
-        puts ' 1 - Mace'
-        puts ' 2 - Spear'
+        puts ' 1 - Iron Helmet'
+        puts ' 2 - Mace'
+        puts ' 3 - Spear'
         puts ' x - leave'
         print '[HAWK]> '
         choice = gets.chomp.downcase
 
         case choice
         when '1'
+          if player.rox >= PRICE_IRON_HELMET
+            player.rox -= PRICE_IRON_HELMET
+            items_purchased.push(IronHelmet.new)
+            puts '>> "Yes, fine."'
+            puts PLAYER_ITEMS_ADDITIONAL
+            next
+          else
+            puts PLAYER_ROX_INSUFFICIENT
+            next
+          end
+        when '2'
           if player.rox >= PRICE_MACE
             player.rox -= PRICE_MACE
             items_purchased.push(Mace.new)
@@ -69,7 +87,7 @@ module Gemwarrior
             puts PLAYER_ROX_INSUFFICIENT
             next
           end
-        when '2'
+        when '3'
           if player.rox >= PRICE_SPEAR
             player.rox -= PRICE_SPEAR
             items_purchased.push(Spear.new)

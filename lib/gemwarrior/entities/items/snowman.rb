@@ -1,23 +1,19 @@
 # lib/gemwarrior/entities/items/snowman.rb
-# Item::Snowman
+# Entity::Item::Snowman
 
 require_relative '../item'
 
 module Gemwarrior
   class Snowman < Item
     # CONSTANTS
-    USE_TEXT = '*** FOOOOSH ***'
+    USE_TEXT = '** FOOOOSH **'
 
     def initialize
       super
 
       self.name         = 'snowman'
+      self.name_display = 'Snowman'
       self.description  = 'Standing solemnly in the snow, a man of snow solemnly stands.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

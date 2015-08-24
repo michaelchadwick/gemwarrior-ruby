@@ -1,20 +1,18 @@
-# lib/gemwarrior/entities/items/stone.rb
-# Item::Stone
+# lib/gemwarrior/entities/weapons/stone.rb
+# Entity::Item::Weapon::Stone
 
-require_relative '../item'
+require_relative '../weapon'
 
 module Gemwarrior
-  class Stone < Item
+  class Stone < Weapon
     def initialize
       super
 
       self.name         = 'stone'
-      self.description  = 'A small, sharp mega pebble, suitable for tossing in amusement, and perhaps combat.'
+      self.name_display = 'Stone'
+      self.description  = 'A small, yet quite sharp, sedimentary pebble, suitable for tossing in amusement, and perhaps combat.'
       self.atk_lo       = 1
       self.atk_hi       = 2
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = true
     end
     
     def use(player = nil)

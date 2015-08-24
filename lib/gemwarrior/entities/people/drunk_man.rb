@@ -1,24 +1,19 @@
-# lib/gemwarrior/entities/items/drunk_man.rb
-# Item::DrunkMan
+# lib/gemwarrior/entities/people/drunk_man.rb
+# Entity::Creature::Person::DrunkMan
 
-require_relative '../item'
+require_relative '../person'
 require_relative '../../misc/formatting'
 
 module Gemwarrior
-  class DrunkMan < Item
+  class DrunkMan < Person
     include Formatting
 
     def initialize
       super
 
       self.name         = 'drunk_man'
+      self.name_display = 'Drunk Man'
       self.description  = 'Some supernatural force is surely keeping this obviously smashed individual from toppling over to the ground. The inebriated fellow somehow continues to stumble about in a small circle near a smattering of shipping crates, looking simultaneously dazed and cheerful.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
     end
 
     def use(player = nil)
@@ -28,6 +23,8 @@ module Gemwarrior
 
       { type: nil, data: nil }
     end
+
+    private
 
     def choose_blurting
       choice = [1, 2, 3, 4].sample

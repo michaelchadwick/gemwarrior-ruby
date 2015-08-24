@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/bosses/emerald.rb
-# Emerald boss monster
+# Entity::Creature::Monster::Emerald (BOSS)
 
 require_relative '../../monster'
 require_relative '../../items/sparkly_thing'
@@ -8,17 +8,21 @@ require_relative '../../../misc/music'
 module Gemwarrior
   class Emerald < Monster
     # CONSTANTS
-    MOVE_TEXT = '*** WHOOOOOOSH ***'
+    MOVE_TEXT = '** WHOOOOOOSH **'
 
     def initialize
-      self.name           = 'Emerald'
+      super
+
+      self.name           = 'emerald'
+      self.name_display   = 'Emerald'
       self.description    = 'A wily, beefy, tower of a man, Emerald looks to be a champion of both wisdom, from what you\'ve heard, AND strength, from what you plainly see. He sports a constant glint in his eyes as he faces you, dead-on.'
+      self.battlecry      = 'You\'ve come for the SparklyThing(tm), I see. To that I say: Ha ha ha ha ha! Prepare yourself fool: today your whole life crumbles!'
       self.face           = 'gleaming'
       self.hands          = 'tantalizing'
       self.mood           = 'enraged'
 
       self.level          = 15
-      self.hp_cur         = rand((level * 2)..(level * 3))
+      self.hp_cur         = rand((level * 3)..(level * 4))
       self.hp_max         = hp_cur
       self.atk_lo         = rand(level..(level * 2.5).floor)
       self.atk_hi         = rand((level * 2.5).floor..(level * 3).floor)
@@ -29,9 +33,7 @@ module Gemwarrior
       self.rox            = rand((level * 2)..(level * 3))
       self.xp             = rand(level..(level * 2))
 
-      self.battlecry      = 'You\'ve come for the SparklyThing(tm), I see. To that I say: Ha ha ha ha ha! Prepare yourself fool: today your whole life crumbles!'
       self.is_boss        = true
-      self.is_dead        = false
     end
     
     def initiate_ending(world)

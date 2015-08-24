@@ -1,21 +1,16 @@
-# lib/gemwarrior/entities/items/thin_man.rb
-# Item::ThinMan
+# lib/gemwarrior/entities/people/thin_man.rb
+# Entity::Creature::Person::ThinMan
 
-require_relative '../item'
+require_relative '../person'
 
 module Gemwarrior
-  class ThinMan < Item
+  class ThinMan < Person
     def initialize
       super
 
       self.name         = 'thin_man'
+      self.name_display = 'Thin Man'
       self.description  = 'An almost shockingly gaunt man is sitting on the ground, resting against a wall. He wears a patchwork quilt of a hat, and his slender frame is covered by a simple brown tunic. His feet point comically toward the sky in brown boots while his head dips down slightly, eyes watching something in the distance you can\'t see.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
     end
 
     def use(player = nil)
@@ -28,7 +23,7 @@ module Gemwarrior
 
         self.used = true
       end
-      
+
       { type: nil, data: nil }
     end
   end

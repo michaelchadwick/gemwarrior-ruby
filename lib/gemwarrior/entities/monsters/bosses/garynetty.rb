@@ -1,13 +1,18 @@
-# lib/gemwarrior/entities/monsters/garynetty.rb
-# Garrynetty monster
+# lib/gemwarrior/entities/monsters/bosses/garynetty.rb
+# Entity::Creature::Monster::Garrynetty (BOSS)
 
 require_relative '../../monster'
+require_relative '../../items/tent'
 
 module Gemwarrior
   class Garynetty < Monster
     def initialize
-      self.name         = 'Garynetty'
+      super
+
+      self.name         = 'garynetty'
+      self.name_display = 'Garynetty'
       self.description  = 'Conservative, yet odd, the Garynetty is not messing around.'
+      self.battlecry    = '...?!'
       self.face         = 'irregular'
       self.hands        = 'sharp'
       self.mood         = 'abrasive'
@@ -20,12 +25,19 @@ module Gemwarrior
       self.defense      = rand(7..9)
       self.dexterity    = rand(10..12)
 
-      self.inventory    = Inventory.new
+      self.inventory    = random_item
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand((level * 3)..(level * 4))
 
-      self.battlecry    = '...?!'
       self.is_boss      = true
+    end
+
+    private
+
+    def random_item
+      if [true, false].sample
+        Inventory.new(items = [Tent.new])
+      end
     end
   end
 end

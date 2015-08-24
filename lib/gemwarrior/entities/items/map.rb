@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/map.rb
-# Item::Map
+# Entity::Item::Map
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'map'
+      self.name_display = 'Map'
       self.description  = 'The land of Jool is contained on this piece of canvas, in a useful, if not very detailed, manner.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

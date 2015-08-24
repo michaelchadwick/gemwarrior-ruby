@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/alexandrat.rb
-# Alexandrat monster
+# Entity::Creature::Monster::Alexandrat
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'alexandrat'
+      self.name_display = 'Alexandrat'
       self.description  = 'Tiny, but fierce, color-changing rodent.'
+      self.battlecry    = 'Bitey, bitey!'
       self.face         = 'ugly'
       self.hands        = 'gnarled'
       self.mood         = 'unchipper'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = 'Bitey, bitey!'
     end
   end
 end

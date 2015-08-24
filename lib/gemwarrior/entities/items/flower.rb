@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'flower'
+      self.name_display = 'Flower'
       self.description  = 'Petals the color of clear sky and a stem of bright white. A most curious plant.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = false
-      self.equippable   = false
     end
   end
 end

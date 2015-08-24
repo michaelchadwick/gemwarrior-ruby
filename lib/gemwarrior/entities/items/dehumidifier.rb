@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/dehumidifier.rb
-# Item::Dehumidifier
+# Entity::Item::Dehumidifier
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'dehumidifier'
-      self.description  = 'Petals the color of clear sky and a stem of bright white. A most curious plant.'
-      self.atk_lo       = 2
-      self.atk_hi       = 4
+      self.name_display = 'Dehumidifier'
+      self.description  = 'Humidity stands approximately zero chance when its presence.'
       self.takeable     = true
-      self.useable      = false
-      self.equippable   = true
     end
   end
 end

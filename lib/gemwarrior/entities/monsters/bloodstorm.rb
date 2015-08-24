@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/bloodstorm.rb
-# Bloodstorm monster
+# Entity::Creature::Monster::Bloodstorm
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'bloodstorm'
+      self.name_display = 'Bloodstorm'
       self.description  = 'A literal swirling, maniacal vortex of human hemoglobin.'
+      self.battlecry    = '/swirls'
       self.face         = 'bloody'
       self.hands        = 'bloody'
       self.mood         = 'boiling'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = '/swirls'
     end
   end
 end

@@ -1,20 +1,18 @@
-# lib/gemwarrior/entities/items/opalaser.rb
-# Item::Opalaser
+# lib/gemwarrior/entities/weapons/opalaser.rb
+# Entity::Item::Weapon::Opalaser
 
 require_relative '../item'
 
 module Gemwarrior
-  class Opalaser < Item
+  class Opalaser < Weapon
     def initialize
       super
 
       self.name         = 'opalaser'
+      self.name_display = 'Opalaser'
       self.description  = 'Gleaming with supernatural light, this object feels alien, yet familiar.'
       self.atk_lo       = 9
       self.atk_hi       = 11
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = true
     end
 
     def use(player = nil)

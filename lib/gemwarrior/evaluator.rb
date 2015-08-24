@@ -2,6 +2,7 @@
 # Evaluates prompt input
 
 require_relative 'arena'
+require_relative 'game_assets'
 require_relative 'game_options'
 
 module Gemwarrior
@@ -13,7 +14,7 @@ module Gemwarrior
 
     GO_PARAMS                           = 'Options: north, east, south, west'
     CHANGE_PARAMS                       = 'Options: name'
-    DEBUG_LIST_PARAMS                   = 'Options: monsters, items, locations'
+    DEBUG_LIST_PARAMS                   = 'Options: players, creatures, items, locations, monsters, weapons'
     DEBUG_STAT_PARAMS                   = 'Options: hp_cur, atk_lo, atk_hi, experience, rox, strength, dexterity, defense, inventory'
 
     ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
@@ -44,15 +45,21 @@ module Gemwarrior
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
 
     attr_accessor :world,
-                  :commands, :aliases, :extras, :cmd_descriptions,
-                  :devcommands, :devaliases, :devextras, :devcmd_descriptions
+                  :commands, 
+                  :aliases, 
+                  :extras, 
+                  :cmd_descriptions,
+                  :devcommands, 
+                  :devaliases, 
+                  :devextras, 
+                  :devcmd_descriptions
 
     def initialize(world)
       self.world = world
 
-      self.devcommands = %w(god beast list vars map stat teleport spawn levelbump restfight)
-      self.devaliases = %w(gd bs ls vs m st tp sp lb rf)
-      self.devextras = %w()
+      self.devcommands  = %w(god beast list vars map stat teleport spawn levelbump restfight)
+      self.devaliases   = %w(gd bs ls vs m st tp sp lb rf)
+      self.devextras    = %w()
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
         'Toggle beast mode (i.e. super strength)',
@@ -66,16 +73,16 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands = %w(character inventory rest look take talk use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
-      self.aliases = %w(c i r l t tk u d eq ue g n e s w a ch v cu h q qq)
-      self.extras = %w(exit exit! x xx fight f ? ?? ???)
+      self.commands     = %w(character look rest take talk inventory use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
+      self.aliases      = %w(c l r t tk i u d eq ue g n e s w a ch v cu h q qq)
+      self.extras       = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
-        'Look in your inventory',
-        'Take a load off and regain HP',
         'Look around your current location',
+        'Take a load off and regain HP',
         'Take item',
         'Talk to person',
+        'Look in your inventory',
         'Use item (in inventory or environment)',
         'Drop item',
         'Equip item',
@@ -86,7 +93,7 @@ module Gemwarrior
         'Go south (shortcut)',
         'Go west (shortcut)',
         'Attack a monster (also fight)',
-        'Change something',
+        'Change attribute',
         'Display game version',
         'Check for newer game releases',
         'This help menu (also ?)',
@@ -95,23 +102,26 @@ module Gemwarrior
       ]
     end
 
-    def evaluate(input)
+    def parse(input)
       case input
       # Ctrl-D or empty command
       when nil, ''
         return
       # real command
       else
-        tokens = input.split
         unless input_valid?(input)
-          return ERROR_COMMAND_INVALID
+          return ERROR_COMMAND_INVALID.colorize(:red)
         end
       end
 
+      tokens = input.split
       command = tokens.first.downcase
       param1 = tokens[1]
       param2 = tokens[2]
       param3 = tokens[3]
+
+      # helpful
+      player_cur_location = world.location_by_coords(world.player.cur_coords)
 
       # dev commands
       if GameOptions.data['debug_mode']
@@ -123,7 +133,11 @@ module Gemwarrior
           GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
           return "Beast mode set to #{GameOptions.data['beast_mode']}"
         when 'vars', 'vs'
-          world.print_vars
+          if param1
+            world.print_vars(param1)
+          else
+            world.print_vars
+          end
         when 'list', 'ls'
           if param1.nil?
             puts ERROR_LIST_PARAM_MISSING
@@ -214,16 +228,16 @@ module Gemwarrior
               end
             when 'inventory', 'inv'
               unless param2.nil?
-                world.player.inventory.items.push(eval(param2).new)
+                world.player.inventory.items.push(Gemwarrior::const_get(param2).new)
               end
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
             end
           end
         when 'spawn', 'sp'
-          cur_loc = world.location_by_coords(world.player.cur_coords)
-          cur_loc.populate_monsters(world.monsters, true)
-          return world.describe(cur_loc)
+          player_cur_location = world.location_by_coords(world.player.cur_coords)
+          player_cur_location.populate_monsters(GameMonsters.data, spawn = true)
+          return world.describe(player_cur_location)
         when 'teleport', 'tp'
           if param1.nil?
             return ERROR_DEBUG_TELEPORT_PARAMS_MISSING
@@ -265,7 +279,8 @@ module Gemwarrior
             world.player.movements_made += 1
 
             Animation::run(phrase: '** TELEPORT! **', speed: :insane)
-            return world.describe(world.location_by_coords(world.player.cur_coords))
+            player_cur_location = world.location_by_coords(world.player.cur_coords)
+            return world.describe(player_cur_location)
           end
         when 'levelbump', 'lb'
           world.player.update_stats(reason: :level_bump, value: 1)
@@ -289,13 +304,26 @@ module Gemwarrior
         else
           world.player.list_inventory
         end
+      when 'look', 'l'
+        if param1
+          # convert 'look at' to 'look'
+          if param1.eql?('at')
+            if param2
+              param1 = param2
+            else
+              return ERROR_LOOK_AT_PARAM_MISSING
+            end
+          end
+          world.describe_entity(player_cur_location, param1)
+        else
+          world.describe(player_cur_location)
+        end
       when 'rest', 'r'
         tent_uses = 0
-        player_inventory = world.player.inventory.items
-        location_inventory = world.location_by_coords(world.player.cur_coords).items
+        player_inventory = world.player.inventory
 
-        if player_inventory.map(&:name).include?('tent')
-          player_inventory.each do |i|
+        if player_inventory.contains_item?('tent')
+          player_inventory.items.each do |i|
             if i.name.eql?('tent')
               if i.number_of_uses > 0
                 result = i.use(world.player)
@@ -306,8 +334,8 @@ module Gemwarrior
               end
             end
           end
-        elsif location_inventory.map(&:name).include?('tent')
-          location_inventory.each do |i|
+        elsif player_cur_location.contains_item?('tent')
+          player_cur_location.items.each do |i|
             if i.name.eql?('tent')
               if i.number_of_uses > 0
                 result = i.use(world.player)
@@ -327,24 +355,11 @@ module Gemwarrior
         else
           result
         end
-      when 'look', 'l'
-        if param1
-          if param1.eql?('at')
-            if param2
-              param1 = param2
-            else
-              return ERROR_LOOK_AT_PARAM_MISSING
-            end
-          end
-          world.describe_entity(world.location_by_coords(world.player.cur_coords), param1)
-        else
-          world.describe(world.location_by_coords(world.player.cur_coords))
-        end
       when 'take', 't'
         if param1.nil?
           ERROR_TAKE_PARAM_MISSING
         else
-          world.player.inventory.add_item(world.location_by_coords(world.player.cur_coords), param1, world.player)
+          world.player.inventory.add_item(param1, player_cur_location, world.player)
         end
       when 'talk', 'tk'
         if param1.nil?
@@ -356,16 +371,14 @@ module Gemwarrior
             return ERROR_TALK_TO_PARAM_MISSING
           end
         end
-        
+
         person_name = param1
         result = nil
 
-        player_inventory = world.player.inventory.items
-        location = world.location_by_coords(world.player.cur_coords)
-        location_inventory = location.items
+        player_inventory = world.player.inventory
 
-        if player_inventory.map(&:name).include?(person_name)
-          player_inventory.each do |person|
+        if player_inventory.contains_item?(person_name)
+          player_inventory.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
                 result = person.use(world.player)
@@ -374,8 +387,8 @@ module Gemwarrior
               end
             end
           end
-        elsif location_inventory.map(&:name).include?(person_name)
-          location_inventory.each do |person|
+        elsif player_cur_location.contains_item?(person_name)
+          player_cur_location.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
                 result = person.use(world.player)
@@ -398,7 +411,7 @@ module Gemwarrior
           end
         when 'purchase'
           result[:data].each do |i|
-            world.player.inventory.items.push(i)
+            world.player.inventory.add_item(i)
           end
           return
         end
@@ -409,12 +422,10 @@ module Gemwarrior
           item_name = param1
           result = nil
 
-          player_inventory = world.player.inventory.items
-          location = world.location_by_coords(world.player.cur_coords)
-          location_inventory = location.items
+          player_inventory = world.player.inventory
 
-          if player_inventory.map(&:name).include?(item_name)
-            player_inventory.each do |i|
+          if player_inventory.contains_item?(item_name)
+            player_inventory.items.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
                   if !i.number_of_uses.nil?
@@ -436,8 +447,8 @@ module Gemwarrior
                 end
               end
             end
-          elsif location_inventory.map(&:name).include?(item_name)
-            location_inventory.each do |i|
+          elsif player_cur_location.contains_item?(item_name)
+            player_cur_location.items.each do |i|
               if i.name.eql?(item_name)
                 if i.useable
                   if !i.number_of_uses.nil?
@@ -467,11 +478,16 @@ module Gemwarrior
             case result[:type]
             when 'move'
               world.player.cur_coords = world.location_coords_by_name(result[:data])
-              world.describe(world.location_by_coords(world.player.cur_coords))
+              player_cur_location = world.location_by_coords(world.player.cur_coords)
+              world.describe(player_cur_location)
             when 'move_dangerous'
-              world.player.take_damage(rand(0..2))
+              dmg = rand(0..2)
+              puts ">> You lose #{dmg} hit point(s)." if dmg > 0
+              world.player.take_damage(dmg)
+              
               world.player.cur_coords = world.location_coords_by_name(result[:data])
-              world.describe(world.location_by_coords(world.player.cur_coords))
+              player_cur_location = world.location_by_coords(world.player.cur_coords)
+              world.describe(player_cur_location)
             when 'dmg'
               world.player.take_damage(result[:data])
               return
@@ -496,7 +512,7 @@ module Gemwarrior
                 player_death_resurrection
               end
             when 'item'
-              world.location_by_coords(world.player.cur_coords).add_item(result[:data])
+              player_cur_location.add_item(result[:data])
               return
             when 'purchase'
               result[:data].each do |i|
@@ -564,11 +580,11 @@ module Gemwarrior
         else
           monster_name = param1
           if world.has_monster_to_attack?(monster_name)
-            monster = world.location_by_coords(world.player.cur_coords).monster_by_name(monster_name)
+            monster = player_cur_location.monster_by_name(monster_name)
             result = world.player.attack(world, monster)
 
             if result.eql?('death')
-              player_death_resurrection
+              return player_death_resurrection
             elsif result.eql?('exit')
               return 'exit'
             end
@@ -579,7 +595,8 @@ module Gemwarrior
                 result[:data]
               when 'move'
                 world.player.cur_coords = world.location_coords_by_name(result[:data])
-                world.describe(world.location_by_coords(world.player.cur_coords))
+                player_cur_location = world.location_by_coords(world.player.cur_coords)
+                world.describe(player_cur_location)
               end
             end
           else
@@ -606,7 +623,7 @@ module Gemwarrior
         'checkupdate'
       when 'quit', 'exit', 'q', 'x'
         print 'You sure you want to quit? (y/n) '
-        response = gets.chomp.downcase
+        answer = gets.chomp.downcase
         
         case answer
         when 'y', 'yes'
@@ -628,8 +645,9 @@ module Gemwarrior
     def try_to_move_player(direction)
       if world.can_move?(direction)
         world.player.go(world.locations, direction)
-        world.location_by_coords(world.player.cur_coords).checked_for_monsters = false
-        world.describe(world.location_by_coords(world.player.cur_coords))
+        player_cur_location = world.location_by_coords(world.player.cur_coords)
+        player_cur_location.checked_for_monsters = false
+        world.describe(player_cur_location)
       else
         return ERROR_GO_PARAM_INVALID
       end
@@ -646,13 +664,16 @@ module Gemwarrior
       puts 'Somehow, though, your adventure does not end here!'.colorize(:yellow)
       puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)
       puts 'A bit worse for the weary and somewhat poorer, but you are ALIVE!'.colorize(:yellow)
+      puts
+      
       world.player.hp_cur = 1
       world.player.rox -= (world.player.rox * 0.1).to_i
       if world.player.rox < 0
         world.player.rox = 0
       end
       world.player.cur_coords = world.location_coords_by_name('Home')
-      world.describe(world.location_by_coords(world.player.cur_coords))
+      player_cur_location = world.location_by_coords(world.player.cur_coords)
+      world.describe(player_cur_location)
       world.player.deaths += 1
       return
     end

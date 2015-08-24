@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/coraliz.rb
-# Coraliz monster
+# Entity::Creature::Monster::Coraliz
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'coraliz'
+      self.name_display = 'Coraliz'
       self.description  = 'Small blue lizard that slithers around, nipping at your ankles.'
+      self.battlecry    = 'Where am I? You\'ll never guess!'
       self.face         = 'spotted'
       self.hands        = 'slippery'
       self.mood         = 'emotionless'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 3))
-
-      self.battlecry    = 'Where am I? You\'ll never guess!'
     end
   end
 end

@@ -10,7 +10,7 @@ module Gemwarrior
     # CONSTANTS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
     BEAST_MODE_ATTACK           = 100
-    ESCAPE_TEXT                 = '  ** POOF **'
+    ESCAPE_TEXT                 = '** POOF **'
 
     attr_accessor :world, :player, :monster, :player_is_defending
 
@@ -113,20 +113,36 @@ module Gemwarrior
         # player action
         case player_action
         when 'fight', 'f', 'attack', 'a'
-          puts "  You attack #{monster.name}#{player.cur_weapon_name}!"
-          dmg = calculate_damage_to(monster)
-          if dmg > 0
-            Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
+          can_attack = true
 
-            take_damage(monster, dmg)
-            if monster_dead?
-              result = monster_death
-              return result
+          # gun exception
+          if player.has_weapon_equipped?
+            if player.inventory.weapon.name.eql?('gun')
+              if player.inventory.contains_item?('bullet')
+                player.inventory.remove_item('bullet')
+              else
+                puts '  Your gun is out of bullets! Running is your best option now.'.colorize(:red)
+                can_attack = false
+              end
             end
-          else
-            Music::cue([{ frequencies: 'A4', duration: 75 }])
+          end
 
-            puts '  You miss entirely!'.colorize(:yellow)
+          if can_attack
+            puts "  You attack #{monster.name}#{player.cur_weapon_name}!"
+            dmg = calculate_damage_to(monster)
+            if dmg > 0
+              Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
+
+              take_damage(monster, dmg)
+              if monster_dead?
+                result = monster_death
+                return result
+              end
+            else
+              Music::cue([{ frequencies: 'A4', duration: 75 }])
+
+              puts '  You miss entirely!'.colorize(:yellow)
+            end
           end
         when 'defend', 'd'
           puts '  You dig in and defend this round.'
@@ -150,7 +166,7 @@ module Gemwarrior
             puts "  You successfully elude #{monster.name}!".colorize(:green)
             print_escape_text
             print_battle_line
-            return 'escaped'
+            return
           else
             puts '  You were not able to run away! :-('.colorize(:yellow)
           end

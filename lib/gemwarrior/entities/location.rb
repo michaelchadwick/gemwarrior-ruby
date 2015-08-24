@@ -1,4 +1,5 @@
 # lib/gemwarrior/entities/location.rb
+# Entity::Location
 # Place in the game
 
 require_relative 'entity'
@@ -8,10 +9,36 @@ module Gemwarrior
   class Location < Entity
     # CONSTANTS
     DANGER_LEVEL              = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
+    ERROR_ITEM_ADD_INVALID    = 'That item cannot be added to the location\'s inventory.'
     ERROR_ITEM_REMOVE_INVALID = 'That item cannot be removed as it does not exist here.'
 
-    attr_accessor :coords, :locs_connected, :danger_level, :monster_level_range, :items, 
-                  :monsters_abounding, :bosses_abounding, :checked_for_monsters
+    attr_accessor :coords,
+                  :locs_connected,
+                  :danger_level,
+                  :monster_level_range,
+                  :items,
+                  :monsters_abounding,
+                  :bosses_abounding,
+                  :checked_for_monsters
+
+    def describe
+      desc_text =  name.ljust(30).upcase.colorize(:green)
+      desc_text << coords.values.to_a.to_s.colorize(:white)
+      desc_text << " DL[#{danger_level.to_s.ljust(8)}] ".colorize(:white) if GameOptions.data['debug_mode']
+      desc_text << " MLR[#{monster_level_range.to_s.ljust(6)}] ".colorize(:white) if GameOptions.data['debug_mode']
+      desc_text << "\n"
+      desc_text << "#{description}".colorize(:white)
+      desc_text
+    end
+
+    def describe_detailed
+      desc_text =  "#{name_display.ljust(36).colorize(:yellow)} #{coords.values.to_a.to_s.colorize(:white)}\n"
+      desc_text << "(#{name})\n".colorize(:green)
+      desc_text << "#{description}\n".colorize(:white)
+      desc_text << "DANGER_LEVEL       : #{danger_level}\n".colorize(:white)
+      desc_text << "MONSTER_LEVEL_RANGE: #{monster_level_range}\n".colorize(:white)
+      desc_text
+    end
 
     def initialize(options)
       self.name                 = options.fetch(:name)
@@ -21,41 +48,36 @@ module Gemwarrior
       self.danger_level         = options.fetch(:danger_level)
       self.monster_level_range  = options.fetch(:monster_level_range)
       self.items                = options.fetch(:items)
-      self.monsters_abounding   = []
-      self.bosses_abounding     = options[:bosses_abounding]
+      self.monsters_abounding   = options.fetch(:monsters_abounding)
+      self.bosses_abounding     = options.fetch[:bosses_abounding]
       self.checked_for_monsters = false
     end
 
-    def status
-      status_text =  name.ljust(30).upcase.colorize(:green)
-      status_text << coords.values.to_a.to_s.colorize(:white)
-      status_text << " DL[#{danger_level.to_s.ljust(8)}] ".colorize(:white) if GameOptions.data['debug_mode']
-      status_text << " MLR[#{monster_level_range.to_s.ljust(6)}] ".colorize(:white) if GameOptions.data['debug_mode']
-      status_text << "\n#{description}\n".colorize(:white)
-    end
-
-    def has_item?(item_name)
-      items.map{|i| i.name.downcase}.include?(item_name)
+    def contains_item?(item_name)
+      self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
     end
 
     def has_monster?(monster_name)
-      monsters_abounding.map{|m| m.name.downcase}.include?(monster_name)
+      monsters_abounding.map{|m| m.name.downcase}.include?(monster_name.downcase)
     end
 
     def has_boss?(boss_name)
-      bosses_abounding.map{|b| b.name.downcase}.include?(boss_name)
+      bosses_abounding.map{|b| b.name.downcase}.include?(boss_name.downcase)
     end
 
-    def add_item(item_name)
-      Dir.glob('lib/gemwarrior/items/*.rb').each do |item|
-        require_relative item[item.index('/', item.index('/')+1)+1..item.length]
+    def add_item(item_name_to_add)
+      all_items = GameItems.data || GameWeapons.data
+      all_items.each do |game_item|
+        if game_item.name.eql?(item_name_to_add)
+          self.items.push(game_item)
+          return
+        end
       end
-
-      self.items.push(eval(item_name).new)
+      return LOCATION_INVENTORY_ADD_ITEM_INVALID
     end
 
     def remove_item(item_name)
-      if has_item?(item_name)
+      if contains_item?(item_name)
         items.reject! { |item| item.name == item_name }
       else
         ERROR_ITEM_REMOVE_INVALID
@@ -64,7 +86,7 @@ module Gemwarrior
 
     def remove_monster(name)
       monsters_abounding.reject! { |monster| monster.name == name }
-      bosses_abounding.reject! { |monster| monster.name == name }
+      bosses_abounding.reject! { |boss| boss.name == name }
     end
 
     def has_loc_to_the?(direction)
@@ -114,27 +136,15 @@ module Gemwarrior
     end
 
     def list_items
-      if items.length > 0
-        items.map(&:name)
-      else
-        []
-      end
+      items.length > 0 ? items.map(&:name) : []
     end
 
     def list_monsters
-      if monsters_abounding.length > 0
-        monsters_abounding.map(&:name)
-      else
-        []
-      end
+      monsters_abounding.length > 0 ? monsters_abounding.map(&:name) : []
     end
 
     def list_bosses
-      if bosses_abounding.length > 0
-        bosses_abounding.map(&:name)
-      else
-        []
-      end
+      bosses_abounding.length > 0 ? bosses_abounding.map(&:name_display) : []
     end
 
     def list_paths
@@ -148,7 +158,7 @@ module Gemwarrior
     end
 
     def list_actionable_words
-      actionable_words =  []
+      actionable_words = []
       actionable_words.push(monsters_abounding.map(&:name)) unless monsters_abounding.empty?
       actionable_words.push(bosses_abounding.map(&:name))   unless bosses_abounding.empty?
       actionable_words.push(items.map(&:name))              unless items.empty?

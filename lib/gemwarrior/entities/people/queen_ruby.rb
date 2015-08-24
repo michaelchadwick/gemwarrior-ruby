@@ -1,25 +1,20 @@
-# lib/gemwarrior/entities/items/queen_ruby.rb
-# Item::QueenRuby
+# lib/gemwarrior/entities/people/queen_ruby.rb
+# Entity::Creature::Person::QueenRuby
 
-require_relative '../item'
+require_relative '../person'
 require_relative '../../misc/animation'
 
 module Gemwarrior
-  class QueenRuby < Item
+  class QueenRuby < Person
     # CONSTANTS
-    MOVE_TEXT = '*** WHOOOOOOSH ***'
-    
+    MOVE_TEXT = '** WHOOOOOOSH **'
+
     def initialize
       super
 
       self.name         = 'queen_ruby'
+      self.name_display = 'Queen Ruby'
       self.description  = 'Queen Ruby glimmers like she was made from the substance of her name. She wears a wan smile, and her hands are delicately intertwined as she sits patiently.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
     end
 
     def use(player = nil)

@@ -1,20 +1,18 @@
-# lib/gemwarrior/entities/items/gun.rb
-# Item::Gun
+# lib/gemwarrior/entities/weapons/gun.rb
+# Entity::Item::Weapon::Gun
 
-require_relative '../item'
+require_relative '../weapon'
 
 module Gemwarrior
-  class Gun < Item
+  class Gun < Weapon
     def initialize
       super
 
       self.name         = 'gun'
-      self.description  = 'Pew pew goes this firearm, you suspect.'
+      self.name_display = 'Gun'
+      self.description  = 'Pew pew goes this firearm, you suspect (if it has bullets).'
       self.atk_lo       = 2
-      self.atk_hi       = 4
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = true
+      self.atk_hi       = 6
     end
 
     def use(player = nil)

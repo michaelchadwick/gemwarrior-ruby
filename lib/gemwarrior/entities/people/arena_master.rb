@@ -1,10 +1,10 @@
-# lib/gemwarrior/entities/items/arena_master.rb
-# Item::ArenaMaster
+# lib/gemwarrior/entities/people/arena_master.rb
+# Entity::Creature::Person::ArenaMaster
 
-require_relative '../item'
+require_relative '../person'
 
 module Gemwarrior
-  class ArenaMaster < Item
+  class ArenaMaster < Person
     # CONSTANTS
     ARENA_FEE         = 50
     ARENA_MASTER_NAME = 'Iolita'
@@ -13,13 +13,8 @@ module Gemwarrior
       super
 
       self.name         = 'arena_master'
+      self.name_display = 'Arena Master'
       self.description  = 'She wears simple clothing, but carries herself with an air of authority. You think she may be the person to talk with if you want to engage in battle.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
     end
 
     def use(player = nil)

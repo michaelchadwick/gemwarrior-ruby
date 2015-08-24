@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/herb.rb
-# Item::Herb
+# Entity::Item::Herb
 
 require_relative '../item'
 
@@ -9,13 +9,10 @@ module Gemwarrior
       super
 
       self.name         = 'herb'
+      self.name_display = 'Herb'
       self.description  = 'Green and leafy, this wild herb looks edible.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = true
       self.consumable   = true
-      self.equippable   = false
     end
 
     def use(player = nil)
@@ -24,7 +21,7 @@ module Gemwarrior
         puts '>> The herb has no medicinal effect, as you already feel perfectly healthy, but it was kind of tasty.'
         { type: nil, data: nil }
       else
-        puts '>> You regain a few hit points.'
+        puts '>> You regain a few hit points.'.colorize(:green)
         { type: 'health', data: rand(3..5) }
       end
     end

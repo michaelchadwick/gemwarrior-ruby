@@ -3,7 +3,7 @@
 
 module Gemwarrior
   module Formatting
-    def self.upstyle(str_arr)
+    def self.upstyle(str_arr, no_space = false)
       if str_arr.is_a? Array
         str_arr_upstyled = []
 
@@ -11,15 +11,15 @@ module Gemwarrior
           str_arr_item_upstyled = []
           
           str_arr_item.split(' ').each do |s|
-            str_arr_item_upstyled << upstyle_string(s)
+            str_arr_item_upstyled << upstyle_string(s, no_space)
           end
 
           str_arr_upstyled << str_arr_item_upstyled.join(' ')
         end
 
-        return str_arr_upstyled
+        str_arr_upstyled
       else
-        return upstyle_string(str_arr)
+        upstyle_string(str_arr, no_space)
       end
     end
 
@@ -35,24 +35,24 @@ module Gemwarrior
         end
         words_hooched << w
       end
-      
-      return words_hooched.join(' ')
+
+      words_hooched.join(' ')
     end
 
     private
 
-    def self.upstyle_string(s)
+    def self.upstyle_string(s, no_space)
       s_upstyle = ''
       s_upstyle << s[0].upcase
       1.upto(s.length-1) do |i|
         if s[i-1].eql?('_')
-          s_upstyle[i-1] = ' '
+          s_upstyle[i-1] = no_space ? '' : ' '
           s_upstyle << s[i].upcase
         else
           s_upstyle << s[i].downcase
         end
       end
-      return s_upstyle
+      s_upstyle
     end
   end
 end

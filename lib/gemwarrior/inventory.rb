@@ -6,59 +6,68 @@ require_relative 'game_options'
 module Gemwarrior
   class Inventory
     # CONSTANTS
-    ERROR_ITEM_REMOVE_INVALID     = 'Your inventory does not contain that item, so you cannot drop it.'
-    ERROR_ITEM_ADD_UNTAKEABLE     = 'That would be great if you could take that thing, wouldn\'t it? Well, it\'s not so great for you right now.'
-    ERROR_ITEM_ADD_INVALID        = 'That item does not exist here.'
-    ERROR_ITEM_EQUIP_INVALID      = 'You do not possess anything called that to equip.'
-    ERROR_ITEM_EQUIP_NONWEAPON    = 'That cannot be equipped as a weapon.'
-    ERROR_ITEM_UNEQUIP_INVALID    = 'You do not possess anything called that to unequip.'
-    ERROR_ITEM_UNEQUIP_NONWEAPON  = 'That cannot be unequipped.'
+    ERROR_ITEM_REMOVE_INVALID       = 'Your inventory does not contain that item, so you cannot drop it.'
+    ERROR_ITEM_ADD_UNTAKEABLE       = 'That would be great if you could take that, wouldn\'t it? Huh!'
+    ERROR_ITEM_ADD_INVALID          = 'That item cannot be added.'
+    ERROR_ITEM_DESCRIBE_INVALID     = 'That does not seem to be in the inventory.'
+    ERROR_ITEM_EQUIP_INVALID        = 'You do not possess anything called that to equip.'
+    ERROR_ITEM_EQUIP_NONARMAMENT    = 'That item cannot be equipped.'
+    ERROR_ITEM_UNEQUIP_INVALID      = 'You do not possess anything called that to unequip.'
+    ERROR_ITEM_UNEQUIP_NONARMAMENT  = 'That item cannot be unequipped.'
 
-    attr_accessor :items, :weapon
+    attr_accessor :items,
+                  :weapon,
+                  :armor
 
-    def initialize(items = [], weapon = nil)
-      self.items = items
+    def initialize(items = [], weapon = nil, armor = nil)
+      self.items  = items
       self.weapon = weapon
+      self.armor  = armor
     end
 
     def list_contents
-      if items.nil? || items.empty?
+      if self.items.nil? || self.items.empty?
         return '[empty]'
       else
-        return "#{items.map(&:name).join ', '}"
+        return "#{self.items.map(&:name).join(', ')}"
       end
     end
 
     def contains_item?(item_name)
-      items.map(&:name).include?(item_name)
+      self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
     end
 
     def describe_item(item_name)
       if contains_item?(item_name)
-        items.each do |i|
+        self.items.each do |i|
           if i.name.eql?(item_name)
             if GameOptions.data['debug_mode']
-              return i.describe
+              return i.describe_detailed
             else
-              return i.description
+              return i.describe
             end
           end
         end
       else
-        return false
+        ERROR_ITEM_DESCRIBE_INVALID
       end
     end
 
     def equip_item(item_name)
       if contains_item?(item_name)
-        items.each do |i|
+        self.items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
               i.equipped = true
-              self.weapon = i
-              return "The #{i.name} has taken charge, and been equipped."
+              if i.is_weapon
+                self.weapon = i
+                return "The #{i.name} has taken charge, and been equipped."
+              elsif i.is_armor
+                self.armor = i
+                return "The #{i.name} has fortified, and has been equipped."
+              end
             else
-              return ERROR_ITEM_EQUIP_NONWEAPON
+              return ERROR_ITEM_EQUIP_NONARMAMENT
             end
           end
         end
@@ -69,14 +78,19 @@ module Gemwarrior
 
     def unequip_item(item_name)
       if contains_item?(item_name)
-        items.each do |i|
+        self.items.each do |i|
           if i.name.eql?(item_name)
             if i.equippable
               i.equipped = false
-              self.weapon = nil
-              return "The #{i.name} has been demoted to unequipped."
+              if i.is_weapon
+                self.weapon = nil
+                return "The #{i.name} has been demoted to unequipped."
+              elsif i.is_armor
+                self.armor = nil
+                return "The #{i.armor} has been demoted to unequipped."
+              end
             else
-              return ERROR_ITEM_UNEQUIP_NONWEAPON
+              return ERROR_ITEM_UNEQUIP_NONARMAMENT
             end
           end
         end
@@ -85,27 +99,31 @@ module Gemwarrior
       end
     end
 
-    def add_item(cur_loc, item_name, player)
-      cur_loc.items.each do |i|
-        if i.name.eql?(item_name)
-          if i.takeable
-            items.push(i)
-            cur_loc.remove_item(item_name)
+    def add_item(item_name, cur_loc = nil, player = nil)
+      if cur_loc.nil?
+        self.items.push(item_name)
+      else
+        cur_loc.items.each do |i|
+          if i.name.eql?(item_name)
+            if i.takeable
+              self.items.push(i)
+              cur_loc.remove_item(item_name)
 
-            # stats
-            player.items_taken += 1
+              # stats
+              player.items_taken += 1
 
-            return "Added #{item_name} to your increasing collection of bits of tid."
-          else
-            return ERROR_ITEM_ADD_UNTAKEABLE
+              return "Added #{item_name} to your increasing collection of bits of tid.".colorize(:green)
+            else
+              return ERROR_ITEM_ADD_UNTAKEABLE.colorize(:red)
+            end
           end
         end
       end
-      ERROR_ITEM_ADD_INVALID
+      ERROR_ITEM_ADD_INVALID.colorize(:red)
     end
 
     def remove_item(item_name)
-      items.delete_at(items.map(&:name).index(item_name) || items.length)
+      self.items.delete_at(self.items.map(&:name).index(item_name) || self.items.length)
       unless self.weapon.nil?
         self.weapon = nil if self.weapon.name.eql?(item_name)
       end

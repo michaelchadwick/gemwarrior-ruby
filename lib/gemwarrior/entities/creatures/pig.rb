@@ -1,21 +1,19 @@
-# lib/gemwarrior/entities/items/pig.rb
-# Item::Pig
+# lib/gemwarrior/entities/people/pig.rb
+# Entity::Creature::Pig
 
-require_relative '../item'
+require_relative '../creature'
 
 module Gemwarrior
-  class Pig < Item
+  class Pig < Creature
     def initialize
       super
 
       self.name         = 'pig'
+      self.name_display = 'Pig'
       self.description  = 'Dirty, eating slop, but still kind of cute. Yep, this is a pig.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
+      self.face         = 'messy'
+      self.hands        = 'muddy'
+      self.mood         = 'restless'
     end
 
     def use(player = nil)

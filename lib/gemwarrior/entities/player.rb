@@ -3,6 +3,7 @@
 
 require_relative 'creature'
 require_relative '../battle'
+require_relative '../game_assets'
 require_relative '../game_options'
 require_relative '../misc/formatting'
 require_relative '../misc/name_generator'
@@ -19,9 +20,16 @@ module Gemwarrior
     include PlayerLevels
     include Formatting
 
-    attr_accessor :stam_cur, :stam_max, :cur_coords, :special_abilities,
-                  :monsters_killed, :bosses_killed, :items_taken, :movements_made,    
-                  :rests_taken, :deaths
+    attr_accessor :stam_cur,
+                  :stam_max,
+                  :cur_coords,
+                  :special_abilities,
+                  :monsters_killed,
+                  :bosses_killed,
+                  :items_taken,
+                  :movements_made,
+                  :rests_taken,
+                  :deaths
 
     def generate_name
       NameGenerator.new('fantasy').generate_name
@@ -44,17 +52,28 @@ module Gemwarrior
         print_char_pic
       end
 
-      weapon_slot = ''
-      atk_lo = self.atk_lo
-      atk_hi = self.atk_hi
+      weapon_slot   = '(unarmed)'
+      armor_slot    = '(unarmored)'
+      base_atk_lo   = self.atk_lo
+      base_atk_hi   = self.atk_hi
+      base_defense  = self.defense
+      net_atk_lo    = nil
+      net_atk_hi    = nil
+      net_defense   = nil
+
+      # juice the weapon display
       if has_weapon_equipped?
         weapon_slot = inventory.weapon.name
-        atk_lo += inventory.weapon.atk_lo
-        atk_hi += inventory.weapon.atk_hi
-      else
-        weapon_slot = '(unarmed)'
+        net_atk_lo = base_atk_lo + inventory.weapon.atk_lo
+        net_atk_hi = base_atk_hi + inventory.weapon.atk_hi
       end
-      
+
+      # juice the armor display
+      if has_armor_equipped?
+        armor_slot = inventory.armor.name
+        net_defense = base_defense + inventory.armor.defense
+      end
+
       abilities = ''
       if special_abilities.empty?
         abilities = 'none...yet(?)'
@@ -67,15 +86,25 @@ module Gemwarrior
       self_text << "EXPERIENCE: #{self.xp}\n"
       self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
       self_text << "WEAPON    : #{weapon_slot}\n"
-      self_text << "ATTACK    : #{atk_lo}-#{atk_hi}\n"
+      self_text << "ARMOR     : #{armor_slot}\n"
+      self_text << "ATTACK    : #{base_atk_lo}-#{base_atk_hi}"
+      self_text << " (#{net_atk_lo}-#{net_atk_hi} w/ #{weapon_slot})".colorize(:yellow) unless net_atk_lo.nil?
+      self_text << "\n"
+      self_text << "DEFENSE   : #{base_defense}\n"
+      self_text << " (#{net_defense} w/ #{armor_slot})".colorize(:yellow) unless net_defense.nil?
       self_text << "DEXTERITY : #{self.dexterity}\n"
-      self_text << "DEFENSE   : #{self.defense}\n"
       self_text << "ABILITIES : #{abilities}\n"
       
       if GameOptions.data['debug_mode']
-        self_text << "  POSITION  : #{self.cur_coords.values.to_a}\n"
-        self_text << "  GOD_MODE  : #{GameOptions.data['god_mode']}\n"
-        self_text << "  BEAST_MODE: #{GameOptions.data['beast_mode']}\n"
+        self_text << ">> POSITION       : #{self.cur_coords.values.to_a}\n"
+        self_text << ">> GOD_MODE       : #{GameOptions.data['god_mode']}\n"
+        self_text << ">> BEAST_MODE     : #{GameOptions.data['beast_mode']}\n"
+        self_text << ">> MONSTERS_KILLED: #{self.monsters_killed}\n"
+        self_text << ">> BOSSES_KILLED  : #{self.bosses_killed}\n"
+        self_text << ">> ITEMS_TAKEN    : #{self.items_taken}\n"
+        self_text << ">> MOVEMENTS_MADE : #{self.movements_made}\n"
+        self_text << ">> RESTS_TAKEN    : #{self.rests_taken}\n"
+        self_text << ">> DEATHS         : #{self.deaths}\n"
       end
 
       self_text << "\n"
@@ -84,14 +113,14 @@ module Gemwarrior
 
       self_text << "\n\n"
 
-      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and\nfeeling, generally, #{self.mood.colorize(:yellow)}."
+      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
       
       self_text << "\n"
     end
 
     def rest(world, tent_uses = 0, ensure_fight = false)
       if ensure_fight
-        battle = Battle.new(world: world, player: self, monster: world.monsters[rand(0..world.monsters.length-1)].clone)
+        battle = Battle.new(world: world, player: self, monster: GameMonsters.data[rand(0..GameMonsters.data.length-1)].clone)
         result = battle.start(is_arena = false, is_event = true)
         if result.eql?('death')
           return 'death'
@@ -126,13 +155,14 @@ module Gemwarrior
 
       if tent_uses > 0
         if self.at_full_hp?
+          Animation::run(phrase: REST_FULL_TEXT)
           return 'Despite feeling just fine, health-wise, you decide to set up camp for the ni--well, actually, after a few minutes you realize you don\'t need to sleep and pack things up again, ready to go.'
         else
           Animation::run(phrase: REST_NOT_FULL_TEXT)
           self.hp_cur = self.hp_max
 
-          status_text = "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure."
-          status_text << "\n>> You regain all of your hit points."
+          status_text = "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure.\n"
+          status_text << ">> You regain all of your hit points.".colorize(:green)
 
           return status_text
         end
@@ -142,11 +172,11 @@ module Gemwarrior
           return 'You sit down on the ground, make some notes on the back of your hand, test the air, and then return to standing, back at it all again.'
         else
           Animation::run(phrase: REST_NOT_FULL_TEXT)
-          self.hp_cur = self.hp_cur.to_i + rand(10..15)
+          self.hp_cur = self.hp_cur.to_i + rand(3..5)
           self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
 
-          status_text = "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new('noun-plural').get_random_value}."
-          status_text << "\n>> You regain a few hit points."
+          status_text = "You lie down somewhere quasi-flat and after a few moments, due to extreme exhaustion, you fall into a deep, yet troubled, slumber. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up with a start. Upon getting to your feet you look around, notice you feel somewhat better, and wonder why you dreamt about #{WordList.new('noun-plural').get_random_value}.\n"
+          status_text << ">> You regain a few hit points.".colorize(:green)
 
           return status_text
         end
@@ -231,6 +261,10 @@ module Gemwarrior
 
     def has_weapon_equipped?
       self.inventory.weapon
+    end
+
+    def has_armor_equipped?
+      self.inventory.armor
     end
 
     def cur_weapon_name

@@ -1,21 +1,19 @@
-# lib/gemwarrior/entities/items/goat.rb
-# Item::Goat
+# lib/gemwarrior/entities/people/goat.rb
+# Entity::Creature::Goat
 
-require_relative '../item'
+require_relative '../creature'
 
 module Gemwarrior
-  class Goat < Item
+  class Goat < Creature
     def initialize
       super
 
       self.name         = 'goat'
+      self.name_display = 'Goat'
       self.description  = 'The scruff is strong with this one as it chews through what appears to be a recent mystery novel most likely thrown into the pen by a passerby.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
-      self.talkable     = true
+      self.face         = 'busy'
+      self.hands        = 'hoofy'
+      self.mood         = 'content'
     end
 
     def use(player = nil)

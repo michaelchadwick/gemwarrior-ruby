@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/rope.rb
-# Item::Rope
+# Entity::Item::Rope
 
 require_relative '../item'
 
@@ -9,12 +9,8 @@ module Gemwarrior
       super
 
       self.name         = 'rope'
+      self.name_display = 'Rope'
       self.description  = 'For some reason, a sturdy rope hangs down from a small opening in the metal tunnel\'s ceiling. It appears to hold your weight when taut.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)

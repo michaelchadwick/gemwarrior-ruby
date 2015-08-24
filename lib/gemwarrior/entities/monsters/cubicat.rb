@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/monsters/cubicat.rb
-# Cubicat monster
+# Entity::Creature::Monster::Cubicat
 
 require_relative '../monster'
 
@@ -9,7 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'cubicat'
+      self.name_display = 'Cubicat'
       self.description  = 'Perfectly geometrically cubed feline, fresh from its woven enclosure, claws at the ready.'
+      self.battlecry    = 'I don\'t really care, as long as you die!'
       self.face         = 'striking'
       self.hands        = 'grippy'
       self.mood         = 'salacious'
@@ -24,8 +26,6 @@ module Gemwarrior
 
       self.rox          = rand((level * 2)..(level * 3))
       self.xp           = rand(level..(level * 2))
-
-      self.battlecry    = 'I don\'t really care, as long as you die!'
     end
   end
 end

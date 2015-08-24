@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/feather.rb
-# Item::Feather
+# Entity::Item::Feather
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'feather'
+      self.name_display = 'Feather'
       self.description  = 'A blue and green feather. It is soft and tender, unlike the craven bird that probably shed it.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = false
-      self.equippable   = false
     end
   end
 end

@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/couch.rb
-# Item::Couch
+# Entity::Item::Couch
 
 require_relative '../item'
 
@@ -9,12 +9,8 @@ module Gemwarrior
       super
 
       self.name         = 'couch'
+      self.name_display = 'Couch'
       self.description  = 'Ever wanted to sit on a cloud? Now is your chance.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
-      self.takeable     = false
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)
@@ -23,8 +19,8 @@ module Gemwarrior
         { type: nil, data: nil }
       else
         puts 'Your body comes to rest somewhere below the surface of the cloudy apparatus, almost as if it were floating *amongst* the couch. The feeling is heavenly, and you actually feel somewhat better after getting back up.'
-        puts '>> You regain a hit point.'
-        { type: 'rest', data: 1 }
+        puts '>> You regain a few hit points.'.colorize(:green)
+        { type: 'rest', data: 4 }
       end
     end
   end

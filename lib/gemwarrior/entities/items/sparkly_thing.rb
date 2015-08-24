@@ -1,5 +1,5 @@
 # lib/gemwarrior/entities/items/sparklything.rb
-# Item::SparklyThing
+# Entity::Item::SparklyThing
 
 require_relative '../item'
 
@@ -9,12 +9,9 @@ module Gemwarrior
       super
 
       self.name         = 'sparkly_thing'
+      self.name_display = 'SparklyThing(tm)'
       self.description  = 'The sparkling that this thing does is unimaginably brilliant.'
-      self.atk_lo       = nil
-      self.atk_hi       = nil
       self.takeable     = true
-      self.useable      = true
-      self.equippable   = false
     end
 
     def use(player = nil)
