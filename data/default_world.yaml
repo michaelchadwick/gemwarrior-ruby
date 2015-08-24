@@ -921,6 +921,7 @@ locations:
     defense: 9
     dexterity: 10
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 29
@@ -964,6 +965,7 @@ locations:
     defense: 9
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 26
@@ -1007,6 +1009,7 @@ locations:
     defense: 7
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 34
@@ -1050,6 +1053,7 @@ locations:
     defense: 9
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 27
@@ -1093,6 +1097,7 @@ locations:
     defense: 9
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 41
@@ -1136,6 +1141,7 @@ locations:
     defense: 9
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 24
@@ -1179,6 +1185,7 @@ locations:
     defense: 7
     dexterity: 12
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items: []
       weapon: 
     rox: 32
@@ -1396,13 +1403,13 @@ locations:
   name: river_bridge
   name_display: River Bridge
   description: Sturdy and safe, this bridge will get you across the otherwise unpassable
-    river you see below.
+    river you see below. Unfortunately, there is a giant in front of you, being quit menacing.
   coords:
     :x: 4
     :y: 4
     :z: 0
   locs_connected:
-    :north: true
+    :north: false
     :east: false
     :south: true
     :west: false
@@ -1413,7 +1420,42 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding: []
+  bosses_abounding:
+  - !ruby/object:Gemwarrior::Jaspern
+    name: jaspern
+    name_display: Jaspern
+    description: Dark green hair, but yellow and brown skin, Jaspern is actually somewhat translucent, and he does not appear to be moveable or go-around-able.
+    face: crystalline
+    hands: small
+    mood: opaque
+    level: 8
+    hp_cur: 27
+    hp_max: 27
+    atk_lo: 18
+    atk_hi: 25
+    defense: 6
+    dexterity: 8
+    inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
+      items:
+      - !ruby/object:Gemwarrior::Tent
+        equipped: false
+        consumable: false
+        used: false
+        number_of_uses: 5
+        name: tent
+        name_display: Tent
+        description: A magical, two-room suite pops up when you flick this otherwise folded
+          piece of canvas just right, perfect for a night's rest.
+        takeable: true
+        useable: true
+        equippable: false
+        weapon: 
+    rox: 50
+    xp: 80
+    battlecry: "I am the keeper of this bridge! To go further, you must get through me!"
+    is_boss: true
+    is_dead: false
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: plains-north_of_bridge
@@ -2036,9 +2078,7 @@ locations:
     number_of_uses: 
     name: throne
     name_display: Throne
-    description: Made of what appears to be unfulfilled desires and latent, flawed
-      happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald
-      sits in it, glaring at you.
+    description: Made of what appears to be unfulfilled desires and latent, flawed happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald sits in it, glaring at you.
     takeable: false
     talkable: true
     useable: false
@@ -2046,10 +2086,9 @@ locations:
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Emerald
-    name: Emerald
-    description: A wily, beefy, tower of a man, Emerald looks to be a champion of
-      both wisdom, from what you've heard, AND strength, from what you plainly see.
-      He sports a permanent scowl as he faces you, dead-on.
+    name: emerald
+    name_display: Emerald
+    description: A wily, beefy, tower of a man, Emerald looks to be a champion of both wisdom, from what you've heard, AND strength, from what you plainly see. He sports a permanent scowl as he faces you, dead-on.
     face: gleaming
     hands: tantalizing
     mood: enraged
@@ -2061,6 +2100,7 @@ locations:
     defense: 5
     dexterity: 9
     inventory: !ruby/object:Gemwarrior::Inventory
+      armor: 
       items:
       - !ruby/object:Gemwarrior::SparklyThing
         equipped: false
@@ -2074,8 +2114,8 @@ locations:
         useable: true
         equippable: false
       weapon: 
-    rox: 35
-    xp: 22
+    rox: 175
+    xp: 200
     battlecry: 'You have come for the SparklyThing(tm), I see. To that I say: Ha ha
       ha ha ha! Prepare yourself fool: today your whole life crumbles!'
     is_boss: true
@@ -2233,6 +2273,7 @@ player: !ruby/object:Gemwarrior::Player
   defense: 5
   dexterity: 5
   inventory: !ruby/object:Gemwarrior::Inventory
+    armor: 
     items: []
     weapon: 
   rox: 0

@@ -317,24 +317,24 @@ module Gemwarrior
         new_stats = PlayerLevels::get_level_stats(new_player_level)
 
         self.level = new_stats[:level]
-        puts "You are now level #{self.level}!"
+        puts "You are now level #{self.level.to_s.colorize(:white)}!"
         self.hp_cur = new_stats[:hp_max]
         self.hp_max = new_stats[:hp_max]
-        puts "You now have #{self.hp_max} hit points!"
+        puts "You now have #{self.hp_max.to_s.colorize(:white)} hit points!"
         self.stam_cur = new_stats[:stam_max]
         self.stam_max = new_stats[:stam_max]
-        puts "You now have #{self.stam_max} stamina points!"
+        puts "You now have #{self.stam_max.to_s.colorize(:white)} stamina points!"
         self.atk_lo = new_stats[:atk_lo]
         self.atk_hi = new_stats[:atk_hi]
-        puts "You now have an attack of #{self.atk_lo}-#{self.atk_hi}!"
+        puts "You now have an attack of #{self.atk_lo.to_s.colorize(:white)}-#{self.atk_hi.to_s.colorize(:white)}!"
         self.defense = new_stats[:defense]
-        puts "You now have #{self.defense} defensive points!"
+        puts "You now have #{self.defense.to_s.colorize(:white)} defensive points!"
         self.dexterity = new_stats[:dexterity]
-        puts "You now have #{self.dexterity} dexterity points!"
+        puts "You now have #{self.dexterity.to_s.colorize(:white)} dexterity points!"
         unless new_stats[:special_abilities].nil?
           unless self.special_abilities.include?(new_stats[:special_abilities])
             self.special_abilities.push(new_stats[:special_abilities])
-            puts "You learned a new ability: #{Formatting::upstyle(new_stats[:special_abilities])}!"
+            puts "You learned a new ability: #{Formatting::upstyle(new_stats[:special_abilities]).colorize(:white)}!"
           end
         end
       end

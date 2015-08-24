@@ -84,6 +84,48 @@ module Gemwarrior
       end
     end
 
+    def location_by_coords(coords)
+      locations.each do |l|
+        if l.coords.eql?(coords)
+          return l
+        end
+      end
+      return nil
+    end
+
+    def location_coords_by_name(name)
+      locations.each do |l|
+        if l.name.downcase.eql?(name.downcase) or l.name_display.downcase.eql?(name.downcase)
+          return l.coords
+        end
+      end
+      return nil
+    end
+
+    def location_by_name(location_name)
+      loc = locations[locations.map(&:name).index(location_name)]
+      if loc.nil?
+        loc = locations[locations.map(&:name_display).index(location_name)]
+      end
+      loc.nil? ? nil : loc
+    end
+
+    def can_move?(direction)
+      location_by_coords(player.cur_coords).has_loc_to_the?(direction)
+    end
+
+    def has_monster_to_attack?(monster_name)
+      possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
+
+      possible_combatants.each do |combatant|
+        if combatant.downcase.eql?(monster_name.downcase)
+          return true
+        end
+      end
+
+      return false
+    end
+
     def list(param, details = false)
       case param
       when 'players'
@@ -144,40 +186,6 @@ module Gemwarrior
       else
         ERROR_LIST_PARAM_INVALID
       end
-    end
-
-    def location_by_coords(coords)
-      locations.each do |l|
-        if l.coords.eql?(coords)
-          return l
-        end
-      end
-      return nil
-    end
-
-    def location_coords_by_name(name)
-      locations.each do |l|
-        if l.name.downcase.eql?(name.downcase) or l.name_display.downcase.eql?(name.downcase)
-          return l.coords
-        end
-      end
-      return nil
-    end
-
-    def can_move?(direction)
-      location_by_coords(player.cur_coords).has_loc_to_the?(direction)
-    end
-
-    def has_monster_to_attack?(monster_name)
-      possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
-
-      possible_combatants.each do |combatant|
-        if combatant.downcase.eql?(monster_name.downcase)
-          return true
-        end
-      end
-
-      return false
     end
 
     def print_vars(show_details = false)

@@ -31,7 +31,7 @@ module Gemwarrior
       desc_text << "\n"
       desc_text << "(#{name})\n".colorize(:green)
       desc_text << "#{description}\n".colorize(:white)
-      desc_text << "DEAD?  #{is_dead}\n"
+      desc_text << "DEAD?  #{is_dead}\n".colorize(:white)
       desc_text << "FACE : #{face}\n".colorize(:white)
       desc_text << "HANDS: #{hands}\n".colorize(:white)
       desc_text << "MOOD : #{mood}\n".colorize(:white)

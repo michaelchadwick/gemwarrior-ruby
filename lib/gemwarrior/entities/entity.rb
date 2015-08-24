@@ -17,7 +17,7 @@ module Gemwarrior
     def initialize
       self.name         = 'entity'
       self.name_display = Formatting::upstyle(name)
-      self.description  = 'entity description'
+      self.description  = 'An entity.'
       self.talkable     = false
     end
 

@@ -30,8 +30,8 @@ module Gemwarrior
       self.dexterity      = rand(8..10)
 
       self.inventory      = Inventory.new(items = [SparklyThing.new])
-      self.rox            = rand((level * 2)..(level * 3))
-      self.xp             = rand(level..(level * 2))
+      self.rox            = rand((level * 9)..(level * 11))
+      self.xp             = rand((level * 13)..(level * 15))
 
       self.is_boss        = true
     end

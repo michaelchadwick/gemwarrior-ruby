@@ -22,8 +22,24 @@ module Gemwarrior
 
     attr_reader   :use
 
+    def initialize
+      super
+      
+      self.name         = 'creature'
+      self.name_display = Formatting::upstyle(name)
+      self.description  = 'A creature.'
+      self.talkable     = true
+    end
+
     def use(player = nil)
       'That creature does not seem to want to talk to you right now.'
+    end
+
+    def describe
+      desc_text = "#{description}".colorize(:white)
+      desc_text << "\n"
+      desc_text << "The creature has several distinguishing features, as well: face is #{face}, hands are #{hands}, and mood is, generally, #{mood}."
+      desc_text
     end
 
     def initialize

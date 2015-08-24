@@ -283,34 +283,50 @@ module Gemwarrior
       puts "  YOU HAVE DEFEATED #{monster.name.upcase}!\n".colorize(:green)
 
       if monster.is_boss
+        # stats
         world.player.bosses_killed += 1
-        # end game boss!
-        if monster.name.eql?('Emerald')
+
+        if monster.name.eql?('emerald')
+          puts '  You just beat THE FINAL BOSS! Unbelievable!'
+          puts
+
+          reward_player(monster)
+
           # game ending: initiate
           return monster.initiate_ending(world)
-        else
-          puts '  You just beat a boss monster. Way to go!'
+        elsif monster.name.eql?('jaspern')
+          puts '  You just beat a MINIBOSS! Fantastic!'
           puts
-          puts '  You get the following spoils of war:'
-          puts "   XP : #{monster.xp}".colorize(:green)
-          puts "   ROX: #{monster.rox}".colorize(:green)
-          print_battle_line
-          player.update_stats(reason: :monster, value: monster)
+
+          reward_player(monster)
+
+          # river bridge boss: initiate
+          return monster.river_bridge_success(world)
+        else
+          reward_player(monster)
+
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
+        # stats
         world.player.monsters_killed += 1
-        
-        puts '  You get the following spoils of war:'
-        puts "   XP   : #{monster.xp}".colorize(:green)
-        puts "   ROX  : #{monster.rox}".colorize(:green)
-        unless monster.inventory.nil?
-          puts "   ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
-        end
-        print_battle_line
-        player.update_stats(reason: :monster, value: monster)
+
+        reward_player(monster)
+
         world.location_by_coords(player.cur_coords).remove_monster(monster.name)
       end
+    end
+
+    def reward_player(monster)
+      puts '  You get the following spoils of war:'
+      puts "   XP   : #{monster.xp}".colorize(:green)
+      puts "   ROX  : #{monster.rox}".colorize(:green)
+      unless monster.inventory.nil?
+        puts "   ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
+      end
+      print_battle_line
+      world.player.update_stats(reason: :monster, value: monster)
+      puts
     end
 
     # PLAYER
