@@ -20,7 +20,7 @@ module Gemwarrior
     attr_accessor :monsters, :locations, :weapons, :player, :duration, :emerald_beaten
 
     def describe(point)
-      desc_text = "[>>> #{point.name.upcase} <<<]".colorize(:cyan)
+      desc_text = "[>>> #{point.name_display.upcase} <<<]".colorize(:cyan)
 
       if GameOptions.data['debug_mode']
         desc_text << " DL[#{point.danger_level.to_s}] MLR[#{point.monster_level_range.to_s}]".colorize(:yellow)

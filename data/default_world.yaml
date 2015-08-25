@@ -865,8 +865,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: forest-southwest
   name_display: Forest (Southwest)
-  description: While you continue to be impressed at the sheer size of this forest,
-    a clearing appears to open up to the west.
+  description: While you continue to be impressed at the sheer size of this forest, it feels like it never ends, making you feel lost. Thankfully, there is an inexplicable bookcase here.
   coords:
     :x: 3
     :y: 0
@@ -875,13 +874,25 @@ locations:
     :north: true
     :east: false
     :south: false
-    :west: true
+    :west: false
   danger_level: :low
   monster_level_range: !ruby/range
     begin: 1
     end: 3
     excl: false
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::Bookcase
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    name: bookcase
+    name_display: Bookcase
+    description: This oaken monstrosity has six shelves, each about 3 feet high. Mathing, you determine it to be "huge", featuring many books within it.
+    takeable: false
+    talkable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
