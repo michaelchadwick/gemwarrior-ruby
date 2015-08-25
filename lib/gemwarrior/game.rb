@@ -5,14 +5,14 @@ require 'colorize'
 require 'matrext'
 
 require_relative 'misc/animation'
+require_relative 'misc/audio'
 require_relative 'misc/formatting'
-require_relative 'misc/music'
-require_relative 'world'
 require_relative 'evaluator'
-require_relative 'repl'
-require_relative 'inventory'
-require_relative 'game_options'
 require_relative 'game_assets'
+require_relative 'game_options'
+require_relative 'inventory'
+require_relative 'repl'
+require_relative 'world'
 
 module Gemwarrior
   class Game

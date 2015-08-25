@@ -1,19 +1,27 @@
-# lib/gemwarrior/misc/music.rb
-# Music cues using win32-sound or feep, depending on platform
+# lib/gemwarrior/misc/audio.rb
+# Audio cues using either synth or samples
+# Synth: win32-sound or feep, depending on platform
+# Samples: small wav files
 
 require_relative '../game_options'
+require_relative 'audio_cues'
+require_relative 'musical_notes'
 
 module Gemwarrior
-  module Music
-    def self.cue(sequence)
+  module Audio
+    def self.play_sample(audio_cue_symbol)
+      # future use
+    end
+
+    def self.play_synth(audio_cue_symbol)
       if GameOptions.data['sound_enabled']
         # if Windows, use superior win32-sound library
         if GameOptions.data['sound_system'].eql?('win32-sound')
           require 'win32/sound'
           require_relative 'musical_notes'
-        
+
           Thread.start do
-            sequence.each do |seq|
+            AudioCues.cues[audio_cue_symbol][:synth].each do |seq|
               threads = []
               seq[:frequencies].split(',').each do |note|
                 threads << Thread.new do
@@ -36,7 +44,7 @@ module Gemwarrior
           }
       
           Thread.start do
-            sequence.each do |seq|
+            AudioCues.cues[audio_cue_symbol][:synth].each do |seq|
               seq = feep_defaults.merge(seq)
 
               Feep::Base.new({

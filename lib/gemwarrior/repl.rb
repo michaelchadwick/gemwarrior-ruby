@@ -452,10 +452,7 @@ module Gemwarrior
     end
 
     def play_intro_tune
-      Music::cue([
-        { frequencies: 'A3,E4,C#5,E5',  duration: 300 },
-        { frequencies: 'A3,E4,C#5,F#5', duration: 600 }
-      ])
+      Audio.play_synth(:intro)
     end
 
     def setup_screen(initial_command = nil, extra_command = nil, new_skip = false, resume_skip = false)

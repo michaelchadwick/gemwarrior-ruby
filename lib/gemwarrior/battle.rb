@@ -22,14 +22,7 @@ module Gemwarrior
     end
 
     def start(is_arena = nil, is_event = nil)
-      Music::cue([
-        { frequencies: 'G4',  duration: 50 },
-        { frequencies: 'G#4', duration: 50 },
-        { frequencies: 'G4',  duration: 50 },
-        { frequencies: 'G#4', duration: 50 },
-        { frequencies: 'G4',  duration: 50 },
-        { frequencies: 'G#4', duration: 50 }
-      ])
+      Audio.play_synth(:battle_start)
 
       # begin battle!
       print_battle_header unless is_arena
@@ -132,7 +125,7 @@ module Gemwarrior
             puts "  You attack #{monster.name}#{player.cur_weapon_name}!"
             dmg = calculate_damage_to(monster)
             if dmg > 0
-              Music::cue([{ frequencies: 'A4,E4,B5', duration: 75 }])
+              Audio.play_synth(:battle_player_attack)
 
               take_damage(monster, dmg)
               if monster_dead?
@@ -140,7 +133,7 @@ module Gemwarrior
                 return result
               end
             else
-              Music::cue([{ frequencies: 'A4', duration: 75 }])
+              Audio.play_synth(:battle_player_miss)
 
               puts '  You miss entirely!'.colorize(:yellow)
             end
@@ -262,11 +255,11 @@ module Gemwarrior
 
       dmg = calculate_damage_to(player)
       if dmg > 0
-        Music::cue([{ frequencies: 'B4,E#5,A5', duration: 75 }])
+        Audio.play_synth(:battle_monster_attack)
 
         take_damage(player, dmg)
       else
-        Music::cue([{ frequencies: 'B4', duration: 75 }])
+        Audio.play_synth(:battle_monster_miss)
 
         puts "  #{monster.name} misses entirely!".colorize(:yellow)
       end
@@ -281,6 +274,7 @@ module Gemwarrior
     end
 
     def monster_death
+      Audio.play_synth(:battle_win)
       puts "  YOU HAVE DEFEATED #{monster.name.upcase}!\n".colorize(:green)
 
       if monster.is_boss

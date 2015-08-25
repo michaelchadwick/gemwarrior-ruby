@@ -654,12 +654,7 @@ module Gemwarrior
     end
 
     def player_death_resurrection
-      Music::cue([
-        { frequencies: 'D#5', duration: 100 },
-        { frequencies: 'A4',  duration: 150 },
-        { frequencies: 'F#4', duration: 200 },
-        { frequencies: 'F4',  duration: 1000 }
-      ])
+      Audio.play_synth(:player_resurrection)
 
       puts 'Somehow, though, your adventure does not end here!'.colorize(:yellow)
       puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)

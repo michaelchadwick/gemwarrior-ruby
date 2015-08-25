@@ -314,6 +314,7 @@ module Gemwarrior
       new_player_level = PlayerLevels::check_level(self.xp)
 
       if new_player_level > old_player_level
+        Audio.play_synth(:player_level_up)
         Animation::run(phrase: LEVEL_UP_TEXT)
         new_stats = PlayerLevels::get_level_stats(new_player_level)
 
@@ -354,11 +355,7 @@ module Gemwarrior
     end
 
     def print_traveling_text(direction_text)
-      Music::cue([
-        { frequencies: 'C4', duration: 75 },
-        { frequencies: 'D4', duration: 75 },
-        { frequencies: 'E4', duration: 75 }
-      ])
+      Audio.play_synth(:player_travel)
       Animation::run(phrase: "* #{direction_text} *", oneline: false)
     end
 

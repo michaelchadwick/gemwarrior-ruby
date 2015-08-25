@@ -3,7 +3,6 @@
 
 require_relative '../../monster'
 require_relative '../../items/sparkly_thing'
-require_relative '../../../misc/music'
 
 module Gemwarrior
   class Emerald < Monster
@@ -38,23 +37,7 @@ module Gemwarrior
     
     def initiate_ending(world)
       # fanfare!
-      Music::cue([
-        { frequencies: 'G3',  duration: 250 },
-        { frequencies: 'A3',  duration: 50 },
-        { frequencies: 'B3',  duration: 50 },
-        { frequencies: 'C4',  duration: 50 },
-        { frequencies: 'D4',  duration: 250 },
-        { frequencies: 'E4',  duration: 50 },
-        { frequencies: 'F#4', duration: 50 },
-        { frequencies: 'G4',  duration: 50 },
-        { frequencies: 'A4',  duration: 250 },
-        { frequencies: 'B4',  duration: 50 },
-        { frequencies: 'C5',  duration: 50 },
-        { frequencies: 'D5',  duration: 50 },
-        { frequencies: 'E5',  duration: 50 },
-        { frequencies: 'F#5', duration: 50 },
-        { frequencies: 'G5',  duration: 1000 }
-      ])
+      Audio.play_synth(:win_game)
 
       # get reference to throne room, emerald monster, and throne item
       throne_room = world.location_by_coords(world.location_coords_by_name('Sky Tower (Throne Room)'))
