@@ -90,8 +90,9 @@ module Gemwarrior
       self_text << "ATTACK    : #{base_atk_lo}-#{base_atk_hi}"
       self_text << " (#{net_atk_lo}-#{net_atk_hi} w/ #{weapon_slot})".colorize(:yellow) unless net_atk_lo.nil?
       self_text << "\n"
-      self_text << "DEFENSE   : #{base_defense}\n"
+      self_text << "DEFENSE   : #{base_defense}"
       self_text << " (#{net_defense} w/ #{armor_slot})".colorize(:yellow) unless net_defense.nil?
+      self_text << "\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
       self_text << "ABILITIES : #{abilities}\n"
       

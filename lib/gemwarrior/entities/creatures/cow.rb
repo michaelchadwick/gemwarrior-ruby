@@ -16,7 +16,7 @@ module Gemwarrior
       self.mood         = 'reserved'
     end
 
-    def use(player = nil)
+    def use(world)
       puts '>> "Moo."'
       { type: nil, data: nil }
     end

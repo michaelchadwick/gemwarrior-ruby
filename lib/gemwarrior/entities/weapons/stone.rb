@@ -15,7 +15,7 @@ module Gemwarrior
       self.atk_hi       = 2
     end
     
-    def use(player = nil)
+    def use(world)
       puts 'You toss the stone a few feet into the air, and then it falls back into your palm. The experience was truly thrilling.'
       { type: nil, data: nil }
     end

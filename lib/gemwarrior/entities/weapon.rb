@@ -19,7 +19,7 @@ module Gemwarrior
       self.is_weapon    = true
     end
 
-    def use(inventory = nil)
+    def use(world)
       'Save the using of your weapon for battle.'
     end
 

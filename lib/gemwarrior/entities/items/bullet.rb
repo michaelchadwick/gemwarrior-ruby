@@ -17,7 +17,7 @@ module Gemwarrior
       self.takeable     = true
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You could throw this at a monster, but somehow the force of it would be less than desired.'
       { type: nil, data: nil }
     end

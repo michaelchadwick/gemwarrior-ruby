@@ -15,7 +15,7 @@ module Gemwarrior
       self.atk_hi       = 6
     end
     
-    def use(player = nil)
+    def use(world)
       puts 'You swing the mace around a few times, really testing out its smashability.'
       { type: nil, data: nil }
     end

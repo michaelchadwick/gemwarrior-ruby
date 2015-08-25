@@ -5,17 +5,17 @@ require_relative 'item'
 
 module Gemwarrior
   class Armor < Item
-    attr_accessor :defense,
-                  :is_armor
+    attr_accessor :defense
 
     def initialize
       super
 
-      self.defense  = 0
-      self.is_armor = true
+      self.equippable = true
+      self.defense    = 0
+      self.is_armor   = true
     end
 
-    def use(inventory = nil)
+    def use(world)
       'Save the donning of this piece of armor for battle.'
     end
 

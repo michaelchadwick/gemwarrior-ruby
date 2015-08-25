@@ -326,7 +326,7 @@ module Gemwarrior
           player_inventory.items.each do |i|
             if i.name.eql?('tent')
               if i.number_of_uses > 0
-                result = i.use(world.player)
+                result = i.use(world)
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
 
@@ -338,7 +338,7 @@ module Gemwarrior
           player_cur_location.items.each do |i|
             if i.name.eql?('tent')
               if i.number_of_uses > 0
-                result = i.use(world.player)
+                result = i.use(world)
                 tent_uses = i.number_of_uses
                 i.number_of_uses -= 1
 
@@ -381,7 +381,7 @@ module Gemwarrior
           player_inventory.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
-                result = person.use(world.player)
+                result = person.use(world)
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
@@ -391,7 +391,7 @@ module Gemwarrior
           player_cur_location.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
-                result = person.use(world.player)
+                result = person.use(world)
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
@@ -430,17 +430,17 @@ module Gemwarrior
                 if i.useable
                   if !i.number_of_uses.nil?
                     if i.number_of_uses > 0
-                      result = i.use(world.player)
+                      result = i.use(world)
                       i.number_of_uses -= 1
                       puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
                     else
                       return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
-                    result = i.use(world.player)
+                    result = i.use(world)
                     world.player.inventory.remove_item(i.name)
                   else
-                    result = i.use(world.player)
+                    result = i.use(world)
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -453,17 +453,17 @@ module Gemwarrior
                 if i.useable
                   if !i.number_of_uses.nil?
                     if i.number_of_uses > 0
-                      result = i.use(world.player)
+                      result = i.use(world)
                       i.number_of_uses -= 1
                       puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
                     else
                       return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
-                    result = i.use(world.player)
+                    result = i.use(world)
                     location.remove_item(i.name)
                   else
-                    result = i.use(world.player)
+                    result = i.use(world)
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE

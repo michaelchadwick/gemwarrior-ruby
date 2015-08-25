@@ -13,7 +13,7 @@ module Gemwarrior
       self.description  = 'For some reason, a sturdy rope hangs down from a small opening in the metal tunnel\'s ceiling. It appears to hold your weight when taut.'
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You hold on to the rope with both hands and begin to climb upwards towards the small opening in the ceiling.'
       puts
 
@@ -21,7 +21,7 @@ module Gemwarrior
       puts
       
       # stats
-      player.movements_made += 1
+      world.player.movements_made += 1
 
       { type: 'move', data: 'Snow Fields (Southeast)' }
     end

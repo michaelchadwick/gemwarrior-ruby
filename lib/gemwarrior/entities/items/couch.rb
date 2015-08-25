@@ -13,8 +13,8 @@ module Gemwarrior
       self.description  = 'Ever wanted to sit on a cloud? Now is your chance.'
     end
 
-    def use(player = nil)
-      if player.at_full_hp?
+    def use(world)
+      if world.player.at_full_hp?
         puts 'You "sit" on the impossibly soft surface of the furniture, but even after a few minutes of this seemingly heavenly hedonism you don\'t feel significantly better and decide to get up again.'
         { type: nil, data: nil }
       else

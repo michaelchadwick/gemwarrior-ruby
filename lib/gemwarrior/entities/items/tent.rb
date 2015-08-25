@@ -15,7 +15,7 @@ module Gemwarrior
       self.number_of_uses = 5
     end
 
-    def use(player = nil)
+    def use(world)
       { type: 'tent', data: self.number_of_uses }
     end
   end

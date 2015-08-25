@@ -14,7 +14,7 @@ module Gemwarrior
       self.takeable     = true
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You unfold the piece of worn canvas, and study the markings upon it.'
 
       { type: 'action', data: 'map' }

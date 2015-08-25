@@ -87,7 +87,7 @@ module Gemwarrior
                 return "The #{i.name} has been demoted to unequipped."
               elsif i.is_armor
                 self.armor = nil
-                return "The #{i.armor} has been demoted to unequipped."
+                return "The #{i.name} has been demoted to unequipped."
               end
             else
               return ERROR_ITEM_UNEQUIP_NONARMAMENT

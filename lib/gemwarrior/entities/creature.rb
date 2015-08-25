@@ -17,34 +17,17 @@ module Gemwarrior
                   :defense,
                   :dexterity,
                   :inventory,
-                  :rox,
-                  :used
+                  :rox
 
-    attr_reader   :use
+    attr_reader   :use,
+                  :speak
 
     def initialize
       super
-      
+
       self.name         = 'creature'
       self.name_display = Formatting::upstyle(name)
       self.description  = 'A creature.'
-      self.talkable     = true
-    end
-
-    def use(player = nil)
-      'That creature does not seem to want to talk to you right now.'
-    end
-
-    def describe
-      desc_text = "#{description}".colorize(:white)
-      desc_text << "\n"
-      desc_text << "The creature has several distinguishing features, as well: face is #{face}, hands are #{hands}, and mood is, generally, #{mood}."
-      desc_text
-    end
-
-    def initialize
-      super
-
       self.face       = 'face-y'
       self.hands      = 'handsy'
       self.mood       = 'moody'
@@ -62,11 +45,21 @@ module Gemwarrior
       self.used       = false
     end
 
+    def use
+      'That creature does not seem to want to talk to you right now.'
+    end
+
+    def describe
+      desc_text = "#{description}".colorize(:white)
+      desc_text << "\n"
+      desc_text << "The creature has several distinguishing features, as well: face is #{face}, hands are #{hands}, and mood is, generally, #{mood}."
+      desc_text
+    end
+
     def describe_detailed
       desc_text =  "\"#{name_display}\"\n".colorize(:yellow)
       desc_text << "(#{name})\n".colorize(:green)
       desc_text << "#{description}\n".colorize(:white)
-      desc_text << "TALKABLE?   #{talkable}\n".colorize(:white)
       desc_text << "FACE      : #{face}\n".colorize(:white)
       desc_text << "HANDS     : #{hands}\n".colorize(:white)
       desc_text << "MOOD      : #{mood}\n".colorize(:white)
@@ -79,6 +72,13 @@ module Gemwarrior
       desc_text << "ROX       : #{rox}\n".colorize(:white)
       desc_text << "INVENTORY : #{inventory.list_contents}\n".colorize(:white)
       desc_text
+    end
+    
+    def speak(s, no_end_quote = false)
+      text =  ">> \"#{s}"
+      text += "\"" unless no_end_quote
+      text += "\n"
+      print text.colorize(:yellow).gsub(/(.{1,#{GameOptions.data['wrap_width']}})(\s+|\Z)/, "\\1\n")
     end
   end
 end

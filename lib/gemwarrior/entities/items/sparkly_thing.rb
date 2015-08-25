@@ -14,9 +14,8 @@ module Gemwarrior
       self.takeable     = true
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'Everything, and I mean *everything*, begins to sparkle. Huh.'
-      puts
       { type: nil, data: nil }
     end
   end

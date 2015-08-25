@@ -16,8 +16,8 @@ module Gemwarrior
       self.description  = 'The place where you sleep when you are not adventuring.'
     end
 
-    def use(player = nil)
-      if player.at_full_hp?
+    def use(world)
+      if world.player.at_full_hp?
         puts 'You feel perfectly healthy and decide not to actually use the bed. Besides, the trail of fire ants currently leading up to and around the furniture seem somehow uninviting.'
         { type: nil, data: nil }
       else

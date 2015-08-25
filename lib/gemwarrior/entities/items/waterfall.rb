@@ -13,7 +13,7 @@ module Gemwarrior
       self.description  = 'Gallons of murky, sparkling water fall downward from an unknown spot in the sky, ending in a pool on the ground, yet never overflowing.'
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You stretch out your hand and touch the waterfall. It stings you with its cold and forceful gushing. Your hand is now wet and rougher than before. In time, it will dry.'
       
       dmg = rand(0..1)

@@ -16,12 +16,12 @@ module Gemwarrior
       self.description  = 'One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable, even.'
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You slowly lower your foot onto the tile, and then gently depress it, through the floor. Your whole body begins to feel light, lifeless. You black out.'
       puts
 
       # stats
-      player.movements_made += 1
+      world.player.movements_made += 1
 
       Animation::run(phrase: MOVE_TEXT)
 

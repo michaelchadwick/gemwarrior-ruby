@@ -10,12 +10,12 @@ module Gemwarrior
 
       self.name         = 'spear'
       self.name_display = 'Spear'
-      self.description  = 'Sharp spikes atop a steel ball, affixed to a sturdy wooden handle. You could do damage with this.'
+      self.description  = 'About six feet in length and razor-sharp at the point, this spear requires two hands, but only one good stab.'
       self.atk_lo       = 3
       self.atk_hi       = 7
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'This spear does, indeed, appear to strike fear upon that which is near.'
       { type: nil, data: nil }
     end

@@ -15,7 +15,7 @@ module Gemwarrior
       self.atk_hi       = 6
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You pull the trigger on the gun, but it does not fire. An inscription on the barrel reads: "Only shoots when pointed at a monster." How safe!'
       { type: nil, data: nil }
     end

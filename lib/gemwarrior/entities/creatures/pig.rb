@@ -16,7 +16,7 @@ module Gemwarrior
       self.mood         = 'restless'
     end
 
-    def use(player = nil)
+    def use(world)
       puts '>> "Oink."'
       { type: nil, data: nil }
     end

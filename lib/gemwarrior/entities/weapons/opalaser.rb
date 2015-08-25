@@ -15,7 +15,7 @@ module Gemwarrior
       self.atk_hi       = 11
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You pull the "trigger" on the opalaser, but nothing happens.'
       { type: nil, data: nil }
     end

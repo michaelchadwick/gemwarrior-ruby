@@ -32,7 +32,7 @@ module Gemwarrior
       self.switches = self.switches.sort_by { rand }
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You look at the pedestal and its switches. The raised gem beckons you to push it and, deductively, you believe that pressing it will do something. However, those switches probably have something to do with the result.'
       
       loop do
@@ -96,7 +96,7 @@ module Gemwarrior
             puts 'You push the large gem into the pedestal and it descends without a hitch, almost as if it were meant to be. The pedestal begins to violently shake and a strong gust of wind picks you up off the ground. You feel completely taken aback and unsettled, but you have no choice: you are being whisked away somewhere into the sky, destination unknown.'.colorize(:yellow)
             
             # stats
-            player.movements_made += 1
+            world.player.player.movements_made += 1
             
             Animation::run(phrase: USE_TEXT)
             return { type: 'move', data: 'Sky Tower (Entryway)' }

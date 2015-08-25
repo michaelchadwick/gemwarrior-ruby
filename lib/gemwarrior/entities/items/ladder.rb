@@ -16,12 +16,12 @@ module Gemwarrior
       self.description  = 'Rickety and crudely-fashioned, this ladder descends down into the dropoff, hopefully heading towards something...anything.'
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You grab onto the shaky, rough-hewn, wooden ladder with all your might and start to descend, being extra careful not to loose your grip, which with every moment becomes shakier and shakier.'
       puts
 
       # stats
-      player.movements_made += 1
+      world.player.movements_made += 1
 
       Animation::run(phrase: USE_TEXT)
 

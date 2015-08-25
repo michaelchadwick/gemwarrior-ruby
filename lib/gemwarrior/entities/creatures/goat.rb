@@ -16,7 +16,7 @@ module Gemwarrior
       self.mood         = 'content'
     end
 
-    def use(player = nil)
+    def use(world)
       puts '>> "Baa."'
       { type: nil, data: nil }
     end

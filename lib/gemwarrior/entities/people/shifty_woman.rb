@@ -13,7 +13,7 @@ module Gemwarrior
       self.description  = 'Sharply dressed with impeccable style, you still can\'t shake the feeling that this otherwise ordinary woman is up to something. It might be the way she almost impulsively looks back and forth along the town street while rubbing her hands together menacingly.'
     end
 
-    def use(player = nil)
+    def use(world)
       if self.used
         puts 'Attempting a friendly overture again, the woman turns and looks directly at you. Her brown eyes glint in the sun, almost turning an ochre hue. Her look burns you to the core, causing you to physically recoil a little.'
         puts
