@@ -61,6 +61,14 @@ module Gemwarrior
           defense:  15,  dexterity:  16,
           special_abilities: :break_through
         }
+      else
+        {
+          level:    8,   xp_start:   10000,
+          hp_max:   200, stam_max:   200,
+          atk_lo:   50,  atk_hi:     100,
+          defense:  50,  dexterity:  100,
+          special_abilities: nil
+        }
       end
     end
 
@@ -79,6 +87,19 @@ module Gemwarrior
         6
       elsif xp < 10000
         7
+      else
+        8
+      end
+    end
+
+    def self.get_ability_description(ability)
+      case ability
+      when :rocking_vision
+        'Allows you to see the enemy hit points while in battle.'
+      when :rock_slide
+        'Adds a random boost to the player\'s attack in battle.'
+      else
+        'Unsure, but it\'s probably cool!'
       end
     end
   end
