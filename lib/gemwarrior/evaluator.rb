@@ -40,6 +40,7 @@ module Gemwarrior
     ERROR_LIST_PARAM_INVALID            = 'You cannot list that...yet.'
     ERROR_DEBUG_STAT_PARAM_MISSING      = 'You cannot just "change stats". You gotta choose a stat to change.'
     ERROR_DEBUG_STAT_PARAM_INVALID      = 'You cannot change that stat...yet.'
+    ERROR_DEBUG_STAT_INV_PARAM_INVALID  = 'You cannot add that to your inventory...yet.'
     ERROR_DEBUG_TELEPORT_PARAMS_MISSING = 'You cannot just "teleport". You gotta specify an x AND y coordinate, at least.'
     ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
@@ -228,7 +229,14 @@ module Gemwarrior
               end
             when 'inventory', 'inv'
               unless param2.nil?
-                world.player.inventory.items.push(Gemwarrior::const_get(param2).new)
+                begin
+                  item_const_name = Gemwarrior.const_get(Formatting::upstyle(param2))
+                  item = item_const_name.new
+                  world.player.inventory.items.push(item)
+                  return "#{item.name} added to player inventory."
+                rescue
+                  return ERROR_DEBUG_STAT_INV_PARAM_INVALID
+                end
               end
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
