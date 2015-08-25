@@ -31,11 +31,11 @@ module Gemwarrior
         world.player.inventory.remove_item('sparkly_thing')
         speak('Oh, thank you! Now that the evil Emerald is defeated, and I, Queen Ruby, have the ShinyThing(tm) again, peace can come to the land of Jool. Your reward is...')
         STDIN.getch
-        Animation::run(phrase: '...', oneline: true)
+        Animation.run(phrase: '...', oneline: true)
         STDIN.getch
-        Animation::run(phrase: '...', oneline: true)
+        Animation.run(phrase: '...', oneline: true)
         STDIN.getch
-        Animation::run(phrase: '...my thanks!"', oneline: true)
+        Animation.run(phrase: '...my thanks!"', oneline: true)
         STDIN.getch
         puts
         speak('Now, be a dear and run on home.')
@@ -44,7 +44,7 @@ module Gemwarrior
         puts 'And with that, she waves her arm in a tired, yet mystical, manner. Your mind and sight go blank, and you "poof" out of existence.'
         puts
         
-        Animation::run(phrase: MOVE_TEXT)
+        Animation.run(phrase: MOVE_TEXT)
         { type: 'move', data: 'Home' }
       when 'n', 'no'
         speak('No? No??? Well, you are not leaving this room until you do, so think long and hard about that.')

@@ -23,7 +23,7 @@ module Gemwarrior
       # stats
       world.player.movements_made += 1
 
-      Animation::run(phrase: USE_TEXT)
+      Animation.run(phrase: USE_TEXT)
 
       puts 'The last couple of steps are more slippery than you anticipated, so you end up fumbling them, falling a few feet onto the hard ground below. When you regain your composure, you notice your conveyance for descending is now far above you and it is, unfortunately, your closest known exit.'
       puts

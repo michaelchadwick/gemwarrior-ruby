@@ -20,7 +20,7 @@ module Gemwarrior
       puts 'You go to touch the snowy softness of the snowman when it magically comes to life! The frozen homunculus grabs you by the wrist and tosses you to the ground, only to follow this up by jumping onto you with its full, freezing, force. Your body, and mind, go numb.'
       puts
 
-      Animation::run(phrase: USE_TEXT)
+      Animation.run(phrase: USE_TEXT)
 
       { type: 'move_dangerous', data: 'Home' }
     end

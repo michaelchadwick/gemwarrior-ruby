@@ -156,10 +156,10 @@ module Gemwarrior
 
       if tent_uses > 0
         if self.at_full_hp?
-          Animation::run(phrase: REST_FULL_TEXT)
+          Animation.run(phrase: REST_FULL_TEXT)
           return 'Despite feeling just fine, health-wise, you decide to set up camp for the ni--well, actually, after a few minutes you realize you don\'t need to sleep and pack things up again, ready to go.'
         else
-          Animation::run(phrase: REST_NOT_FULL_TEXT)
+          Animation.run(phrase: REST_NOT_FULL_TEXT)
           self.hp_cur = self.hp_max
 
           status_text = "You brandish the trusty magical canvas and, with a flick of the wrist, your home for the evening is set up. Approximately #{hours} #{hours_text}, #{minutes} #{mins_text}, and #{seconds} #{secs_text} later, you wake up, fully rested, ready for adventure.\n"
@@ -169,10 +169,10 @@ module Gemwarrior
         end
       else
         if self.at_full_hp?
-          Animation::run(phrase: REST_FULL_TEXT)
+          Animation.run(phrase: REST_FULL_TEXT)
           return 'You sit down on the ground, make some notes on the back of your hand, test the air, and then return to standing, back at it all again.'
         else
-          Animation::run(phrase: REST_NOT_FULL_TEXT)
+          Animation.run(phrase: REST_NOT_FULL_TEXT)
           self.hp_cur = self.hp_cur.to_i + rand(3..5)
           self.hp_cur = self.hp_max if self.hp_cur > self.hp_max
 
@@ -315,7 +315,7 @@ module Gemwarrior
 
       if new_player_level > old_player_level
         Audio.play_synth(:player_level_up)
-        Animation::run(phrase: LEVEL_UP_TEXT)
+        Animation.run(phrase: LEVEL_UP_TEXT)
         new_stats = PlayerLevels::get_level_stats(new_player_level)
 
         self.level = new_stats[:level]
@@ -356,7 +356,7 @@ module Gemwarrior
 
     def print_traveling_text(direction_text)
       Audio.play_synth(:player_travel)
-      Animation::run(phrase: "* #{direction_text} *", oneline: false)
+      Animation.run(phrase: "* #{direction_text} *", oneline: false)
     end
 
     def print_char_pic

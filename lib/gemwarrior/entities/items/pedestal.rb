@@ -98,7 +98,7 @@ module Gemwarrior
             # stats
             world.player.player.movements_made += 1
             
-            Animation::run(phrase: USE_TEXT)
+            Animation.run(phrase: USE_TEXT)
             return { type: 'move', data: 'Sky Tower (Entryway)' }
           else
             puts 'You attempt to push the large gem, but it puts up quite the resistance, and nothing much else happens. Your attention once again returns to the pedestal and its switches.'.colorize(:red)

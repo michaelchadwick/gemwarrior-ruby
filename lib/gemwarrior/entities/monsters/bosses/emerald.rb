@@ -76,7 +76,7 @@ module Gemwarrior
       STDIN.getc
 
       # onto the queen
-      Animation::run(phrase: MOVE_TEXT)
+      Animation.run(phrase: MOVE_TEXT)
       puts
 
       return { type: 'move', data: 'Queen Room'}

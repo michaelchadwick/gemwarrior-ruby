@@ -29,7 +29,7 @@ module Gemwarrior
 
       if is_arena
         print '  Your opponent is now...'
-        Animation::run(phrase: "#{monster.name.upcase}", speed: :slow, oneline: true)
+        Animation.run(phrase: "#{monster.name.upcase}", speed: :slow, oneline: true)
         print "!\n"
       elsif is_event
         puts "  You are ambushed by #{monster.name}!".colorize(:yellow)
@@ -231,7 +231,7 @@ module Gemwarrior
       end
 
       print who_gets_wounded_start
-      Animation::run(phrase: dmg.to_s, speed: :slow, oneline: true, alpha: false, random: false)
+      Animation.run(phrase: dmg.to_s, speed: :slow, oneline: true, alpha: false, random: false)
       print who_gets_wounded_end
     end
 
@@ -359,7 +359,7 @@ module Gemwarrior
 
     # STATUS TEXT
     def print_escape_text
-      Animation::run(phrase: ESCAPE_TEXT, oneline: false)
+      Animation.run(phrase: ESCAPE_TEXT, oneline: false)
     end
 
     def print_battle_line

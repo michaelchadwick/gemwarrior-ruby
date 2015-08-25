@@ -23,7 +23,7 @@ module Gemwarrior
       # stats
       world.player.movements_made += 1
 
-      Animation::run(phrase: MOVE_TEXT)
+      Animation.run(phrase: MOVE_TEXT)
 
       { type: 'move', data: 'Rock Piles' }
     end

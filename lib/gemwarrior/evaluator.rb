@@ -278,7 +278,7 @@ module Gemwarrior
             # stats
             world.player.movements_made += 1
 
-            Animation::run(phrase: '** TELEPORT! **', speed: :insane)
+            Animation.run(phrase: '** TELEPORT! **', speed: :insane)
             player_cur_location = world.location_by_coords(world.player.cur_coords)
             return world.describe(player_cur_location)
           end

@@ -35,7 +35,7 @@ module Gemwarrior
           when 'mineral'
             forest_southwest.locs_connected[:west] = true
             puts
-            Animation::run(phrase: OPEN_TEXT)
+            Animation.run(phrase: OPEN_TEXT)
             puts
             puts 'After you shout out your answer to the book\'s question to no one in particular, you manage to see a clearing in the forest to the west that was presumably not there before. Huh.'
             STDIN.getc
