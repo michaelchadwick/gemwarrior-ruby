@@ -373,7 +373,6 @@ module Gemwarrior
         end
 
         person_name = param1
-        result = nil
 
         player_inventory = world.player.inventory
 
@@ -381,7 +380,7 @@ module Gemwarrior
           player_inventory.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
-                result = person.use(world)
+                return self.parse("use #{person_name}")
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
@@ -391,29 +390,12 @@ module Gemwarrior
           player_cur_location.items.each do |person|
             if person.name.eql?(person_name)
               if person.talkable
-                result = person.use(world)
+                return self.parse("use #{person_name}")
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
             end
           end
-        end
-
-        return ERROR_TALK_PARAM_INVALID if result.nil?
-
-        case result[:type]
-        when 'arena'
-          arena = Arena.new(world: world, player: world.player)
-          arena_result = arena.start
-
-          if arena_result.eql?('death')
-            player_death_resurrection
-          end
-        when 'purchase'
-          result[:data].each do |i|
-            world.player.inventory.add_item(i)
-          end
-          return
         end
       when 'use', 'u'
         if param1.nil?

@@ -74,11 +74,16 @@ module Gemwarrior
       desc_text
     end
     
-    def speak(s, no_end_quote = false)
+    def speak(s, no_end_quote = false, no_line_feed = false)
       text =  ">> \"#{s}"
       text += "\"" unless no_end_quote
-      text += "\n"
-      print text.colorize(:yellow).gsub(/(.{1,#{GameOptions.data['wrap_width']}})(\s+|\Z)/, "\\1\n")
+      text += "\n" unless no_line_feed
+      text = text.colorize(:yellow)
+      if no_line_feed
+        print text
+      else
+        print text.gsub(/(.{1,#{GameOptions.data['wrap_width']}})(\s+|\Z)/, "\\1\n")
+      end
     end
   end
 end

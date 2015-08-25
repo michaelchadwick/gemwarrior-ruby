@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'http', '~> 0.8.10'
   spec.add_runtime_dependency 'json', '~> 1.8.2'
   spec.add_runtime_dependency 'colorize', '~> 0.7.7'
-  spec.add_runtime_dependency 'matrext', '~> 0.4.9'
+  spec.add_runtime_dependency 'matrext', '~> 0.4.10'
   spec.add_runtime_dependency 'clocker', '~> 0.1.6'
   spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
   spec.add_runtime_dependency 'feep', '~> 0.1.3'
