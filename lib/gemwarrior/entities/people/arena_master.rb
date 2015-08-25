@@ -21,13 +21,13 @@ module Gemwarrior
       puts "You approach #{ARENA_MASTER_NAME.colorize(color: :white, background: :black)}, the Arena Master, and ask to prove your mettle in the arena. She snickers to herself, but sees you have a good spirit about you."
       puts
 
-      if world.player.rox >= 50
+      if world.player.rox >= ARENA_FEE
         print "She asks for the requisite payment: #{ARENA_FEE} rox. Do you pay up? (y/n) "
         answer = gets.chomp.downcase
         
         case answer
         when 'y', 'yes'
-          world.player.rox -= 50
+          world.player.rox -= ARENA_FEE
           puts
           puts 'She pockets the money and motions toward the center of the arena. She reminds you that you will be facing an ever-worsening onslaught of monsters. Each one you dispatch nets you a bonus cache of rox in addition to whatever the monster gives you. You will also become more experienced the longer you last. Finally, you can give up at any time between battles.'
           puts

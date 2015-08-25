@@ -36,7 +36,8 @@ module Gemwarrior
 
       if is_arena
         print '  Your opponent is now...'
-        Animation::run(phrase: "#{monster.name.upcase}!", speed: :slow)
+        Animation::run(phrase: "#{monster.name.upcase}", speed: :slow, oneline: true)
+        print "!\n"
       elsif is_event
         puts "  You are ambushed by #{monster.name}!".colorize(:yellow)
       else

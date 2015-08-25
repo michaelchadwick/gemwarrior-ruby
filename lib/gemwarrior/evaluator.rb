@@ -403,7 +403,7 @@ module Gemwarrior
 
         case result[:type]
         when 'arena'
-          arena_result = Arena.new(world: world, player: world.player)
+          arena = Arena.new(world: world, player: world.player)
           arena_result = arena.start
 
           if arena_result.eql?('death')

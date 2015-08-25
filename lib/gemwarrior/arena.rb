@@ -1,11 +1,14 @@
 # lib/gemwarrior/arena.rb
 # Arena series of battles
 
-require_relative 'misc/player_levels'
 require_relative 'battle'
 
 module Gemwarrior
   class Arena
+    # CONSTANTS
+    BONUS_ROX_MULTIPLIER  = 25
+    BONUS_XP_MULTIPLIER   = 10
+
     attr_accessor :world, :player
 
     def initialize(options)
@@ -37,8 +40,8 @@ module Gemwarrior
         when 'y', 'yes'
           next
         else
-          bonus_rox = arena_monsters_vanquished * 25
-          bonus_xp = arena_monsters_vanquished * 10
+          bonus_rox = arena_monsters_vanquished * BONUS_ROX_MULTIPLIER
+          bonus_xp = arena_monsters_vanquished * BONUS_XP_MULTIPLIER
           player.rox = player.rox + bonus_rox
           player.xp = player.xp + bonus_xp
           puts 'You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
@@ -56,7 +59,7 @@ module Gemwarrior
       random_monster = nil
 
       loop do
-        random_monster = world.monsters[rand(0..world.monsters.length - 1)].clone
+        random_monster = GameMonsters.data[rand(0..GameMonsters.data.length - 1)].clone
 
         unless random_monster.is_boss
           break
