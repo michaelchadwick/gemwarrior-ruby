@@ -9,14 +9,16 @@ module Gemwarrior
   class Monster < Creature
     ITEM_POOL = [Herb.new, Bullet.new]
 
-    attr_accessor :battlecry, 
-                  :is_boss, 
+    attr_accessor :battlecry,
+                  :is_boss,
                   :is_dead
 
     def initialize
       super
 
       self.inventory  = Inventory.new
+      self.useable    = true
+      self.talkable   = true
       self.is_dead    = false
       3.times do
         if [true, false].sample
@@ -43,6 +45,8 @@ module Gemwarrior
       desc_text << "DEX  : #{dexterity}\n".colorize(:white)
       desc_text << "ROX  : #{rox}\n".colorize(:white)
       desc_text << "INV  : #{inventory.list_contents}\n".colorize(:white)
+      desc_text << "TALK?  #{talkable}\n".colorize(:white)
+      desc_text << "USE?   #{useable}\n".colorize(:white)
       desc_text
     end
   end

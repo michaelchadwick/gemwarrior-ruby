@@ -8,42 +8,43 @@ require_relative 'game_options'
 module Gemwarrior
   class Evaluator
     # CONSTANTS
-    PROGRAM_NAME                        = 'Gem Warrior'
-    QUIT_MESSAGE                        = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
-    RESUME_MESSAGE                      = 'Back to adventuring!'.colorize(:green)
+    PROGRAM_NAME                          = 'Gem Warrior'
+    QUIT_MESSAGE                          = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
+    RESUME_MESSAGE                        = 'Back to adventuring!'.colorize(:green)
 
-    GO_PARAMS                           = 'Options: north, east, south, west'
-    CHANGE_PARAMS                       = 'Options: name'
-    DEBUG_LIST_PARAMS                   = 'Options: players, creatures, items, locations, monsters, weapons'
-    DEBUG_STAT_PARAMS                   = 'Options: hp_cur, atk_lo, atk_hi, experience, rox, strength, dexterity, defense, inventory'
+    GO_PARAMS                             = 'Options: north, east, south, west'
+    CHANGE_PARAMS                         = 'Options: name'
+    DEBUG_LIST_PARAMS                     = 'Options: players, creatures, items, locations, monsters, weapons'
+    DEBUG_STAT_PARAMS                     = 'Options: hp_cur, atk_lo, atk_hi, experience, rox, strength, dexterity, defense, inventory'
 
-    ERROR_COMMAND_INVALID               = 'That is not something the game yet understands.'
-    ERROR_LOOK_AT_PARAM_MISSING         = 'You cannot just "look at". You gotta choose something to look at.'
-    ERROR_TALK_PARAM_INVALID            = 'Are you talking to yourself? That person is not here.'
-    ERROR_TALK_PARAM_UNTALKABLE         = 'That cannnot be conversed with.'
-    ERROR_TALK_TO_PARAM_MISSING         = 'You cannot just "talk to". You gotta choose someone to talk to.'
-    ERROR_GO_PARAM_MISSING              = 'Just wander aimlessly? A direction would be nice.'
-    ERROR_GO_PARAM_INVALID              = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
-    ERROR_DIRECTION_PARAM_INVALID       = 'You cannot go to that place.'
-    ERROR_ATTACK_PARAM_MISSING          = 'You cannot just "attack". You gotta choose something to attack.'
-    ERROR_ATTACK_PARAM_INVALID          = 'That monster does not exist here or can\'t be attacked.'
-    ERROR_TAKE_PARAM_MISSING            = 'You cannot just "take". You gotta choose something to take.'
-    ERROR_USE_PARAM_MISSING             = 'You cannot just "use". You gotta choose something to use.'
-    ERROR_USE_PARAM_INVALID             = 'You cannot use that, as it does not exist here or in your inventory.'
-    ERROR_USE_PARAM_UNUSEABLE           = 'That object is not useable.'
-    ERROR_DROP_PARAM_MISSING            = 'You cannot just "drop". You gotta choose something to drop.'
-    ERROR_EQUIP_PARAM_MISSING           = 'You cannot just "equip". You gotta choose something to equip.'
-    ERROR_UNEQUIP_PARAM_MISSING         = 'You cannot just "unequip". You gotta choose something to unequip.'
-    ERROR_CHANGE_PARAM_MISSING          = 'You cannot just "change". You gotta choose something to change.'
-    ERROR_CHANGE_PARAM_INVALID          = 'You cannot change that...yet.'
-    ERROR_LIST_PARAM_MISSING            = 'You cannot just "list". You gotta choose something to list.'
-    ERROR_LIST_PARAM_INVALID            = 'You cannot list that...yet.'
-    ERROR_DEBUG_STAT_PARAM_MISSING      = 'You cannot just "change stats". You gotta choose a stat to change.'
-    ERROR_DEBUG_STAT_PARAM_INVALID      = 'You cannot change that stat...yet.'
-    ERROR_DEBUG_STAT_INV_PARAM_INVALID  = 'You cannot add that to your inventory...yet.'
-    ERROR_DEBUG_TELEPORT_PARAMS_MISSING = 'You cannot just "teleport". You gotta specify an x AND y coordinate, at least.'
-    ERROR_DEBUG_TELEPORT_PARAMS_NEEDED  = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
-    ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
+    ERROR_COMMAND_INVALID                 = 'That is not something the game yet understands.'
+    ERROR_LOOK_AT_PARAM_MISSING           = 'You cannot just "look at". You gotta choose something to look at.'
+    ERROR_TALK_PARAM_INVALID              = 'Are you talking to yourself? That person is not here.'
+    ERROR_TALK_PARAM_UNTALKABLE           = 'That cannnot be conversed with.'
+    ERROR_TALK_TO_PARAM_MISSING           = 'You cannot just "talk to". You gotta choose someone to talk to.'
+    ERROR_GO_PARAM_MISSING                = 'Just wander aimlessly? A direction would be nice.'
+    ERROR_GO_PARAM_INVALID                = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_DIRECTION_PARAM_INVALID         = 'You cannot go to that place.'
+    ERROR_ATTACK_PARAM_MISSING            = 'You cannot just "attack". You gotta choose something to attack.'
+    ERROR_ATTACK_PARAM_INVALID            = 'That monster does not exist here or can\'t be attacked.'
+    ERROR_TAKE_PARAM_MISSING              = 'You cannot just "take". You gotta choose something to take.'
+    ERROR_USE_PARAM_MISSING               = 'You cannot just "use". You gotta choose something to use.'
+    ERROR_USE_PARAM_INVALID               = 'You cannot use that, as it does not exist here or in your inventory.'
+    ERROR_USE_PARAM_UNUSEABLE             = 'That object is not useable.'
+    ERROR_DROP_PARAM_MISSING              = 'You cannot just "drop". You gotta choose something to drop.'
+    ERROR_EQUIP_PARAM_MISSING             = 'You cannot just "equip". You gotta choose something to equip.'
+    ERROR_UNEQUIP_PARAM_MISSING           = 'You cannot just "unequip". You gotta choose something to unequip.'
+    ERROR_CHANGE_PARAM_MISSING            = 'You cannot just "change". You gotta choose something to change.'
+    ERROR_CHANGE_PARAM_INVALID            = 'You cannot change that...yet.'
+    ERROR_LIST_PARAM_MISSING              = 'You cannot just "list". You gotta choose something to list.'
+    ERROR_LIST_PARAM_INVALID              = 'You cannot list that...yet.'
+    ERROR_DEBUG_STAT_PARAM_MISSING        = 'You cannot just "change stats". You gotta choose a stat to change.'
+    ERROR_DEBUG_STAT_PARAM_INVALID        = 'You cannot change that stat...yet.'
+    ERROR_DEBUG_STAT_INV_PARAM_INVALID    = 'You cannot add that to your inventory...yet.'
+    ERROR_DEBUG_GLOBAL_VAR_INVALID        = 'That global variable does not exist.'
+    ERROR_DEBUG_TELEPORT_PARAMS_MISSING   = 'You cannot just "teleport". You gotta specify an x AND y coordinate, at least.'
+    ERROR_DEBUG_TELEPORT_PARAMS_NEEDED    = 'You cannot just "teleport" to an x coordinate without a y coordinate.'
+    ERROR_DEBUG_TELEPORT_PARAMS_INVALID   = 'You cannot teleport there...yet.'
 
     attr_accessor :world,
                   :commands,
@@ -58,8 +59,8 @@ module Gemwarrior
     def initialize(world)
       self.world = world
 
-      self.devcommands  = %w(god beast constants list vars map stat teleport spawn levelbump restfight)
-      self.devaliases   = %w(gd bs cn ls vs m st tp sp lb rf)
+      self.devcommands  = %w(god beast constants list vars map stat global teleport spawn levelbump restfight)
+      self.devaliases   = %w(gd bs cn ls vs m st gl tp sp lb rf)
       self.devextras    = %w()
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
@@ -69,6 +70,7 @@ module Gemwarrior
         'List all the variables in the world',
         'Show a map of the world',
         'Change player stat',
+        'Change world global variable',
         'Teleport to coordinates (5 0 0) or name (\'Home\')',
         'Spawn random monster',
         'Bump your character to the next level',
@@ -247,7 +249,7 @@ module Gemwarrior
             when 'inventory', 'inv'
               unless param2.nil?
                 begin
-                  item_const_name = Gemwarrior.const_get(Formatting.upstyle(param2))
+                  item_const_name = Gemwarrior.const_get(Formatting.upstyle(param2, no_space: true))
                   item = item_const_name.new
                   world.player.inventory.items.push(item)
                   return "#{item.name} added to player inventory."
@@ -258,6 +260,20 @@ module Gemwarrior
             else
               return ERROR_DEBUG_STAT_PARAM_INVALID
             end
+          end
+        when 'global', 'gl'
+          if param1.nil?
+            return world.instance_variables.join(', ')
+          elsif world.instance_variable_get("@#{param1}").nil?
+            return ERROR_DEBUG_GLOBAL_VAR_INVALID
+          elsif param2.nil?
+            return world.instance_variable_get("@#{param1}").to_s
+          else
+            val = false
+            val = param2.eql?('true') ? true : val
+
+            world.instance_variable_set("@#{param1}", val)
+            return "Instance variable #{param1} has been set to #{val}."
           end
         when 'spawn', 'sp'
           player_cur_location = world.location_by_coords(world.player.cur_coords)
@@ -388,7 +404,7 @@ module Gemwarrior
         end
       when 'talk', 'tk'
         if param1.nil?
-          return ERROR_USE_PARAM_MISSING
+          return ERROR_TALK_TO_PARAM_MISSING
         elsif param1.eql?('to')
           if param2
             param1 = param2
@@ -397,25 +413,45 @@ module Gemwarrior
           end
         end
 
-        person_name = param1
+        talkable_name = param1
 
         player_inventory = world.player.inventory
 
-        if player_inventory.contains_item?(person_name)
+        if player_inventory.contains_item?(talkable_name)
           player_inventory.items.each do |person|
-            if person.name.eql?(person_name)
+            if person.name.eql?(talkable_name)
               if person.talkable
-                return self.parse("use #{person_name}")
+                return self.parse("use #{talkable_name}")
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
             end
           end
-        elsif player_cur_location.contains_item?(person_name)
+        elsif player_cur_location.contains_item?(talkable_name)
           player_cur_location.items.each do |person|
-            if person.name.eql?(person_name)
+            if person.name.eql?(talkable_name)
               if person.talkable
-                return self.parse("use #{person_name}")
+                return self.parse("use #{talkable_name}")
+              else
+                return ERROR_TALK_PARAM_UNTALKABLE
+              end
+            end
+          end
+        elsif player_cur_location.has_monster?(talkable_name)
+          player_cur_location.monsters_abounding.each do |monster|
+            if monster.name.eql?(talkable_name)
+              if monster.talkable
+                return self.parse("use #{talkable_name}")
+              else
+                return ERROR_TALK_PARAM_UNTALKABLE
+              end
+            end
+          end
+        elsif player_cur_location.has_boss?(talkable_name)
+          player_cur_location.bosses_abounding.each do |boss|
+            if boss.name.eql?(talkable_name)
+              if boss.talkable
+                return self.parse("use #{talkable_name}")
               else
                 return ERROR_TALK_PARAM_UNTALKABLE
               end
@@ -475,6 +511,18 @@ module Gemwarrior
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
                 end
+              end
+            end
+          elsif player_cur_location.has_monster?(item_name)
+            player_cur_location.monsters_abounding.each do |i|
+              if i.name.eql?(item_name)
+                return i.use(world)
+              end
+            end
+          elsif player_cur_location.has_boss?(item_name)
+            player_cur_location.bosses_abounding.each do |i|
+              if i.name.eql?(item_name)
+                return i.use(world)
               end
             end
           end

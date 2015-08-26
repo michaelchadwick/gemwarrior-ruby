@@ -1090,7 +1090,19 @@ locations:
     begin: 5
     end: 20
     excl: false
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::SandJewel
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: false
+    name: sand_jewel
+    name_display: Sand Jewel
+    description: As blue (or is it violet? or brown?) as it is brittle, this shiny rock feels warm to the touch.
+    takeable: true
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding:
   - !ruby/object:Gemwarrior::Garynetty
@@ -1274,7 +1286,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-south_southeast
   name_display: Plains (South-Southeast)
-  description: The river continues to flow north of you, as plains stretch out all
+  description: A path north of you descends into a valley, but otherwise the plains stretch out all
     around. The noise from the east is quite loud, and a building can be seen in the
     near distance.
   coords:
@@ -1282,7 +1294,7 @@ locations:
     :y: 3
     :z: 0
   locs_connected:
-    :north: false
+    :north: true
     :east: true
     :south: false
     :west: true
@@ -1472,15 +1484,14 @@ locations:
   name: plains-north_of_bridge
   name_display: Plains (North of Bridge)
   description: North of the river feels similar to south of the river, as you continue
-    to be surrounded by grass and grass and, well, grass. A path to the east stretches
-    out into a valley.
+    to be surrounded by grass and grass and, well, grass.
   coords:
     :x: 4
     :y: 5
     :z: 0
   locs_connected:
     :north: false
-    :east: true
+    :east: false
     :south: true
     :west: true
   danger_level: :low
@@ -1493,19 +1504,19 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: peridover_valley-outskirts_west
-  name_display: Peridover Valley (Outskirts (West))
+  name: peridover_valley-south
+  name_display: Peridover Valley (South)
   description: The road slopes down slightly here, but in the near distance you can
-    see that it slopes way more slopily.
+    see that it slopes way more slopily. A mighty river ends in a bay to your west.
   coords:
-    :x: 5
-    :y: 5
+    :x: 6
+    :y: 4
     :z: 0
   locs_connected:
-    :north: false
-    :east: true
-    :south: false
-    :west: true
+    :north: true
+    :east: false
+    :south: true
+    :west: false
   danger_level: :low
   monster_level_range: !ruby/range
     begin: 2
@@ -1527,8 +1538,8 @@ locations:
   locs_connected:
     :north: false
     :east: true
-    :south: false
-    :west: true
+    :south: true
+    :west: false
   danger_level: :moderate
   monster_level_range: !ruby/range
     begin: 3
@@ -1539,8 +1550,8 @@ locations:
   bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
-  name: peridover_valley-outskirts_east
-  name_display: Peridover Valley (Outskirts (East))
+  name: peridover_valley-northeast
+  name_display: Peridover Valley (Northeast)
   description: Sloping way down to the west, but leveling off here, a din of civilization
     calls from the north.
   coords:
@@ -1749,7 +1760,7 @@ locations:
     number_of_uses: 
     talkable: true
     name: shifty_woman
-    name: Shifty Woman
+    name_display: Shifty Woman
     description: Sharply dressed with impeccable style, you still can't shake the feeling that this 
       otherwise ordinary woman is up to something. It might be the way she almost impulsively looks 
       back and forth along the town street while rubbing her hands together menacingly.
@@ -2104,11 +2115,11 @@ locations:
     hands: tantalizing
     mood: enraged
     level: 15
-    hp_cur: 32
-    hp_max: 32
+    hp_cur: 100
+    hp_max: 100
     atk_lo: 28
     atk_hi: 44
-    defense: 5
+    defense: 6
     dexterity: 9
     inventory: !ruby/object:Gemwarrior::Inventory
       armor: 
@@ -2131,6 +2142,8 @@ locations:
       ha ha ha! Prepare yourself fool: today your whole life crumbles!'
     is_boss: true
     is_dead: false
+    talkable: true
+    useable: true
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-lounge
@@ -2299,4 +2312,6 @@ player: !ruby/object:Gemwarrior::Player
   rests_taken: 0
   deaths: 0
 emerald_beaten: false
+shifty_jeweled: false
+shifty_to_jewel: false
 duration:

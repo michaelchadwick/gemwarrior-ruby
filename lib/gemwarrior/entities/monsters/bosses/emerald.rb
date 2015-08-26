@@ -21,7 +21,7 @@ module Gemwarrior
       self.mood           = 'enraged'
 
       self.level          = 15
-      self.hp_cur         = rand((level * 3)..(level * 4))
+      self.hp_cur         = rand((level * 6)..(level * 7))
       self.hp_max         = hp_cur
       self.atk_lo         = rand(level..(level * 2.5).floor)
       self.atk_hi         = rand((level * 2.5).floor..(level * 3).floor)
@@ -32,6 +32,8 @@ module Gemwarrior
       self.rox            = rand((level * 9)..(level * 11))
       self.xp             = rand((level * 13)..(level * 15))
 
+      self.talkable       = true
+      self.useable        = true
       self.is_boss        = true
     end
     

@@ -17,7 +17,14 @@ module Gemwarrior
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
-    attr_accessor :monsters, :locations, :weapons, :player, :duration, :emerald_beaten
+    attr_accessor :monsters,
+                  :locations,
+                  :weapons,
+                  :player,
+                  :duration,
+                  :emerald_beaten,
+                  :shifty_to_jewel,
+                  :shifty_has_jeweled
 
     def describe(point)
       desc_text = "[>>> #{point.name_display.upcase} <<<]".colorize(:cyan)

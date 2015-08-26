@@ -10,7 +10,10 @@ module Gemwarrior
     BEAST_MODE_ATTACK           = 100
     ESCAPE_TEXT                 = '** POOF **'
 
-    attr_accessor :world, :player, :monster, :player_is_defending
+    attr_accessor :world,
+                  :player,
+                  :monster,
+                  :player_is_defending
 
     def initialize(options)
       self.world                = options.fetch(:world)
@@ -19,12 +22,13 @@ module Gemwarrior
       self.player_is_defending  = false
     end
 
-    def start(is_arena = nil, is_event = nil)
+    def start(is_arena = false, is_event = false)
       Audio.play_synth(:battle_start)
 
       # begin battle!
       print_battle_header unless is_arena
 
+      # print opponent announcement, depending on reason for battle
       if is_arena
         print '  Your opponent is now...'
         Animation.run(phrase: "#{monster.name.upcase}", speed: :slow, oneline: true)
@@ -37,12 +41,21 @@ module Gemwarrior
 
       puts "  #{monster.name} cries out: \"#{monster.battlecry}\""
 
-      # first strike!
-      unless is_arena
-        if monster_strikes_first?(is_event)
-          puts "  #{monster.name} strikes first!".colorize(:yellow)
-          monster_attacks_player
+      # first strike! (unless arena or emerald)
+      # shifty woman time, if emerald
+      if monster.name.eql?('emerald')
+        if world.shifty_to_jewel && !world.shifty_has_jeweled
+          puts
+          puts '  Suddenly, the Shifty Woman appears out of nowhere, and stands between you and Emerald!'
+          STDIN.getc
+          Person.new.speak('Hey! The developer hasn\'t figured out what I\'m here to do, but I really hope you can defeat Emerald! Also, thanks for the shiny jewel!')
+          STDIN.getc
+          puts '  The Shifty Woman\'s perplexing speech now over, she disappears.'
+          world.shifty_has_jeweled = true
         end
+      elsif monster_strikes_first?(arena_battle: is_arena, event_battle: is_event)
+        puts "  #{monster.name} strikes first!".colorize(:yellow)
+        monster_attacks_player
       end
 
       # main battle loop
@@ -259,8 +272,8 @@ module Gemwarrior
     end
 
     # MONSTER
-    def monster_strikes_first?(is_event = nil)
-      if (monster.dexterity > player.dexterity) || is_event
+    def monster_strikes_first?(arena_battle = false, event_battle = false)
+      if (monster.dexterity > player.dexterity) || event_battle || !arena_battle
         return true
       else
         dex_diff = player.dexterity - monster.dexterity

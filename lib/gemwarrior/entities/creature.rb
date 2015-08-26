@@ -45,7 +45,7 @@ module Gemwarrior
       self.used       = false
     end
 
-    def use
+    def use(world)
       'That creature does not seem to want to talk to you right now.'
     end
 
