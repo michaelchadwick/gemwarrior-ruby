@@ -12,6 +12,7 @@ module Gemwarrior
                   :description,
                   :takeable,
                   :useable,
+                  :useable_battle,
                   :talkable,
                   :consumable,
                   :equippable,
@@ -28,6 +29,7 @@ module Gemwarrior
       self.name_display   = Formatting::upstyle(name)
       self.description    = 'An entity.'
       self.useable        = true
+      self.useable_battle = false
       self.talkable       = false
       self.consumable     = false
       self.takeable       = true

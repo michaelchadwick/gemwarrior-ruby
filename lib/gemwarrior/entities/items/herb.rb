@@ -8,11 +8,12 @@ module Gemwarrior
     def initialize
       super
 
-      self.name         = 'herb'
-      self.name_display = 'Herb'
-      self.description  = 'Green and leafy, this wild herb looks edible.'
-      self.takeable     = true
-      self.consumable   = true
+      self.name           = 'herb'
+      self.name_display   = 'Herb'
+      self.description    = 'Green and leafy, this wild herb looks edible.'
+      self.takeable       = true
+      self.consumable     = true
+      self.useable_battle = true
     end
 
     def use(world)
@@ -21,8 +22,9 @@ module Gemwarrior
         puts '>> The herb has no medicinal effect, as you already feel perfectly healthy, but it was kind of tasty.'
         { type: nil, data: nil }
       else
-        puts '>> You regain a few hit points.'.colorize(:green)
-        { type: 'health', data: rand(3..5) }
+        hp_healed = rand(3..5)
+        puts ">> You regain #{hp_healed} hit points.".colorize(:green)
+        { type: 'health', data: hp_healed }
       end
     end
   end

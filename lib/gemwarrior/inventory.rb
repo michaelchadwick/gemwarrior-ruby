@@ -25,16 +25,34 @@ module Gemwarrior
       self.armor  = armor
     end
 
+    def is_empty?
+      self.items.nil? || self.items.empty?
+    end
+
     def list_contents
-      if self.items.nil? || self.items.empty?
-        return '[empty]'
-      else
-        return "#{self.items.map(&:name).join(', ')}"
-      end
+      is_empty? ? '[empty]' : "#{self.items.map(&:name).join(', ')}"
     end
 
     def contains_item?(item_name)
       self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
+    end
+
+    def contains_battle_item?
+      battle_item_found = false
+      self.items.each do |i|
+        if i.useable_battle
+          battle_item_found = true
+        end
+      end
+      battle_item_found
+    end
+
+    def list_battle_items
+      battle_items = []
+      self.items.each do |i|
+        battle_items.push(i) if i.useable_battle
+      end
+      battle_items
     end
 
     def describe_item(item_name)

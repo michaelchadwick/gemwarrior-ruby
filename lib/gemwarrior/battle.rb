@@ -1,9 +1,7 @@
 # lib/gemwarrior/battle.rb
 # Monster battle
 
-require_relative 'misc/player_levels'
 require_relative 'game_options'
-require_relative 'entities/items/sparkly_thing'
 
 module Gemwarrior
   class Battle
@@ -49,6 +47,8 @@ module Gemwarrior
 
       # main battle loop
       loop do
+        skip_next_monster_attack = false
+
         if monster_dead?
           result = monster_death
           return result
@@ -86,22 +86,7 @@ module Gemwarrior
         self.player_is_defending = false
 
         # battle options prompt
-        puts '  What do you do?'
-        print '  ['.colorize(:yellow)
-        print 'F'.colorize(:green)
-        print 'ight/'.colorize(:yellow)
-        print 'A'.colorize(:green)
-        print 'ttack]['.colorize(:yellow)
-        print 'D'.colorize(:green)
-        print 'efend]['.colorize(:yellow)
-        print 'L'.colorize(:green)
-        print 'ook]['.colorize(:yellow)
-        print 'P'.colorize(:green)
-        print 'ass]['.colorize(:yellow)
-        print 'R'.colorize(:green)
-        print 'un]'.colorize(:yellow)
-        print "\n"
-        print '  [BATTLE]> '
+        print_battle_options
         player_action = STDIN.gets.chomp.downcase
 
         # player action
@@ -141,12 +126,52 @@ module Gemwarrior
         when 'defend', 'd'
           puts '  You dig in and defend this round.'
           self.player_is_defending = true
-        when 'pass', 'p'
-          puts '  You decide to pass your turn for some reason. Brave!'
+        when 'item', 'i'
+          if player.inventory.is_empty?
+            puts '  You have no items!'
+            next
+          elsif player.inventory.contains_battle_item?
+            puts '  Which item do you want to use?'
+            puts
+            b_items = player.inventory.list_battle_items
+            count = 0
+            b_items.each do |bi|
+              puts "  (#{count+1}) #{bi.name}"
+              count += 1
+            end
+            puts '  (x) exit'
+
+            loop do
+              print_battle_prompt
+              answer = gets.chomp.downcase
+
+              case answer
+              when 'x', 'q'
+                skip_next_monster_attack = true
+                break
+              else
+                begin
+                  item = b_items[answer.to_i - 1]
+                  if item
+                    result = item.use(world)
+                    player.hp_cur += result[:data]
+                    player.inventory.remove_item(item.name) if item.consumable
+                    break
+                  end
+                rescue
+                  puts '  That is not a valid item choice.'
+                  puts
+                  next
+                end
+              end
+            end
+          else
+            puts '  You have no battle items!'
+          end
         when 'look', 'l'
           print "  #{monster.name}".colorize(:white)
           print " (#{monster.hp_cur}/#{monster.hp_max} HP): #{monster.description}\n"
-          puts "  It has some distinguishing features, too: face is #{monster.face}, hands are #{monster.hands}, and general mood is #{monster.mood}."
+          puts "  It has some distinguishing features, too: face is #{monster.face.colorize(:yellow)}, hands are #{monster.hands.colorize(:yellow)}, and mood, currently, is #{monster.mood.colorize(:yellow)}."
           if GameOptions.data['debug_mode']
             puts '  If defeated, will receive:'
             puts "  >> XP   : #{monster.xp}"
@@ -154,6 +179,8 @@ module Gemwarrior
             puts "  >> ITEMS: #{monster.inventory.list_contents}"
             next
           end
+         when 'pass', 'p'
+          puts '  You decide to pass your turn for some reason. Brave!'
         when 'run', 'r'
           if player_escape?(is_arena)
             monster.hp_cur = monster.hp_max
@@ -165,12 +192,12 @@ module Gemwarrior
             puts '  You were not able to run away! :-('.colorize(:yellow)
           end
         else
-          puts ERROR_ATTACK_OPTION_INVALID
+          puts "  #{ERROR_ATTACK_OPTION_INVALID}"
           next
         end
 
         # monster action
-        monster_attacks_player
+        monster_attacks_player unless skip_next_monster_attack
       end
     end
 
@@ -359,12 +386,31 @@ module Gemwarrior
 
     # STATUS TEXT
     def print_escape_text
+      print '  '
       Animation.run(phrase: ESCAPE_TEXT, oneline: false)
     end
 
     def print_battle_line
       GameOptions.data['wrap_width'].times { print '*'.colorize(background: :red, color: :white) }
       print "\n"
+    end
+
+    def print_battle_options
+      puts '  What do you do?'
+      print '  '
+      print "#{'['.colorize(:yellow)}"
+      print "#{'F'.colorize(:green)}#{'ight]['.colorize(:yellow)}"
+      print "#{'D'.colorize(:green)}#{'efend]['.colorize(:yellow)}"
+      print "#{'L'.colorize(:green)}#{'ook]['.colorize(:yellow)}"
+      print "#{'I'.colorize(:green)}#{'tem]['.colorize(:yellow)}"
+      print "#{'P'.colorize(:green)}#{'ass]['.colorize(:yellow)}"
+      print "#{'R'.colorize(:green)}#{'un]'.colorize(:yellow)}"
+      print "\n"
+      print_battle_prompt
+    end
+
+    def print_battle_prompt
+      print '  [BATTLE]> '
     end
 
     def print_battle_header
