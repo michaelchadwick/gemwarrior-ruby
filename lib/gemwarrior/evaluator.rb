@@ -58,12 +58,13 @@ module Gemwarrior
     def initialize(world)
       self.world = world
 
-      self.devcommands  = %w(god beast list vars map stat teleport spawn levelbump restfight)
-      self.devaliases   = %w(gd bs ls vs m st tp sp lb rf)
+      self.devcommands  = %w(god beast constants list vars map stat teleport spawn levelbump restfight)
+      self.devaliases   = %w(gd bs cn ls vs m st tp sp lb rf)
       self.devextras    = %w()
       self.devcmd_descriptions = [
         'Toggle god mode (i.e. invincible)',
         'Toggle beast mode (i.e. super strength)',
+        'List all GameAssets',
         'List all instances of a specific entity type',
         'List all the variables in the world',
         'Show a map of the world',
@@ -131,6 +132,24 @@ module Gemwarrior
         when 'beast', 'bs'
           GameOptions.data['beast_mode'] = !GameOptions.data['beast_mode']
           return "Beast mode set to #{GameOptions.data['beast_mode']}"
+        when 'constants', 'cn'
+          puts 'GameCreatures'.colorize(:yellow)
+          puts GameCreatures.data
+          STDIN.getc
+          puts 'GameMonsters'.colorize(:yellow)
+          puts GameMonsters.data
+          STDIN.getc
+          puts 'GamePeople'.colorize(:yellow)
+          puts GamePeople.data
+          STDIN.getc
+          puts 'GameItems'.colorize(:yellow)
+          puts GameItems.data
+          STDIN.getc
+          puts 'GameArmor'.colorize(:yellow)
+          puts GameArmor.data
+          STDIN.getc
+          puts 'GameWeapons'.colorize(:yellow)
+          puts GameWeapons.data
         when 'vars', 'vs'
           if param1
             world.print_vars(param1)
