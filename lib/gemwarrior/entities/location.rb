@@ -124,10 +124,6 @@ module Gemwarrior
         trigger_values = 0..max
         actual_value = rand(1..100)
 
-        if GameOptions.data['debug_mode']
-          puts "should_spawn_monster? #{trigger_values} : #{actual_value}"
-        end
-
         if trigger_values.include?(actual_value)
           found = true
         end

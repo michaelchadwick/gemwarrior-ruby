@@ -138,8 +138,6 @@ module Gemwarrior
       if cur_loc.should_spawn_monster?
         chance_of_ambush = rand(0..100)
 
-        puts "chance_of_ambush: #{chance_of_ambush}" if GameOptions.data['debug_mode']
-
         if chance_of_ambush < 25
           battle = Battle.new(world: world, player: self, monster: cur_loc.monsters_abounding[rand(0..cur_loc.monsters_abounding.length-1)].clone)
           return battle.start(is_arena = false, is_event = true)
