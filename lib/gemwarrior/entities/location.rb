@@ -169,7 +169,7 @@ module Gemwarrior
 
         # get random non-boss monster
         loop do
-          random_monster = monsters_available[rand(0..monsters_available.length-1)]
+          random_monster = monsters_available[rand(0..monsters_available.length-1)].clone
 
           if spawn
             break

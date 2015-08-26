@@ -916,29 +916,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 13
-    hp_cur: 45
-    hp_max: 45
-    atk_lo: 27
-    atk_hi: 33
-    defense: 9
-    dexterity: 10
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 29
-    xp: 41
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-east
@@ -960,29 +938,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 13
-    hp_cur: 40
-    hp_max: 40
-    atk_lo: 31
-    atk_hi: 34
-    defense: 9
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 26
-    xp: 50
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-central
@@ -1004,29 +960,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 15
-    hp_cur: 52
-    hp_max: 52
-    atk_lo: 34
-    atk_hi: 40
-    defense: 7
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 34
-    xp: 45
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-south
@@ -1048,29 +982,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 12
-    hp_cur: 33
-    hp_max: 33
-    atk_lo: 26
-    atk_hi: 31
-    defense: 9
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 27
-    xp: 37
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-west
@@ -1104,29 +1016,7 @@ locations:
     useable: true
     equippable: false
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 14
-    hp_cur: 44
-    hp_max: 44
-    atk_lo: 30
-    atk_hi: 41
-    defense: 9
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 41
-    xp: 52
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-northwest
@@ -1148,29 +1038,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 12
-    hp_cur: 37
-    hp_max: 37
-    atk_lo: 28
-    atk_hi: 32
-    defense: 9
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 24
-    xp: 44
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-north
@@ -1192,29 +1060,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Garynetty
-    name: garynetty
-    name_display: Garynetty
-    description: Conservative, yet odd, the Garynetty is not messing around.
-    face: irregular
-    hands: sharp
-    mood: abrasive
-    level: 12
-    hp_cur: 37
-    hp_max: 37
-    atk_lo: 29
-    atk_hi: 32
-    defense: 7
-    dexterity: 12
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items: []
-      weapon: 
-    rox: 32
-    xp: 45
-    battlecry: "...?!"
-    is_boss: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: plains-outskirts
@@ -1443,42 +1289,7 @@ locations:
     excl: false
   items: []
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Jaspern
-    name: jaspern
-    name_display: Jaspern
-    description: Dark green hair, but yellow and brown skin, Jaspern is actually somewhat translucent, and he does not appear to be moveable or go-around-able.
-    face: crystalline
-    hands: small
-    mood: opaque
-    level: 8
-    hp_cur: 27
-    hp_max: 27
-    atk_lo: 18
-    atk_hi: 25
-    defense: 6
-    dexterity: 8
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items:
-      - !ruby/object:Gemwarrior::Tent
-        equipped: false
-        consumable: false
-        used: false
-        number_of_uses: 5
-        name: tent
-        name_display: Tent
-        description: A magical, two-room suite pops up when you flick this otherwise folded
-          piece of canvas just right, perfect for a night's rest.
-        takeable: true
-        useable: true
-        equippable: false
-        weapon: 
-    rox: 50
-    xp: 80
-    battlecry: "I am the keeper of this bridge! To go further, you must get through me!"
-    is_boss: true
-    is_dead: false
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: plains-north_of_bridge
@@ -2106,44 +1917,7 @@ locations:
     useable: false
     equippable: false
   monsters_abounding: []
-  bosses_abounding:
-  - !ruby/object:Gemwarrior::Emerald
-    name: emerald
-    name_display: Emerald
-    description: A wily, beefy, tower of a man, Emerald looks to be a champion of both wisdom, from what you've heard, AND strength, from what you plainly see. He sports a permanent scowl as he faces you, dead-on.
-    face: gleaming
-    hands: tantalizing
-    mood: enraged
-    level: 15
-    hp_cur: 100
-    hp_max: 100
-    atk_lo: 28
-    atk_hi: 44
-    defense: 6
-    dexterity: 9
-    inventory: !ruby/object:Gemwarrior::Inventory
-      armor: 
-      items:
-      - !ruby/object:Gemwarrior::SparklyThing
-        equipped: false
-        consumable: false
-        used: false
-        number_of_uses: 
-        name: sparkly_thing
-        name_display: SparklyThing(tm)
-        description: The sparkling that this thing does is unimaginably brilliant.
-        takeable: true
-        useable: true
-        equippable: false
-      weapon: 
-    rox: 175
-    xp: 200
-    battlecry: 'You have come for the SparklyThing(tm), I see. To that I say: Ha ha
-      ha ha ha! Prepare yourself fool: today your whole life crumbles!'
-    is_boss: true
-    is_dead: false
-    talkable: true
-    useable: true
+  bosses_abounding: []
   checked_for_monsters: false
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-lounge

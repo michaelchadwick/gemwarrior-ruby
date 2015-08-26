@@ -17,8 +17,8 @@ module Gemwarrior
       self.hands        = 'sharp'
       self.mood         = 'abrasive'
 
-      self.level        = rand(12..15)
-      self.hp_cur       = rand((level * 2.5).floor..(level * 3.5).floor)
+      self.level        = rand(10..12)
+      self.hp_cur       = rand((level * 4.5).floor..(level * 5.5).floor)
       self.hp_max       = hp_cur
       self.atk_lo       = rand((level * 2)..(level * 2.5).floor)
       self.atk_hi       = rand((level * 2.5).floor..(level * 3).floor)
@@ -26,8 +26,8 @@ module Gemwarrior
       self.dexterity    = rand(10..12)
 
       self.inventory    = random_item
-      self.rox          = rand((level * 2)..(level * 3))
-      self.xp           = rand((level * 3)..(level * 4))
+      self.rox          = rand((level * 5)..(level * 6))
+      self.xp           = rand((level * 7)..(level * 11))
 
       self.is_boss      = true
     end

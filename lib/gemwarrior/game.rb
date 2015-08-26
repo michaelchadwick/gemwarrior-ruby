@@ -58,8 +58,25 @@ module Gemwarrior
       world.player.inventory   = GameOptions.data['debug_mode'] ? INVENTORY_DEBUG : INVENTORY_DEFAULT
       world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
 
+      # set some global variables
       world.duration           = { mins: 0, secs: 0, ms: 0 }
       world.emerald_beaten     = false
+      world.shifty_to_jewel    = false
+      world.shifty_has_jeweled = false
+
+      # spawn bosses
+      ## Pain Quarry
+      world.location_by_name('pain_quarry-southeast').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-east').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-central').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-south').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-west').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-northwest').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      world.location_by_name('pain_quarry-north').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
+      ## River Bridge
+      world.location_by_name('river_bridge').bosses_abounding.push(Gemwarrior.const_get('Jaspern').new)
+      ## Throne Room
+      world.location_by_name('sky_tower-throne_room').bosses_abounding.push(Gemwarrior.const_get('Emerald').new)
 
       # create options file if not existing
       update_options_file
