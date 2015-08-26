@@ -46,13 +46,13 @@ module Gemwarrior
     ERROR_DEBUG_TELEPORT_PARAMS_INVALID = 'You cannot teleport there...yet.'
 
     attr_accessor :world,
-                  :commands, 
-                  :aliases, 
-                  :extras, 
+                  :commands,
+                  :aliases,
+                  :extras,
                   :cmd_descriptions,
-                  :devcommands, 
-                  :devaliases, 
-                  :devextras, 
+                  :devcommands,
+                  :devaliases,
+                  :devextras,
                   :devcmd_descriptions
 
     def initialize(world)
@@ -110,9 +110,7 @@ module Gemwarrior
         return
       # real command
       else
-        unless input_valid?(input)
-          return ERROR_COMMAND_INVALID.colorize(:red)
-        end
+        return ERROR_COMMAND_INVALID.colorize(:red) unless input_valid?(input)
       end
 
       tokens = input.split
@@ -230,7 +228,7 @@ module Gemwarrior
             when 'inventory', 'inv'
               unless param2.nil?
                 begin
-                  item_const_name = Gemwarrior.const_get(Formatting::upstyle(param2))
+                  item_const_name = Gemwarrior.const_get(Formatting.upstyle(param2))
                   item = item_const_name.new
                   world.player.inventory.items.push(item)
                   return "#{item.name} added to player inventory."
@@ -244,7 +242,7 @@ module Gemwarrior
           end
         when 'spawn', 'sp'
           player_cur_location = world.location_by_coords(world.player.cur_coords)
-          player_cur_location.populate_monsters(GameMonsters.data, spawn = true)
+          player_cur_location.populate_monsters(GameMonsters.data, spawn: true)
           return world.describe(player_cur_location)
         when 'teleport', 'tp'
           if param1.nil?
@@ -261,7 +259,7 @@ module Gemwarrior
 
                 # check to make sure new location exists
                 if world.location_by_coords(x: x_coord, y: y_coord, z: z_coord)
-                  world.player.cur_coords = {x: x_coord, y: y_coord, z: z_coord}
+                  world.player.cur_coords = { x: x_coord, y: y_coord, z: z_coord }
                 else
                   return ERROR_DEBUG_TELEPORT_PARAMS_INVALID
                 end
@@ -474,7 +472,7 @@ module Gemwarrior
               dmg = rand(0..2)
               puts ">> You lose #{dmg} hit point(s)." if dmg > 0
               world.player.take_damage(dmg)
-              
+
               world.player.cur_coords = world.location_coords_by_name(result[:data])
               player_cur_location = world.location_by_coords(world.player.cur_coords)
               world.describe(player_cur_location)
@@ -614,7 +612,7 @@ module Gemwarrior
       when 'quit', 'exit', 'q', 'x'
         print 'You sure you want to quit? (y/n) '
         answer = gets.chomp.downcase
-        
+
         case answer
         when 'y', 'yes'
           puts QUIT_MESSAGE
@@ -650,7 +648,7 @@ module Gemwarrior
       puts 'Instead, you are whisked back home via some magical force.'.colorize(:yellow)
       puts 'A bit worse for the weary and somewhat poorer, but you are ALIVE!'.colorize(:yellow)
       puts
-      
+
       world.player.hp_cur = 1
       world.player.rox -= (world.player.rox * 0.1).to_i
       if world.player.rox < 0
@@ -664,7 +662,7 @@ module Gemwarrior
     end
 
     def print_separator
-      puts "========================================================="
+      puts '========================================================='
     end
 
     def list_commands

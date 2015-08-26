@@ -34,15 +34,13 @@ module Gemwarrior
     end
 
     def contains_item?(item_name)
-      self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
+      self.items.map{ |i| i.name.downcase }.include?(item_name.downcase)
     end
 
     def contains_battle_item?
       battle_item_found = false
       self.items.each do |i|
-        if i.useable_battle
-          battle_item_found = true
-        end
+        battle_item_found = true if i.useable_battle
       end
       battle_item_found
     end

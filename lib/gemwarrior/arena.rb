@@ -24,29 +24,28 @@ module Gemwarrior
       loop do
         monster = generate_monster
         battle = Battle.new(world: world, player: player, monster: monster)
-        result = battle.start(is_arena = true)
+        result = battle.start(is_arena: true)
 
-        if result.eql?('death')
-          return 'death'
-        end
+        return 'death' if result.eql?('death')
 
         arena_monsters_vanquished += 1
 
-        puts
-        print 'Do you wish to continue fighting in the Arena? (y/n) '
+        print '  Do you wish to continue fighting in the Arena? (y/n) '
         answer = gets.chomp.downcase
 
         case answer
         when 'y', 'yes'
+          puts
           next
         else
           bonus_rox = arena_monsters_vanquished * BONUS_ROX_MULTIPLIER
           bonus_xp = arena_monsters_vanquished * BONUS_XP_MULTIPLIER
           player.rox = player.rox + bonus_rox
           player.xp = player.xp + bonus_xp
-          puts 'You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
-          puts "You defeated #{arena_monsters_vanquished} monsters!"
-          puts "You have gained #{bonus_rox} rox and #{bonus_xp} XP!"
+          puts
+          puts '  You decided you\'ve had enough of the exhausting Arena for one day and exit the main stage.'
+          puts "  You defeated #{arena_monsters_vanquished} monsters!"
+          puts "  You have gained #{bonus_rox} rox and #{bonus_xp} XP!"
 
           return print_arena_outro
         end
@@ -61,12 +60,10 @@ module Gemwarrior
       loop do
         random_monster = GameMonsters.data[rand(0..GameMonsters.data.length - 1)].clone
 
-        unless random_monster.is_boss
-          break
-        end
+        break unless random_monster.is_boss
       end
 
-      return random_monster.clone
+      random_monster.clone
     end
 
     def print_arena_intro

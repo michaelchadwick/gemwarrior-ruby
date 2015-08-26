@@ -22,10 +22,10 @@ module Gemwarrior
     ROX_DEFAULT                   = 0
     ROX_DEBUG                     = 300
 
-    attr_accessor :world, 
-                  :evaluator, 
+    attr_accessor :world,
+                  :evaluator,
                   :repl,
-                  :monsters, 
+                  :monsters,
                   :weapons
 
     def initialize(options)
@@ -57,7 +57,7 @@ module Gemwarrior
       world.player.mood        = world.player.generate_mood
       world.player.inventory   = GameOptions.data['debug_mode'] ? INVENTORY_DEBUG : INVENTORY_DEFAULT
       world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
-      
+
       world.duration           = { mins: 0, secs: 0, ms: 0 }
       world.emerald_beaten     = false
 
@@ -69,7 +69,7 @@ module Gemwarrior
       self.repl       = Repl.new(self, world, evaluator)
 
       # enter Jool!
-      repl.start('look', options.fetch(:extra_command),  options.fetch(:new_skip), options.fetch(:resume_skip))
+      repl.start('look', options.fetch(:extra_command), options.fetch(:new_skip), options.fetch(:resume_skip))
     end
 
     def update_options_file
@@ -85,8 +85,8 @@ module Gemwarrior
 
     # convert an entity filename to a class so it can be added to game asset singleton registry
     def file_to_class(filename)
-      filename_to_string = Formatting::upstyle(filename.split('/').last.split('.')[0], no_space = true)
-      string_to_class = Gemwarrior.const_get(filename_to_string).new
+      filename_to_string = Formatting.upstyle(filename.split('/').last.split('.')[0], no_space: true)
+      Gemwarrior.const_get(filename_to_string).new
     end
 
     def init_creatures
@@ -141,7 +141,7 @@ module Gemwarrior
       if mode.eql?('Y')
         if File.exist?(GameOptions.data['default_world_path_yaml'])
           File.open(GameOptions.data['default_world_path_yaml'], 'r') do |f|
-            return YAML::load(f)
+            return YAML.load(f)
           end
         else
           puts "Error: cannot load #{GameOptions.data['default_world_path_yaml']}."
@@ -149,7 +149,7 @@ module Gemwarrior
       else
         if File.exist?(GameOptions.data['default_world_path_bin'])
           File.open(GameOptions.data['default_world_path_bin'], 'r') do |f|
-            return Marshal::load(f)
+            return Marshal.load(f)
           end
         else
           puts "Error: cannot load #{GameOptions.data['default_world_path_bin']}."

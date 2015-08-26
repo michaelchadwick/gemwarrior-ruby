@@ -18,7 +18,7 @@ module Gemwarrior
       @@data ||= []
     end
   end
-  
+
   module GameCreatures
     def self.add obj
       @@data ||= []
@@ -29,7 +29,7 @@ module Gemwarrior
       @@data ||= []
     end
   end
-  
+
   module GameItems
     def self.add obj
       @@data ||= []
@@ -40,7 +40,7 @@ module Gemwarrior
       @@data ||= []
     end
   end
-  
+
   module GameMonsters
     def self.add obj
       @@data ||= []
@@ -51,7 +51,7 @@ module Gemwarrior
       @@data ||= []
     end
   end
-  
+
   module GamePeople
     def self.add obj
       @@data ||= []
@@ -62,7 +62,7 @@ module Gemwarrior
       @@data ||= []
     end
   end
-  
+
   module GameWeapons
     def self.add obj
       @@data ||= []

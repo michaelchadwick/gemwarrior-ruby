@@ -58,12 +58,8 @@ module Gemwarrior
         end
 
         # check for near death
-        if player_near_death?
-          puts "  You are almost dead!\n".colorize(:yellow)
-        end
-        if monster_near_death?
-          puts "  #{monster.name} is almost dead!\n".colorize(:yellow)
-        end
+        puts "  You are almost dead!\n".colorize(:yellow)             if player_near_death?
+        puts "  #{monster.name} is almost dead!\n".colorize(:yellow)  if monster_near_death?
 
         puts
 
@@ -136,7 +132,7 @@ module Gemwarrior
             b_items = player.inventory.list_battle_items
             count = 0
             b_items.each do |bi|
-              puts "  (#{count+1}) #{bi.name}"
+              puts "  (#{count + 1}) #{bi.name}"
               count += 1
             end
             puts '  (x) exit'
@@ -179,7 +175,7 @@ module Gemwarrior
             puts "  >> ITEMS: #{monster.inventory.list_contents}"
             next
           end
-         when 'pass', 'p'
+        when 'pass', 'p'
           puts '  You decide to pass your turn for some reason. Brave!'
         when 'run', 'r'
           if player_escape?(is_arena)
@@ -213,12 +209,12 @@ module Gemwarrior
           # base attack range
           base_atk_lo = player.atk_lo
           base_atk_hi = player.atk_hi
-          
+
           if player.has_weapon_equipped?
             base_atk_lo += player.inventory.weapon.atk_lo
             base_atk_hi += player.inventory.weapon.atk_hi
           end
-          
+
           atk_range = base_atk_lo..base_atk_hi
 
           # beast mode modifier
@@ -381,7 +377,7 @@ module Gemwarrior
           end
         end
       end
-      return false
+      false
     end
 
     # STATUS TEXT

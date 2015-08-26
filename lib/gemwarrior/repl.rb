@@ -161,7 +161,7 @@ module Gemwarrior
         print_options
       when '4'
         print answer
-        GameOptions.data['use_wordnik']= !GameOptions.data['use_wordnik']
+        GameOptions.data['use_wordnik'] = !GameOptions.data['use_wordnik']
         print_options
       else
         print answer
@@ -180,7 +180,7 @@ module Gemwarrior
       print ' (2) FEEP        '
       print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('feep')
       print "\n"
-      puts 
+      puts
       puts 'Enter option number to select sound system, or any other key to exit.'
       puts 'Note: win32-sound only works on Windows and will break the game is sound is enabled on non-Windows machines. Feep is cross-platform, but very slow and buggy, so use at your discretion!'
       puts
@@ -284,7 +284,7 @@ module Gemwarrior
           result = resume_game
           if result.nil?
             run_main_menu
-          elsif
+          else
             self.world = result
             self.evaluator = Evaluator.new(self.world)
             return
@@ -316,7 +316,7 @@ module Gemwarrior
         game.update_options_file
         exit
       else
-        run_main_menu(show_choices = false)
+        run_main_menu(show_choices: false)
       end
     end
 
@@ -355,11 +355,11 @@ module Gemwarrior
 
       if mode.eql? 'Y'
         File.open(GameOptions.data['save_file_yaml_path'], 'w') do |f|
-          f.write YAML::dump(world)
+          f.write YAML.dump(world)
         end
       elsif mode.eql? 'M'
         File.open(GameOptions.data['save_file_bin_path'], 'w') do |f|
-          f.write Marshal::dump(world)
+          f.write Marshal.dump(world)
         end
       else
         puts 'Error: Save file mode not set. Game not saved.'
@@ -386,7 +386,7 @@ module Gemwarrior
       if mode.eql? 'Y'
         if File.exist?(GameOptions.data['save_file_yaml_path'])
           File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-            return YAML::load(f)
+            return YAML.load(f)
           end
         else
           puts 'No save file exists.'
@@ -395,7 +395,7 @@ module Gemwarrior
       elsif mode.eql? 'M'
         if File.exist?(GameOptions.data['save_file_marshal_path'])
           File.open(GameOptions.data['save_file_marshal_path'], 'r') do |f|
-            return Marshal::load(f)
+            return Marshal.load(f)
           end
         else
           puts 'No save file exists.'
@@ -407,17 +407,17 @@ module Gemwarrior
     def overwrite_save?
       mode = GameOptions.data['save_file_mode']
       save_file_path = ''
-      
+
       if mode.eql? 'Y'
         save_file_path = GameOptions.data['save_file_yaml_path']
       elsif mode.eql? 'M'
         save_file_path = GameOptions.data['save_file_marshal_path']
       end
-      
+
       if File.exist?(save_file_path)
         print 'Overwrite existing save file? (y/n) '
         answer = gets.chomp.downcase
-          
+
         case answer
         when 'y', 'yes'
           puts 'New game started! Press any key to continue.'
@@ -469,7 +469,7 @@ module Gemwarrior
         result = resume_game
         if result.nil?
           run_main_menu
-        elsif
+        else
           self.world = result
           self.evaluator = Evaluator.new(self.world)
         end
@@ -484,14 +484,13 @@ module Gemwarrior
 
     def prompt
       prompt_template =  "\n"
-      prompt_template =  "[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [".colorize(:yellow)
+      prompt_template += "[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [".colorize(:yellow)
       prompt_template += "%s".colorize(:green)
       prompt_template += " @ ".colorize(:yellow)
       prompt_template += "%s".colorize(:cyan)
       prompt_template += "]".colorize(:yellow)
-      if GameOptions.data['debug_mode']
-        prompt_template += "[%s, %s, %s]".colorize(:yellow)
-      end
+      prompt_template += "[%s, %s, %s]".colorize(:yellow) if GameOptions.data['debug_mode']
+
       prompt_vars_arr = [
         world.player.level,
         world.player.xp,
@@ -511,8 +510,8 @@ module Gemwarrior
     end
 
     def command_exists?(cmd)
-      ENV['PATH'].split(File::PATH_SEPARATOR).collect { |d| 
-        Dir.entries d if Dir.exist? d 
+      ENV['PATH'].split(File::PATH_SEPARATOR).collect { |d|
+        Dir.entries d if Dir.exist? d
       }.flatten.include?(cmd)
     end
   end

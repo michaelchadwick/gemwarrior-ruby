@@ -86,11 +86,9 @@ module Gemwarrior
 
     def location_by_coords(coords)
       locations.each do |l|
-        if l.coords.eql?(coords)
-          return l
-        end
+        return l if l.coords.eql?(coords)
       end
-      return nil
+      nil
     end
 
     def location_coords_by_name(name)
@@ -99,7 +97,7 @@ module Gemwarrior
           return l.coords
         end
       end
-      return nil
+      nil
     end
 
     def location_by_name(location_name)
@@ -118,12 +116,9 @@ module Gemwarrior
       possible_combatants = location_by_coords(player.cur_coords).monsters_abounding.map(&:name) | location_by_coords(player.cur_coords).bosses_abounding.map(&:name)
 
       possible_combatants.each do |combatant|
-        if combatant.downcase.eql?(monster_name.downcase)
-          return true
-        end
+        return true if combatant.downcase.eql?(monster_name.downcase)
       end
-
-      return false
+      false
     end
 
     def list(param, details = false)
@@ -242,7 +237,6 @@ module Gemwarrior
         puts '|X| = valid location'
         puts '|O| = player'
       end
-      return
     end
   end
 end
