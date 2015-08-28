@@ -125,20 +125,18 @@ module Gemwarrior
             next
           end
         when 'x'
+          return_type = { type: nil, data: nil }
           if items_purchased.length > 0
             display_shopping_cart(items_purchased)
             speak('Are you certain you wish to buy these things? (y/n)')
             print '[HAWK]> '
             answer = gets.chomp.downcase
 
-            return_type = nil
             case answer
             when 'y', 'yes'
               world.player.rox -= amount_spent
               speak('Take them.')
               return_type = { type: 'purchase', data: items_purchased }
-            else
-              return_type = { type: nil, data: nil }
             end
           end
           speak('Our business is complete then.')
