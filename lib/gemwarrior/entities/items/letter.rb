@@ -22,20 +22,20 @@ module Gemwarrior
         case answer
         when 'y', 'yes'
           print "\n"
-          print_letter(player)
+          print_letter(world)
         else
           { type: nil, data: nil }
         end
       else
         self.used = true
-        print_letter(player)
+        print_letter(world)
         { type: 'xp', data: 3 }
       end
     end
 
     private
 
-    def print_letter(player)
+    def print_letter(world)
       puts 'The words of the queen echo in your head as you read the royal note sent to you again:'
       puts
       Animation.run(phrase: "  Dear #{world.player.name},", speed: :insane)

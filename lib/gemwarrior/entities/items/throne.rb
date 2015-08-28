@@ -13,7 +13,7 @@ module Gemwarrior
       self.description  = 'Made of what appears to be unfulfilled desires and latent, flawed happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald sits in it, glaring at you.'
     end
     
-    def use
+    def use(world)
       puts 'Your words fall on deaf chairs. Emerald continues to stare at you.'
       { type: nil, data: nil }
     end

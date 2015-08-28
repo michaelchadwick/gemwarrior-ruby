@@ -96,7 +96,7 @@ module Gemwarrior
             puts 'You push the large gem into the pedestal and it descends without a hitch, almost as if it were meant to be. The pedestal begins to violently shake and a strong gust of wind picks you up off the ground. You feel completely taken aback and unsettled, but you have no choice: you are being whisked away somewhere into the sky, destination unknown.'.colorize(:yellow)
             
             # stats
-            world.player.player.movements_made += 1
+            world.player.movements_made += 1
             
             Animation.run(phrase: USE_TEXT)
             return { type: 'move', data: 'Sky Tower (Entryway)' }

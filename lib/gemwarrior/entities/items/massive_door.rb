@@ -13,7 +13,7 @@ module Gemwarrior
       self.description  = 'Translucent, but not transparent, this door constructed of condensed water vapor is like nothing you have ever seen. It has no keyhole, but it does have a stone-shaped depression floating centrally within it.'
     end
 
-    def use(player = nil)
+    def use(world)
       puts 'You attempt to open the seriously massive door that separates you from Emerald himself.'
       if world.player.inventory.contains_item?('keystone')
         puts 'The keystone in your inventory glows as you approach the incredibly titanic-sized door, so you naturally pull it out and thrust it into the stone-shaped depression within the cloudy obstruction. The door "opens" in a way and you can now pass through.'
