@@ -6,7 +6,7 @@ require_relative '../items/herb'
 require_relative '../weapons/dagger'
 
 module Gemwarrior
-  class Rockney < Item
+  class Rockney < Person
     # CONSTANTS
     PRICE_HERB              = 10
     PRICE_DAGGER            = 150
@@ -29,13 +29,13 @@ module Gemwarrior
         puts
       end
 
-      rat_shop(player)
+      rat_shop(world)
     end
 
     private
 
-    def rat_shop(player)
-      player_rox_remaining = player.rox
+    def rat_shop(world)
+      player_rox_remaining = world.player.rox
       amount_spent = 0
       items_purchased = []
 
@@ -52,7 +52,7 @@ module Gemwarrior
       puts "    #{herb.description}"
       puts "(2) #{'Dagger'.colorize(:yellow)}   - #{PRICE_DAGGER} rox"
       puts "    #{dagger.description}"
-      puts "    Attack: +#{dagger.atk_lo}-#{dagger.atk_hi} (current: #{player.atk_lo}-#{player.atk_hi})"
+      puts "    Attack: +#{dagger.atk_lo}-#{dagger.atk_hi} (current: #{world.player.atk_lo}-#{world.player.atk_hi})"
       puts
       speak('What are you in need of?')
 
@@ -89,8 +89,8 @@ module Gemwarrior
             next
           end
         when '2'
-          if player.rox >= PRICE_DAGGER
-            player.rox -= PRICE_DAGGER
+          if world.player.rox >= PRICE_DAGGER
+            world.player.rox -= PRICE_DAGGER
             items_purchased.push(Dagger.new)
             amount_spent += PRICE_DAGGER
 
@@ -103,6 +103,7 @@ module Gemwarrior
             next
           end
         when 'x'
+          return_type = { type: nil, data: nil }
           if items_purchased.length > 0
             display_shopping_cart(items_purchased)
             speak('Are you certain you wish to buy these things? (y/n)')
@@ -113,7 +114,7 @@ module Gemwarrior
             return_type = nil
             case answer
             when 'y', 'yes'
-              player.rox -= amount_spent
+              world.player.rox -= amount_spent
               speak('Enjoy!')
               return_type = { type: 'purchase', data: items_purchased }
             else
