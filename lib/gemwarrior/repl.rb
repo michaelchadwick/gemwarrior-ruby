@@ -322,13 +322,13 @@ module Gemwarrior
 
     def log_stats(duration, pl)
       # display stats upon exit
-      puts '######################################################################'
+      Hr.print('#')
       print 'Gem Warrior'.colorize(color: :white, background: :black)
       print " v#{Gemwarrior::VERSION}".colorize(:yellow)
       print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} min(s),"
       print " #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s),"
       print " and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
-      puts  '----------------------------------------------------------------------'
+      Hr.print('-')
       print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
       print "\n".ljust(12)
       print "killed #{pl.bosses_killed.to_s.colorize(color: :white, background: :black)} boss(es)"
@@ -341,7 +341,7 @@ module Gemwarrior
       print "\n".ljust(12)
       print "died #{pl.deaths.to_s.colorize(color: :white, background: :black)} time(s)"
       print "\n"
-      puts '######################################################################'
+      Hr.print('#')
 
       # log stats to file in home directory
       File.open(GameOptions.data['log_file_path'], 'a') do |f|

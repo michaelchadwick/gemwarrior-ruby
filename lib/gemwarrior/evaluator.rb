@@ -728,30 +728,26 @@ module Gemwarrior
       return
     end
 
-    def print_separator
-      puts '========================================================='
-    end
-
     def list_commands
       i = 0
-      print_separator
+      Hr.print('=')
       puts ' COMMAND     | ALIAS | DESCRIPTION '
-      print_separator
+      Hr.print('=')
       commands.each do |cmd|
         puts " #{cmd.ljust(11)} | #{aliases[i].ljust(5)} | #{cmd_descriptions[i]}"
         i += 1
       end
-      print_separator
+      Hr.print('=')
 
       if GameOptions.data['debug_mode']
         puts ' DEBUG COMMANDS'
-        print_separator
+        Hr.print('=')
         i = 0
         devcommands.each do |cmd|
           puts " #{cmd.ljust(11)} | #{devaliases[i].ljust(5)} | #{devcmd_descriptions[i]}"
           i += 1
         end
-        print_separator
+        Hr.print('=')
       end
     end
 
