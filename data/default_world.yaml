@@ -8,7 +8,7 @@ locations:
     :x: 5
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -79,7 +79,7 @@ locations:
     :x: 6
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -102,7 +102,7 @@ locations:
     :x: 7
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -152,7 +152,7 @@ locations:
     :x: 7
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -175,7 +175,7 @@ locations:
     :x: 8
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -212,7 +212,7 @@ locations:
     :x: 8
     :y: 1
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -236,7 +236,7 @@ locations:
     :x: 8
     :y: 2
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -260,7 +260,7 @@ locations:
     :x: 8
     :y: 3
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -284,7 +284,7 @@ locations:
     :x: 8
     :y: 4
     :z: -1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -308,7 +308,7 @@ locations:
     :x: 7
     :y: 4
     :z: -1
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -332,7 +332,7 @@ locations:
     :x: 6
     :y: 4
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -356,7 +356,7 @@ locations:
     :x: 6
     :y: 5
     :z: -1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -380,7 +380,7 @@ locations:
     :x: 5
     :y: 5
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -404,7 +404,7 @@ locations:
     :x: 4
     :y: 5
     :z: -1
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -441,7 +441,7 @@ locations:
     :x: 5
     :y: 6
     :z: -1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -465,7 +465,7 @@ locations:
     :x: 5
     :y: 7
     :z: -1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -501,7 +501,7 @@ locations:
     :x: 5
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -524,7 +524,7 @@ locations:
     :x: 4
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -547,7 +547,7 @@ locations:
     :x: 3
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -570,7 +570,7 @@ locations:
     :x: 2
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -593,7 +593,7 @@ locations:
     :x: 1
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -616,7 +616,7 @@ locations:
     :x: 1
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -651,7 +651,7 @@ locations:
     :x: 2
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -674,7 +674,7 @@ locations:
     :x: 3
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -697,7 +697,7 @@ locations:
     :x: 4
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -720,7 +720,7 @@ locations:
     :x: 5
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -742,7 +742,7 @@ locations:
     :x: 8
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -777,7 +777,7 @@ locations:
     :x: 4
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -812,7 +812,7 @@ locations:
     :x: 4
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -835,7 +835,7 @@ locations:
     :x: 3
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -870,7 +870,7 @@ locations:
     :x: 3
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -904,7 +904,7 @@ locations:
     :x: 2
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -926,7 +926,7 @@ locations:
     :x: 2
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -948,7 +948,7 @@ locations:
     :x: 1
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: true
@@ -970,7 +970,7 @@ locations:
     :x: 1
     :y: 0
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -992,7 +992,7 @@ locations:
     :x: 0
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -1026,7 +1026,7 @@ locations:
     :x: 0
     :y: 2
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -1048,7 +1048,7 @@ locations:
     :x: 1
     :y: 2
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1070,7 +1070,7 @@ locations:
     :x: 5
     :y: 1
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1092,7 +1092,7 @@ locations:
     :x: 5
     :y: 2
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1115,7 +1115,7 @@ locations:
     :x: 5
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -1139,7 +1139,7 @@ locations:
     :x: 6
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -1163,7 +1163,7 @@ locations:
     :x: 7
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -1202,7 +1202,7 @@ locations:
     :x: 8
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: false
@@ -1234,7 +1234,7 @@ locations:
     :x: 4
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -1257,7 +1257,7 @@ locations:
     :x: 3
     :y: 3
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -1277,7 +1277,7 @@ locations:
     :x: 4
     :y: 4
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1300,7 +1300,7 @@ locations:
     :x: 4
     :y: 5
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1323,7 +1323,7 @@ locations:
     :x: 6
     :y: 4
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1346,7 +1346,7 @@ locations:
     :x: 6
     :y: 5
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -1369,7 +1369,7 @@ locations:
     :x: 7
     :y: 5
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -1392,7 +1392,7 @@ locations:
     :x: 7
     :y: 6
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1415,7 +1415,7 @@ locations:
     :x: 7
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: true
@@ -1449,7 +1449,7 @@ locations:
     :x: 8
     :y: 7
     :z: 0
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -1498,7 +1498,7 @@ locations:
     :x: 8
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1556,7 +1556,7 @@ locations:
     :x: 7
     :y: 8
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -1590,7 +1590,7 @@ locations:
     :x: 3
     :y: 5
     :z: 0
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -1664,7 +1664,7 @@ locations:
     :x: 8
     :y: 6
     :z: 1
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -1699,7 +1699,7 @@ locations:
     :x: 8
     :y: 7
     :z: 1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1763,7 +1763,7 @@ locations:
     :x: 7
     :y: 6
     :z: 1
-  locs_connected:
+  paths:
     :north: true
     :east: true
     :south: false
@@ -1797,7 +1797,7 @@ locations:
     :x: 7
     :y: 7
     :z: 1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1820,7 +1820,7 @@ locations:
     :x: 7
     :y: 8
     :z: 1
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: true
@@ -1856,7 +1856,7 @@ locations:
     :x: 8
     :y: 8
     :z: 1
-  locs_connected:
+  paths:
     :north: false
     :east: true
     :south: false
@@ -1893,7 +1893,7 @@ locations:
     :x: 8
     :y: 9
     :z: 1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1928,7 +1928,7 @@ locations:
     :x: 9
     :y: 8
     :z: 1
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: true
@@ -1963,7 +1963,7 @@ locations:
     :x: 9
     :y: 7
     :z: 1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: true
@@ -1986,7 +1986,7 @@ locations:
     :x: 9
     :y: 6
     :z: 1
-  locs_connected:
+  paths:
     :north: true
     :east: false
     :south: false
@@ -2033,7 +2033,7 @@ locations:
     :x: 5
     :y: 5
     :z: 2
-  locs_connected:
+  paths:
     :north: false
     :east: false
     :south: false

@@ -17,6 +17,10 @@ module Gemwarrior
     def self.data
       @@data ||= []
     end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
+    end
   end
 
   module GameCreatures
@@ -27,6 +31,10 @@ module Gemwarrior
 
     def self.data
       @@data ||= []
+    end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
     end
   end
 
@@ -39,6 +47,10 @@ module Gemwarrior
     def self.data
       @@data ||= []
     end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
+    end
   end
 
   module GameMonsters
@@ -49,6 +61,10 @@ module Gemwarrior
 
     def self.data
       @@data ||= []
+    end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
     end
   end
 
@@ -61,6 +77,10 @@ module Gemwarrior
     def self.data
       @@data ||= []
     end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
+    end
   end
 
   module GameWeapons
@@ -71,6 +91,10 @@ module Gemwarrior
 
     def self.data
       @@data ||= []
+    end
+
+    def self.get(name)
+      self.data.find { |i| i.name.downcase == name.downcase }
     end
   end
 end

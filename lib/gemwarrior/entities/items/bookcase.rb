@@ -19,7 +19,7 @@ module Gemwarrior
     def use(world)
       forest_southwest = world.location_by_name('forest-southwest')
 
-      if forest_southwest.locs_connected[:west].eql? false
+      if forest_southwest.paths[:west].eql? false
         if !self.used
           puts 'Many books look interesting, including one specific volume entitled "Use Me Again to Attempt Unlocking the Way", by Not Very Subtle.'
           puts
@@ -33,7 +33,7 @@ module Gemwarrior
 
           case answer
           when 'mineral'
-            forest_southwest.locs_connected[:west] = true
+            forest_southwest.paths[:west] = true
             puts
             Animation.run(phrase: OPEN_TEXT)
             puts

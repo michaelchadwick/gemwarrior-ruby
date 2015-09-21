@@ -13,13 +13,26 @@ module Gemwarrior
     ERROR_ITEM_REMOVE_INVALID = 'That item cannot be removed as it does not exist here.'
 
     attr_accessor :coords,
-                  :locs_connected,
+                  :paths,
                   :danger_level,
                   :monster_level_range,
                   :items,
                   :monsters_abounding,
                   :bosses_abounding,
                   :checked_for_monsters
+
+    def initialize(options)
+      self.name                 = options.fetch(:name)
+      self.description          = options.fetch(:description)
+      self.coords               = options.fetch(:coords)
+      self.paths                = options.fetch(:paths)
+      self.danger_level         = options.fetch(:danger_level)
+      self.monster_level_range  = options.fetch(:monster_level_range)
+      self.items                = options.fetch(:items)
+      self.monsters_abounding   = options.fetch(:monsters_abounding)
+      self.bosses_abounding     = options.fetch[:bosses_abounding]
+      self.checked_for_monsters = false
+    end
 
     def describe
       desc_text =  name.ljust(30).upcase.colorize(:green)
@@ -40,19 +53,6 @@ module Gemwarrior
       desc_text
     end
 
-    def initialize(options)
-      self.name                 = options.fetch(:name)
-      self.description          = options.fetch(:description)
-      self.coords               = options.fetch(:coords)
-      self.locs_connected       = options.fetch(:locs_connected)
-      self.danger_level         = options.fetch(:danger_level)
-      self.monster_level_range  = options.fetch(:monster_level_range)
-      self.items                = options.fetch(:items)
-      self.monsters_abounding   = options.fetch(:monsters_abounding)
-      self.bosses_abounding     = options.fetch[:bosses_abounding]
-      self.checked_for_monsters = false
-    end
-
     def contains_item?(item_name)
       self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
     end
@@ -66,7 +66,7 @@ module Gemwarrior
     end
 
     def add_item(item_name_to_add)
-      all_items = GameItems.data || GameWeapons.data
+      all_items = GameItems.data | GameWeapons.data | GameArmor.data
       all_items.each do |game_item|
         if game_item.name.eql?(item_name_to_add)
           self.items.push(game_item)
@@ -78,7 +78,7 @@ module Gemwarrior
 
     def remove_item(item_name)
       if contains_item?(item_name)
-        items.reject! { |item| item.name == item_name }
+        self.items.delete_at(items.index(items.find { |i| i.name.downcase == item_name.downcase }))
       else
         ERROR_ITEM_REMOVE_INVALID
       end
@@ -100,7 +100,7 @@ module Gemwarrior
       when 'w'
         direction = 'west'
       end
-      locs_connected[direction.to_sym]
+      paths[direction.to_sym]
     end
 
     def monster_by_name(monster_name)
@@ -132,7 +132,36 @@ module Gemwarrior
     end
 
     def list_items
-      items.length > 0 ? items.map(&:name) : []
+      if items.empty?
+        []
+      else
+        item_hash = {}
+        self.items.map(&:name).each do |i|
+          i_sym = i.to_sym
+          if item_hash.keys.include? i_sym
+            item_hash[i_sym] += 1
+          else
+            item_hash[i_sym] = 1
+          end
+        end
+
+        if item_hash.length == 1
+          item_hash.each do |i, q|
+            q > 1 ? "#{q} #{i}s" : i
+          end
+        else
+          item_arr = []
+          item_hash.each do |i, q|
+            if q > 1
+              item_arr.push("#{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)} x#{q}")
+            else
+              item_arr.push(i)
+            end
+          end
+
+          return item_arr
+        end
+      end
     end
 
     def list_monsters
@@ -145,7 +174,7 @@ module Gemwarrior
 
     def list_paths
       valid_paths = []
-      locs_connected.each do |key, value|
+      self.paths.each do |key, value|
         if value
           valid_paths.push(key.to_s)
         end

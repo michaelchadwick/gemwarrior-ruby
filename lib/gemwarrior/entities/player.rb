@@ -76,9 +76,10 @@ module Gemwarrior
 
       abilities = ''
       if special_abilities.empty?
-        abilities = 'none...yet(?)'
+        abilities = " none...yet(?)\n"
       else
         special_abilities.each do |sp|
+          abilities << "\n"
           abilities << "  #{Formatting.upstyle(sp.to_s).ljust(15).colorize(:yellow)}: #{PlayerLevels.get_ability_description(sp)}\n"
         end
       end
@@ -96,7 +97,7 @@ module Gemwarrior
       self_text << " (#{net_defense} w/ #{armor_slot})".colorize(:yellow) unless net_defense.nil?
       self_text << "\n"
       self_text << "DEXTERITY : #{self.dexterity}\n"
-      self_text << "ABILITIES :\n"
+      self_text << "ABILITIES :"
       self_text << "#{abilities}"
       
       if GameOptions.data['debug_mode']

@@ -583,7 +583,7 @@ module Gemwarrior
         if param1.nil?
           ERROR_DROP_PARAM_MISSING
         else
-          world.player.inventory.drop_item(param1)
+          world.player.inventory.drop_item(param1, player_cur_location)
         end
       when 'equip', 'eq'
         if param1.nil?

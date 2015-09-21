@@ -4,6 +4,9 @@
 require 'colorize'
 require 'matrext'
 
+require_relative 'entities/armor/iron_helmet'
+require_relative 'entities/items/herb'
+require_relative 'entities/weapons/dagger'
 require_relative 'misc/animation'
 require_relative 'misc/audio'
 require_relative 'misc/formatting'
@@ -18,7 +21,7 @@ module Gemwarrior
   class Game
     # CONSTANTS
     INVENTORY_DEFAULT             = Inventory.new
-    INVENTORY_DEBUG               = Inventory.new([Herb.new])
+    INVENTORY_DEBUG               = Inventory.new([Herb.new, Herb.new, Herb.new])
     ROX_DEFAULT                   = 0
     ROX_DEBUG                     = 300
 

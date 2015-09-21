@@ -14,6 +14,7 @@ module Gemwarrior
     ERROR_ITEM_EQUIP_NONARMAMENT    = 'That item cannot be equipped.'
     ERROR_ITEM_UNEQUIP_INVALID      = 'You do not possess anything called that to unequip.'
     ERROR_ITEM_UNEQUIP_NONARMAMENT  = 'That item cannot be unequipped.'
+    VOWELS                          = 'aeiou'
 
     attr_accessor :items,
                   :weapon,
@@ -29,8 +30,50 @@ module Gemwarrior
       self.items.nil? || self.items.empty?
     end
 
+    def contents
+      is_empty? ? nil : list_contents
+    end
+
     def list_contents
-      is_empty? ? '[empty]' : "#{self.items.map(&:name).join(', ')}"
+      if is_empty?
+        'You possess nothing.'
+      else
+        item_hash = {}
+        self.items.map(&:name).each do |i|
+          i_sym = i.to_sym
+          if item_hash.keys.include? i_sym
+            item_hash[i_sym] += 1
+          else
+            item_hash[i_sym] = 1
+          end
+        end
+
+        if item_hash.length == 1
+          item_hash.each do |i, q|
+            if q > 1
+              return "You have #{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}."
+            else
+              article = VOWELS.include?(i[0]) ? 'an' : 'a'
+              return "You have #{article} #{i.to_s.colorize(:yellow)}."
+            end
+          end
+        else
+          item_list_text = 'You have '
+          item_arr = []
+          item_hash.each do |i, q|
+            if q > 1
+              item_arr.push("#{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}")
+            else
+              article = VOWELS.include?(i[0]) ? 'an' : 'a'
+              item_arr.push("#{article} #{i.to_s.colorize(:yellow)}")
+            end
+          end
+
+          item_arr[-1].replace("and #{item_arr[-1]}.")
+
+          return item_list_text << item_arr.join(', ')
+        end
+      end
     end
 
     def contains_item?(item_name)
@@ -77,10 +120,10 @@ module Gemwarrior
               i.equipped = true
               if i.is_weapon
                 self.weapon = i
-                return "The #{i.name} has taken charge, and been equipped."
+                return "The #{i.name.colorize(:yellow)} has taken charge, and been equipped."
               elsif i.is_armor
                 self.armor = i
-                return "The #{i.name} has fortified, and has been equipped."
+                return "The #{i.name.colorize(:yellow)} has fortified, and has been equipped."
               end
             else
               return ERROR_ITEM_EQUIP_NONARMAMENT
@@ -100,10 +143,10 @@ module Gemwarrior
               i.equipped = false
               if i.is_weapon
                 self.weapon = nil
-                return "The #{i.name} has been demoted to unequipped."
+                return "The #{i.name.colorize(:yellow)} has been demoted to unequipped."
               elsif i.is_armor
                 self.armor = nil
-                return "The #{i.name} has been demoted to unequipped."
+                return "The #{i.name.colorize(:yellow)} has been demoted to unequipped."
               end
             else
               return ERROR_ITEM_UNEQUIP_NONARMAMENT
@@ -128,7 +171,7 @@ module Gemwarrior
               # stats
               player.items_taken += 1
 
-              return "Added #{item_name} to your increasing collection of bits of tid.".colorize(:green)
+              return "#{"Added".colorize(:green)} #{item_name.colorize(:yellow)} #{"to your increasing collection of bits of tid".colorize(:green)}."
             else
               return ERROR_ITEM_ADD_UNTAKEABLE.colorize(:red)
             end
@@ -138,28 +181,20 @@ module Gemwarrior
       ERROR_ITEM_ADD_INVALID.colorize(:red)
     end
 
+    def drop_item(item_name, cur_loc)
+      if contains_item?(item_name)
+        remove_item(item_name)
+        cur_loc.add_item(item_name)
+        "You dropped #{item_name.colorize(:yellow)}."
+      else
+        ERROR_ITEM_REMOVE_INVALID
+      end
+    end
+
     def remove_item(item_name)
       self.items.delete_at(self.items.map(&:name).index(item_name) || self.items.length)
       unless self.weapon.nil?
         self.weapon = nil if self.weapon.name.eql?(item_name)
-      end
-    end
-
-    def drop_item(item_name)
-      if contains_item?(item_name)
-        print "Are you sure you want to permanently throw away #{item_name}? (y/n) "
-        answer = gets.chomp.downcase
-
-        case answer
-        when 'y', 'yes'
-          remove_item(item_name)
-
-          return "The #{item_name} has been thrown on the ground, but far out of reach, and you're much too lazy to go get it now, so it's as good as gone."
-        else
-          return "You decide to keep #{item_name} for now."
-        end
-      else
-        ERROR_ITEM_REMOVE_INVALID
       end
     end
   end

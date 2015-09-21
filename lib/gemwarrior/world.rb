@@ -5,7 +5,6 @@ require_relative 'game_options'
 require_relative 'game_assets'
 require_relative 'inventory'
 require_relative 'entities/item'
-require_relative 'entities/items/herb'
 require_relative 'entities/location'
 require_relative 'entities/player'
 
@@ -218,7 +217,7 @@ module Gemwarrior
             z: floor.nil? ? self.player.cur_coords[:z] : floor.to_i
           }
           if self.player.cur_coords.eql?(cur_map_coords)
-            print '|O|'
+            print "|#{'O'.colorize(:cyan)}|"
           elsif location_by_coords(cur_map_coords)
             print '|X|'
           else

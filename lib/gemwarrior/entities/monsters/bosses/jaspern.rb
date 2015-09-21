@@ -49,7 +49,7 @@ module Gemwarrior
 
       # unlock northward travel
       river_bridge.description = 'The path northward on this well-constructed bridge is no longer blocked after your brutal scuffle with Jaspern, and yet the flowing river below seems unperturbed.'
-      river_bridge.locs_connected[:north] = true
+      river_bridge.paths[:north] = true
       return
     end
 
