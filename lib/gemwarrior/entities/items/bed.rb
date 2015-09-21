@@ -23,8 +23,8 @@ module Gemwarrior
       else
         Animation.run(phrase: USE_TEXT)
         puts 'You unmake the bed, get under the covers, close your eyes, and begin to think about all the things you need to do today. You realize sleep is not one of them and quickly get back up, remake the bed, and get on about your day.'
-        puts '>> You regain a few hit points.'.colorize(:green)
-        { type: 'rest', data: rand(5..7) }
+        puts '>> You regain all of your hit points.'.colorize(:green)
+        { type: 'rest', data: world.player.hp_max-world.player.hp_cur }
       end
     end
   end
