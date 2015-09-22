@@ -458,7 +458,7 @@ module Gemwarrior
 
       # main menu loop until new game or exit
       if new_skip
-        Audio.play_synth(:intro)
+        play_intro_tune
         print_splash_message
         print_fortune
       elsif resume_skip
@@ -476,6 +476,10 @@ module Gemwarrior
       # hook to do something right off the bat
       puts evaluator.parse(initial_command) unless initial_command.nil?
       puts evaluator.parse(extra_command) unless extra_command.nil?
+    end
+
+    def play_intro_tune
+      Audio.play_synth(:intro)
     end
 
     def prompt
