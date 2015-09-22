@@ -107,7 +107,9 @@ def read_options_file
     File.open(GameOptions.data['options_file_path']).readlines.each do |line|
       options << line.chomp.split(':')
     end
-    return options
+
+    # check for null
+    return options[0][0].eql?('sound_enabled') ? options : nil
   end
   nil
 end
