@@ -3,7 +3,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: home
   name_display: Home
-  description: The little, unimportant, decrepit hut that you live in.
+  description: The little, unimportant, decrepit shack that you live in. What it lacks in decisive magnanimity, it makes up for it in its cozy squalidness. Nearby, you notice a curious letter, folded in three.
   coords: &2
     :x: 5
     :y: 0
@@ -1264,7 +1264,19 @@ locations:
     :west: false
   danger_level: :none
   monster_level_range: 
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::Hut
+    equipped: false
+    consumable: false
+    used: false
+    number_of_uses: 
+    talkable: false
+    name: hut
+    name_display: Hut
+    description: A simple thatched hut, sitting in the middle of the plains. Nothing about it seems odd, except its existence among the otherwise featureless landscape.
+    takeable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
