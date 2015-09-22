@@ -52,7 +52,7 @@ module Gemwarrior
     def describe
       desc_text = "#{description}".colorize(:white)
       desc_text << "\n"
-      desc_text << "The creature has several distinguishing features, as well: face is #{face}, hands are #{hands}, and mood is, generally, #{mood}."
+      desc_text << "The creature has several distinguishing features, as well: face is #{face.colorize(:yellow)}, hands are #{hands.colorize(:yellow)}, and mood is, generally, #{mood.colorize(:yellow)}."
       desc_text
     end
 
