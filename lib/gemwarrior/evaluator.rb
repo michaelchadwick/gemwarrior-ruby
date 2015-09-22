@@ -9,8 +9,8 @@ module Gemwarrior
   class Evaluator
     # CONSTANTS
     PROGRAM_NAME                          = 'Gem Warrior'
-    QUIT_MESSAGE                          = 'Thanks for playing the game. Until next time...'.colorize(:yellow)
-    RESUME_MESSAGE                        = 'Back to adventuring!'.colorize(:green)
+    QUIT_MESSAGE                          = 'Thanks for playing the game. Until next time...'
+    RESUME_MESSAGE                        = 'Back to adventuring!'
 
     GO_PARAMS                             = 'Options: north, east, south, west'
     CHANGE_PARAMS                         = 'Options: name'
@@ -689,13 +689,13 @@ module Gemwarrior
 
         case answer
         when 'y', 'yes'
-          puts QUIT_MESSAGE
+          puts QUIT_MESSAGE.colorize(:yellow)
           return 'exit'
         else
-          puts RESUME_MESSAGE
+          puts RESUME_MESSAGE.colorize(:green)
         end
       when 'quit!', 'exit!', 'qq', 'xx'
-        puts QUIT_MESSAGE
+        puts QUIT_MESSAGE.colorize(:yellow)
         return 'exit'
       else
         return
