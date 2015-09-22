@@ -12,6 +12,28 @@ module Gemwarrior
       @@cues ||= {}
     end
 
+    self.add :bg1, {
+      synth: [
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'G4', duration: 400 },
+        { frequencies: 'A4', duration: 400 },
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'C4', duration: 400 },
+        { frequencies: 'C5', duration: 400 },
+        { frequencies: 'B4', duration: 400 },
+        { frequencies: 'A4', duration: 400 },
+      ],
+      sample: 'bg1.wav'
+    }
+    
     self.add :battle_start, {
       synth: [
         { frequencies: 'G4',  duration: 50 },

@@ -451,10 +451,6 @@ module Gemwarrior
       end
     end
 
-    def play_intro_tune
-      Audio.play_synth(:intro)
-    end
-
     def setup_screen(initial_command = nil, extra_command = nil, new_skip = false, resume_skip = false)
       # welcome player to game
       clear_screen
@@ -462,7 +458,7 @@ module Gemwarrior
 
       # main menu loop until new game or exit
       if new_skip
-        play_intro_tune
+        Audio.play_synth(:intro)
         print_splash_message
         print_fortune
       elsif resume_skip
