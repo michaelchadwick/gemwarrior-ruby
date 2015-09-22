@@ -98,6 +98,11 @@ module Gemwarrior
         'Allows you to see the enemy hit points while in battle.'
       when :rock_slide
         'Adds a random boost to the player\'s attack in battle.'
+      when :stone_face
+        'Chance to auto-win in battle against any non-boss monster (does not work in arena or if ambushed).'
+      #when :graniton
+      #when :gleam
+      #when :break_through
       else
         'Unsure, but it\'s probably cool!'
       end

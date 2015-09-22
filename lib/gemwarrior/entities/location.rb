@@ -135,6 +135,7 @@ module Gemwarrior
       if items.empty?
         []
       else
+        # build hash out of location's items
         item_hash = {}
         self.items.map(&:name).each do |i|
           i_sym = i.to_sym
@@ -145,10 +146,12 @@ module Gemwarrior
           end
         end
 
+        # one item? return single element array
         if item_hash.length == 1
-          item_hash.each do |i, q|
-            q > 1 ? "#{q} #{i}s" : i
-          end
+          i = item_hash.keys
+          q = item_hash.values.join.to_i
+          return q > 1 ? ["#{q} #{i}s"] : i
+        # multiple items? build an array of strings
         else
           item_arr = []
           item_hash.each do |i, q|

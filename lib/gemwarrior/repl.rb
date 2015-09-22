@@ -329,17 +329,17 @@ module Gemwarrior
       print " #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s),"
       print " and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
       Hr.print('-')
-      print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :white, background: :black)} monster(s)"
+      print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :yellow, background: :black)} monster(s)"
       print "\n".ljust(12)
-      print "killed #{pl.bosses_killed.to_s.colorize(color: :white, background: :black)} boss(es)"
+      print "killed #{pl.bosses_killed.to_s.colorize(color: :yellow, background: :black)} boss(es)"
       print "\n".ljust(12)
-      print "picked up #{pl.items_taken.to_s.colorize(color: :white, background: :black)} item(s)"
+      print "picked up #{pl.items_taken.to_s.colorize(color: :yellow, background: :black)} item(s)"
       print "\n".ljust(12)
-      print "traveled #{pl.movements_made.to_s.colorize(color: :white, background: :black)} time(s)"
+      print "traveled #{pl.movements_made.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n".ljust(12)
-      print "rested #{pl.rests_taken.to_s.colorize(color: :white, background: :black)} time(s)"
+      print "rested #{pl.rests_taken.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n".ljust(12)
-      print "died #{pl.deaths.to_s.colorize(color: :white, background: :black)} time(s)"
+      print "died #{pl.deaths.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n"
       Hr.print('#')
 

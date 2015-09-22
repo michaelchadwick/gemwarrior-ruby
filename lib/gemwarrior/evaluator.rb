@@ -23,14 +23,14 @@ module Gemwarrior
     ERROR_TALK_PARAM_UNTALKABLE           = 'That cannnot be conversed with.'
     ERROR_TALK_TO_PARAM_MISSING           = 'You cannot just "talk to". You gotta choose someone to talk to.'
     ERROR_GO_PARAM_MISSING                = 'Just wander aimlessly? A direction would be nice.'
-    ERROR_GO_PARAM_INVALID                = 'The place in that direction is far, far, FAR too dangerous. You should try a different way.'
+    ERROR_GO_PARAM_INVALID                = 'Something tells you that is not a way to go.'
     ERROR_DIRECTION_PARAM_INVALID         = 'You cannot go to that place.'
     ERROR_ATTACK_PARAM_MISSING            = 'You cannot just "attack". You gotta choose something to attack.'
     ERROR_ATTACK_PARAM_INVALID            = 'That monster does not exist here or can\'t be attacked.'
     ERROR_TAKE_PARAM_MISSING              = 'You cannot just "take". You gotta choose something to take.'
     ERROR_USE_PARAM_MISSING               = 'You cannot just "use". You gotta choose something to use.'
     ERROR_USE_PARAM_INVALID               = 'You cannot use that, as it does not exist here or in your inventory.'
-    ERROR_USE_PARAM_UNUSEABLE             = 'That object is not useable.'
+    ERROR_USE_PARAM_UNUSEABLE             = 'That is not useable.'
     ERROR_DROP_PARAM_MISSING              = 'You cannot just "drop". You gotta choose something to drop.'
     ERROR_EQUIP_PARAM_MISSING             = 'You cannot just "equip". You gotta choose something to equip.'
     ERROR_UNEQUIP_PARAM_MISSING           = 'You cannot just "unequip". You gotta choose something to unequip.'
@@ -73,7 +73,7 @@ module Gemwarrior
         'Change world global variable',
         'Teleport to coordinates (5 0 0) or name (\'Home\')',
         'Spawn random monster',
-        'Bump your character to the next level',
+        'Bump your character up *n* levels',
         'Rest, but ensure battle for testing'
       ]
 
@@ -324,7 +324,8 @@ module Gemwarrior
             return world.describe(player_cur_location)
           end
         when 'levelbump', 'lb'
-          world.player.update_stats(reason: :level_bump, value: 1)
+          new_level = param1.nil? ? 1 : param1.to_i
+          world.player.update_stats(reason: :level_bump, value: new_level)
         when 'restfight', 'rf'
           result = world.player.rest(world, 0, true)
 
@@ -476,14 +477,17 @@ module Gemwarrior
                       result = i.use(world)
                       i.number_of_uses -= 1
                       puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
+                      break
                     else
                       return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
                     result = i.use(world)
                     world.player.inventory.remove_item(i.name)
+                    break
                   else
                     result = i.use(world)
+                    break
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -499,14 +503,17 @@ module Gemwarrior
                       result = i.use(world)
                       i.number_of_uses -= 1
                       puts ">> #{i.name} can be used #{i.number_of_uses} more time(s)."
+                      break
                     else
                       return ">> #{i.name} cannot be used anymore."
                     end
                   elsif i.consumable
                     result = i.use(world)
                     location.remove_item(i.name)
+                    break
                   else
                     result = i.use(world)
+                    break
                   end
                 else
                   return ERROR_USE_PARAM_UNUSEABLE
@@ -704,7 +711,7 @@ module Gemwarrior
         player_cur_location.checked_for_monsters = false
         world.describe(player_cur_location)
       else
-        return ERROR_GO_PARAM_INVALID
+        return ERROR_GO_PARAM_INVALID.colorize(:red)
       end
     end
 

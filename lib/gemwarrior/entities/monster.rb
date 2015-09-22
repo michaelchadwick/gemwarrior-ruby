@@ -43,7 +43,7 @@ module Gemwarrior
       desc_text << "DEX  : #{dexterity}\n".colorize(:white)
       desc_text << "ROX  : #{rox}\n".colorize(:white)
       desc_text << "XP   : #{xp}\n".colorize(:white)
-      desc_text << "INV  : #{inventory.list_contents}\n".colorize(:white)
+      desc_text << "INV  : #{inventory.contents}\n".colorize(:white)
       desc_text << "DEAD?  #{is_dead}\n".colorize(:white)
       desc_text << "TALK?  #{talkable}\n".colorize(:white)
       desc_text << "USE?   #{useable}\n".colorize(:white)

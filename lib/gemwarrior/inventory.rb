@@ -30,13 +30,10 @@ module Gemwarrior
       self.items.nil? || self.items.empty?
     end
 
+    # non-English-like contents of inventory for simple lists
     def contents
-      is_empty? ? nil : list_contents
-    end
-
-    def list_contents
       if is_empty?
-        'You possess nothing.'
+        nil
       else
         item_hash = {}
         self.items.map(&:name).each do |i|
@@ -48,15 +45,54 @@ module Gemwarrior
           end
         end
 
+        # one item? return string
         if item_hash.length == 1
+          i = item_hash.keys.join
+          q = item_hash.values.join.to_i
+          return q > 1 ? "#{q} #{i}s" : i
+        # multiple items? return array of strings to mush together
+        else
+          item_arr = []
           item_hash.each do |i, q|
             if q > 1
-              return "You have #{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}."
+              item_arr.push("#{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)} x#{q}")
             else
-              article = VOWELS.include?(i[0]) ? 'an' : 'a'
-              return "You have #{article} #{i.to_s.colorize(:yellow)}."
+              item_arr.push(i)
             end
           end
+
+          return item_arr.join(', ')
+        end
+      end
+    end
+
+    # English-like sentence summary of inventory
+    def list_contents
+      if is_empty?
+        'You possess nothing.'
+      else
+        # build hash of inventory's items
+        item_hash = {}
+        self.items.map(&:name).each do |i|
+          i_sym = i.to_sym
+          if item_hash.keys.include? i_sym
+            item_hash[i_sym] += 1
+          else
+            item_hash[i_sym] = 1
+          end
+        end
+
+        # one item? return string
+        if item_hash.length == 1
+          i = item_hash.keys.join
+          q = item_hash.values.join.to_i
+          if q > 1
+            return "You have #{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}."
+          else
+            article = VOWELS.include?(i[0]) ? 'an' : 'a'
+            return "You have #{article} #{i.to_s.colorize(:yellow)}."
+          end
+        # multiple items? return array of strings to mush together
         else
           item_list_text = 'You have '
           item_arr = []

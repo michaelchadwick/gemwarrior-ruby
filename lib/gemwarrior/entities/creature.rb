@@ -70,7 +70,7 @@ module Gemwarrior
       desc_text << "DEFENSE   : #{defense}\n".colorize(:white)
       desc_text << "DEXTERITY : #{dexterity}\n".colorize(:white)
       desc_text << "ROX       : #{rox}\n".colorize(:white)
-      desc_text << "INVENTORY : #{inventory.list_contents}\n".colorize(:white)
+      desc_text << "INVENTORY : #{inventory.contents}\n".colorize(:white)
       desc_text
     end
     

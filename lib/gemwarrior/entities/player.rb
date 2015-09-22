@@ -78,8 +78,8 @@ module Gemwarrior
       if special_abilities.empty?
         abilities = " none...yet(?)\n"
       else
+        abilities << "\n"
         special_abilities.each do |sp|
-          abilities << "\n"
           abilities << "  #{Formatting.upstyle(sp.to_s).ljust(15).colorize(:yellow)}: #{PlayerLevels.get_ability_description(sp)}\n"
         end
       end
@@ -309,7 +309,7 @@ module Gemwarrior
       when trigger[:reason].eql?(:xp)
         self.xp += trigger[:value]
       when trigger[:reason].eql?(:level_bump)
-        next_player_level = old_player_level + 1
+        next_player_level = old_player_level + trigger[:value]
         self.xp = PlayerLevels::get_level_stats(next_player_level)[:xp_start]
       end
 
@@ -328,24 +328,24 @@ module Gemwarrior
           new_stats = PlayerLevels::get_level_stats(level_to_get)
 
           self.level = new_stats[:level]
-          puts "You are now level #{self.level.to_s.colorize(:white)}!"
+          puts "You are now level #{self.level.to_s.colorize(:green)}!"
           self.hp_cur = new_stats[:hp_max]
           self.hp_max = new_stats[:hp_max]
-          puts "You now have #{self.hp_max.to_s.colorize(:white)} hit points!"
+          puts "You now have #{self.hp_max.to_s.colorize(:green)} hit points!"
           self.stam_cur = new_stats[:stam_max]
           self.stam_max = new_stats[:stam_max]
-          puts "You now have #{self.stam_max.to_s.colorize(:white)} stamina points!"
+          puts "You now have #{self.stam_max.to_s.colorize(:green)} stamina points!"
           self.atk_lo = new_stats[:atk_lo]
           self.atk_hi = new_stats[:atk_hi]
-          puts "You now have an attack of #{self.atk_lo.to_s.colorize(:white)}-#{self.atk_hi.to_s.colorize(:white)}!"
+          puts "You now have an attack of #{self.atk_lo.to_s.colorize(:green)}-#{self.atk_hi.to_s.colorize(:green)}!"
           self.defense = new_stats[:defense]
-          puts "You now have #{self.defense.to_s.colorize(:white)} defensive points!"
+          puts "You now have #{self.defense.to_s.colorize(:green)} defensive points!"
           self.dexterity = new_stats[:dexterity]
-          puts "You now have #{self.dexterity.to_s.colorize(:white)} dexterity points!"
+          puts "You now have #{self.dexterity.to_s.colorize(:green)} dexterity points!"
           unless new_stats[:special_abilities].nil?
             unless self.special_abilities.include?(new_stats[:special_abilities])
               self.special_abilities.push(new_stats[:special_abilities])
-              puts "You learned a new ability: #{Formatting::upstyle(new_stats[:special_abilities]).colorize(:white)}!"
+              puts "You learned a new ability: #{Formatting::upstyle(new_stats[:special_abilities]).colorize(:green)}!"
             end
           end
           STDIN.getc

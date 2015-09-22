@@ -57,6 +57,26 @@ module Gemwarrior
         puts "  #{monster.name} strikes first!".colorize(:yellow)
         monster_attacks_player
       end
+      
+      # LV4:STONE_FACE modifier prior to main battle to auto-win
+      # Doesn't work against bosses, nor if battle is an event or in the arena
+      if player.special_abilities.include?(:stone_face) && !monster.is_boss && !is_event && !is_arena
+        level_diff = (player.level - monster.level) * 4
+        chance_range = 0..(30 + level_diff)
+        roll = rand(0..100)
+
+        if GameOptions.data['debug_mode']
+          puts
+          puts "  (MOD) LV4: Stone Face"
+          puts "  Range to auto-win: #{chance_range}"
+          puts "  Auto-win roll: #{roll}"
+        end
+
+        if chance_range.include?(roll)
+          puts "  You use your STONE FACE to tell the #{monster.name} you mean business, and #{monster.name} just gives up!".colorize(:green)
+          return monster_death
+        end
+      end
 
       # main battle loop
       loop do
@@ -185,7 +205,7 @@ module Gemwarrior
             puts '  If defeated, will receive:'
             puts "  >> XP   : #{monster.xp}"
             puts "  >> ROX  : #{monster.rox}"
-            puts "  >> ITEMS: #{monster.inventory.list_contents}"
+            puts "  >> ITEMS: #{monster.inventory.contents}"
             next
           end
         when 'pass', 'p'
@@ -230,17 +250,26 @@ module Gemwarrior
 
           atk_range = base_atk_lo..base_atk_hi
 
-          # beast mode modifier
+          # DEBUG(beast mode) modifier
           if GameOptions.data['beast_mode']
             atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
-          # level 3 ability modifier
+          # LV3:ROCK_SLIDE modifier
           elsif player.special_abilities.include?(:rock_slide)
             lo_boost = rand(0..9)
+            hi_boost = lo_boost + rand(5..10)
 
-            if lo_boost >= 7
-              puts "#{player.name} uses Rock Slide for added damage!"
-              hi_boost = lo_boost + rand(0..5)
+            if GameOptions.data['debug_mode']
+              puts
+              puts "  (MOD) LV3: Rock Slide"
+              puts "  Rock Slide lo_boost: #{lo_boost}"
+              puts "  Rock Slide hi_boost: #{hi_boost}"
+            end
+
+            if lo_boost >= 6
+              puts "  You use Rock Slide for added damage!"
               atk_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
+            else
+              puts "  Rock Slide failed :(" if GameOptions.data['debug_mode']
             end
           end
 
@@ -273,7 +302,11 @@ module Gemwarrior
 
     # MONSTER
     def monster_strikes_first?(arena_battle = false, event_battle = false)
-      if (monster.dexterity > player.dexterity) || event_battle || !arena_battle
+      if event_battle || arena_battle
+        return false
+      elsif player.special_abilities.include?(:stone_face)
+        return false
+      elsif (monster.dexterity > player.dexterity)
         return true
       else
         dex_diff = player.dexterity - monster.dexterity
@@ -353,7 +386,7 @@ module Gemwarrior
       puts "   XP   : #{monster.xp}".colorize(:green)
       puts "   ROX  : #{monster.rox}".colorize(:green)
       unless monster.inventory.nil?
-        puts "   ITEMS: #{monster.inventory.list_contents}".colorize(:green) unless monster.inventory.items.empty?
+        puts "   ITEMS: #{monster.inventory.contents}".colorize(:green) unless monster.inventory.items.empty?
       end
       print_battle_line
       world.player.update_stats(reason: :monster, value: monster)
