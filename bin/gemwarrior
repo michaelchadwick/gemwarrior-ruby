@@ -17,7 +17,7 @@ GW_OPTS_FILE          = "#{GW_HOME}/gw_opts"
 GW_LOG_FILE           = "#{GW_HOME}/gw_log"
 GW_DEFAULT_WORLD_YAML = File.expand_path('../../data/default_world.yaml', __FILE__)
 GW_DEFAULT_WORLD_BIN  = File.expand_path('../../data/default_world.bin', __FILE__)
-GW_WRAP_WIDTH         = 80
+GW_DEFAULT_WRAP_WIDTH = 80
 
 def parse_options_cli
   options = {
@@ -127,7 +127,7 @@ def init_config
   GameOptions.add 'save_file_bin_path',       GW_SAVE_FILE_BIN
   GameOptions.add 'log_file_path',            GW_LOG_FILE
   GameOptions.add 'options_file_path',        GW_OPTS_FILE
-  GameOptions.add 'wrap_width',               GW_WRAP_WIDTH
+  GameOptions.add 'wrap_width',               GW_DEFAULT_WRAP_WIDTH
 end
 
 begin

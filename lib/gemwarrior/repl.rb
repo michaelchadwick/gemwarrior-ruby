@@ -16,6 +16,8 @@ require_relative 'version'
 module Gemwarrior
   class Repl
     # CONSTANTS
+    SCREEN_WIDTH_MIN        = 80
+    SCREEN_WIDTH_MAX        = 120
     QUIT_MESSAGE            = 'Temporal flux detected. Shutting down...'.colorize(:red)
     MAIN_MENU_QUIT_MESSAGE  = 'Giving up so soon? Jool will be waiting...'.colorize(:red)
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
@@ -28,8 +30,35 @@ module Gemwarrior
       self.game         = game
       self.world        = world
       self.evaluator    = evaluator
+
+      GameOptions.data['wrap_width'] = get_screen_width
     end
 
+    def get_screen_width
+      screen_width = SCREEN_WIDTH_MIN
+
+      begin
+        require 'io/console'
+        screen_width = IO.console.winsize[1]
+      rescue
+        if command_exists?('tput')
+          screen_width = `tput cols`.to_i
+        elsif command_exists?('stty')
+          screen_width = `stty size`.split.last.to_i
+        elsif command_exists?('mode')
+          mode_output = `mode`.split
+          screen_width = mode_output[mode_output.index('Columns:')+1].to_i
+        end
+      end
+
+      case
+      when screen_width.nil?, screen_width <= 0
+        return SCREEN_WIDTH_MIN
+      else
+        return [screen_width, SCREEN_WIDTH_MAX].min
+      end
+    end
+    
     def start(initial_command, extra_command, new_skip, resume_skip)
       setup_screen(initial_command, extra_command, new_skip, resume_skip)
 
