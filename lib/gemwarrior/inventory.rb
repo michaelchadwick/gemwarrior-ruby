@@ -203,6 +203,9 @@ module Gemwarrior
             if i.takeable
               self.items.push(i)
               cur_loc.remove_item(item_name)
+              if cur_loc.name.eql?('home')
+                cur_loc.description = 'The little, unimportant, decrepit shack that you live in. What it lacks in decisive magnanimity, it makes up for it in its cozy squalidness.'
+              end
 
               # stats
               player.items_taken += 1
