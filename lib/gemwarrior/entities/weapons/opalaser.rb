@@ -13,6 +13,7 @@ module Gemwarrior
       self.description  = 'Gleaming with supernatural light, this object feels alien, yet familiar.'
       self.atk_lo       = 9
       self.atk_hi       = 11
+      self.dex_mod      = 2
     end
 
     def use(world)

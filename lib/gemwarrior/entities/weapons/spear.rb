@@ -13,6 +13,7 @@ module Gemwarrior
       self.description  = 'About six feet in length and razor-sharp at the point, this spear requires two hands, but only one good stab.'
       self.atk_lo       = 3
       self.atk_hi       = 7
+      self.dex_mod      = -1
     end
 
     def use(world)

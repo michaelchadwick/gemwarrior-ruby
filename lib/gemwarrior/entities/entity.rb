@@ -18,6 +18,7 @@ module Gemwarrior
                   :equippable,
                   :equipped,
                   :used,
+                  :used_again,
                   :number_of_uses
 
     attr_reader   :describe,
@@ -36,6 +37,7 @@ module Gemwarrior
       self.equippable     = false
       self.equipped       = false
       self.used           = false
+      self.used_again     = false
       self.number_of_uses = nil
     end
 
@@ -58,6 +60,7 @@ module Gemwarrior
       desc_text << "EQUIPPABLE? #{equippable}\n".colorize(:white)
       desc_text << "EQUIPPED?   #{equipped}\n".colorize(:white)
       desc_text << "USED?       #{used}\n".colorize(:white)
+      desc_text << "USED AGAIN? #{used_again}\n".colorize(:white)
       desc_text << "USES LEFT?  #{number_of_uses}\n".colorize(:white) unless number_of_uses.nil?
       desc_text
     end

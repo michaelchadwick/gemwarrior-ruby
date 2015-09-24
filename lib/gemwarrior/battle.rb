@@ -237,6 +237,11 @@ module Gemwarrior
         attempt_success_hi += rand((a_dex)..(a_dex+2))
         attempt_success_hi -= rand((d_dex)..(d_dex+2))
 
+        # weapon can change dexterity
+        if player.has_weapon_equipped?
+          attempt_success_hi += player.weapon.dex_mod
+        end
+
         # compute attempt success
         attempt = rand(attempt_success_lo..attempt_success_hi)
         miss_cap = MISS_CAP_DEFAULT

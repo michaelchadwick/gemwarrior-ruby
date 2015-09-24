@@ -13,6 +13,7 @@ module Gemwarrior
       self.description  = 'Pew pew goes this firearm, you suspect (if it has bullets).'
       self.atk_lo       = 2
       self.atk_hi       = 6
+      self.dex_mod      = 2
     end
 
     def use(world)

@@ -13,6 +13,7 @@ module Gemwarrior
       self.description  = 'A small, yet quite sharp, sedimentary pebble, suitable for tossing in amusement, and perhaps combat.'
       self.atk_lo       = 1
       self.atk_hi       = 2
+      self.dex_mod      = -1
     end
     
     def use(world)

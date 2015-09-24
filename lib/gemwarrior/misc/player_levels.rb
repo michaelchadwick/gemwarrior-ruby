@@ -10,7 +10,7 @@ module Gemwarrior
           level:    1,   xp_start:   0,
           hp_max:   30,  stam_max:   20, 
           atk_lo:   1,   atk_hi:     2, 
-          defense:  1,   dexterity:  1,
+          defense:  1,   dexterity:  3,
           special_abilities: nil
         }
       when 2
@@ -18,7 +18,7 @@ module Gemwarrior
           level:    2,   xp_start:   50,
           hp_max:   35,  stam_max:   25, 
           atk_lo:   2,   atk_hi:     3, 
-          defense:  3,   dexterity:  3,
+          defense:  3,   dexterity:  4,
           special_abilities: :rocking_vision
         }
       when 3

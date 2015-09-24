@@ -33,7 +33,20 @@ module Gemwarrior
       end
 
       desc_text << "\n"
-      desc_text << point.description
+
+      point_desc = point.description.clone
+      
+      # specific location description changes
+      if point.name.eql?('home')
+        if point.contains_item?('tent')
+          point_desc << ' Next to the bed, on the floor, is a folded-up tent.'
+        end
+        if point.contains_item?('letter')
+          point_desc << ' Atop the chest you notice a curious letter, folded in three.'
+        end
+      end
+
+      desc_text << point_desc
 
       point.populate_monsters(GameMonsters.data) unless point.checked_for_monsters?
 

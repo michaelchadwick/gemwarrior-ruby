@@ -52,20 +52,24 @@ module Gemwarrior
         print_char_pic
       end
 
-      weapon_slot   = '(unarmed)'
-      armor_slot    = '(unarmored)'
-      base_atk_lo   = self.atk_lo
-      base_atk_hi   = self.atk_hi
-      base_defense  = self.defense
-      net_atk_lo    = nil
-      net_atk_hi    = nil
-      net_defense   = nil
+      weapon_slot     = '(unarmed)'
+      armor_slot      = '(unarmored)'
+      base_atk_lo     = self.atk_lo
+      base_atk_hi     = self.atk_hi
+      base_defense    = self.defense
+      base_dexterity  = self.dexterity
+      net_atk_lo      = nil
+      net_atk_hi      = nil
+      net_defense     = nil
+      net_dexterity   = nil
 
       # juice the weapon display
       if has_weapon_equipped?
-        weapon_slot = inventory.weapon.name
-        net_atk_lo = base_atk_lo + inventory.weapon.atk_lo
-        net_atk_hi = base_atk_hi + inventory.weapon.atk_hi
+      binding.pry
+        weapon_slot = self.inventory.weapon.name
+        net_atk_lo = base_atk_lo + self.inventory.weapon.atk_lo
+        net_atk_hi = base_atk_hi + self.inventory.weapon.atk_hi
+        net_dexterity = self.dexterity + self.inventory.weapon.dex_mod
       end
 
       # juice the armor display
@@ -84,7 +88,8 @@ module Gemwarrior
         end
       end
 
-      self_text =  "NAME      : #{self.name}\n"
+      self_text =  "\n"
+      self_text << "NAME      : #{self.name.colorize(:green)}\n"
       self_text << "LEVEL     : #{self.level}\n"
       self_text << "EXPERIENCE: #{self.xp}\n"
       self_text << "HIT POINTS: #{self.hp_cur}/#{self.hp_max}\n"
@@ -96,11 +101,16 @@ module Gemwarrior
       self_text << "DEFENSE   : #{base_defense}"
       self_text << " (#{net_defense} w/ #{armor_slot})".colorize(:yellow) unless net_defense.nil?
       self_text << "\n"
-      self_text << "DEXTERITY : #{self.dexterity}\n"
+      self_text << "DEXTERITY : #{self.dexterity}"
+      self_text << " (#{net_dexterity} w/ #{weapon_slot})".colorize(:yellow) unless net_dexterity.nil?
+      self_text << "\n"
       self_text << "ABILITIES :"
       self_text << "#{abilities}"
+      self_text << "INVENTORY : #{self.inventory.contents}\n"
       
       if GameOptions.data['debug_mode']
+        self_text << "\n"
+        self_text << "[DEBUG STUFF]\n"
         self_text << ">> POSITION       : #{self.cur_coords.values.to_a}\n"
         self_text << ">> GOD_MODE       : #{GameOptions.data['god_mode']}\n"
         self_text << ">> BEAST_MODE     : #{GameOptions.data['beast_mode']}\n"
@@ -114,11 +124,11 @@ module Gemwarrior
 
       self_text << "\n"
 
-      self_text << "[Your Story]\n#{self.description}"
+      self_text << "[#{"Your Story".colorize(:yellow)}]\n#{self.description}"
 
       self_text << "\n\n"
 
-      self_text << "[Current Status]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
+      self_text << "[#{"Current Status".colorize(:yellow)}]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
       
       self_text << "\n"
     end

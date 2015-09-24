@@ -3,7 +3,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: home
   name_display: Home
-  description: The little, unimportant, decrepit shack that you live in. What it lacks in decisive magnanimity, it makes up for it in its cozy squalidness. Nearby, you notice a curious letter, folded in three.
+  description: The little, unimportant, decrepit shack that you live in. What the place lacks in decisive magnanimity is made up for in cozy squalidness. Your bed covers much of the northern corner. Your beloved family chest sits at the foot of the bed.
   coords: &2
     :x: 5
     :y: 0
@@ -20,6 +20,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: bed
     name_display: Bed
@@ -28,10 +29,24 @@ locations:
     talkable: false
     useable: true
     equippable: false
+  - !ruby/object:Gemwarrior::Chest
+    equipped: false
+    consumable: false
+    used: false
+    used_again: false
+    number_of_uses: 
+    name: chest
+    name_display: Chest
+    description: Well-crafted with solid oak, this family chest has intricate inlays all around the front and sides. It's the one thing from home you took with you when you left.
+    takeable: false
+    talkable: false
+    useable: true
+    equippable: false
   - !ruby/object:Gemwarrior::Letter
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: letter
     name_display: Letter
@@ -44,6 +59,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: stone
     name_display: Stone
@@ -55,10 +71,12 @@ locations:
     useable: true
     equippable: true
     is_weapon: true
+    dex_mod: 0
   - !ruby/object:Gemwarrior::Tent
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 5
     name: tent
     name_display: Tent
@@ -117,6 +135,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: stalactite
     name_display: Stalactite
@@ -132,6 +151,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: stonemite
     name_display: Stonemite
@@ -190,6 +210,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: ladder
     name_display: Ladder
@@ -419,6 +440,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: small_hole
     name_display: Small Hole
@@ -480,6 +502,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: rope
     name_display: Rope
@@ -631,6 +654,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: snowman
     name_display: Snowman
@@ -757,6 +781,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: map
     name_display: Map
@@ -792,6 +817,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: tree
     name_display: Tree
@@ -799,7 +825,7 @@ locations:
       second great-uncle.
     takeable: false
     talkable: false
-    useable: false
+    useable: true
     equippable: false
   monsters_abounding: []
   bosses_abounding: []
@@ -850,6 +876,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: feather
     name_display: Feather
@@ -885,6 +912,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: bookcase
     name_display: Bookcase
@@ -1007,6 +1035,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: false
     name: sand_jewel
@@ -1178,6 +1207,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: arena_door
     name_display: Arena Door
@@ -1214,6 +1244,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: arena_master
@@ -1269,6 +1300,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: false
     name: hut
@@ -1414,7 +1446,20 @@ locations:
     begin: 1
     end: 2
     excl: false
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::Bullet
+    equipped: false
+    consumable: false
+    used: false
+    used_again: false
+    number_of_uses: 
+    talkable: false
+    name: bullet
+    name_display: Bullet
+    description: Gunpowder packed into a small metallic tube, ready to be fired from...something.
+    takeable: true
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
@@ -1439,6 +1484,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: ware_hawker
@@ -1473,6 +1519,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: thin_man
@@ -1488,6 +1535,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: drunk_man
@@ -1522,6 +1570,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: pig
@@ -1534,6 +1583,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: cow
@@ -1546,6 +1596,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: goat
@@ -1580,6 +1631,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     talkable: true
     name: shifty_woman
@@ -1617,6 +1669,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: gun
     name_display: Gun
@@ -1632,6 +1685,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: pedestal
     name_display: Pedestal
@@ -1691,6 +1745,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: floor_tile
     name_display: Floor Tile
@@ -1726,6 +1781,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: flower
     name_display: Flower
@@ -1739,6 +1795,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: keystone
     name_display: Keystone
@@ -1752,6 +1809,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: pond
     name_display: Pond
@@ -1790,6 +1848,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: dehumidifier
     name_display: Dehumidifier
@@ -1847,6 +1906,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: waterfall
     name_display: Waterfall
@@ -1883,6 +1943,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: massive_door
     name_display: Massive Door
@@ -1920,6 +1981,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: throne
     name_display: Throne
@@ -1955,6 +2017,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: couch
     name_display: Couch
@@ -2013,6 +2076,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: apple
     name_display: Apple
@@ -2025,6 +2089,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: cup
     name_display: Cup
@@ -2057,6 +2122,7 @@ locations:
     equipped: false
     consumable: false
     used: false
+    used_again: false
     number_of_uses: 
     name: queen_ruby
     description: Queen Ruby glimmers like she was made from the substance of her name. She wears a wan smile, and her hands are delicately intertwined as she sits patiently.
@@ -2081,7 +2147,7 @@ player: !ruby/object:Gemwarrior::Player
   atk_lo: 1
   atk_hi: 2
   defense: 1
-  dexterity: 1
+  dexterity: 3
   inventory: !ruby/object:Gemwarrior::Inventory
     armor: 
     items: []

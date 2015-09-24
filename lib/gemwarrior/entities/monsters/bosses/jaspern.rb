@@ -32,6 +32,10 @@ module Gemwarrior
       self.is_boss      = true
     end
 
+    def use(world)
+      speak('You are not going any further north, little man. No matter of talking will move me!')
+    end
+
     def river_bridge_success(world)
       # get object references
       river_bridge = world.location_by_name('river_bridge')

@@ -8,7 +8,7 @@ module Gemwarrior
     # CONSTANTS
     ERROR_ITEM_REMOVE_INVALID       = 'Your inventory does not contain that item, so you cannot drop it.'
     ERROR_ITEM_ADD_UNTAKEABLE       = 'That would be great if you could take that, wouldn\'t it? Huh!'
-    ERROR_ITEM_ADD_INVALID          = 'That item cannot be added.'
+    ERROR_ITEM_ADD_INVALID          = 'That item cannot be taken or does not exist.'
     ERROR_ITEM_DESCRIBE_INVALID     = 'That does not seem to be in the inventory.'
     ERROR_ITEM_EQUIP_INVALID        = 'You do not possess anything called that to equip.'
     ERROR_ITEM_EQUIP_NONARMAMENT    = 'That item cannot be equipped.'
@@ -49,13 +49,13 @@ module Gemwarrior
         if item_hash.length == 1
           i = item_hash.keys.join
           q = item_hash.values.join.to_i
-          return q > 1 ? "#{q} #{i}s" : i
+          return q > 1 ? "#{i}s x#{q}" : i
         # multiple items? return array of strings to mush together
         else
           item_arr = []
           item_hash.each do |i, q|
             if q > 1
-              item_arr.push("#{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)} x#{q}")
+              item_arr.push("#{i}s x#{q}")
             else
               item_arr.push(i)
             end
@@ -203,9 +203,6 @@ module Gemwarrior
             if i.takeable
               self.items.push(i)
               cur_loc.remove_item(item_name)
-              if cur_loc.name.eql?('home')
-                cur_loc.description = 'The little, unimportant, decrepit shack that you live in. What it lacks in decisive magnanimity, it makes up for it in its cozy squalidness.'
-              end
 
               # stats
               player.items_taken += 1
