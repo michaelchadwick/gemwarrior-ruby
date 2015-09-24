@@ -11,6 +11,7 @@ module Gemwarrior
     DANGER_LEVEL              = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
     ERROR_ITEM_ADD_INVALID    = 'That item cannot be added to the location\'s inventory.'
     ERROR_ITEM_REMOVE_INVALID = 'That item cannot be removed as it does not exist here.'
+    ERROR_SPAWN_NAME_INVALID  = 'That monster does not exist in the game, and cannot be spawned.'
 
     attr_accessor :coords,
                   :paths,
@@ -193,26 +194,36 @@ module Gemwarrior
       actionable_words.join(', ')
     end
 
-    def populate_monsters(monsters_available, spawn = false)
+    def populate_monsters(monsters_available = nil, spawn = false, monster_type = nil)
       if should_spawn_monster? || spawn
         self.checked_for_monsters = true unless spawn
         self.monsters_abounding = [] unless spawn
         random_monster = nil
 
-        # get random non-boss monster
-        loop do
-          random_monster = monsters_available[rand(0..monsters_available.length-1)].clone
+        if monster_type.nil?
+          # get random non-boss monster
+          loop do
+            random_monster = monsters_available[rand(0..monsters_available.length-1)].clone
 
-          if spawn
-            break
-          else
-            unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
+            if spawn
               break
+            else
+              unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
+                break
+              end
             end
           end
-        end
 
-        monsters_abounding.push(random_monster)
+          monsters_abounding.push(random_monster)
+        else
+          monster_type_to_spawn = monsters_available.find { |m| m.name.downcase == monster_type.downcase }
+          if monster_type_to_spawn.nil?
+            puts ERROR_SPAWN_NAME_INVALID.colorize(:red)
+            puts
+          else
+            monsters_abounding.push(monster_type_to_spawn)
+          end
+        end
       else
         return nil
       end

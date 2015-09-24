@@ -277,7 +277,7 @@ module Gemwarrior
           end
         when 'spawn', 'sp'
           player_cur_location = world.location_by_coords(world.player.cur_coords)
-          player_cur_location.populate_monsters(GameMonsters.data, spawn: true)
+          player_cur_location.populate_monsters(GameMonsters.data, true, param1)
           return world.describe(player_cur_location)
         when 'teleport', 'tp'
           if param1.nil?
