@@ -30,9 +30,8 @@ module Gemwarrior
     end
 
     def start(is_arena = false, is_event = false)
-      Audio.play_synth(:battle_start)
-
       # begin battle!
+      Audio.play_synth(:battle_start)
       print_battle_header unless is_arena
 
       # print opponent announcement, depending on reason for battle
@@ -89,6 +88,7 @@ module Gemwarrior
       loop do
         skip_next_monster_attack = false
 
+        # 1. check for death to end battle
         if monster_dead?
           result = monster_death
           return result
@@ -97,35 +97,16 @@ module Gemwarrior
           return 'death'
         end
 
-        # check for near death
-        puts "  You are almost dead!\n".colorize(:yellow)             if player_near_death?
-        puts "  #{monster.name} is almost dead!\n".colorize(:yellow)  if monster_near_death?
+        # 2. print general info and display options prompt
+        print_near_death_info
+        print_combatants_health_info
+        print_battle_options_prompt
 
-        puts
-
-        # print health info
-        print "  #{player.name.upcase.ljust(12).colorize(:green)} :: #{player.hp_cur.to_s.rjust(3)} HP"
-        print " (LVL: #{player.level})" if GameOptions.data['debug_mode']
-        print "\n"
-
-        print "  #{monster.name.upcase.ljust(12).colorize(:red)} :: "
-        if GameOptions.data['debug_mode'] || player.special_abilities.include?(:rocking_vision)
-          print "#{monster.hp_cur.to_s.rjust(3)}"
-        else
-          print '???'
-        end
-        print ' HP'
-        print " (LVL: #{monster.level})" if GameOptions.data['debug_mode']
-        print "\n"
-        puts
-
+        # 3. get player action
         self.player_is_defending = false
-
-        # battle options prompt
-        print_battle_options
         player_action = STDIN.gets.chomp.downcase
 
-        # player action
+        # 4. parse player action
         case player_action
         when 'fight', 'f', 'attack', 'a'
           can_attack = true
@@ -232,7 +213,7 @@ module Gemwarrior
           next
         end
 
-        # monster action
+        # 5. parse monster action
         monster_attacks_player unless skip_next_monster_attack
       end
     end
@@ -581,6 +562,29 @@ module Gemwarrior
     end
 
     # STATUS TEXT
+    def print_near_death_info
+      puts "  You are almost dead!\n".colorize(:yellow)             if player_near_death?
+      puts "  #{monster.name} is almost dead!\n".colorize(:yellow)  if monster_near_death?
+      puts
+    end
+
+    def print_combatants_health_info
+      print "  #{player.name.upcase.ljust(12).colorize(:green)} :: #{player.hp_cur.to_s.rjust(3)} HP"
+      print " (LVL: #{player.level})" if GameOptions.data['debug_mode']
+      print "\n"
+
+      print "  #{monster.name.upcase.ljust(12).colorize(:red)} :: "
+      if GameOptions.data['debug_mode'] || player.special_abilities.include?(:rocking_vision)
+        print "#{monster.hp_cur.to_s.rjust(3)}"
+      else
+        print '???'
+      end
+      print ' HP'
+      print " (LVL: #{monster.level})" if GameOptions.data['debug_mode']
+      print "\n"
+      puts
+    end
+
     def print_escape_text
       print '  '
       Animation.run(phrase: ESCAPE_TEXT, oneline: false)
@@ -591,7 +595,7 @@ module Gemwarrior
       print "\n"
     end
 
-    def print_battle_options
+    def print_battle_options_prompt
       puts '  What do you do?'
       print '  '
       print "#{'['.colorize(:yellow)}"
