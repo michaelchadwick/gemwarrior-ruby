@@ -65,7 +65,6 @@ module Gemwarrior
 
       # juice the weapon display
       if has_weapon_equipped?
-      binding.pry
         weapon_slot = self.inventory.weapon.name
         net_atk_lo = base_atk_lo + self.inventory.weapon.atk_lo
         net_atk_hi = base_atk_hi + self.inventory.weapon.atk_hi

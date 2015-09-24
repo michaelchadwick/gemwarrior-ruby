@@ -238,8 +238,8 @@ module Gemwarrior
         attempt_success_hi -= rand((d_dex)..(d_dex+2))
 
         # weapon can change dexterity
-        if player.has_weapon_equipped?
-          attempt_success_hi += player.weapon.dex_mod
+        if attacker.has_weapon_equipped?
+          attempt_success_hi += attacker.inventory.weapon.dex_mod
         end
 
         # compute attempt success
