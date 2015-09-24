@@ -21,7 +21,7 @@ module Gemwarrior
       self.hp_max       = hp_cur
       self.atk_lo       = rand(level..(level * 2.5).floor)
       self.atk_hi       = rand((level * 2.5).floor..(level * 3).floor)
-      self.defense      = rand(5..7)
+      self.defense      = rand(6..7)
       self.dexterity    = rand(8..10)
 
       self.rox          = rand((level * 2)..(level * 3))

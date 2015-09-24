@@ -2080,8 +2080,8 @@ player: !ruby/object:Gemwarrior::Player
   hp_max: 30
   atk_lo: 1
   atk_hi: 2
-  defense: 5
-  dexterity: 5
+  defense: 1
+  dexterity: 1
   inventory: !ruby/object:Gemwarrior::Inventory
     armor: 
     items: []

@@ -7,7 +7,14 @@ module Gemwarrior
   class Battle
     # CONSTANTS
     ERROR_ATTACK_OPTION_INVALID = 'That will not do anything against the monster.'
-    BEAST_MODE_ATTACK           = 100
+    BEAST_MODE_ATTACK_LO        = 100
+    BEAST_MODE_ATTACK_HI        = 200
+    ATTEMPT_SUCCESS_LO_DEFAULT  = 0
+    ATTEMPT_SUCCESS_HI_DEFAULT  = 100
+    MISS_CAP_DEFAULT            = 20
+    LV3_MOD_LO                  = 6
+    LV5_MOD_LO                  = 7
+    LV5_MOD_HI                  = 14
     ESCAPE_TEXT                 = '** POOF **'
 
     attr_accessor :world,
@@ -58,7 +65,7 @@ module Gemwarrior
         monster_attacks_player
       end
       
-      # LV4:STONE_FACE modifier prior to main battle to auto-win
+      # LV4:STONE_FACE modifier (chance to auto-win)
       # Doesn't work against bosses, nor if battle is an event or in the arena
       if player.special_abilities.include?(:stone_face) && !monster.is_boss && !is_event && !is_arena
         level_diff = (player.level - monster.level) * 4
@@ -68,8 +75,8 @@ module Gemwarrior
         if GameOptions.data['debug_mode']
           puts
           puts "  (MOD) LV4: Stone Face"
-          puts "  Range to auto-win: #{chance_range}"
-          puts "  Auto-win roll: #{roll}"
+          puts "  SUCCESS_RANGE: #{chance_range}"
+          puts "  SUCCESS_ROLL : #{roll}"
         end
 
         if chance_range.include?(roll)
@@ -97,11 +104,11 @@ module Gemwarrior
         puts
 
         # print health info
-        print "  #{player.name.upcase.ljust(12)} :: #{player.hp_cur.to_s.rjust(3)} HP"
+        print "  #{player.name.upcase.ljust(12).colorize(:green)} :: #{player.hp_cur.to_s.rjust(3)} HP"
         print " (LVL: #{player.level})" if GameOptions.data['debug_mode']
         print "\n"
 
-        print "  #{monster.name.upcase.ljust(12)} :: "
+        print "  #{monster.name.upcase.ljust(12).colorize(:red)} :: "
         if GameOptions.data['debug_mode'] || player.special_abilities.include?(:rocking_vision)
           print "#{monster.hp_cur.to_s.rjust(3)}"
         else
@@ -137,7 +144,7 @@ module Gemwarrior
 
           if can_attack
             puts "  You attack #{monster.name}#{player.cur_weapon_name}!"
-            dmg = calculate_damage_to(monster)
+            dmg = calculate_damage(player, monster)
             if dmg > 0
               Audio.play_synth(:battle_player_attack)
 
@@ -149,7 +156,7 @@ module Gemwarrior
             else
               Audio.play_synth(:battle_player_miss)
 
-              puts '  You miss entirely!'.colorize(:yellow)
+              puts '  You do no damage!'.colorize(:yellow)
             end
           end
         when 'defend', 'd'
@@ -233,27 +240,80 @@ module Gemwarrior
     private
 
     # NEUTRAL
-    def calculate_damage_to(entity)
-      miss = rand(0..(100 + entity.defense))
-      if miss < 15
-        0
-      else
-        if entity.eql?(monster)
-          # base attack range
+    def calculate_damage(attacker, defender)
+      # things that modify attack success and damage
+      a_dex = attacker.dexterity
+      d_dex = defender.dexterity
+      d_def = defender.defense
+
+      # player attacking monster
+      if defender.eql?(monster)
+        # attack success defined by attacker's and defender's dexterity
+        attempt_success_lo = ATTEMPT_SUCCESS_LO_DEFAULT
+        attempt_success_hi = ATTEMPT_SUCCESS_HI_DEFAULT
+
+        # success range to hit based on dexterity
+        attempt_success_hi += rand((a_dex)..(a_dex+2))
+        attempt_success_hi -= rand((d_dex)..(d_dex+2))
+
+        # compute attempt success
+        attempt = rand(attempt_success_lo..attempt_success_hi)
+        miss_cap = MISS_CAP_DEFAULT
+
+        ######################
+        # ACCURACY MODIFIERS #
+        # vvvvvvvvvvvvvvvvvv #
+        ######################
+
+        ### LV5:GRANITON modifier (more accuracy)
+        if player.special_abilities.include?(:graniton)
+          miss_cap -= rand(LV5_MOD_LO..LV5_MOD_HI)
+        end
+
+        ######################
+        # ^^^^^^^^^^^^^^^^^^ #
+        # ACCURACY MODIFIERS #
+        ######################
+
+        # number to beat for attack success
+        success_min = rand(miss_cap..miss_cap + 5)
+
+        if GameOptions.data['debug_mode']
+          puts
+          puts '  Player Roll for Attack:'.colorize(:green)
+          puts "  ATTEMPT_RANGE: #{attempt_success_lo}..#{attempt_success_hi}"
+          puts "  MUST_BEAT    : #{success_min}"
+          if attempt > success_min
+            puts "  ATTEMPT_ROLL : #{attempt.to_s.colorize(:green)}"
+          else
+            puts "  ATTEMPT_ROLL : #{attempt.to_s.colorize(:red)}"
+          end
+        end
+
+        # no miss, so attack
+        if attempt > success_min
+          # base player damage range
           base_atk_lo = player.atk_lo
           base_atk_hi = player.atk_hi
 
+          # weapon increases damage range
           if player.has_weapon_equipped?
             base_atk_lo += player.inventory.weapon.atk_lo
             base_atk_hi += player.inventory.weapon.atk_hi
           end
 
-          atk_range = base_atk_lo..base_atk_hi
+          # non-modified damage range
+          dmg_range = base_atk_lo..base_atk_hi
 
-          # DEBUG(beast mode) modifier
+          ####################
+          # DAMAGE MODIFIERS #
+          # vvvvvvvvvvvvvvvv #
+          ####################
+
+          ### DEBUG:BEAST_MODE modifier (ludicrously higher damage range)
           if GameOptions.data['beast_mode']
-            atk_range = BEAST_MODE_ATTACK..BEAST_MODE_ATTACK
-          # LV3:ROCK_SLIDE modifier
+            dmg_range = BEAST_MODE_ATTACK_LO..BEAST_MODE_ATTACK_HI
+          ### LV3:ROCK_SLIDE modifier (increased damage range)
           elsif player.special_abilities.include?(:rock_slide)
             lo_boost = rand(0..9)
             hi_boost = lo_boost + rand(5..10)
@@ -265,20 +325,114 @@ module Gemwarrior
               puts "  Rock Slide hi_boost: #{hi_boost}"
             end
 
-            if lo_boost >= 6
+            if lo_boost >= LV3_MOD_LO
               puts "  You use Rock Slide for added damage!"
-              atk_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
+              dmg_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
             else
               puts "  Rock Slide failed :(" if GameOptions.data['debug_mode']
             end
           end
 
-          # return attack range
-          return rand(atk_range)
-        else
-          dmg = rand(monster.atk_lo..monster.atk_hi)
-          dmg -= (entity.defense / 2) if player_is_defending
+          ####################
+          # ^^^^^^^^^^^^^^^^ #
+          # DAMAGE MODIFIERS #
+          ####################
+
+          # get base damage to apply
+          base_dmg = rand(dmg_range)
+
+          # lower value due to defender's defense
+          dmg = base_dmg - d_def
+
+          # 50% chance of doing 1 point of damage even if you were going to do no damage
+          hail_mary = [dmg, 1].sample
+          dmg = hail_mary if dmg <= 0
+
+          if GameOptions.data['debug_mode']
+            puts
+            puts '  Player Roll for Damage:'.colorize(:green)
+            puts "  DMG_RANGE  : #{dmg_range}"
+            puts "  DMG_ROLL   : #{base_dmg}"
+            puts "  MONSTER_DEF: #{d_def}"
+            puts "  HAIL_MARY  : #{hail_mary}"
+            if dmg > 0
+              puts "  NET_DMG    : #{dmg.to_s.colorize(:green)}"
+            else
+              puts "  NET_DMG    : #{dmg.to_s.colorize(:red)}"
+            end
+          end
+
           return dmg
+        # missed? no damage
+        else
+          return 0
+        end
+      # monster attacking player
+      else
+        # attack success defined by attacker's and defender's dexterity
+        attempt_success_lo = ATTEMPT_SUCCESS_LO_DEFAULT
+        attempt_success_hi = ATTEMPT_SUCCESS_HI_DEFAULT
+
+        # success range to hit based on dexterity
+        attempt_success_hi += rand((a_dex)..(a_dex+2))
+        attempt_success_hi -= rand((d_dex)..(d_dex+2))
+
+        # compute attempt success
+        attempt = rand(attempt_success_lo..attempt_success_hi)
+        miss_cap = MISS_CAP_DEFAULT
+
+        # number to beat for attack success
+        success_min = rand(miss_cap..miss_cap + 5)
+
+        if GameOptions.data['debug_mode']
+          puts
+          puts '  Monster Roll for Attack:'.colorize(:red)
+          puts "  ATTEMPT_RANGE: #{attempt_success_lo}..#{attempt_success_hi}"
+          puts "  ATTEMPT_ROLL : #{attempt}"
+          puts "  MUST_BEAT    : #{success_min}"
+          if attempt > success_min
+            puts "  ATTEMPT_ROLL : #{attempt.to_s.colorize(:green)}"
+          else
+            puts "  ATTEMPT_ROLL : #{attempt.to_s.colorize(:red)}"
+          end
+        end
+
+        # no miss, so attack
+        if attempt > success_min
+          dmg_range = attacker.atk_lo..attacker.atk_lo
+
+          # get base damage to apply
+          base_dmg = rand(dmg_range)
+
+          # lower value for defender's defense (and further if actively defending)
+          if player_is_defending
+            dmg = base_dmg - [(d_def * 1.5).floor, (d_def * 1.5).ceil].sample
+          else
+            dmg = base_dmg - d_def
+          end
+
+          # 25% chance of doing 1 point of damage even if monster was going to do no damage
+          hail_mary = [dmg, dmg, dmg, 1].sample
+          dmg = hail_mary if dmg <= 0
+
+          if GameOptions.data['debug_mode']
+            puts
+            puts '  Monster Roll for Damage:'.colorize(:red)
+            puts "  DMG_RANGE  : #{dmg_range}"
+            puts "  DMG_ROLL   : #{base_dmg}"
+            puts "  PLAYER_DEF : #{d_def}"
+            puts "  HAIL_MARY  : #{hail_mary}"
+            if dmg > 0
+              puts "  NET_DMG    : #{dmg.to_s.colorize(:green)}"
+            else
+              puts "  NET_DMG    : #{dmg.to_s.colorize(:red)}"
+            end
+          end
+
+          return dmg
+        # missed? no damage
+        else
+          return 0
         end
       end
     end
@@ -322,7 +476,7 @@ module Gemwarrior
     def monster_attacks_player
       puts "  #{monster.name} attacks you!".colorize(:yellow)
 
-      dmg = calculate_damage_to(player)
+      dmg = calculate_damage(monster, player)
       if dmg > 0
         Audio.play_synth(:battle_monster_attack)
 
@@ -330,7 +484,7 @@ module Gemwarrior
       else
         Audio.play_synth(:battle_monster_miss)
 
-        puts "  #{monster.name} misses entirely!".colorize(:yellow)
+        puts "  #{monster.name} does no damage!".colorize(:yellow)
       end
     end
 

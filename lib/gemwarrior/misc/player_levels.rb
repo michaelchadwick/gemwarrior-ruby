@@ -10,7 +10,7 @@ module Gemwarrior
           level:    1,   xp_start:   0,
           hp_max:   30,  stam_max:   20, 
           atk_lo:   1,   atk_hi:     2, 
-          defense:  5,   dexterity:  5,
+          defense:  1,   dexterity:  1,
           special_abilities: nil
         }
       when 2
@@ -18,7 +18,7 @@ module Gemwarrior
           level:    2,   xp_start:   50,
           hp_max:   35,  stam_max:   25, 
           atk_lo:   2,   atk_hi:     3, 
-          defense:  6,   dexterity:  6,
+          defense:  3,   dexterity:  3,
           special_abilities: :rocking_vision
         }
       when 3
@@ -26,7 +26,7 @@ module Gemwarrior
           level:    3,   xp_start:   120,
           hp_max:   45,  stam_max:   30, 
           atk_lo:   3,   atk_hi:     5, 
-          defense:  7,   dexterity:  8,
+          defense:  5,   dexterity:  6,
           special_abilities: :rock_slide
         }
       when 4
@@ -34,7 +34,7 @@ module Gemwarrior
           level:    4,   xp_start:   250,
           hp_max:   55,  stam_max:   35, 
           atk_lo:   5,   atk_hi:     6, 
-          defense:  8,   dexterity:  9,
+          defense:  6,   dexterity:  8,
           special_abilities: :stone_face
         }
       when 5
@@ -42,7 +42,7 @@ module Gemwarrior
           level:    5,   xp_start:   600,
           hp_max:   70,  stam_max:   45, 
           atk_lo:   7,   atk_hi:     8, 
-          defense:  10,  dexterity:  11,
+          defense:  8,  dexterity:   9,
           special_abilities: :graniton
         }
       when 6
@@ -50,7 +50,7 @@ module Gemwarrior
           level:    6,   xp_start:   1000,
           hp_max:   85,  stam_max:   60, 
           atk_lo:   8,   atk_hi:     10, 
-          defense:  13,  dexterity:  13,
+          defense:  10,  dexterity:  11,
           special_abilities: :gleam
         }
       when 7
@@ -58,7 +58,7 @@ module Gemwarrior
           level:    7,   xp_start:   1500,
           hp_max:   100, stam_max:   80, 
           atk_lo:   10,  atk_hi:     12, 
-          defense:  15,  dexterity:  16,
+          defense:  13,  dexterity:  14,
           special_abilities: :break_through
         }
       else
@@ -100,7 +100,8 @@ module Gemwarrior
         'Adds a random boost to the player\'s attack in battle.'
       when :stone_face
         'Chance to auto-win in battle against any non-boss monster (does not work in arena or if ambushed).'
-      #when :graniton
+      when :graniton
+        'Chance to be much more accurate in your attacks.'
       #when :gleam
       #when :break_through
       else

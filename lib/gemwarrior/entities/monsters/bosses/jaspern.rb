@@ -18,7 +18,7 @@ module Gemwarrior
       self.mood         = 'opaque'
 
       self.level        = rand(7..8)
-      self.hp_cur       = rand((level * 2.5).floor..(level * 3.5).floor)
+      self.hp_cur       = rand((level * 4.5).floor..(level * 5.5).floor)
       self.hp_max       = hp_cur
       self.atk_lo       = rand((level * 2)..(level * 2.5).floor)
       self.atk_hi       = rand((level * 2.5).floor..(level * 3).floor)

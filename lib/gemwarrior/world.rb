@@ -43,7 +43,7 @@ module Gemwarrior
       desc_text << "\n >> Path(s):     #{point.list_paths.join(', ')}".colorize(:white)
 
       if GameOptions.data['debug_mode']
-        desc_text << "\n >>> Actionable: ".colorize(color: :red, background: :grey)
+        desc_text << "\n >>> Actionable: ".colorize(color: :yellow, background: :grey)
         desc_text << point.list_actionable_words.colorize(color: :white, background: :grey)
       end
 
