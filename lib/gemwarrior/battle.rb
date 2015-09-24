@@ -59,7 +59,7 @@ module Gemwarrior
           puts '  The Shifty Woman\'s perplexing speech now over, she disappears.'
           world.shifty_has_jeweled = true
         end
-      elsif monster_strikes_first?(arena_battle: is_arena, event_battle: is_event)
+      elsif monster_strikes_first?(is_arena, is_event)
         puts "  #{monster.name} strikes first!".colorize(:yellow)
         monster_attacks_player
       end
@@ -374,7 +374,6 @@ module Gemwarrior
           puts
           puts '  Monster Roll for Attack:'.colorize(:red)
           puts "  ATTEMPT_RANGE: #{attempt_success_lo}..#{attempt_success_hi}"
-          puts "  ATTEMPT_ROLL : #{attempt}"
           puts "  MUST_BEAT    : #{success_min}"
           if attempt > success_min
             puts "  ATTEMPT_ROLL : #{attempt.to_s.colorize(:green)}"
@@ -447,10 +446,23 @@ module Gemwarrior
       elsif player.special_abilities.include?(:stone_face)
         return false
       elsif (monster.dexterity > player.dexterity)
+        if GameOptions.data['debug_mode']
+          puts
+          puts "  MONSTER_DEX: #{monster.dexterity}, PLAYER_DEX: #{player.dexterity}"
+        end
+
         return true
       else
         dex_diff = player.dexterity - monster.dexterity
         rand_dex = rand(0..dex_diff)
+
+        if GameOptions.data['debug_mode']
+          puts
+          puts "  DEX_DIFF    : #{dex_diff}"
+          puts "  RAND_DEX    : #{rand_dex}"
+          puts "  RAND_DEX % 2: #{rand_dex % 2}"
+        end
+
         if rand_dex % 2 > 0
           return true
         else

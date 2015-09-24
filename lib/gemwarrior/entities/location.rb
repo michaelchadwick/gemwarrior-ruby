@@ -195,26 +195,19 @@ module Gemwarrior
     end
 
     def populate_monsters(monsters_available = nil, spawn = false, monster_type = nil)
-      if should_spawn_monster? || spawn
-        self.checked_for_monsters = true unless spawn
-        self.monsters_abounding = [] unless spawn
+      # debug spawn
+      if spawn
         random_monster = nil
 
+        # debug spawn random monster
         if monster_type.nil?
-          # get random non-boss monster
           loop do
             random_monster = monsters_available[rand(0..monsters_available.length-1)].clone
 
-            if spawn
-              break
-            else
-              unless random_monster.is_boss || !self.monster_level_range.include?(random_monster.level)
-                break
-              end
-            end
+            monsters_abounding.push(random_monster)
+            break
           end
-
-          monsters_abounding.push(random_monster)
+        # debug spawn w/ monster_type
         else
           monster_type_to_spawn = monsters_available.find { |m| m.name.downcase == monster_type.downcase }
           if monster_type_to_spawn.nil?
@@ -222,6 +215,21 @@ module Gemwarrior
             puts
           else
             monsters_abounding.push(monster_type_to_spawn)
+          end
+        end
+      # normal location spawn
+      elsif should_spawn_monster?
+        self.checked_for_monsters = true
+        self.monsters_abounding = []
+        random_monster = nil
+
+        # get random non-boss monster
+        loop do
+          random_monster = monsters_available[rand(0..monsters_available.length-1)].clone
+
+          if !random_monster.is_boss && self.monster_level_range.include?(random_monster.level)
+            monsters_abounding.push(random_monster)
+            break
           end
         end
       else
