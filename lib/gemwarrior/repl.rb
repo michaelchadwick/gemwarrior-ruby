@@ -149,85 +149,6 @@ module Gemwarrior
       puts '* Most commands can be abbreviated to their first letter  *'
     end
 
-    def print_options
-      puts
-      puts 'Gem Warrior Options'.colorize(:yellow)
-      puts '======================='.colorize(:yellow)
-      puts 'Change whether sound is played, which sound system to use, what game volume is, or whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set)'
-      puts
-      puts " (1) SOUND ENABLED : #{GameOptions.data['sound_enabled']}"
-      puts " (2) SOUND SYSTEM  : #{GameOptions.data['sound_system']}"
-      puts " (3) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
-      puts " (4) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
-      puts
-      puts '======================='
-      puts
-      puts 'Enter option number to change value, or any other key to return to main menu.'
-      print '[GAME_OPTIONS]> '
-
-      answer = STDIN.getch
-
-      case answer
-      when '1'
-        print answer
-        GameOptions.data['sound_enabled'] = !GameOptions.data['sound_enabled']
-        print_options
-      when '2'
-        print answer
-        print "\n"
-        print_sound_system_selection
-        print_options
-      when '3'
-        print answer
-        print "\n"
-        print 'Enter a volume from 0.0 to 1.0: '
-        new_vol = gets.chomp.to_f.abs
-        if new_vol >= 0.0 and new_vol <= 1.0
-          GameOptions.data['sound_volume'] = new_vol
-        else
-          puts 'Not a valid volume.'
-        end
-        print_options
-      when '4'
-        print answer
-        GameOptions.data['use_wordnik'] = !GameOptions.data['use_wordnik']
-        print_options
-      else
-        print answer
-        return
-      end
-    end
-
-    def print_sound_system_selection
-      puts
-      puts 'Sound System Selection'.colorize(:yellow)
-      puts '========================'.colorize(:yellow)
-      puts
-      print ' (1) WIN32-SOUND '
-      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('win32-sound')
-      print "\n"
-      print ' (2) FEEP        '
-      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('feep')
-      print "\n"
-      puts
-      puts 'Enter option number to select sound system, or any other key to exit.'
-      puts 'Note: win32-sound only works on Windows and will break the game is sound is enabled on non-Windows machines. Feep is cross-platform, but very slow and buggy, so use at your discretion!'
-      puts
-      print '[SOUND_SYSTEM]> '
-      answer = STDIN.getch.chomp.downcase
-      
-      case answer
-      when '1'
-        GameOptions.add 'sound_system', 'win32-sound'
-        print_sound_system_selection
-      when '2'
-        GameOptions.add 'sound_system', 'feep'
-        print_sound_system_selection
-      else
-        return
-      end
-    end
-
     def display_log_of_attempts
       if File.exist?(GameOptions.data['log_file_path']) and !File.zero?(GameOptions.data['log_file_path'])
         File.open(GameOptions.data['log_file_path']).readlines.each do |line|
@@ -271,18 +192,103 @@ module Gemwarrior
       end
     end
 
+    def print_options_sound_sytem
+      puts
+      puts 'Sound System Selection'.colorize(:yellow)
+      puts '================================='.colorize(:yellow)
+      puts
+      print ' (1) WIN32-SOUND '
+      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('win32-sound')
+      print "\n"
+      print ' (2) FEEP        '
+      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('feep')
+      print "\n"
+      puts
+      puts 'Note: WIN32-SOUND is Windows-only, and will break the game if sound is enabled on non-Windows machines.'
+      puts 'Note: FEEP is cross-platform, but VERY SLOW and BUGGY, so use at your discretion!'
+      puts
+      puts '================================='.colorize(:yellow)
+      puts
+      puts 'Enter option number to select sound system, or any other key to exit.'
+      puts
+      print '[GW_OPTS]-[SOUND_SYSTEM]> '
+      answer = STDIN.getch.chomp.downcase
+
+      case answer
+      when '1'
+        GameOptions.add 'sound_system', 'win32-sound'
+        print_options_sound_sytem
+      when '2'
+        GameOptions.add 'sound_system', 'feep'
+        print_options_sound_sytem
+      else
+        return
+      end
+    end
+
+    def print_options
+      puts
+      puts 'Gem Warrior General Options'.colorize(:yellow)
+      puts '================================='.colorize(:yellow)
+      puts
+      puts 'Change several sound (quite experimental for now) options, and whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set).'
+      puts
+      puts " (1) SOUND ENABLED : #{GameOptions.data['sound_enabled']}"
+      puts " (2) SOUND SYSTEM  : #{GameOptions.data['sound_system']}"
+      puts " (3) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
+      puts " (4) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
+      puts
+      puts '================================='.colorize(:yellow)
+      puts
+      puts 'Enter option number to change value, or any other key to return to main menu.'
+      puts
+      print '[GW_OPTS]> '
+
+      answer = STDIN.getch
+
+      case answer
+      when '1'
+        print answer
+        GameOptions.data['sound_enabled'] = !GameOptions.data['sound_enabled']
+        print_options
+      when '2'
+        print answer
+        print "\n"
+        print_options_sound_sytem
+        print_options
+      when '3'
+        print answer
+        print "\n"
+        print 'Enter a volume from 0.0 to 1.0: '
+        new_vol = gets.chomp.to_f.abs
+        if new_vol >= 0.0 and new_vol <= 1.0
+          GameOptions.data['sound_volume'] = new_vol
+        else
+          puts 'Not a valid volume.'
+        end
+        print_options
+      when '4'
+        print answer
+        GameOptions.data['use_wordnik'] = !GameOptions.data['use_wordnik']
+        print_options
+      else
+        print answer
+        return
+      end
+    end
+
     def print_main_menu
       puts
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
+      puts ' (R)esume Game'.colorize(:green) if save_file_exist?
       puts ' (N)ew Game'
-      puts ' (R)esume Game' if save_file_exist?
       puts ' (A)bout'
       puts ' (H)elp'
       puts ' (O)ptions'
       puts ' (L)og of Attempts'
       puts ' (C)heck for Updates'
-      puts ' (E)xit'
+      puts ' (E)xit'.colorize(:red)
       puts '======================='
       puts
     end
@@ -339,7 +345,7 @@ module Gemwarrior
         puts choice
         check_for_new_release
         run_main_menu
-      when 'e', 'x'
+      when 'e', 'x', 'q'
         puts choice
         puts MAIN_MENU_QUIT_MESSAGE
         game.update_options_file
