@@ -42,7 +42,7 @@ module Gemwarrior
           level:    5,   xp_start:   600,
           hp_max:   70,  stam_max:   45, 
           atk_lo:   7,   atk_hi:     8, 
-          defense:  8,  dexterity:   9,
+          defense:  8,   dexterity:  9,
           special_abilities: :graniton
         }
       when 6
