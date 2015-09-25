@@ -27,7 +27,7 @@ module Gemwarrior
           hp_max:   45,  stam_max:   30, 
           atk_lo:   3,   atk_hi:     5, 
           defense:  5,   dexterity:  6,
-          special_abilities: :rock_slide
+          special_abilities: :gleam
         }
       when 4
         {
@@ -35,7 +35,7 @@ module Gemwarrior
           hp_max:   55,  stam_max:   35, 
           atk_lo:   5,   atk_hi:     6, 
           defense:  6,   dexterity:  8,
-          special_abilities: :stone_face
+          special_abilities: :rock_slide
         }
       when 5
         { 
@@ -51,7 +51,7 @@ module Gemwarrior
           hp_max:   85,  stam_max:   60, 
           atk_lo:   8,   atk_hi:     10, 
           defense:  10,  dexterity:  11,
-          special_abilities: :gleam
+          special_abilities: :stone_face
         }
       when 7
         { 
@@ -94,15 +94,16 @@ module Gemwarrior
 
     def self.get_ability_description(ability)
       case ability
-      when :rocking_vision
+      when :rocking_vision # LV2
         'Allows you to see the enemy hit points while in battle.'
-      when :rock_slide
+      when :gleam          # LV3
+        'The map now shows every place in Jool, whether you have been there or not.'
+      when :rock_slide     # LV4
         'Adds a random boost to the player\'s attack in battle.'
-      when :stone_face
-        'Chance to auto-win in battle against any non-boss monster (does not work in arena or if ambushed).'
-      when :graniton
+      when :graniton       # LV5
         'Chance to be much more accurate in your attacks.'
-      #when :gleam
+      when :stone_face     # LV6
+        'Chance to auto-win in battle against any non-boss monster (does not work in arena or if ambushed).'
       #when :break_through
       else
         'Unsure, but it\'s probably cool!'

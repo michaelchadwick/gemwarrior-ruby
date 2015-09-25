@@ -12,7 +12,7 @@ module Gemwarrior
     ATTEMPT_SUCCESS_LO_DEFAULT  = 0
     ATTEMPT_SUCCESS_HI_DEFAULT  = 100
     MISS_CAP_DEFAULT            = 20
-    LV3_MOD_LO                  = 6
+    LV4_ROCK_SLIDE_MOD_LO           = 6
     LV5_MOD_LO                  = 7
     LV5_MOD_HI                  = 14
     ESCAPE_TEXT                 = '** POOF **'
@@ -64,7 +64,7 @@ module Gemwarrior
         monster_attacks_player
       end
       
-      # LV4:STONE_FACE modifier (chance to auto-win)
+      # LV6:STONE_FACE modifier (chance to auto-win)
       # Doesn't work against bosses, nor if battle is an event or in the arena
       if player.special_abilities.include?(:stone_face) && !monster.is_boss && !is_event && !is_arena
         level_diff = (player.level - monster.level) * 4
@@ -73,7 +73,7 @@ module Gemwarrior
 
         if GameOptions.data['debug_mode']
           puts
-          puts "  (MOD) LV4: Stone Face"
+          puts "  (MOD) LV6: Stone Face"
           puts "  SUCCESS_RANGE: #{chance_range}"
           puts "  SUCCESS_ROLL : #{roll}"
         end
@@ -299,19 +299,19 @@ module Gemwarrior
           ### DEBUG:BEAST_MODE modifier (ludicrously higher damage range)
           if GameOptions.data['beast_mode']
             dmg_range = BEAST_MODE_ATTACK_LO..BEAST_MODE_ATTACK_HI
-          ### LV3:ROCK_SLIDE modifier (increased damage range)
+          ### LV4:ROCK_SLIDE modifier (increased damage range)
           elsif player.special_abilities.include?(:rock_slide)
             lo_boost = rand(0..9)
             hi_boost = lo_boost + rand(5..10)
 
             if GameOptions.data['debug_mode']
               puts
-              puts "  (MOD) LV3: Rock Slide"
+              puts '  (MOD) LV4: Rock Slide'
               puts "  Rock Slide lo_boost: #{lo_boost}"
               puts "  Rock Slide hi_boost: #{hi_boost}"
             end
 
-            if lo_boost >= LV3_MOD_LO
+            if lo_boost >= LV4_ROCK_SLIDE_MOD_LO
               puts "  You use Rock Slide for added damage!"
               dmg_range = (player.atk_lo + lo_boost)..(player.atk_hi + hi_boost)
             else

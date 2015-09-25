@@ -236,7 +236,7 @@ module Gemwarrior
           if self.player.cur_coords.eql?(cur_map_coords)
             print "|#{'O'.colorize(:cyan)}|"
           elsif location_by_coords(cur_map_coords)
-            if GameOptions.data['debug_mode'] || location_by_coords(cur_map_coords).visited
+            if GameOptions.data['debug_mode'] || location_by_coords(cur_map_coords).visited || self.player.special_abilities.include?(:gleam)
               print '|X|'
             else
               print '| |'
