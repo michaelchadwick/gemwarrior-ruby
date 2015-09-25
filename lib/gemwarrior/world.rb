@@ -222,7 +222,11 @@ module Gemwarrior
           print '---'
         end
         print "\n"
-        print "#{(WORLD_DIM_HEIGHT - 1) - count_y} "
+        if GameOptions.data['debug_mode']
+          print "#{(WORLD_DIM_HEIGHT - 1) - count_y} "
+        else
+          print ' '
+        end
         0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
           cur_map_coords = {
             x: count_x,
@@ -232,7 +236,11 @@ module Gemwarrior
           if self.player.cur_coords.eql?(cur_map_coords)
             print "|#{'O'.colorize(:cyan)}|"
           elsif location_by_coords(cur_map_coords)
-            print '|X|'
+            if GameOptions.data['debug_mode'] || location_by_coords(cur_map_coords).visited
+              print '|X|'
+            else
+              print '| |'
+            end
           else
             print '| |'
           end
@@ -246,7 +254,11 @@ module Gemwarrior
       puts
       print '   '
       0.upto(WORLD_DIM_WIDTH - 1) do |count_x|
-        print "#{count_x}  "
+        if GameOptions.data['debug_mode']
+          print "#{count_x}  "
+        else
+          print ' '
+        end
       end
       if GameOptions.data['debug_mode']
         puts

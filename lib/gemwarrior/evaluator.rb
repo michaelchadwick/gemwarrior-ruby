@@ -706,7 +706,7 @@ module Gemwarrior
 
     def try_to_move_player(direction)
       if world.can_move?(direction)
-        world.player.go(world.locations, direction)
+        world.player.go(world, direction)
         player_cur_location = world.location_by_coords(world.player.cur_coords)
         player_cur_location.checked_for_monsters = false
         world.describe(player_cur_location)

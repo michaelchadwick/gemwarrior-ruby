@@ -15,7 +15,7 @@ module Gemwarrior
     end
 
     def use(world)
-      puts 'You unfold the piece of worn canvas, and study the markings upon it.'
+      puts 'You unfold the piece of worn canvas and study the markings upon it, always making sure to update it with new places you find.'
 
       { type: 'action', data: 'map' }
     end

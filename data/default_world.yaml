@@ -3,6 +3,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: home
   name_display: Home
+  visited: true
   description: The little, unimportant, decrepit shack that you live in. What the place lacks in decisive magnanimity is made up for in cozy squalidness. Your bed covers much of the northern corner. Your beloved family chest sits at the foot of the bed.
   coords: &2
     :x: 5
@@ -91,6 +92,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: cave-entrance
   name_display: Cave (Entrance)
+  visited: false
   description: A nearby, dank entrance to a cavern, surely filled with stacktites,
     stonemites, and rocksites.
   coords:
@@ -114,6 +116,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: cave-antechamber
   name_display: Cave (Antechamber)
+  visited: false
   description: Now inside the cavern, you confirm there are stacktites, stonemites,
     rocksites, and even some pebblejites.
   coords:
@@ -167,6 +170,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: cave-nook
   name_display: Cave (Nook)
+  visited: false
   description: A depression in the cave wall casts a shadow over a small rock shelf.
   coords:
     :x: 7
@@ -189,6 +193,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: cave-dropoff
   name_display: Cave (Dropoff)
+  visited: false
   description: Caves do not usually feature sudden chasms spilling down into an unknowable
     void, but this one does.
   coords:
@@ -226,6 +231,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-south_entrance
   name_display: Metal Tunnel (South Entrance)
+  visited: false
   description: You are in a tightly-enclosed tunnel running under the ground. The
     walls are made of shiny, smooth material you think may be some kind of metal.
     It is claustrophobic, to say the least.
@@ -250,6 +256,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-8_2
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -274,6 +281,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-8_3
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -298,6 +306,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-8_4
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -322,6 +331,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-7_4
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -346,6 +356,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-6_4
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -370,6 +381,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-6_5
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -394,6 +406,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-5_5
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -418,6 +431,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: tunnel_alcove
   name_display: Tunnel Alcove
+  visited: false
   description: A moderately-sized alcove seems to have been blown out of the side
     of tunnel here, almost as if an actual bomb detonated, the remainder of the wall
     a mix of rock and wires.
@@ -456,6 +470,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-5_6
   name_display: Metal Tunnel
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -480,6 +495,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: metal_tunnel-north_entrance
   name_display: Metal Tunnel (North Entrance)
+  visited: false
   description: The walls of this underground tunnel shine, as if some otherworldly
     light source emanates directly from them. It is cold and narrow and you are not
     sure you are a huge fan of it.
@@ -518,6 +534,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-southeast
   name_display: Snow Fields (Southeast)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -541,6 +558,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-south_southeast
   name_display: Snow Fields (South-Southeast)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -564,6 +582,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-south
   name_display: Snow Fields (South)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -587,6 +606,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-south_southwest
   name_display: Snow Fields (South-Southwest)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -610,6 +630,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-southwest
   name_display: Snow Fields (Southwest)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -633,6 +654,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-northwest
   name_display: Snow Fields (Northwest)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -669,6 +691,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-north_northwest
   name_display: Snow Fields (North-Northwest)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -692,6 +715,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-north
   name_display: Snow Fields (North)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -715,6 +739,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-north_northeast
   name_display: Snow Fields (North-Northeast)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -738,6 +763,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: snow_fields-northeast
   name_display: Snow Fields (Northeast)
+  visited: false
   description: It is as if the color palette for this still and frozen scene before
     you consisted only of whites, off-whites, and vanilla.
   coords:
@@ -761,6 +787,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: cave-causeway
   name_display: Cave (Causeway)
+  visited: false
   description: Paths lead north and west as a dank, musty smell permeates your sinuses.
   coords:
     :x: 8
@@ -797,6 +824,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: forest-southeast
   name_display: Forest (Southeast)
+  visited: false
   description: Trees exist here, in droves.
   coords:
     :x: 4
@@ -833,6 +861,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: forest-northeast
   name_display: Forest (Northeast)
+  visited: false
   description: You see much foliage.
   coords:
     :x: 4
@@ -855,6 +884,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: forest-northwest
   name_display: Forest (Northwest)
+  visited: false
   description: The amount of leaves and branches and trunks you can see boggles the
     mind.
   coords:
@@ -892,6 +922,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: forest-southwest
   name_display: Forest (Southwest)
+  visited: false
   description: While you continue to be impressed at the sheer size of this forest, it feels like it never ends, making you feel lost. Thankfully, there is an inexplicable bookcase here.
   coords:
     :x: 3
@@ -927,6 +958,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-southeast
   name_display: Pain Quarry (Southeast)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 2
@@ -949,6 +981,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-east
   name_display: Pain Quarry (East)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 2
@@ -971,6 +1004,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-central
   name_display: Pain Quarry (Central)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -993,6 +1027,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-south
   name_display: Pain Quarry (South)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -1015,6 +1050,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-west
   name_display: Pain Quarry (West)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 0
@@ -1050,6 +1086,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-northwest
   name_display: Pain Quarry (Northwest)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 0
@@ -1072,6 +1109,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: pain_quarry-north
   name_display: Pain Quarry (North)
+  visited: false
   description: Horrible terribleness emanates from this desolate land of unkind misery.
   coords:
     :x: 1
@@ -1094,6 +1132,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-outskirts
   name_display: Plains (Outskirts)
+  visited: false
   description: A lot of grass and nothing, stretching out northward.
   coords:
     :x: 5
@@ -1116,6 +1155,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-fields
   name_display: Plains (Fields)
+  visited: false
   description: Now you are plum smack dab in the middle of rolling fields.
   coords:
     :x: 5
@@ -1138,6 +1178,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-south_of_river
   name_display: Plains (South of River)
+  visited: false
   description: A raging river borders the northern side of this bucolic vista. Much
     raucous noise comes from the east.
   coords:
@@ -1161,6 +1202,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-south_southeast
   name_display: Plains (South-Southeast)
+  visited: false
   description: A path north of you descends into a valley, but otherwise the plains stretch out all
     around. The noise from the east is quite loud, and a building can be seen in the
     near distance.
@@ -1185,6 +1227,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-arena_entrance
   name_display: Plains (Arena Entrance)
+  visited: false
   description: Well above the noise of the raging river nearby, the din of the mighty
     Arena to the east reaches its near fever-pitch just outside. The door, and battle,
     beckons.
@@ -1225,6 +1268,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: arena
   name_display: Arena
+  visited: false
   description: Dangerous and risky, the Arena allows would-be monster-slayers and
     adventurers fight against an infinite number of beasts in order to test their
     mettle and improve their skill...for a small fee, of course.
@@ -1260,6 +1304,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-south_of_bridge
   name_display: Plains (South of Bridge)
+  visited: false
   description: To the north of these fields lies a bridge that may be crossable.
   coords:
     :x: 4
@@ -1282,6 +1327,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-hut
   name_display: Plains (Hut)
+  visited: false
   description: A straw hut sits alone, curiously, in a patch of grass, sticks, and
     straw.
   coords:
@@ -1315,6 +1361,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: river_bridge
   name_display: River Bridge
+  visited: false
   description: Sturdy and safe, this bridge will get you across the otherwise unpassable
     river you see below. Unfortunately, there is a giant in front of you, being quit menacing.
   coords:
@@ -1338,6 +1385,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: plains-north_of_bridge
   name_display: Plains (North of Bridge)
+  visited: false
   description: North of the river feels similar to south of the river, as you continue
     to be surrounded by grass and grass and, well, grass.
   coords:
@@ -1361,6 +1409,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: peridover_valley-south
   name_display: Peridover Valley (South)
+  visited: false
   description: The road slopes down slightly here, but in the near distance you can
     see that it slopes way more slopily. A mighty river ends in a bay to your west.
   coords:
@@ -1384,6 +1433,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: peridover_valley-central
   name_display: Peridover Valley (Central)
+  visited: false
   description: The Peridover Valley is in full effect here, sloping down into a reverse
     plateau. Bones of wild animals litter the area.
   coords:
@@ -1407,6 +1457,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: peridover_valley-northeast
   name_display: Peridover Valley (Northeast)
+  visited: false
   description: Sloping way down to the west, but leveling off here, a din of civilization
     calls from the north.
   coords:
@@ -1430,6 +1481,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: south_of_spinelia
   name_display: South of Spinelia
+  visited: false
   description: Northwardly, you can hear general town noise, such as people scuffling,
     nattering, and more or less existing in a people kind of way.
   coords:
@@ -1466,6 +1518,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: spinelia-southwest
   name_display: Spinelia (Southwest)
+  visited: false
   description: Near the front entrance to Spinelia is the market corner. Merchants
     are all around, hawking wares and giving those nearby walking stares.
   coords:
@@ -1501,6 +1554,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: spinelia-southeast
   name_display: Spinelia (Southeast)
+  visited: false
   description: The southeast of Spinelia contains a few people, just kind of
     hanging out.
   coords:
@@ -1552,6 +1606,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: spinelia-northeast
   name_display: Spinelia (Northeast)
+  visited: false
   description: Northeasternly speaking, Spinelia contains a pen with a few animals
     calmly eating food, and not really having much impact on their environment.
   coords:
@@ -1611,6 +1666,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: spinelia-northwest
   name_display: Spinelia (Northwest)
+  visited: false
   description: Residences line the northwest corner of Spinelia, each one similar to
     each other, made of granite and stone, featuring a single window and a single
     door. One particular house's hallmark appears to be a rather fanciful woman leaning
@@ -1648,6 +1704,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: rock_piles
   name_display: Rock Piles
+  visited: false
   description: Piles of rocks, both big and small, are placed here and there, a testament
     to someone's surely back-breaking labor.
   coords:
@@ -1724,6 +1781,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-entryway
   name_display: Sky Tower (Entryway)
+  visited: false
   description: You feel unsettled as you gaze upon the wondrous proportions of Emerald's
     home.
   coords:
@@ -1760,6 +1818,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-cloud_garden
   name_display: Sky Tower (Cloud Garden)
+  visited: false
   description: A perfectly-maintained array of wispy flowers and other ethereal plantlife
     contained within a cumulonimbus barrier.
   coords:
@@ -1827,6 +1886,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-armory
   name_display: Sky Tower (Armory)
+  visited: false
   description: Weapons of all kinds litter the ground and are hung on hooks from the
     wall. Tower assailants beware/rejoice!
   coords:
@@ -1863,6 +1923,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-west_hallway
   name_display: Sky Tower (West Hallway)
+  visited: false
   description: The hallway seems to stretch on for days.
   coords:
     :x: 7
@@ -1885,6 +1946,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-waterfalls
   name_display: Sky Tower (Waterfalls)
+  visited: false
   description: The seemingly neverending deluge of water causes this room to be quite
     loud, yet pretty.
   coords:
@@ -1922,6 +1984,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-massive_door
   name_display: Sky Tower (Massive Door)
+  visited: false
   description: Before you lies a massive collection of cumulus clouds that form into
     a seemingly impenetrable door, beyond which may well be your doom.
   coords:
@@ -1960,6 +2023,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-throne_room
   name_display: Sky Tower (Throne Room)
+  visited: false
   description: There, on a mighty seat made of broken dreams, sits Emerald himself,
     staring at you coldly, silently.
   coords:
@@ -1996,6 +2060,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-lounge
   name_display: Sky Tower (Lounge)
+  visited: false
   description: Nothing but a simple couch, which looks very comfortable, exists in
     this corner of the tower.
   coords:
@@ -2032,6 +2097,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-east_hallway
   name_display: Sky Tower (East Hallway)
+  visited: false
   description: Longish and neverending is what you might say about this stretch of
     the tower.
   coords:
@@ -2055,6 +2121,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: sky_tower-kitchen
   name_display: Sky Tower (Kitchen)
+  visited: false
   description: This kitchen looks well-used, as appliances abound, and leftover food
     sits atop counters.
   coords:
@@ -2105,6 +2172,7 @@ locations:
 - !ruby/object:Gemwarrior::Location
   name: queen_room
   name_display: Queen Room
+  visited: false
   description: Your surroundings contain four walls with no windows, a vaulted ceiling above, and a tile floor below, all immaculately decorated. A small throne lies before you with a woman sitting on it. You must be in the presence of Queen Ruby herself.
   coords:
     :x: 5

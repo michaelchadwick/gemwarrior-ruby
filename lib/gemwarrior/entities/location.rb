@@ -20,7 +20,8 @@ module Gemwarrior
                   :items,
                   :monsters_abounding,
                   :bosses_abounding,
-                  :checked_for_monsters
+                  :checked_for_monsters,
+                  :visited
 
     def initialize(options)
       self.name                 = options.fetch(:name)
@@ -33,6 +34,7 @@ module Gemwarrior
       self.monsters_abounding   = options.fetch(:monsters_abounding)
       self.bosses_abounding     = options.fetch[:bosses_abounding]
       self.checked_for_monsters = false
+      self.visited              = false
     end
 
     def describe

@@ -82,6 +82,9 @@ module Gemwarrior
       ## Throne Room
       world.location_by_name('sky_tower-throne_room').bosses_abounding.push(Gemwarrior.const_get('Emerald').new)
 
+      # mark home as visited
+      world.location_by_name('home').visited = true
+
       # create options file if not existing
       update_options_file
 

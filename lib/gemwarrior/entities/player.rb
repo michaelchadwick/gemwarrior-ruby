@@ -218,7 +218,7 @@ module Gemwarrior
       inventory.list_contents
     end 
 
-    def go(locations, direction)
+    def go(world, direction)
       case direction
       when 'north', 'n'
         self.cur_coords = {
@@ -249,6 +249,7 @@ module Gemwarrior
         }
         direction_text = '<<<'
       end
+      world.location_by_coords(self.cur_coords).visited = true
       print_traveling_text(direction_text)
 
       # stats
