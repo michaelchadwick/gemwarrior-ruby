@@ -59,7 +59,7 @@ module Gemwarrior
           hp_max:   100, stam_max:   80, 
           atk_lo:   10,  atk_hi:     12, 
           defense:  13,  dexterity:  14,
-          special_abilities: :break_through
+          special_abilities: :breakthru
         }
       else
         {
@@ -104,7 +104,8 @@ module Gemwarrior
         'Chance to be much more accurate in your attacks.'
       when :stone_face     # LV6
         'Chance to auto-win in battle against any non-boss monster (does not work in arena or if ambushed).'
-      #when :break_through
+      when :breakthru
+        'Teleport to any location, given that you can remember its name.'
       else
         'Unsure, but it\'s probably cool!'
       end

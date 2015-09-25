@@ -27,6 +27,9 @@ module Gemwarrior
     ERROR_DIRECTION_PARAM_INVALID         = 'You cannot go to that place.'
     ERROR_ATTACK_PARAM_MISSING            = 'You cannot just "attack". You gotta choose something to attack.'
     ERROR_ATTACK_PARAM_INVALID            = 'That monster does not exist here or can\'t be attacked.'
+    ERROR_BREAKTHRU_PARAM_MISSING         = 'You cannot just "breakthru". You gotta specify a location name.'
+    ERROR_BREAKTHRU_PARAM_INVALID         = 'You cannot breakthru to that place.'
+    ERROR_BREAKTHRU_INEXPERIENCED         = 'You are not experienced enough to perform that feat.'
     ERROR_TAKE_PARAM_MISSING              = 'You cannot just "take". You gotta choose something to take.'
     ERROR_USE_PARAM_MISSING               = 'You cannot just "use". You gotta choose something to use.'
     ERROR_USE_PARAM_INVALID               = 'You cannot use that, as it does not exist here or in your inventory.'
@@ -77,8 +80,8 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands     = %w(character look rest take talk inventory use drop equip unequip go north east south west attack change version checkupdate help quit quit!)
-      self.aliases      = %w(c l r t tk i u d eq ue g n e s w a ch v cu h q qq)
+      self.commands     = %w(character look rest take talk inventory use drop equip unequip go north east south west attack breakthru change version checkupdate help quit quit!)
+      self.aliases      = %w(c l r t tk i u d eq ue g n e s w a br ch v cu h q qq)
       self.extras       = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
@@ -97,6 +100,7 @@ module Gemwarrior
         'Go south (shortcut)',
         'Go west (shortcut)',
         'Attack a monster (also fight)',
+        'Teleport to a location (if you are experienced enough)',
         'Change attribute',
         'Display game version',
         'Check for newer game releases',
@@ -664,6 +668,32 @@ module Gemwarrior
           else
             ERROR_ATTACK_PARAM_INVALID
           end
+        end
+      when 'breakthru', 'br'
+        if world.player.special_abilities.include?(:breakthru)
+          if param1.nil?
+            return ERROR_BREAKTHRU_PARAM_MISSING
+          else
+            place_to_match = tokens[1..tokens.length].join(' ').downcase
+            locations = []
+            world.locations.each do |l|
+              locations << l.name.downcase
+            end
+            if locations.include?(place_to_match)
+              world.player.cur_coords = world.location_coords_by_name(place_to_match)
+            else
+              return ERROR_BREAKTHRU_PARAM_INVALID
+            end
+          end
+
+          # stats
+          world.player.movements_made += 1
+
+          Animation.run(phrase: '** BREAK THROUGH! **')
+          player_cur_location = world.location_by_coords(world.player.cur_coords)
+          return world.describe(player_cur_location)
+        else
+          ERROR_BREAKTHRU_INEXPERIENCED
         end
       when 'change', 'ch'
         if param1.nil?
