@@ -20,9 +20,7 @@ module Gemwarrior
     include PlayerLevels
     include Formatting
 
-    attr_accessor :stam_cur,
-                  :stam_max,
-                  :cur_coords,
+    attr_accessor :cur_coords,
                   :special_abilities,
                   :monsters_killed,
                   :bosses_killed,
@@ -195,10 +193,6 @@ module Gemwarrior
       end
     end
 
-    def stamina_dec
-      self.stam_cur = stam_cur - 1
-    end
-
     def modify_name
       print 'Enter new name: '
 
@@ -342,9 +336,6 @@ module Gemwarrior
           self.hp_cur = new_stats[:hp_max]
           self.hp_max = new_stats[:hp_max]
           puts "You now have #{self.hp_max.to_s.colorize(:green)} hit points!"
-          self.stam_cur = new_stats[:stam_max]
-          self.stam_max = new_stats[:stam_max]
-          puts "You now have #{self.stam_max.to_s.colorize(:green)} stamina points!"
           self.atk_lo = new_stats[:atk_lo]
           self.atk_hi = new_stats[:atk_hi]
           puts "You now have an attack of #{self.atk_lo.to_s.colorize(:green)}-#{self.atk_hi.to_s.colorize(:green)}!"

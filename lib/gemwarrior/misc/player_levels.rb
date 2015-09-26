@@ -8,7 +8,7 @@ module Gemwarrior
       when 1
         {
           level:    1,   xp_start:   0,
-          hp_max:   30,  stam_max:   20, 
+          hp_max:   30,
           atk_lo:   1,   atk_hi:     2, 
           defense:  1,   dexterity:  3,
           special_abilities: nil
@@ -16,7 +16,7 @@ module Gemwarrior
       when 2
         { 
           level:    2,   xp_start:   50,
-          hp_max:   35,  stam_max:   25, 
+          hp_max:   35,
           atk_lo:   2,   atk_hi:     3, 
           defense:  3,   dexterity:  4,
           special_abilities: :rocking_vision
@@ -24,7 +24,7 @@ module Gemwarrior
       when 3
         { 
           level:    3,   xp_start:   120,
-          hp_max:   45,  stam_max:   30, 
+          hp_max:   45,
           atk_lo:   3,   atk_hi:     5, 
           defense:  5,   dexterity:  6,
           special_abilities: :gleam
@@ -32,7 +32,7 @@ module Gemwarrior
       when 4
         {
           level:    4,   xp_start:   250,
-          hp_max:   55,  stam_max:   35, 
+          hp_max:   55,
           atk_lo:   5,   atk_hi:     6, 
           defense:  6,   dexterity:  8,
           special_abilities: :rock_slide
@@ -40,7 +40,7 @@ module Gemwarrior
       when 5
         { 
           level:    5,   xp_start:   600,
-          hp_max:   70,  stam_max:   45, 
+          hp_max:   70,
           atk_lo:   7,   atk_hi:     8, 
           defense:  8,   dexterity:  9,
           special_abilities: :graniton
@@ -48,7 +48,7 @@ module Gemwarrior
       when 6
         { 
           level:    6,   xp_start:   1000,
-          hp_max:   85,  stam_max:   60, 
+          hp_max:   85,
           atk_lo:   8,   atk_hi:     10, 
           defense:  10,  dexterity:  11,
           special_abilities: :stone_face
@@ -56,7 +56,7 @@ module Gemwarrior
       when 7
         { 
           level:    7,   xp_start:   1500,
-          hp_max:   100, stam_max:   80, 
+          hp_max:   100,
           atk_lo:   10,  atk_hi:     12, 
           defense:  13,  dexterity:  14,
           special_abilities: :breakthru
@@ -64,7 +64,7 @@ module Gemwarrior
       else
         {
           level:    8,   xp_start:   10000,
-          hp_max:   200, stam_max:   200,
+          hp_max:   200,
           atk_lo:   50,  atk_hi:     100,
           defense:  50,  dexterity:  100,
           special_abilities: nil

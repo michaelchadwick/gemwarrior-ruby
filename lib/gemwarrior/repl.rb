@@ -519,7 +519,7 @@ module Gemwarrior
 
     def prompt
       prompt_template =  "\n"
-      prompt_template += "[LV:%2s][XP:%3s][ROX:%3s] [HP:%3s/%-3s][STM:%2s/%-2s] [".colorize(:yellow)
+      prompt_template += "[LV:%2s][XP:%3s][ROX:%3s][HP:%3s/%-3s] [".colorize(:yellow)
       prompt_template += "%s".colorize(:green)
       prompt_template += " @ ".colorize(:yellow)
       prompt_template += "%s".colorize(:cyan)
@@ -532,8 +532,6 @@ module Gemwarrior
         world.player.rox,
         world.player.hp_cur,
         world.player.hp_max,
-        world.player.stam_cur,
-        world.player.stam_max,
         world.player.name,
         world.location_by_coords(world.player.cur_coords).name_display
       ]

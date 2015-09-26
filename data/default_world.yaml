@@ -2221,8 +2221,6 @@ player: !ruby/object:Gemwarrior::Player
     items: []
     weapon: 
   rox: 0
-  stam_cur: 20
-  stam_max: 20
   cur_coords: *2
   special_abilities: []
   monsters_killed: 0
