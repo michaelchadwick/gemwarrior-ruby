@@ -54,9 +54,55 @@ module Gemwarrior
           puts
           puts '  Suddenly, the Shifty Woman appears out of nowhere, and stands between you and Emerald!'
           STDIN.getc
-          Person.new.speak('Hey! The developer hasn\'t figured out what I\'m here to do, but I really hope you can defeat Emerald! Also, thanks for the shiny jewel!')
+          print '  '
+          Person.new.speak('Hey, friend. Now it is time to finally get my revenge on ol\' Emer!')
           STDIN.getc
-          puts '  The Shifty Woman\'s perplexing speech now over, she disappears.'
+          puts '  She brandishes a now-sharpened-to-a-fine-point-and-glowing version of the Sand Jewel you gave to her and plunges it deep into Emerald\'s side, causing him to scream in agony.'
+          puts
+          print '  '
+          Person.new.speak('THAT was for murdering my parents!')
+          STDIN.getc
+          puts '  She uses the hand not gripping the shiny blade to conjure up a small bolt of lightning, which she then flings directly at Emerald\'s chest.'
+          puts
+          print '  '
+          Person.new.speak('And THAT was for stealing the ShinyThing(tm)!')
+          STDIN.getc
+          puts '  Emerald growls mightily, looking quite put off at the turn of events.'
+          STDIN.getc
+          puts '  He is not without strength, however, and pulls the weapon from his body with one hand while conjuring a fireball with his other, sending it right back at the Shifty Woman. Her glee at delivering a seemingly crushing blow is thwarted as she crumples to the floor.'
+          STDIN.getc
+          puts '  Both combatants are breathing heavily and groaning through their injuries. The Shifty Woman looks pretty hurt, and begins eyeing an exit from this mess.'
+          STDIN.getc
+          print '  '
+          Person.new.speak('I may not have been able to finish you off, but my friend here will succeed where I and the land of Jool have failed. Goodbye and good luck!')
+           puts '  The Shifty Woman regains her compsure just enough to limp off to a back door, disappearing.'
+          STDIN.getc
+
+          if GameOptions.data['debug_mode']
+            puts
+            puts '  Emerald Stats Before Altercation'
+            puts "  HP   : #{monster.hp_cur}"
+            puts "  DEF  : #{monster.defense}"
+            puts "  A_LO : #{monster.atk_lo}"
+            puts "  A_HI : #{monster.atk_hi}"
+          end
+
+          monster.hp_cur -= (monster.hp_cur * 0.3).floor
+          monster.defense -= (monster.defense * 0.25).floor
+          monster.atk_lo -= (monster.atk_lo * 0.2).floor
+          monster.atk_hi -= (monster.atk_hi * 0.2).floor
+
+          if GameOptions.data['debug_mode']
+            puts
+            puts '  Emerald Stats After Altercation'
+            puts "  HP   : #{monster.hp_cur}"
+            puts "  DEF  : #{monster.defense}"
+            puts "  A_LO : #{monster.atk_lo}"
+            puts "  A_HI : #{monster.atk_hi}"
+            puts
+          end
+
+          puts '  Emerald has been wounded, but he is not done with this world yet. You approach him, wits about you, ready for battle.'
           world.shifty_has_jeweled = true
         end
       elsif monster_strikes_first?(is_arena, is_event)

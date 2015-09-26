@@ -15,13 +15,13 @@ module Gemwarrior
       self.name           = 'emerald'
       self.name_display   = 'Emerald'
       self.description    = 'A wily, beefy, tower of a man, Emerald looks to be a champion of both wisdom, from what you\'ve heard, AND strength, from what you plainly see. He sports a constant glint in his eyes as he faces you, dead-on.'
-      self.battlecry      = 'You\'ve come for the SparklyThing(tm), I see. To that I say: Ha ha ha ha ha! Prepare yourself fool: today your whole life crumbles!'
+      self.battlecry      = 'You\'ve come for the SparklyThing(tm), I see. Well, you cannot have it, because it is mine, and I will wield it to my own desire! Oh, you think you are good and I am evil? To that I say: Ha ha ha ha ha! Prepare yourself fool: today your whole life crumbles!'
       self.face           = 'gleaming'
       self.hands          = 'tantalizing'
       self.mood           = 'enraged'
 
       self.level          = 15
-      self.hp_cur         = rand((level * 6)..(level * 7))
+      self.hp_cur         = rand((level * 8)..(level * 9))
       self.hp_max         = hp_cur
       self.atk_lo         = rand((level * 2)..(level * 2.5).floor)
       self.atk_hi         = rand((level * 2.5).floor..(level * 3).floor)
