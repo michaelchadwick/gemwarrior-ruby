@@ -117,7 +117,7 @@ end
 def init_config
   Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
 
-  sound_system_default = OS.windows? ? 'win32-sound' : 'feep'
+  sound_system_default = OS.windows? ? 'win32-sound' : 'bloops'
   
   GameOptions.add 'sound_system',             sound_system_default
   GameOptions.add 'save_file_mode',           'Y'

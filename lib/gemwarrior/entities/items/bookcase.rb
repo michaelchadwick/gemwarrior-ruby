@@ -33,6 +33,7 @@ module Gemwarrior
 
           case answer
           when 'mineral'
+            Audio.play_synth(:uncover_secret)
             forest_southwest.paths[:west] = true
             puts
             Animation.run(phrase: OPEN_TEXT)

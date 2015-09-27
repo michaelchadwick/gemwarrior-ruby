@@ -1,25 +1,40 @@
 # lib/gemwarrior/misc/audio.rb
 # Audio cues using either synth or samples
-# Synth: win32-sound or feep, depending on platform
+# Synth: win32-sound, feep, or bloopsaphone depending on platform/choice
 # Samples: small wav files
 
 require_relative '../game_options'
-require_relative 'audio_cues'
-require_relative 'musical_notes'
 
 module Gemwarrior
   module Audio
-    def self.play_sample(audio_cue_symbol)
-      # future use
+    def self.init
+      if GameOptions.data['sound_system'].eql?('win32-sound')
+        begin
+          require 'win32/sound'
+        rescue LoadError => e
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Gem Warrior will be silent for now."
+        end
+      elsif GameOptions.data['sound_system'].eql?('feep')
+        begin
+          require 'feep'
+        rescue LoadError => e
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Gem Warrior will be silent for now."
+        end
+      elsif GameOptions.data['sound_system'].eql?('bloops')
+        begin
+          require 'bloops'
+        rescue LoadError => e
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}aphone'. Gem Warrior will be silent for now."
+        end
+      end
     end
 
     def self.play_synth(audio_cue_symbol)
       if GameOptions.data['sound_enabled']
-        # if Windows, use superior win32-sound library
-        if GameOptions.data['sound_system'].eql?('win32-sound')
-          require 'win32/sound'
+        case GameOptions.data['sound_system']
+        when 'win32-sound'
+          require_relative 'audio_cues'
           require_relative 'musical_notes'
-
           Thread.start do
             AudioCues.cues[audio_cue_symbol][:synth].each do |seq|
               threads = []
@@ -31,10 +46,8 @@ module Gemwarrior
               threads.each { |th| th.join }
             end
           end
-        # otherwise, use inferior feep library
-        elsif GameOptions.data['sound_system'].eql?('feep')
-          require 'feep'
-
+        when 'feep'
+          require_relative 'audio_cues'
           feep_defaults = {
             frequencies:  '440',
             waveform:     'sine',
@@ -42,7 +55,7 @@ module Gemwarrior
             duration:     500,
             notext:       true
           }
-      
+
           Thread.start do
             AudioCues.cues[audio_cue_symbol][:synth].each do |seq|
               seq = feep_defaults.merge(seq)
@@ -56,8 +69,35 @@ module Gemwarrior
               })
             end
           end
+        when 'bloops'
+          require_relative 'bloops_cues'
+          Thread.start do
+            BloopsCues.cues[audio_cue_symbol][:synth].each do |seq|
+              threads = []
+
+              seq.each do |note|
+                threads << Thread.new do
+                  b = Bloops.new
+                  b.tempo = 240
+                  snd = b.sound Bloops::SQUARE
+                  snd.punch = GameOptions.data['sound_volume']/2
+                  snd.sustain = 0.7
+                  snd.decay = 0.2
+                  b.tune snd, note[1]
+                  b.play
+                  sleep 0.1 while !b.stopped?
+                end
+              end
+
+              threads.each { |th| th.join }
+            end
+          end
         end
       end
+    end
+
+    def self.play_sample(audio_cue_symbol)
+      # future use
     end
   end
 end

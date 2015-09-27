@@ -88,6 +88,11 @@ module Gemwarrior
       # create options file if not existing
       update_options_file
 
+      # require needed files for selected sound_system if sound_enabled
+      if GameOptions.data['sound_enabled']
+        Audio.init
+      end
+
       # create the console
       self.evaluator  = Evaluator.new(world)
       self.repl       = Repl.new(self, world, evaluator)

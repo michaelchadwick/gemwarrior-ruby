@@ -93,13 +93,11 @@ module Gemwarrior
 
     self.add :intro, {
       synth: [
-        { frequencies: 'A3,E5',  duration: 50 },
-        { frequencies: 'B3,F5',  duration: 50 },
-        { frequencies: 'C4,G5',  duration: 50 },
-        { frequencies: 'D4,A5',  duration: 50 },
-        { frequencies: 'E4,B5',  duration: 50 },
-        { frequencies: 'F4,C6',  duration: 50 },
-        { frequencies: 'G4,B5,D6',  duration: 500 }
+        { frequencies: 'C3,G4',  duration: 50 },
+        { frequencies: 'D3,A4',  duration: 50 },
+        { frequencies: 'E3,B4',  duration: 50 },
+        { frequencies: 'F3,C5',  duration: 50 },
+        { frequencies: 'G3,B4,D5',  duration: 350 }
       ],
       sample: 'intro.wav'
     }
@@ -129,6 +127,19 @@ module Gemwarrior
         { frequencies: 'E4', duration: 75 }
       ],
       sample: 'player_travel.wav'
+    }
+
+    self.add :uncover_secret, {
+      synth: [
+        { frequencies: 'F5', duration: 150 },
+        { frequencies: 'E5', duration: 150 },
+        { frequencies: 'C#4', duration: 150 },
+        { frequencies: 'C4', duration: 150 },
+        { frequencies: 'D#5', duration: 150 },
+        { frequencies: 'F#5', duration: 150 },
+        { frequencies: 'A5', duration: 150 }
+      ],
+      sample: 'uncover_secret.wav'
     }
 
     self.add :win_game, {

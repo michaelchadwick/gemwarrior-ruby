@@ -541,7 +541,6 @@ module Gemwarrior
     end
 
     def monster_death
-      Audio.play_synth(:battle_win)
       puts "  YOU HAVE DEFEATED #{monster.name.upcase}!\n".colorize(:green)
 
       if monster.is_boss
@@ -557,6 +556,8 @@ module Gemwarrior
           # game ending: initiate
           return monster.initiate_ending(world)
         elsif monster.name.eql?('jaspern')
+          Audio.play_synth(:battle_win_boss)
+
           puts '  You just beat a MINIBOSS! Fantastic!'
           puts
 
@@ -565,11 +566,15 @@ module Gemwarrior
           # river bridge boss: initiate
           return monster.river_bridge_success(world)
         else
+          Audio.play_synth(:battle_win_boss)
+
           reward_player(monster)
 
           world.location_by_coords(player.cur_coords).remove_monster(monster.name)
         end
       else
+        Audio.play_synth(:battle_win_monster)
+
         # stats
         world.player.monsters_killed += 1
 

@@ -203,9 +203,17 @@ module Gemwarrior
       print ' (2) FEEP        '
       print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('feep')
       print "\n"
+      print ' (3) BLOOPS      '
+      print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('bloops')
+      print "\n"
       puts
-      puts 'Note: WIN32-SOUND is Windows-only, and will break the game if sound is enabled on non-Windows machines.'
-      puts 'Note: FEEP is cross-platform, but VERY SLOW and BUGGY, so use at your discretion!'
+      puts ' WIN32-SOUND : good quality; Windows-only'
+      puts ' FEEP        : cross-platform; VERY SLOW and BUGGY'
+      puts ' BLOOPS      : cross-platform; requires portaudio'
+      puts
+      puts ' NOTE: none of these are required dependencies anymore, as sound is optional.'
+      puts ' If you do not have the one selected installed on your machine, you will get '
+      puts ' an error on game load, and no sound will be heard.'
       puts
       puts '================================='.colorize(:yellow)
       puts
@@ -220,6 +228,9 @@ module Gemwarrior
         print_options_sound_sytem
       when '2'
         GameOptions.add 'sound_system', 'feep'
+        print_options_sound_sytem
+      when '3'
+        GameOptions.add 'sound_system', 'bloops'
         print_options_sound_sytem
       else
         return
@@ -493,6 +504,7 @@ module Gemwarrior
 
       # main menu loop until new game or exit
       if new_skip
+        print_errors
         play_intro_tune
         print_splash_message
         print_fortune
@@ -501,6 +513,7 @@ module Gemwarrior
         if result.nil?
           run_main_menu
         else
+          print_errors
           self.world = result
           self.evaluator = Evaluator.new(self.world)
         end
@@ -511,6 +524,12 @@ module Gemwarrior
       # hook to do something right off the bat
       puts evaluator.parse(initial_command) unless initial_command.nil?
       puts evaluator.parse(extra_command) unless extra_command.nil?
+    end
+
+    def print_errors
+      if GameOptions.data['errors']
+        puts GameOptions.data['errors'].colorize(:red)
+      end
     end
 
     def play_intro_tune

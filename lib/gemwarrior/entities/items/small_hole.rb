@@ -17,6 +17,7 @@ module Gemwarrior
       if !self.used
         self.used = true
 
+        Audio.play_synth(:uncover_secret)
         puts 'You lower yourself to the ground and attempt to peer in the hole in the wall. Just as you begin to think this is a fruitless endeavor, a pair of bright, beady eyes manifest, and an unexpectedly low voice speaks:'
         Person.new.speak('Hello. I\'m Rockney, of Rockney\'s Hole in the Wall. Pleasure!')
 

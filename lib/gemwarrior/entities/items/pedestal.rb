@@ -93,6 +93,7 @@ module Gemwarrior
           end   
       
           if pedestal_configured
+            Audio.play_synth(:uncover_secret)
             puts 'You push the large gem into the pedestal and it descends without a hitch, almost as if it were meant to be. The pedestal begins to violently shake and a strong gust of wind picks you up off the ground. You feel completely taken aback and unsettled, but you have no choice: you are being whisked away somewhere into the sky, destination unknown.'.colorize(:yellow)
             
             # stats

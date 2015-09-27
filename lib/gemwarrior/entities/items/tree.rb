@@ -20,7 +20,9 @@ module Gemwarrior
         return { type: nil, data: nil }
       elsif self.used
         self.used_again = true
-        
+
+        Audio.play_synth(:uncover_secret)
+
         puts 'Looking further into the small opening in the trunk your eye catches the light glinting off a few small metallic objects.'
 
         cur_loc = world.location_by_name('forest-southeast')

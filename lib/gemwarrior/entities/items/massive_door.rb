@@ -16,6 +16,7 @@ module Gemwarrior
     def use(world)
       puts 'You attempt to open the seriously massive door that separates you from Emerald himself.'
       if world.player.inventory.contains_item?('keystone')
+        Audio.play_synth(:uncover_secret)
         puts 'The keystone in your inventory glows as you approach the incredibly titanic-sized door, so you naturally pull it out and thrust it into the stone-shaped depression within the cloudy obstruction. The door "opens" in a way and you can now pass through.'
         { type: 'move', data: 'Sky Tower (Throne Room)' }
       else
