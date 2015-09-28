@@ -29,7 +29,7 @@ module Gemwarrior
       self.player_is_defending  = false
     end
 
-    def start(is_arena = false, is_event = false)
+    def start(is_arena = false, is_ambush = false)
       # begin battle!
       Audio.play_synth(:battle_start)
       print_battle_header unless is_arena
@@ -39,7 +39,7 @@ module Gemwarrior
         print '  Your opponent is now...'
         Animation.run(phrase: "#{monster.name.upcase}", speed: :slow, oneline: true)
         print "!\n"
-      elsif is_event
+      elsif is_ambush
         puts "  You are ambushed by #{monster.name}!".colorize(:yellow)
       else
         puts "  You decide to attack #{monster.name}!"
@@ -105,14 +105,14 @@ module Gemwarrior
           puts '  Emerald has been wounded, but he is not done with this world yet. You approach him, wits about you, ready for battle.'
           world.shifty_has_jeweled = true
         end
-      elsif monster_strikes_first?(is_arena, is_event)
+      elsif monster_strikes_first?(is_arena, is_ambush)
         puts "  #{monster.name} strikes first!".colorize(:yellow)
         monster_attacks_player
       end
       
       # LV6:STONE_FACE modifier (chance to auto-win)
       # Doesn't work against bosses, nor if battle is an event or in the arena
-      if player.special_abilities.include?(:stone_face) && !monster.is_boss && !is_event && !is_arena
+      if player.special_abilities.include?(:stone_face) && !monster.is_boss && !is_ambush && !is_arena
         level_diff = (player.level - monster.level) * 4
         chance_range = 0..(30 + level_diff)
         roll = rand(0..100)

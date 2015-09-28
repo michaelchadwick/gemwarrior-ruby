@@ -656,7 +656,7 @@ module Gemwarrior
           monster_name = param1
           if world.has_monster_to_attack?(monster_name)
             monster = player_cur_location.monster_by_name(monster_name)
-            result = world.player.attack(world, monster)
+            result = world.player.attack(world, monster, param2)
 
             if result.eql?('death')
               return player_death_resurrection
@@ -748,6 +748,20 @@ module Gemwarrior
         world.player.go(world, direction)
         player_cur_location = world.location_by_coords(world.player.cur_coords)
         player_cur_location.checked_for_monsters = false
+
+        if player_cur_location.name.include?('pain_quarry')
+          if player_cur_location.has_boss?('garynetty')
+            roll = rand(0..100) + world.player.dexterity
+            roll_display = roll < 25 ? "#{roll}".colorize(:red) : "#{roll}".colorize(:green)
+            puts "[Pain Quarry Garynetty Roll: #{roll_display}]" if GameOptions.data['debug_mode']
+            if roll < 25
+              self.parse("attack garynetty is_ambush")
+            else
+              puts 'You nearly got attacked by a vicious Garynetty! Be careful, your next move might not be as lucky.'.colorize(:yellow)
+            end
+          end
+        end
+
         world.describe(player_cur_location)
       else
         return ERROR_GO_PARAM_INVALID.colorize(:red)

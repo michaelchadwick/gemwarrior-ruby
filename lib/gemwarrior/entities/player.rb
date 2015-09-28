@@ -250,12 +250,12 @@ module Gemwarrior
       self.movements_made += 1
     end
 
-    def attack(world, monster)
+    def attack(world, monster, is_ambush = false)
       if monster.is_dead
         { type: 'message', data: 'That monster is now dead forever and cannot be attacked. You must have done them a good one.' }
       else
         battle = Battle.new(world: world, player: self, monster: monster)
-        result = battle.start
+        result = battle.start(false, is_ambush)
         if result.eql?('death')
           return 'death'
         elsif result.eql?('exit')
