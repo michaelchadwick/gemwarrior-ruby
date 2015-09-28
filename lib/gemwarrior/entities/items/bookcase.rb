@@ -29,6 +29,7 @@ module Gemwarrior
           STDIN.getc
           puts 'Opening the book, you see a question on the inside cover:'
           puts '>> "What do you get when an underground excavator is named after a famous "weird" guy?"'
+          print '? '
           answer = gets.chomp.downcase
 
           case answer
@@ -41,7 +42,7 @@ module Gemwarrior
             puts 'After you shout out your answer to the book\'s question to no one in particular, you manage to see a clearing in the forest to the west that was presumably not there before. Huh.'
             STDIN.getc
 
-            puts 'Before getting back to your travels, however, you notice the book\'s back cover warns: "The path westward is a difficult one and has fallen many an adventurer. Take care before venturing thataway."'
+            puts 'Before getting back to your travels, however, you notice the book\'s back cover warns: "The path westward is a difficult one and has "ended" many an adventurer. Take care before venturing forth."'
           else
             puts 'For some reason, you blurt out an answer to the unhearing trees, feel embarrassed, and put the book back in the bookcase.'
           end
