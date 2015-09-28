@@ -132,14 +132,14 @@ module Gemwarrior
       battle_items
     end
 
-    def describe_item(item_name)
+    def describe_item(item_name, world)
       if contains_item?(item_name)
         self.items.each do |i|
           if i.name.eql?(item_name)
             if GameOptions.data['debug_mode']
-              return i.describe_detailed
+              return i.describe_detailed(world)
             else
-              return i.describe
+              return i.describe(world)
             end
           end
         end

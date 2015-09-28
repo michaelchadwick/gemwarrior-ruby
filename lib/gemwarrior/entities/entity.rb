@@ -45,11 +45,11 @@ module Gemwarrior
       'That does not appear to be useable.'
     end
 
-    def describe
+    def describe(world)
       desc_text = "#{description}".colorize(:white)
     end
 
-    def describe_detailed
+    def describe_detailed(world)
       desc_text =  "\"#{name_display}\"\n".colorize(:yellow)
       desc_text << "(#{name})\n".colorize(:green)
       desc_text << "#{description}\n".colorize(:white)

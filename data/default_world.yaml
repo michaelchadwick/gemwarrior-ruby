@@ -756,7 +756,20 @@ locations:
     begin: 5
     end: 6
     excl: false
-  items: []
+  items:
+  - !ruby/object:Gemwarrior::RedKey
+    equipped: false
+    consumable: false
+    used: false
+    used_again: false
+    number_of_uses: 
+    name: red_key
+    name_display: Red Key
+    description: Redder than an embarrassed tomato in front of a moderate fire, but still very capable of being a key.
+    takeable: true
+    talkable: false
+    useable: true
+    equippable: false
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
@@ -1067,17 +1080,17 @@ locations:
     end: 20
     excl: false
   items:
-  - !ruby/object:Gemwarrior::SandJewel
+  - !ruby/object:Gemwarrior::LockerCorner
     equipped: false
     consumable: false
     used: false
     used_again: false
     number_of_uses: 
     talkable: false
-    name: sand_jewel
-    name_display: Sand Jewel
-    description: As blue (or is it violet? or brown?) as it is brittle, this shiny rock feels warm to the touch.
-    takeable: true
+    name: locker_corner
+    name_display: Locker (Corner)
+    description: The top corner of what appears to be a small locker is slightly sticking up from the sand floor.
+    takeable: false
     useable: true
     equippable: false
   monsters_abounding: []
@@ -1658,6 +1671,19 @@ locations:
     name_display: Goat
     description: The scruff is strong with this one as it chews through what appears to be a recent mystery novel most likely thrown into the pen by a passerby.
     takeable: false
+    useable: true
+    equippable: false
+  - !ruby/object:Gemwarrior::Shovel
+    equipped: false
+    consumable: false
+    used: false
+    used_again: false
+    number_of_uses: 
+    talkable: false
+    name: shovel
+    name_display: Shovel
+    description: You can really "dig" this tool, despite its well-worn appearance.
+    takeable: true
     useable: true
     equippable: false
   monsters_abounding: []

@@ -286,7 +286,7 @@ module Gemwarrior
       self.hp_cur = self.hp_cur - dmg.to_i
 
       if hp_cur <= 0
-        player_death
+        return player_death
       end
     end
 
@@ -362,7 +362,6 @@ module Gemwarrior
 
     def player_death
       puts 'Your actions have reduced you to death.'.colorize(:red)
-      puts 'Somehow, however, your adventure does not end here. Instead, you are whisked back home via some magical force, a bit worse for the weary and somewhat poorer, but ALIVE!'.colorize(:yellow)
       return 'death'
     end
 

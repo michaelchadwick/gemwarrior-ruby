@@ -11,6 +11,7 @@ module Gemwarrior
     DANGER_LEVEL              = { none: 0, low: 15, moderate: 30, high: 55, assured: 100 }
     ERROR_ITEM_ADD_INVALID    = 'That item cannot be added to the location\'s inventory.'
     ERROR_ITEM_REMOVE_INVALID = 'That item cannot be removed as it does not exist here.'
+    ERROR_ITEM_REF_INVALID    = 'That item cannot be accessed.'
     ERROR_SPAWN_NAME_INVALID  = 'That monster does not exist in the game, and cannot be spawned.'
 
     attr_accessor :coords,
@@ -72,6 +73,17 @@ module Gemwarrior
       bosses_abounding.map{|b| b.name.downcase}.include?(boss_name.downcase)
     end
 
+    def get_item_ref(item_name)
+      all_items = GameItems.data | GameWeapons.data | GameArmor.data
+      all_items.each do |game_item|
+        if game_item.name.eql?(item_name)
+          item_ref = self.items.find{ |i| i.name.downcase == item_name.downcase }
+          return item_ref
+        end
+      end
+      return ERROR_ITEM_REF_INVALID
+    end
+
     def add_item(item_name_to_add)
       all_items = GameItems.data | GameWeapons.data | GameArmor.data
       all_items.each do |game_item|
@@ -80,7 +92,7 @@ module Gemwarrior
           return
         end
       end
-      return LOCATION_INVENTORY_ADD_ITEM_INVALID
+      return ERROR_ITEM_ADD_INVALID
     end
 
     def remove_item(item_name)

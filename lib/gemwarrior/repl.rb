@@ -147,6 +147,9 @@ module Gemwarrior
       puts '* Basic functions: look, go, character, inventory, attack *'
       puts '* Type \'help\' while in-game for complete list of commands *'
       puts '* Most commands can be abbreviated to their first letter  *'
+      puts '* Note: if something isn\'t working, try:                  *'
+      puts '*   1) starting a new game                                *'
+      puts '*   2) updating the game                                  *'
     end
 
     def display_log_of_attempts

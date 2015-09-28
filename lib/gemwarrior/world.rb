@@ -70,9 +70,9 @@ module Gemwarrior
         point.items.each do |i|
           if i.name.downcase.eql?(entity_name)
             if GameOptions.data['debug_mode']
-              return i.describe_detailed
+              return i.describe_detailed(self)
             else
-              return i.describe
+              return i.describe(self)
             end
           end
         end
@@ -80,9 +80,9 @@ module Gemwarrior
         point.monsters_abounding.each do |m|
           if m.name.downcase.eql?(entity_name)
             if GameOptions.data['debug_mode']
-              return m.describe_detailed
+              return m.describe_detailed(self)
             else
-              return m.describe
+              return m.describe(self)
             end
           end
         end
@@ -90,14 +90,14 @@ module Gemwarrior
         point.bosses_abounding.each do |b|
           if b.name.downcase.eql?(entity_name)
             if GameOptions.data['debug_mode']
-              return b.describe_detailed
+              return b.describe_detailed(self)
             else
-              return b.describe
+              return b.describe(self)
             end
           end
         end
       elsif player.inventory.contains_item?(entity_name)
-        player.inventory.describe_item(entity_name)
+        player.inventory.describe_item(entity_name, self)
       else
         ERROR_DESCRIBE_ENTITY_INVALID
       end

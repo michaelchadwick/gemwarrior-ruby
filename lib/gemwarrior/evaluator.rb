@@ -256,7 +256,7 @@ module Gemwarrior
                   item_const_name = Gemwarrior.const_get(Formatting.upstyle(param2, no_space: true))
                   item = item_const_name.new
                   world.player.inventory.items.push(item)
-                  return "#{item.name} added to player inventory."
+                  return "#{item.name.colorize(:yellow)} added to player inventory."
                 rescue
                   return ERROR_DEBUG_STAT_INV_PARAM_INVALID
                 end
@@ -555,8 +555,11 @@ module Gemwarrior
               player_cur_location = world.location_by_coords(world.player.cur_coords)
               world.describe(player_cur_location)
             when 'dmg'
-              world.player.take_damage(result[:data])
-              return
+              result = world.player.take_damage(result[:data])
+
+              if result.eql?('death')
+                player_death_resurrection
+              end
             when 'rest', 'health'
               world.player.heal_damage(result[:data])
               return
