@@ -242,12 +242,13 @@ module Gemwarrior
       puts 'Gem Warrior General Options'.colorize(:yellow)
       puts '================================='.colorize(:yellow)
       puts
-      puts 'Change several sound (quite experimental for now) options, and whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set).'
+      puts 'Change several sound options, whether Wordnik is used to generate more dynamic descriptors of entities (valid WORDNIK_API_KEY environment variable must be set), and if attack/fight commands need to have a target or not (if enabled, will attack first monster in vicinty).'
       puts
-      puts " (1) SOUND ENABLED : #{GameOptions.data['sound_enabled']}"
-      puts " (2) SOUND SYSTEM  : #{GameOptions.data['sound_system']}"
-      puts " (3) SOUND VOLUME  : #{GameOptions.data['sound_volume']}"
-      puts " (4) USE WORDNIK   : #{GameOptions.data['use_wordnik']}"
+      puts " (1) SOUND ENABLED    : #{GameOptions.data['sound_enabled']}"
+      puts " (2) SOUND SYSTEM     : #{GameOptions.data['sound_system']}"
+      puts " (3) SOUND VOLUME     : #{GameOptions.data['sound_volume']}"
+      puts " (4) USE WORDNIK      : #{GameOptions.data['use_wordnik']}"
+      puts " (5) FIGHT COMPLETION : #{GameOptions.data['fight_completion']}"
       puts
       puts '================================='.colorize(:yellow)
       puts
@@ -281,6 +282,10 @@ module Gemwarrior
       when '4'
         print answer
         GameOptions.data['use_wordnik'] = !GameOptions.data['use_wordnik']
+        print_options
+      when '5'
+        print answer
+        GameOptions.data['fight_completion'] = !GameOptions.data['fight_completion']
         print_options
       else
         print answer

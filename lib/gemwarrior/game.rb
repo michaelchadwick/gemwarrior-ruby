@@ -41,6 +41,7 @@ module Gemwarrior
       GameOptions.add 'sound_system', options.fetch(:sound_system)
       GameOptions.add 'sound_volume', options.fetch(:sound_volume)
       GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
+      GameOptions.add 'fight_completion', options.fetch(:fight_completion)
 
       # add classes for creatures, monsters, people, items, weapons, and armor to game
       # also add them to the global GameAssets
@@ -107,6 +108,7 @@ module Gemwarrior
         f.puts "sound_system:#{GameOptions.data['sound_system']}"
         f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
         f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
+        f.puts "fight_completion:#{GameOptions.data['fight_completion']}"
       end
     end
 

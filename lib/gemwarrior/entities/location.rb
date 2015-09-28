@@ -32,7 +32,7 @@ module Gemwarrior
       self.monster_level_range  = options.fetch(:monster_level_range)
       self.items                = options.fetch(:items)
       self.monsters_abounding   = options.fetch(:monsters_abounding)
-      self.bosses_abounding     = options.fetch[:bosses_abounding]
+      self.bosses_abounding     = options.fetch(:bosses_abounding)
       self.checked_for_monsters = false
       self.visited              = false
     end
@@ -58,6 +58,10 @@ module Gemwarrior
 
     def contains_item?(item_name)
       self.items.map{|i| i.name.downcase}.include?(item_name.downcase)
+    end
+
+    def has_any_monsters?
+      monsters_abounding.length > 0
     end
 
     def has_monster?(monster_name)

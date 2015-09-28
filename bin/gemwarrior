@@ -20,33 +20,31 @@ GW_DEFAULT_WORLD_BIN  = File.expand_path('../../data/default_world.bin', __FILE_
 GW_DEFAULT_WRAP_WIDTH = 80
 
 def parse_options_cli
+  # default options
   options = {
-    beast_mode:     false, 
-    debug_mode:     false, 
-    god_mode:       false, 
-    new_skip:       false,
-    resume_skip:    false,
-    sound_enabled:  false,
-    sound_system:   'bloops',
-    sound_volume:   0.3,
-    use_wordnik:    false,
-    extra_command:  nil
+    beast_mode:       false, 
+    debug_mode:       false, 
+    god_mode:         false, 
+    new_skip:         false,
+    resume_skip:      false,
+    sound_enabled:    false,
+    sound_system:     'bloops',
+    sound_volume:     0.3,
+    use_wordnik:      false,
+    fight_completion: false,
+    extra_command:    nil
   }
 
-  options_file = read_options_file
-  
-  unless options_file.nil?
-    sound_enabled_option    = options_file[0][1].eql?('false') ? false : true
-    sound_system_selected   = options_file[1][1]
-    sound_volume_option     = options_file[2][1].to_f
-    use_wordnik_option      = options_file[3][1].eql?('false') ? false : true
-
-    options[:sound_enabled] = sound_enabled_option
-    options[:sound_system]  = sound_system_selected
-    options[:sound_volume]  = sound_volume_option
-    options[:use_wordnik]   = use_wordnik_option
+  # options file has next precedence
+  unless (opts_file = read_options_file).nil?
+    options[:sound_enabled]     = (opts_file[:sound_enabled].eql?('false') ? false : true) if opts_file[:sound_enabled]
+    options[:sound_system]      = (opts_file[:sound_system].eql?('false') ? false : true) if opts_file[:sound_system]
+    options[:sound_volume]      = (opts_file[:sound_volume].to_f) if opts_file[:sound_volume]
+    options[:use_wordnik]       = (opts_file[:use_wordnik].eql?('false') ? false : true) if opts_file[:use_wordnik]
+    options[:fight_completion]  = (opts_file[:fight_completion].eql?('false') ? false : true) if opts_file[:fight_completion]
   end
 
+  # command line has next precedence
   optparse = OptionParser.new do |opts|
     opts.on('-b', '--beast', 'Enable debug[beastmode]') do
       options[:beast_mode] = true
@@ -81,6 +79,10 @@ def parse_options_cli
       options[:use_wordnik] = true
     end
 
+    opts.on('-f', '--fight-completion', 'Fighting without specifying an enemy will attack first one it finds') do
+      options[:fight_completion] = false
+    end
+
     opts.on('-x', '--extra COMMAND,PARAM1,PARAM2,PARAM3', String, 'Run a command, with optional params, immediately upon beginning the game') do |xc|
       options[:extra_command] = xc.gsub(',',' ')
     end
@@ -103,13 +105,14 @@ end
 
 def read_options_file
   if File.exist?(GameOptions.data['options_file_path'])
-    options = []
+    options = {}
     File.open(GameOptions.data['options_file_path']).readlines.each do |line|
-      options << line.chomp.split(':')
+      kv = line.chomp.split(':')
+      options[kv[0].to_sym] = kv[1]
     end
 
     # check for null
-    return options[0][0].eql?('sound_enabled') ? options : nil
+    return options[:sound_enabled] ? options : nil
   end
   nil
 end
@@ -118,7 +121,7 @@ def init_config
   Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
 
   sound_system_default = OS.windows? ? 'win32-sound' : 'bloops'
-  
+
   GameOptions.add 'sound_system',             sound_system_default
   GameOptions.add 'save_file_mode',           'Y'
   GameOptions.add 'default_world_path_yaml',  GW_DEFAULT_WORLD_YAML

@@ -642,7 +642,16 @@ module Gemwarrior
         end
       when 'attack', 'a', 'fight', 'f'
         if param1.nil?
-          ERROR_ATTACK_PARAM_MISSING
+          if GameOptions.data['fight_completion']
+            if player_cur_location.has_any_monsters?
+              monster_param = player_cur_location.monsters_abounding[0].name
+              self.parse("attack #{monster_param}")
+            else
+              ERROR_ATTACK_PARAM_INVALID
+            end
+          else
+            ERROR_ATTACK_PARAM_MISSING
+          end
         else
           monster_name = param1
           if world.has_monster_to_attack?(monster_name)
