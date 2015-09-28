@@ -331,8 +331,8 @@ module Gemwarrior
           if result.nil?
             run_main_menu
           else
-            self.world = result
-            self.evaluator = Evaluator.new(self.world)
+            print_errors
+            load_saved_world(result)
             return
           end
         end
@@ -497,6 +497,11 @@ module Gemwarrior
       end
     end
 
+    def load_saved_world(result)
+      self.world = result
+      self.evaluator = Evaluator.new(self.world)
+    end
+
     def setup_screen(initial_command = nil, extra_command = nil, new_skip = false, resume_skip = false)
       # welcome player to game
       clear_screen
@@ -514,8 +519,7 @@ module Gemwarrior
           run_main_menu
         else
           print_errors
-          self.world = result
-          self.evaluator = Evaluator.new(self.world)
+          load_saved_world(result)
         end
       else
         run_main_menu

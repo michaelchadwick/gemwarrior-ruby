@@ -12,19 +12,19 @@ module Gemwarrior
         begin
           require 'win32/sound'
         rescue LoadError => e
-          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Gem Warrior will be silent for now."
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Silence for now."
         end
       elsif GameOptions.data['sound_system'].eql?('feep')
         begin
           require 'feep'
         rescue LoadError => e
-          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Gem Warrior will be silent for now."
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}'. Silence for now."
         end
       elsif GameOptions.data['sound_system'].eql?('bloops')
         begin
           require 'bloops'
         rescue LoadError => e
-          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}aphone'. Gem Warrior will be silent for now."
+          GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}aphone'. Silence for now."
         end
       end
     end
