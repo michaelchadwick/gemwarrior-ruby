@@ -1,19 +1,24 @@
 # lib/gemwarrior/misc/timer.rb
 # Timer
 
+require 'observer'
+
 module Gemwarrior
   class Timer
-    attr_accessor :duration_in_s, :timer_name, :background, :progress, :verbose
+    include Observable
+
+    attr_accessor :duration_in_s, :timer_name, :background, :progress, :verbose, :command
 
     DEFAULTS = {
-      duration_in_s: 1, 
-      timer_name:    'Timer', 
-      background:    false,
+      duration_in_s: 5, 
+      timer_name:    'timer', 
+      background:    true,
       progress:      false,
-      verbose:       true
+      verbose:       false,
+      command:       nil
     }
 
-    def initialize(options = {})
+    def initialize(options = {}, repl)
       options = DEFAULTS.merge(options)
 
       self.duration_in_s  = options[:duration_in_s]
@@ -21,6 +26,9 @@ module Gemwarrior
       self.background     = options[:background]
       self.progress       = options[:progress]
       self.verbose        = options[:verbose]
+      self.command        = options[:command]
+
+      add_observer(repl)
     end
 
     def start
@@ -40,11 +48,15 @@ module Gemwarrior
         sleep 1
         print '.' if progress
         if Time.now >= end_time
-          print "\n"
-          puts "#{timer_name} ended at #{Time.now}" if verbose
-          return
+          return stop
         end
       end
+    end
+
+    def stop
+      puts "\n#{timer_name} ended at #{Time.now}" if verbose
+      changed
+      notify_observers(self.command) unless self.command.nil?
     end
   end
 end

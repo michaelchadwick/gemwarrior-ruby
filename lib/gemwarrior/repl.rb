@@ -76,15 +76,7 @@ module Gemwarrior
         loop do
           prompt
           begin
-            input = read_line
-            result = evaluator.parse(input)
-            if result.eql?('exit')
-              exit
-            elsif result.eql?('checkupdate')
-              check_for_new_release
-            else
-              puts result
-            end
+            main_loop
           rescue Interrupt
             puts
             puts QUIT_MESSAGE
@@ -93,6 +85,23 @@ module Gemwarrior
         end
       end
     end
+
+    def main_loop(ext_input = nil)
+      input = ext_input.nil? ? read_line : ext_input
+      result = evaluator.parse(input)
+      if result.eql?('exit')
+        exit
+      elsif result.eql?('checkupdate')
+        check_for_new_release
+      else
+        puts result
+      end
+    end
+
+    # timer observer
+    #def update(command)
+    #  main_loop(command)
+    #end
 
     private
 
