@@ -197,6 +197,14 @@ module Gemwarrior
         else
           ">> weapons: #{GameWeapons.data.map(&:name).join(', ')}"
         end
+      when 'armor'
+        puts "[ARMOR](#{GameArmor.data.length})".colorize(:yellow)
+        if details
+          GameArmor.data.map { |w| print w.describe_detailed }
+          return
+        else
+          ">> armor: #{GameArmor.data.map(&:name).join(', ')}"
+        end
       else
         ERROR_LIST_PARAM_INVALID
       end
@@ -210,6 +218,7 @@ module Gemwarrior
       puts "#{list('creatures', show_details)}\n\n"
       puts "#{list('monsters', show_details)}\n\n"
       puts "#{list('items', show_details)}\n\n"
+      puts "#{list('armor', show_details)}\n\n"
       puts "#{list('weapons', show_details)}\n\n"
       puts "#{list('locations', show_details)}\n"
       puts

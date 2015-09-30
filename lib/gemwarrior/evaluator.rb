@@ -14,7 +14,7 @@ module Gemwarrior
 
     GO_PARAMS                             = 'Options: north, east, south, west'
     CHANGE_PARAMS                         = 'Options: name'
-    DEBUG_LIST_PARAMS                     = 'Options: players, creatures, items, locations, monsters, weapons'
+    DEBUG_LIST_PARAMS                     = 'Options: players, creatures, items, locations, monsters, weapons, armor'
     DEBUG_STAT_PARAMS                     = 'Options: hp_cur, atk_lo, atk_hi, experience, rox, strength, dexterity, defense, inventory'
 
     ERROR_COMMAND_INVALID                 = 'That is not something the game yet understands.'
