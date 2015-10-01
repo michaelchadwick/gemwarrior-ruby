@@ -16,10 +16,8 @@ module Gemwarrior
     WORLD_DIM_WIDTH               = 10
     WORLD_DIM_HEIGHT              = 10
 
-    attr_accessor :monsters,
+    attr_accessor :player,
                   :locations,
-                  :weapons,
-                  :player,
                   :duration,
                   :emerald_beaten,
                   :shifty_to_jewel,

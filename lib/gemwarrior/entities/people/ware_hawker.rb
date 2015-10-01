@@ -76,7 +76,7 @@ module Gemwarrior
           print "\n"
         end
         puts
-        print 'REMAINING GOLD: '
+        print 'REMAINING ROX: '
         Animation.run(phrase: player_rox_remaining.to_s, oneline: true)
         print "\n"
         display_shopping_cart(items_purchased)
