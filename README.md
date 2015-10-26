@@ -42,11 +42,3 @@ Run the commands above and you'll be whisked away to Jool, ready to start or con
 `> version`               - display current game version  
 `> quit`                  - quit this nonsense w/ prompt  
 `> quit!`                 - quit this nonsense w/o prompt  
-
-## In Progress, Yanno
-
-Gem Warrior is in heavy beta testing right now, and if you wish to help out in an official way, please visit [the main Gem Warrior homepage](http://gw.codana.me) for more information.
-
-## Current Issues/Requests
-
-The old list of issues/features has been moved to the [Github issues section](https://github.com/michaelchadwick/gemwarrior/issues). Feel free to go there to add any bugs you find while playing or any requests for new features.
