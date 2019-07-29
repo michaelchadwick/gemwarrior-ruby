@@ -6,7 +6,7 @@
 require 'yaml'
 
 class NameGenerator
-  attr_accessor :name_set, :type, :chain_cache
+  attr_accessor :type, :name_set, :chain_cache
 
   def initialize(type)
     self.type         = type
@@ -39,9 +39,9 @@ class NameGenerator
   def generate_names(count = 1)
     list = []
 
-    for i in 1..count
+    (1..count).each {
       list.push(generate_name)
-    end
+    }
 
     return list
   end
@@ -117,11 +117,11 @@ class NameGenerator
     chain.each do |key, subkey|
       table_len[key] = 0
 
-      subkey.each do |subkey, value|
+      subkey.each do |subsubkey, value|
         count = value
         weighted = (count ** 1.3).floor
 
-        chain[key][subkey] = weighted
+        chain[key][subsubkey] = weighted
         table_len[key] += weighted
       end
     end
@@ -136,7 +136,7 @@ class NameGenerator
     parts = select_link(chain, 'parts')
     names = []
 
-    for i in 0..parts-1
+    (0..parts-1).each {
       name_len = select_link(chain, 'name_len')
       c = select_link(chain, 'initial')
       name = c
@@ -148,7 +148,7 @@ class NameGenerator
         last_c = c
       end
       names.push(name)
-    end
+    }
 
     return names.join(' ')
   end
