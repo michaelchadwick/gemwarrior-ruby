@@ -35,9 +35,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake', '~> 12.3.3'
   spec.add_development_dependency 'rubocop', '~> 0.52.1'
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'rspec-nc'
-  spec.add_development_dependency 'guard'
-  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'rspec', '~> 3.9.0'
+  spec.add_development_dependency 'rspec-nc', '~> 0.3'
+  spec.add_development_dependency 'guard', '~> 2.16'
+  spec.add_development_dependency 'guard-rspec', '~> 4.7'
   spec.add_development_dependency 'pry-byebug', '~> 3.9'
 end
