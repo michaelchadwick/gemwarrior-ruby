@@ -378,9 +378,28 @@ module Gemwarrior
         puts MAIN_MENU_QUIT_MESSAGE
         game.update_options_file
         exit
-      else
-        run_main_menu(show_choices: false)
+      when "\c?"  # Backspace/Delete
+        refresh_menu
+      when "\e"   # ANSI escape sequence
+        case STDIN.getch
+        when '['  # CSI
+          choice = STDIN.getch
+          puts choice
+          case choice
+          when 'A', 'B', 'C', 'D' # arrow keys
+            refresh_menu
+          end
+        end
+      else        # All other invalid options
+        refresh_menu
       end
+    end
+
+    # need this to handle any non-valid input at the main menu
+    def refresh_menu
+      clear_screen
+      print_logo
+      run_main_menu
     end
 
     def log_stats(duration, pl)
