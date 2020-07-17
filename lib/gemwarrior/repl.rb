@@ -58,7 +58,7 @@ module Gemwarrior
         return [screen_width, SCREEN_WIDTH_MAX].min
       end
     end
-    
+
     def start(initial_command, extra_command, new_skip, resume_skip)
       setup_screen(initial_command, extra_command, new_skip, resume_skip)
 
@@ -145,7 +145,7 @@ module Gemwarrior
     def print_about_text
       puts 'Gem Warrior - A Game of Fortune and Mayhem'.colorize(:yellow)
       puts '=========================================='.colorize(:yellow)
-      puts 'Gem Warrior is a text adventure roguelike-lite as a RubyGem created by Michael Chadwick (mike@codana.me) and released as open-source on Github. Take on the task set by Queen Ruby to defeat the evil Emerald and get back the ShinyThing(tm) he stole for terrible, dastardly reasons.'
+      puts 'Gem Warrior is a text adventure roguelike-lite as a RubyGem created by Michael Chadwick (mike@neb.host) and released as open-source on Github. Take on the task set by Queen Ruby to defeat the evil Emerald and get back the ShinyThing(tm) he stole for terrible, dastardly reasons.'
       puts
       puts 'Explore the land of Jool with the power of text, fighting enemies to improve your station, grabbing curious items that may or may not come in handy, and finally defeating Mr. Emerald himself to win the game.'
     end
