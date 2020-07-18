@@ -26,6 +26,8 @@ module Gemwarrior
         rescue
           GameOptions.data['errors'] = "#{GameOptions.data['sound_system']} could not be loaded. You may need to run 'gem install #{GameOptions.data['sound_system']}aphone'. Silence for now."
         end
+      else
+        GameOptions.data['errors'] = "'#{GameOptions.data['sound_system']}' is not a valid sound system. Audio subsystem load failed."
       end
     end
 
