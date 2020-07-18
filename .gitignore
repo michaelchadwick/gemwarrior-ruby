@@ -11,3 +11,4 @@
 /img/
 /assets/
 .gemwarrior
+!bin/gemwarrior
