@@ -148,7 +148,7 @@ module Gemwarrior
       noun2_values = WordList.new('noun-plural')
       noun3_values = WordList.new('noun-plural')
 
-      puts "* Remember: #{noun1_values.get_random_value} and #{noun2_values.get_random_value} are the key to #{noun3_values.get_random_value} *\n\n"
+      puts "* Remember: #{noun1_values.get_random_value.colorize(:yellow)} and #{noun2_values.get_random_value.colorize(:yellow)} are the key to #{noun3_values.get_random_value.colorize(:yellow)} *\n\n"
       puts
     end
 
