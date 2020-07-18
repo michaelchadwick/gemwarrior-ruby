@@ -66,7 +66,7 @@ module Gemwarrior
         weapon_slot = self.inventory.weapon.name
         net_atk_lo = base_atk_lo + self.inventory.weapon.atk_lo
         net_atk_hi = base_atk_hi + self.inventory.weapon.atk_hi
-        net_dexterity = self.dexterity + self.inventory.weapon.dex_mod
+        net_dexterity = base_dexterity + self.inventory.weapon.dex_mod
       end
 
       # juice the armor display
@@ -104,7 +104,7 @@ module Gemwarrior
       self_text << "ABILITIES :"
       self_text << "#{abilities}"
       self_text << "INVENTORY : #{self.inventory.contents}\n"
-      
+
       if GameOptions.data['debug_mode']
         self_text << "\n"
         self_text << "[DEBUG STUFF]\n"
@@ -126,7 +126,7 @@ module Gemwarrior
       self_text << "\n\n"
 
       self_text << "[#{"Current Status".colorize(:yellow)}]\nBreathing, non-naked, with a #{self.face.colorize(:yellow)} face, #{self.hands.colorize(:yellow)} hands, and feeling, generally, #{self.mood.colorize(:yellow)}."
-      
+
       self_text << "\n"
     end
 
@@ -210,34 +210,34 @@ module Gemwarrior
 
     def list_inventory
       inventory.list_contents
-    end 
+    end
 
     def go(world, direction)
       case direction
       when 'north', 'n'
         self.cur_coords = {
-          x: cur_coords[:x], 
+          x: cur_coords[:x],
           y: cur_coords[:y]+1,
           z: cur_coords[:z]
         }
         direction_text = '^^^'
       when 'east', 'e'
         self.cur_coords = {
-          x: cur_coords[:x]+1, 
+          x: cur_coords[:x]+1,
           y: cur_coords[:y],
           z: cur_coords[:z]
         }
         direction_text = '>>>'
       when 'south', 's'
         self.cur_coords = {
-          x: cur_coords[:x], 
+          x: cur_coords[:x],
           y: cur_coords[:y]-1,
           z: cur_coords[:z]
         }
         direction_text = 'vvv'
       when 'west', 'w'
         self.cur_coords = {
-          x: cur_coords[:x]-1, 
+          x: cur_coords[:x]-1,
           y: cur_coords[:y],
           z: cur_coords[:z]
         }
