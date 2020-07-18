@@ -47,6 +47,7 @@ module Gemwarrior
 
     def describe(world)
       desc_text = "#{description}".colorize(:white)
+      desc_text
     end
 
     def describe_detailed(world)
