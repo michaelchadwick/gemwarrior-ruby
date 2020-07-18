@@ -6,6 +6,7 @@ require 'os'
 require 'clocker'
 require 'io/console'
 require 'gems'
+require 'ap'
 
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
@@ -309,7 +310,13 @@ module Gemwarrior
       puts
       puts "      GW v#{Gemwarrior::VERSION}"
       puts '======================='
-      puts ' (R)esume Game'.colorize(:green) if save_file_exist?
+
+      save_file = get_save_file_name
+      if not save_file.nil?
+        recent_name = save_file.instance_variable_get(:@player).name
+        puts " #{'(R)esume Game'.colorize(:green)} as #{recent_name.colorize(:yellow)}"
+      end
+
       puts ' (N)ew Game'
       puts ' (A)bout'
       puts ' (H)elp'
@@ -319,6 +326,14 @@ module Gemwarrior
       puts ' (E)xit'.colorize(:red)
       puts '======================='
       puts
+    end
+
+    def get_save_file_name
+      if save_file_exist?
+        File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
+          return YAML.load(f)
+        end
+      end
     end
 
     def print_main_menu_prompt
