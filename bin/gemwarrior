@@ -22,9 +22,9 @@ GW_DEFAULT_WRAP_WIDTH = 80
 def parse_options_cli
   # default options
   options = {
-    beast_mode:       false, 
-    debug_mode:       false, 
-    god_mode:         false, 
+    beast_mode:       false,
+    debug_mode:       false,
+    god_mode:         false,
     new_skip:         false,
     resume_skip:      false,
     sound_enabled:    false,
