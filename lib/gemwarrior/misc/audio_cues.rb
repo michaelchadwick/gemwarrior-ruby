@@ -93,10 +93,12 @@ module Gemwarrior
 
     self.add :intro, {
       synth: [
-        { frequencies: 'C3,G4',  duration: 50 },
-        { frequencies: 'D3,A4',  duration: 50 },
-        { frequencies: 'E3,B4',  duration: 50 },
-        { frequencies: 'F3,C5',  duration: 50 },
+        { frequencies: 'C4,G4',  duration: 350 },
+        { frequencies: 'D3,A4',  duration: 85 },
+        { frequencies: 'E3,B4',  duration: 85 },
+        { frequencies: 'F3,C5',  duration: 170 },
+        { frequencies: 'F3,C5',  duration: 170 },
+        { frequencies: 'F3,C5',  duration: 170 },
         { frequencies: 'G3,B4,D5',  duration: 350 }
       ],
       sample: 'intro.wav'

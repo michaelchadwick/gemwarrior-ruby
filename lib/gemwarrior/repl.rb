@@ -116,6 +116,14 @@ module Gemwarrior
       Readline.readline(prompt_text, true).to_s
     end
 
+    def get_save_file_name
+      if save_file_exist?
+        File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
+          return YAML.load(f)
+        end
+      end
+    end
+
     def puts(s = '', width = GameOptions.data['wrap_width'])
       super s.gsub(/(.{1,#{width}})(\s+|\Z)/, "\\1\n") unless s.nil?
     end
@@ -326,6 +334,34 @@ module Gemwarrior
       end
     end
 
+    def print_sound_test
+      puts
+      puts 'Gem Warrior Sound Test'.colorize(:yellow)
+      puts '================================='.colorize(:yellow)
+      puts
+      puts 'Play all the sounds in Gemwarrior.'
+      puts
+      for cue in Audio.get_cues do
+        pp cue[0].to_s
+      end
+      puts
+      puts '================================='.colorize(:yellow)
+      puts
+      puts 'Enter sound id to play it, or enter "x" to return to the main menu.'
+      puts
+      print '[GW_SOUND_TEST]> '
+
+      answer = gets.chomp.downcase
+
+      # print answer
+      if answer.eql?('x')
+        return
+      else
+        Audio.play_synth(answer.to_sym)
+        print_sound_test
+      end
+    end
+
     def print_main_menu
       puts
       puts "      GW v#{Gemwarrior::VERSION}"
@@ -342,18 +378,11 @@ module Gemwarrior
       puts ' (H)elp'
       puts ' (O)ptions'
       puts ' (L)og of Attempts'
+      puts ' (S)ound Test'
       puts ' (C)heck for Updates'
       puts ' (E)xit'.colorize(:red)
       puts '======================='
       puts
-    end
-
-    def get_save_file_name
-      if save_file_exist?
-        File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-          return YAML.load(f)
-        end
-      end
     end
 
     def print_main_menu_prompt
@@ -403,6 +432,10 @@ module Gemwarrior
       when 'l'
         puts choice
         display_log_of_attempts
+        run_main_menu
+      when 's'
+        puts choice
+        print_sound_test
         run_main_menu
       when 'c'
         puts choice
