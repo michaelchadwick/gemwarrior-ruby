@@ -475,21 +475,23 @@ module Gemwarrior
       Hr.print('#')
       print 'Gem Warrior'.colorize(color: :white, background: :black)
       print " v#{Gemwarrior::VERSION}".colorize(:yellow)
-      print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} min(s),"
-      print " #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s),"
-      print " and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms\n"
+      print " played for #{duration[:mins].to_s.colorize(color: :white, background: :black)} min(s)"
+      print ", #{duration[:secs].to_s.colorize(color: :white, background: :black)} sec(s)"
+      # print ", and #{duration[:ms].to_s.colorize(color: :white, background: :black)} ms"
+      print "\n"
       Hr.print('-')
-      print "#{pl.name.ljust(10)} killed #{pl.monsters_killed.to_s.colorize(color: :yellow, background: :black)} monster(s)"
+      print "#{pl.name.ljust(10).colorize(:green)} "
+      print "destroyed #{pl.monsters_killed.to_s.colorize(color: :yellow, background: :black)} monster(s)"
       print "\n".ljust(12)
-      print "killed #{pl.bosses_killed.to_s.colorize(color: :yellow, background: :black)} boss(es)"
+      print "destroyed #{pl.bosses_killed.to_s.colorize(color: :yellow, background: :black)} boss(es)"
       print "\n".ljust(12)
       print "picked up #{pl.items_taken.to_s.colorize(color: :yellow, background: :black)} item(s)"
       print "\n".ljust(12)
-      print "traveled #{pl.movements_made.to_s.colorize(color: :yellow, background: :black)} time(s)"
+      print "traveled  #{pl.movements_made.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n".ljust(12)
-      print "rested #{pl.rests_taken.to_s.colorize(color: :yellow, background: :black)} time(s)"
+      print "rested    #{pl.rests_taken.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n".ljust(12)
-      print "died #{pl.deaths.to_s.colorize(color: :yellow, background: :black)} time(s)"
+      print "died      #{pl.deaths.to_s.colorize(color: :yellow, background: :black)} time(s)"
       print "\n"
       Hr.print('#')
 
