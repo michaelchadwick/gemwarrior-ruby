@@ -220,6 +220,7 @@ module Gemwarrior
           y: cur_coords[:y]+1,
           z: cur_coords[:z]
         }
+        direction_cue = :player_travel_north
         direction_text = '^^^'
       when 'east', 'e'
         self.cur_coords = {
@@ -227,6 +228,7 @@ module Gemwarrior
           y: cur_coords[:y],
           z: cur_coords[:z]
         }
+        direction_cue = :player_travel_east
         direction_text = '>>>'
       when 'south', 's'
         self.cur_coords = {
@@ -234,6 +236,7 @@ module Gemwarrior
           y: cur_coords[:y]-1,
           z: cur_coords[:z]
         }
+        direction_cue = :player_travel_south
         direction_text = 'vvv'
       when 'west', 'w'
         self.cur_coords = {
@@ -241,10 +244,11 @@ module Gemwarrior
           y: cur_coords[:y],
           z: cur_coords[:z]
         }
+        direction_cue = :player_travel_west
         direction_text = '<<<'
       end
       world.location_by_coords(self.cur_coords).visited = true
-      print_traveling_text(direction_text)
+      print_traveling_text(direction_cue, direction_text)
 
       # stats
       self.movements_made += 1
@@ -365,8 +369,8 @@ module Gemwarrior
       return 'death'
     end
 
-    def print_traveling_text(direction_text)
-      Audio.play_synth(:player_travel)
+    def print_traveling_text(direction_cue, direction_text)
+      Audio.play_synth(direction_cue)
       Animation.run(phrase: "* #{direction_text} *", oneline: false)
     end
 

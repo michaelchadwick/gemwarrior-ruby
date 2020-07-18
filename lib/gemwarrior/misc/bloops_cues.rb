@@ -129,6 +129,42 @@ module Gemwarrior
       sample: 'player_travel.wav'
     }
 
+    self.add :player_travel_east, {
+      synth: [
+        { s1: '16:E4' },
+        { s1: '16:G4' },
+        { s1: '16:E4' }
+      ],
+      sample: 'player_travel_east.wav'
+    }
+
+    self.add :player_travel_north, {
+      synth: [
+        { s1: '16:C4' },
+        { s1: '16:D4' },
+        { s1: '16:E4' }
+      ],
+      sample: 'player_travel_north.wav'
+    }
+
+    self.add :player_travel_south, {
+      synth: [
+        { s1: '16:E4' },
+        { s1: '16:D4' },
+        { s1: '16:C4' }
+      ],
+      sample: 'player_travel_south.wav'
+    }
+
+    self.add :player_travel_west, {
+      synth: [
+        { s1: '16:C4' },
+        { s1: '16:A4' },
+        { s1: '16:C4' }
+      ],
+      sample: 'player_travel_west.wav'
+    }
+
     self.add :test, {
       synth: [
         { s1: '4:F4' },
