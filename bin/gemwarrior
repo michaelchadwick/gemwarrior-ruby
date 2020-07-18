@@ -38,7 +38,7 @@ def parse_options_cli
   # options file has next precedence
   unless (opts_file = read_options_file).nil?
     options[:sound_enabled]     = (opts_file[:sound_enabled].eql?('false') ? false : true) if opts_file[:sound_enabled]
-    options[:sound_system]      = (opts_file[:sound_system].eql?('false') ? false : true) if opts_file[:sound_system]
+    options[:sound_system]      = (opts_file[:sound_system]) if opts_file[:sound_system]
     options[:sound_volume]      = (opts_file[:sound_volume].to_f) if opts_file[:sound_volume]
     options[:use_wordnik]       = (opts_file[:use_wordnik].eql?('false') ? false : true) if opts_file[:use_wordnik]
     options[:fight_completion]  = (opts_file[:fight_completion].eql?('false') ? false : true) if opts_file[:fight_completion]
@@ -121,9 +121,10 @@ def init_config
   Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
 
   sound_system_default = OS.windows? ? 'win32-sound' : 'bloops'
+  save_file_mode_default = 'Y' # YAML
 
   GameOptions.add 'sound_system',             sound_system_default
-  GameOptions.add 'save_file_mode',           'Y'
+  GameOptions.add 'save_file_mode',           save_file_mode_default
   GameOptions.add 'default_world_path_yaml',  GW_DEFAULT_WORLD_YAML
   GameOptions.add 'default_world_path_bin',   GW_DEFAULT_WORLD_BIN
   GameOptions.add 'save_file_yaml_path',      GW_SAVE_FILE_YAML
