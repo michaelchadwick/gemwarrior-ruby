@@ -7,7 +7,7 @@ module Gemwarrior
       @@cues ||= {}
       @@cues[key] = val
     end
-    
+
     def self.cues
       @@cues ||= {}
     end
@@ -33,7 +33,7 @@ module Gemwarrior
       ],
       sample: 'bg1.wav'
     }
-    
+
     self.add :battle_start, {
       synth: [
         { frequencies: 'G4',  duration: 50 },
@@ -101,7 +101,7 @@ module Gemwarrior
       ],
       sample: 'intro.wav'
     }
-    
+
     self.add :player_level_up, {
       synth: [
         { frequencies: 'D4,A4,D5,A5,D6', duration: 100 },
@@ -127,6 +127,16 @@ module Gemwarrior
         { frequencies: 'E4', duration: 75 }
       ],
       sample: 'player_travel.wav'
+    }
+
+    self.add :test, {
+      synth: [
+        { frequencies: 'F4', duration: 75 },
+        { frequencies: 'E5', duration: 75 },
+        { frequencies: 'C5', duration: 75 },
+        { frequencies: 'E5', duration: 75 }
+      ],
+      sample: 'test.wav'
     }
 
     self.add :uncover_secret, {

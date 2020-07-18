@@ -8,6 +8,7 @@ require 'io/console'
 require 'gems'
 require 'ap'
 
+require_relative 'misc/audio'
 require_relative 'misc/timer'
 require_relative 'misc/wordlist'
 require_relative 'evaluator'
@@ -210,7 +211,8 @@ module Gemwarrior
       puts 'Sound System Selection'.colorize(:yellow)
       puts '================================='.colorize(:yellow)
       puts
-      print ' (1) WIN32-SOUND '
+      win32 = ' (1) WIN32-SOUND '
+      OS.windows? ? (print win32) : (print win32.colorize(:light_black))
       print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('win32-sound')
       print "\n"
       print ' (2) FEEP        '
@@ -218,6 +220,9 @@ module Gemwarrior
       print "\n"
       print ' (3) BLOOPS      '
       print '(SELECTED)'.colorize(:yellow) if GameOptions.data['sound_system'].eql?('bloops')
+      print "\n"
+      print "\n"
+      print ' (T) TEST SOUND  '
       print "\n"
       puts
       puts ' WIN32-SOUND : good quality; Windows-only'
@@ -233,19 +238,34 @@ module Gemwarrior
       puts 'Enter option number to select sound system, or any other key to exit.'
       puts
       print '[GW_OPTS]-[SOUND_SYSTEM]> '
+
       answer = STDIN.getch.chomp.downcase
 
       case answer
       when '1'
-        GameOptions.add 'sound_system', 'win32-sound'
+        if OS.windows?
+          puts answer
+          GameOptions.add 'sound_system', 'win32-sound'
+        else
+          puts
+        end
         print_options_sound_sytem
       when '2'
+        puts answer
         GameOptions.add 'sound_system', 'feep'
         print_options_sound_sytem
       when '3'
+        puts answer
         GameOptions.add 'sound_system', 'bloops'
         print_options_sound_sytem
+      when 't'
+        puts answer
+        Audio.init
+        play_test_tune
+        print_errors
+        print_options_sound_sytem
       else
+        puts
         return
       end
     end
@@ -583,12 +603,17 @@ module Gemwarrior
 
     def print_errors
       if GameOptions.data['errors']
-        puts GameOptions.data['errors'].colorize(:red)
+        puts "\n\n"
+        puts "Errors: #{GameOptions.data['errors'].colorize(:red)}"
       end
     end
 
     def play_intro_tune
       Audio.play_synth(:intro)
+    end
+
+    def play_test_tune
+      Audio.play_synth(:test)
     end
 
     def prompt
