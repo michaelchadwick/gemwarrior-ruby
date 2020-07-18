@@ -657,6 +657,8 @@ module Gemwarrior
       prompt_template += "%s".colorize(:cyan)
       prompt_template += "]".colorize(:yellow)
       prompt_template += "[%s, %s, %s]".colorize(:yellow) if GameOptions.data['debug_mode']
+      prompt_template += "\n"
+      prompt_template += '[c:character][i:inventory][l:look][u:use][t:take]'
 
       prompt_vars_arr = [
         world.player.level,
