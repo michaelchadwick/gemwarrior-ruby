@@ -80,8 +80,8 @@ module Gemwarrior
         'Rest, but ensure battle for testing'
       ]
 
-      self.commands     = %w(character look rest take talk inventory use drop equip unequip go north east south west attack breakthru change version checkupdate help quit quit!)
-      self.aliases      = %w(c l r t tk i u d eq ue g n e s w a br ch v cu h q qq)
+      self.commands     = %w(character look rest take talk inventory use open drop equip unequip go north east south west attack breakthru change version checkupdate help quit quit!)
+      self.aliases      = %w(c l r t tk i u o d eq ue g n e s w a br ch v cu h q qq)
       self.extras       = %w(exit exit! x xx fight f ? ?? ???)
       self.cmd_descriptions = [
         'Display character information',
@@ -91,6 +91,7 @@ module Gemwarrior
         'Talk to person',
         'Look in your inventory',
         'Use item (in inventory or environment)',
+        'Open item (in inventory or environment)',
         'Drop item',
         'Equip item',
         'Unequip item',
@@ -463,7 +464,7 @@ module Gemwarrior
             end
           end
         end
-      when 'use', 'u'
+      when 'use', 'u', 'open', 'o'
         if param1.nil?
           ERROR_USE_PARAM_MISSING
         else
