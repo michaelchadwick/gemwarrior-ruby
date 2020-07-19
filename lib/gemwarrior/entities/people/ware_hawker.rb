@@ -9,9 +9,9 @@ require_relative '../armor/iron_helmet'
 module Gemwarrior
   class WareHawker < Person
     # CONSTANTS
-    PRICE_IRON_HELMET       = 100
-    PRICE_MACE              = 200
-    PRICE_SPEAR             = 250
+    PRICE_IRON_HELMET       = 10
+    PRICE_MACE              = 30
+    PRICE_SPEAR             = 40
     PLAYER_ROX_INSUFFICIENT = 'You have insufficient rox to purchase that. Quit testing me, human.'
     PLAYER_ITEMS_ADDITIONAL = 'Will there be something else?'
     PLAYER_COMMAND_INVALID  = 'That means nothing to me.'

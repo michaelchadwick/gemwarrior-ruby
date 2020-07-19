@@ -8,8 +8,8 @@ require_relative '../weapons/dagger'
 module Gemwarrior
   class Rockney < Person
     # CONSTANTS
-    PRICE_HERB              = 10
-    PRICE_DAGGER            = 150
+    PRICE_HERB              = 5
+    PRICE_DAGGER            = 10
     PLAYER_ROX_INSUFFICIENT = 'Pity. You are a bit short on funds to purchase that item.'
     PLAYER_ITEMS_ADDITIONAL = 'Anything else?'
     PLAYER_COMMAND_INVALID  = 'Huh?'
