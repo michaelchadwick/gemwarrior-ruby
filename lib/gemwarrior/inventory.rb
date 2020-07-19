@@ -26,6 +26,14 @@ module Gemwarrior
       self.armor  = armor
     end
 
+    def an_words
+      ['herb']
+    end
+
+    def article_chooser(word)
+      (VOWELS.include?(word[0]) or an_words.include?(word)) ? 'an' : 'a'
+    end
+
     def is_empty?
       self.items.nil? || self.items.empty?
     end
@@ -89,8 +97,7 @@ module Gemwarrior
           if q > 1
             return "You have #{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}."
           else
-            article = VOWELS.include?(i[0]) ? 'an' : 'a'
-            return "You have #{article} #{i.to_s.colorize(:yellow)}."
+            return "You have #{self.article_chooser(i)} #{i.to_s.colorize(:yellow)}."
           end
         # multiple items? return array of strings to mush together
         else
@@ -100,8 +107,7 @@ module Gemwarrior
             if q > 1
               item_arr.push("#{q} #{i.to_s.colorize(:yellow)}#{'s'.colorize(:yellow)}")
             else
-              article = VOWELS.include?(i[0]) ? 'an' : 'a'
-              item_arr.push("#{article} #{i.to_s.colorize(:yellow)}")
+              item_arr.push("#{self.article_chooser(i)} #{i.to_s.colorize(:yellow)}")
             end
           end
 
@@ -159,7 +165,7 @@ module Gemwarrior
                 return "The #{i.name.colorize(:yellow)} has taken charge, and been equipped."
               elsif i.is_armor
                 self.armor = i
-                return "The #{i.name.colorize(:yellow)} has fortified, and has been equipped."
+                return "The #{i.name.colorize(:yellow)} has fortified you, and been equipped."
               end
             else
               return ERROR_ITEM_EQUIP_NONARMAMENT
