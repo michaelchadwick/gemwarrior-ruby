@@ -7,12 +7,13 @@ module Gemwarrior
   class Person < Creature
     def initialize
       super
-      
+
       self.name         = 'person.'
       self.name_display = Formatting::upstyle(name)
       self.description  = 'It appears to be a person of some kind.'
+      self.takeable     = false
     end
-  
+
     def use(world)
       'That person does not seem to want to talk to you right now.'
     end
