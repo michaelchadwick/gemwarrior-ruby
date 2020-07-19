@@ -167,6 +167,22 @@ module Gemwarrior
       sample: 'player_travel_west.wav'
     }
 
+    self.add :resume_game, {
+      synth: [
+        { frequencies: 'C4', duration: 75 },
+        { frequencies: 'D4', duration: 75 },
+        { frequencies: 'E4', duration: 75 },
+        { frequencies: 'F#4', duration: 75 },
+        { frequencies: 'G#4', duration: 75 },
+        { frequencies: 'A#4', duration: 75 },
+        { frequencies: 'C5', duration: 75 },
+        { frequencies: 'D5', duration: 75 },
+        { frequencies: 'E5', duration: 75 },
+        { frequencies: 'F#5', duration: 75 }
+      ],
+      sample: 'test.wav'
+    }
+
     self.add :test, {
       synth: [
         { frequencies: 'F4', duration: 75 },

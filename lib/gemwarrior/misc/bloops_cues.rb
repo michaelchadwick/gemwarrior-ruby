@@ -167,6 +167,16 @@ module Gemwarrior
       sample: 'player_travel_west.wav'
     }
 
+    self.add :resume_game, {
+      synth: [
+        { s1: '16:C4' },
+        { s1: '16:D4' },
+        { s1: '16:E4' },
+        { s1: '8:F#4' }
+      ],
+      sample: 'test.wav'
+    }
+
     self.add :test, {
       synth: [
         { s1: '4:F4' },

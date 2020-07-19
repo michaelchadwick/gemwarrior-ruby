@@ -413,6 +413,7 @@ module Gemwarrior
             run_main_menu
           else
             print_errors
+            play_resume_tune
             load_saved_world(result)
             return
           end
@@ -645,6 +646,10 @@ module Gemwarrior
 
     def play_intro_tune
       Audio.play_synth(:intro)
+    end
+
+    def play_resume_tune
+      Audio.play_synth(:resume_game)
     end
 
     def play_test_tune
