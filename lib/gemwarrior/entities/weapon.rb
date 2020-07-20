@@ -22,7 +22,7 @@ module Gemwarrior
     end
 
     def use(world)
-      'Save the brrandishing of your weapon for battle.'
+      'Save the brandishing of your weapon for battle.'
     end
 
     def describe_detailed
