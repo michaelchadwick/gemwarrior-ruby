@@ -7,6 +7,9 @@ require_relative '../game_options'
 
 module Gemwarrior
   module Audio
+    # CONSTANTS
+    ERROR_SOUND_NOT_ENABLED = 'Sound is disabled! Enable in main options to hear sound.'
+
     def self.init
       if GameOptions.data['sound_system'].eql?('win32-sound')
         begin
@@ -117,6 +120,8 @@ module Gemwarrior
             end
           end
         end
+      else
+        GameOptions.data['errors'] = ERROR_SOUND_NOT_ENABLED
       end
     end
 

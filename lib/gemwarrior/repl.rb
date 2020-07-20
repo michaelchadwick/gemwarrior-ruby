@@ -25,6 +25,7 @@ module Gemwarrior
     SPLASH_MESSAGE          = 'Welcome to *Jool*, where randomized fortune is just as likely as mayhem.'
     GITHUB_NAME             = 'michaelchadwick'
     GITHUB_PROJECT          = 'gemwarrior'
+    ERROR_SOUND_NOT_ENABLED = 'Sound is disabled! Enter \'x\' to exit'
 
     attr_accessor :game, :world, :evaluator
 
@@ -338,16 +339,27 @@ module Gemwarrior
       puts
       puts 'Gem Warrior Sound Test'.colorize(:yellow)
       puts '================================='.colorize(:yellow)
-      puts
-      puts 'Play all the sounds in Gemwarrior.'
-      puts
-      for cue in Audio.get_cues do
-        pp cue[0].to_s
+
+      if GameOptions.data['sound_enabled']
+        puts
+        puts 'Play all the sounds in Gemwarrior.'
+        puts
+
+        cues = Audio.get_cues
+        for cue in cues do
+          pp cue[0].to_s
+        end
+
+        puts
+        puts '================================='.colorize(:yellow)
+        puts
+        puts 'Enter sound id to play it, or enter "x" to return to the main menu.'
+      else
+        GameOptions.data['errors'] = ERROR_SOUND_NOT_ENABLED
       end
-      puts
-      puts '================================='.colorize(:yellow)
-      puts
-      puts 'Enter sound id to play it, or enter "x" to return to the main menu.'
+
+      print_errors
+
       puts
       print '[GW_SOUND_TEST]> '
 
@@ -641,6 +653,7 @@ module Gemwarrior
       if GameOptions.data['errors']
         puts "\n\n"
         puts "Errors: #{GameOptions.data['errors'].colorize(:red)}"
+        GameOptions.data['errors'] = nil
       end
     end
 
