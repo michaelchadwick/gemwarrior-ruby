@@ -15,14 +15,14 @@ locations:
     :south: false
     :west: true
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::Bed
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: bed
     name_display: Bed
     description: The place where you sleep when you are not adventuring.
@@ -35,7 +35,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: chest
     name_display: Chest
     description: Well-crafted with solid oak, this family chest has intricate inlays all around the front and sides. It's the one thing from home you took with you when you left.
@@ -48,7 +48,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: letter
     name_display: Letter
     description: A single page of thin paper, folded at the middle, with some excellent
@@ -61,7 +61,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: stone
     name_display: Stone
     description: A small, yet quite sharp, sedimentary pebble, suitable for tossing in
@@ -139,7 +139,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: stalactite
     name_display: Stalactite
     description: Long protrusion of cave adornment, broken off and fallen to the ground,
@@ -150,12 +150,13 @@ locations:
     talkable: false
     useable: false
     equippable: true
+    is_weapon: true
   - !ruby/object:Gemwarrior::Stonemite
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: stonemite
     name_display: Stonemite
     description: Stubby cave debris that is neat to look at, as it is off-grey and
@@ -163,7 +164,6 @@ locations:
     takeable: true
     useable: false
     equippable: false
-    is_weapon: true
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
@@ -216,7 +216,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: ladder
     name_display: Ladder
     description: Rickety and crudely-fashioned, this ladder descends down into the
@@ -455,7 +455,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: small_hole
     name_display: Small Hole
     description: Amongst the rubble of the alcove, a small hole, barely big enough
@@ -519,7 +519,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: rope
     name_display: Rope
     description: For some reason, a sturdy rope hangs down from a small opening in
@@ -677,7 +677,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: snowman
     name_display: Snowman
     description: Standing solemnly in the snow, a man of snow solemnly stands.
@@ -762,7 +762,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: red_key
     name_display: Red Key
     description: Redder than an embarrassed tomato in front of a moderate fire, but still very capable of being a key.
@@ -822,7 +822,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: map
     name_display: Map
     description: The land of Jool is contained on this piece of canvas, in a useful,
@@ -859,7 +859,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: tree
     name_display: Tree
     description: A mighty representation of nature, older than your father's father's
@@ -920,7 +920,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: feather
     name_display: Feather
     description: A blue and green feather. It is soft and tender, unlike the craven
@@ -957,7 +957,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: bookcase
     name_display: Bookcase
     description: This oaken monstrosity has six shelves, each about 3 feet high. Mathing, you determine it to be "huge", featuring many books within it.
@@ -1085,7 +1085,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: false
     name: locker_corner
     name_display: Locker (Corner)
@@ -1264,7 +1264,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: arena_door
     name_display: Arena Door
     description: The Arena is massive, with its numerous columns and stone walls stretching
@@ -1295,14 +1295,14 @@ locations:
     :south: false
     :west: true
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::ArenaMaster
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: arena_master
     name_display: Arena Master
@@ -1353,14 +1353,14 @@ locations:
     :south: false
     :west: false
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::Hut
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: false
     name: hut
     name_display: Hut
@@ -1517,7 +1517,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: false
     name: bullet
     name_display: Bullet
@@ -1544,14 +1544,14 @@ locations:
     :south: true
     :west: false
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::WareHawker
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: ware_hawker
     name_display: Ware Hawker
@@ -1580,20 +1580,20 @@ locations:
     :south: false
     :west: true
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::ThinMan
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: thin_man
     name_display: Thin Man
-    description: An almost shockingly gaunt man is sitting on the ground, resting against a wall. He   
-      wears a patchwork quilt of a hat, and his slender frame is covered by a simple brown tunic. His feet 
-      point comically toward the sky in brown boots while his head dips down slightly, eyes watching 
+    description: An almost shockingly gaunt man is sitting on the ground, resting against a wall. He
+      wears a patchwork quilt of a hat, and his slender frame is covered by a simple brown tunic. His feet
+      point comically toward the sky in brown boots while his head dips down slightly, eyes watching
       something in the distance you can't see.
     takeable: false
     useable: true
@@ -1603,12 +1603,12 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: drunk_man
     name_display: Drunk Man
-    description: Some supernatural force is surely keeping this obviously smashed individual from 
-      toppling over to the ground. The inebriated fellow somehow continues to stumble about in a small 
+    description: Some supernatural force is surely keeping this obviously smashed individual from
+      toppling over to the ground. The inebriated fellow somehow continues to stumble about in a small
       circle near a smattering of shipping crates, looking simultaneously dazed and cheerful.
     takeable: false
     useable: true
@@ -1632,14 +1632,14 @@ locations:
     :south: true
     :west: true
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::Pig
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: pig
     name_display: Pig
@@ -1652,7 +1652,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: cow
     name_display: Cow
@@ -1665,7 +1665,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: goat
     name_display: Goat
@@ -1678,7 +1678,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: false
     name: shovel
     name_display: Shovel
@@ -1707,19 +1707,19 @@ locations:
     :south: true
     :west: false
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::ShiftyWoman
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     talkable: true
     name: shifty_woman
     name_display: Shifty Woman
-    description: Sharply dressed with impeccable style, you still can't shake the feeling that this 
-      otherwise ordinary woman is up to something. It might be the way she almost impulsively looks 
+    description: Sharply dressed with impeccable style, you still can't shake the feeling that this
+      otherwise ordinary woman is up to something. It might be the way she almost impulsively looks
       back and forth along the town street while rubbing her hands together menacingly.
     takeable: false
     useable: true
@@ -1753,7 +1753,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: gun
     name_display: Gun
     description: Pew pew goes this firearm, you suspect (if it has bullets).
@@ -1769,7 +1769,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: pedestal
     name_display: Pedestal
     description: A pedestal about 4 feet in height rises up from the ground, with
@@ -1785,22 +1785,22 @@ locations:
     switches:
     - - alexandrat
       - antdxlarea
-      - 
+      -
     - - iolita
       - alitoi
-      - 
+      -
     - - emerald
       - eelmrda
-      - 
+      -
     - - amberoo
       - raoobem
-      - 
+      -
     - - ruby
       - ruyb
-      - 
+      -
     - - rockney
       - eyrcnok
-      - 
+      -
   monsters_abounding: []
   bosses_abounding: []
   checked_for_monsters: false
@@ -1830,7 +1830,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: floor_tile
     name_display: Floor Tile
     description: One of the floor tiles, rough-hewn but immaculate, looks...off. Pressable,
@@ -1867,7 +1867,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: flower
     name_display: Flower
     description: Petals the color of clear sky and a stem of bright white. A most
@@ -1881,7 +1881,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: keystone
     name_display: Keystone
     description: Certainly greater than the sum of its parts, this smallish stone
@@ -1895,7 +1895,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: pond
     name_display: Pond
     description: 'This tiny pool of water self-ripples every minute or so. Small,
@@ -1935,7 +1935,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: dehumidifier
     name_display: Dehumidifier
     description: Petals the color of clear sky and a stem of bright white. A most
@@ -1995,7 +1995,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: waterfall
     name_display: Waterfall
     description: Gallons of murky, sparkling water fall downward from an unknown spot
@@ -2033,7 +2033,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: massive_door
     name_display: Massive Door
     description: Translucent, but not transparent, this door constructed of condensed
@@ -2072,7 +2072,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: throne
     name_display: Throne
     description: Made of what appears to be unfulfilled desires and latent, flawed happiness, the well-crafted seat still looks kinda comfy. The wizard Emerald sits in it, glaring at you.
@@ -2109,7 +2109,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: couch
     name_display: Couch
     description: Ever wanted to sit on a cloud? Now is your chance.
@@ -2170,7 +2170,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: apple
     name_display: Apple
     description: Reddish-orangeish in color, this fruit looks sweet, but it is heavy
@@ -2183,7 +2183,7 @@ locations:
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: cup
     name_display: Cup
     description: A nice stone mug, perfect for putting things into and then using
@@ -2210,14 +2210,14 @@ locations:
     :south: false
     :west: false
   danger_level: :none
-  monster_level_range: 
+  monster_level_range:
   items:
   - !ruby/object:Gemwarrior::QueenRuby
     equipped: false
     consumable: false
     used: false
     used_again: false
-    number_of_uses: 
+    number_of_uses:
     name: queen_ruby
     description: Queen Ruby glimmers like she was made from the substance of her name. She wears a wan smile, and her hands are delicately intertwined as she sits patiently.
     takeable: false
@@ -2243,9 +2243,9 @@ player: !ruby/object:Gemwarrior::Player
   defense: 1
   dexterity: 3
   inventory: !ruby/object:Gemwarrior::Inventory
-    armor: 
+    armor:
     items: []
-    weapon: 
+    weapon:
   rox: 0
   cur_coords: *2
   special_abilities: []
