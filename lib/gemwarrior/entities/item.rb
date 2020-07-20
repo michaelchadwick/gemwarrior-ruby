@@ -7,12 +7,12 @@ module Gemwarrior
   class Item < Entity
     attr_accessor :is_armor,
                   :is_weapon
-  
+
     attr_reader   :use
 
     def initialize
       super
-      
+
       self.is_armor   = false
       self.is_weapon  = false
     end
@@ -20,7 +20,7 @@ module Gemwarrior
     def use(world)
       'That item does not do anything...yet.'
     end
-    
+
     def describe_detailed(world)
       desc_text =  "\"#{name_display}\"\n".colorize(:yellow)
       desc_text << "(#{name})\n".colorize(:green)
