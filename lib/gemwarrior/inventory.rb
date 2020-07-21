@@ -31,7 +31,7 @@ module Gemwarrior
     end
 
     def article_chooser(word)
-      (VOWELS.include?(word[0]) or an_words.include?(word)) ? 'an' : 'a'
+      (VOWELS.include?(word.to_s[0]) or an_words.include?(word.to_s)) ? 'an' : 'a'
     end
 
     def is_empty?
