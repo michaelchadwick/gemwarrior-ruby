@@ -1,9 +1,4 @@
-```
-/-+-+-+ +-+-+-+-+-+-+-\
-|G|E|M| |W|A|R|R|I|O|R|
-\-+-+-+ +-+-+-+-+-+-+-/
-```
-<small>logo courtesy of [ascii generator](http://www.network-science.de/ascii/)</small>
+AppLand Badge Demo
 
 [![Gem Version](https://badge.fury.io/rb/gemwarrior.svg)](http://badge.fury.io/rb/gemwarrior)
 
