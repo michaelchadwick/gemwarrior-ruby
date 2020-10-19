@@ -1,5 +1,3 @@
-AppLand Badge Demo
-
 ![](https://byob.yarr.is/RubbaBoy/Example/time)
 
 **Gem Warrior** is a text adventure that takes place in the land of **Jool**, where randomized fortune is just as likely as *mayhem*.
