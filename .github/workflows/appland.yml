@@ -1,12 +1,12 @@
 name: AppLand
-on: pull_request
+on: push
 
 jobs:
   badge_job:
     runs-on: ubuntu-latest
     steps:
       - id: date
-        run: echo "##[set-output name=data;]$(date)"
+        run: echo "yolo"
       - name: Time badge
         uses: RubbaBoy/BYOB@v1.1.0
         with:
