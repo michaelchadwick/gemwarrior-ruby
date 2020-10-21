@@ -14,3 +14,5 @@ jobs:
           LABEL: 'AppLand'
           STATUS: 'https://app.land/applications/165?mapset=2057'
           COLOR: 00EEFF
+          
+# not working
