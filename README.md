@@ -1,4 +1,3 @@
-![AppLand](https://app.land/applications/165?mapset=2057)
 
 **Gem Warrior** is a text adventure that takes place in the land of **Jool**, where randomized fortune is just as likely as *mayhem*.
 
