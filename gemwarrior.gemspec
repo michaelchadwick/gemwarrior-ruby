@@ -19,6 +19,8 @@ Gem::Specification.new do |spec|
   spec.require_paths   = ['lib']
   spec.license         = 'MIT'
 
+  spec.required_ruby_version = '~> 2.0'
+
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
   spec.add_runtime_dependency 'http', '~> 0.8.10'
   spec.add_runtime_dependency 'json', '~> 2.3.0'
