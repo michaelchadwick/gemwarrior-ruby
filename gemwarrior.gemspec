@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version         = Gemwarrior::VERSION
   spec.platform        = Gem::Platform::RUBY
   spec.authors         = ['Michael Chadwick']
-  spec.email           = 'mike@codana.me'
+  spec.email           = 'mike@neb.host'
   spec.homepage        = 'http://rubygems.org/gems/gemwarrior'
   spec.summary         = 'RubyGem text adventure'
   spec.description     = 'A fun text adventure in the form of a RubyGem!'
