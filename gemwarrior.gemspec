@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   # additional
   ## runtime deps
   spec.add_runtime_dependency 'clocker', '~> 0.1.6'
-  spec.add_runtime_dependency 'colorize', '~> 0.8'
+  spec.add_runtime_dependency 'colorize', '~> 1.0'
   spec.add_runtime_dependency 'gems', '~> 1.2'
   spec.add_runtime_dependency 'http', '~> 5.1'
   spec.add_runtime_dependency 'json', '~> 2.6'
