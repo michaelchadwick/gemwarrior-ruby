@@ -1,0 +1,67 @@
+--- !ruby/object:Gemwarrior::World
+locations:
+- !ruby/object:Gemwarrior::Location
+  name: home
+  name_display: Home
+  visited: true
+  description: The little, unimportant, decrepit shack that you live in. What the place lacks in decisive magnanimity is made up for in cozy squalidness. Your bed covers much of the northern corner. Your beloved family chest sits at the foot of the bed.
+  coords: &2
+    :x: 5
+    :y: 0
+    :z: 0
+  paths:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :none
+  monster_level_range:
+  items:
+  - !ruby/object:Gemwarrior::Bed
+    equipped: false
+    consumable: false
+    used: false
+    used_again: false
+    number_of_uses:
+    name: bed
+    name_display: Bed
+    description: The place where you sleep when you are not adventuring.
+    takeable: false
+    talkable: false
+    useable: true
+    equippable: false
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+player: !ruby/object:Gemwarrior::Player
+  name: Player
+  description: |-
+    Picked to do battle against a wizened madman for a shiny something or other for world-saving purposes.
+  face: facey
+  hands: handsy
+  mood: moody
+  level: 1
+  xp: 0
+  hp_cur: 30
+  hp_max: 30
+  atk_lo: 1
+  atk_hi: 2
+  defense: 1
+  dexterity: 3
+  inventory: !ruby/object:Gemwarrior::Inventory
+    armor:
+    items: []
+    weapon:
+  rox: 0
+  cur_coords: *2
+  special_abilities: []
+  monsters_killed: 0
+  bosses_killed: 0
+  items_taken: 0
+  movements_made: 0
+  rests_taken: 0
+  deaths: 0
+emerald_beaten: false
+shifty_jeweled: false
+shifty_to_jewel: false
+duration:

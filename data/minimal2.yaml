@@ -1,0 +1,25 @@
+--- !ruby/object:Gemwarrior::World
+locations:
+- !ruby/object:Gemwarrior::Location
+  name: home
+  name_display: Home
+  visited: true
+  description: The little, unimportant, decrepit shack that you live in. What the place lacks in decisive magnanimity is made up for in cozy squalidness. Your bed covers much of the northern corner. Your beloved family chest sits at the foot of the bed.
+  coords: &2
+    :x: 5
+    :y: 0
+    :z: 0
+  paths:
+    :north: true
+    :east: true
+    :south: false
+    :west: true
+  danger_level: :none
+  monster_level_range:
+  monsters_abounding: []
+  bosses_abounding: []
+  checked_for_monsters: false
+emerald_beaten: false
+shifty_jeweled: false
+shifty_to_jewel: false
+duration:
