@@ -22,10 +22,10 @@ require_relative 'world'
 module Gemwarrior
   class Game
     # CONSTANTS
-    INVENTORY_DEFAULT             = Inventory.new
-    INVENTORY_DEBUG               = Inventory.new([Herb.new, Herb.new, Herb.new])
-    ROX_DEFAULT                   = 0
-    ROX_DEBUG                     = 300
+    INVENTORY_DEFAULT               = Inventory.new
+    INVENTORY_DEBUG                 = Inventory.new([Herb.new, Herb.new, Herb.new])
+    ROX_DEFAULT                     = 0
+    ROX_DEBUG                       = 300
 
     attr_accessor :world,
                   :evaluator,
@@ -35,42 +35,86 @@ module Gemwarrior
 
     def initialize(options)
       # set game options
-      GameOptions.add 'beast_mode', options.fetch(:beast_mode)
-      GameOptions.add 'debug_mode', options.fetch(:debug_mode)
-      GameOptions.add 'god_mode', options.fetch(:god_mode)
-      GameOptions.add 'sound_enabled', options.fetch(:sound_enabled)
-      GameOptions.add 'sound_system', options.fetch(:sound_system)
-      GameOptions.add 'sound_volume', options.fetch(:sound_volume)
-      GameOptions.add 'use_wordnik', options.fetch(:use_wordnik)
-      GameOptions.add 'fight_completion', options.fetch(:fight_completion)
+      self.init_game_options(options)
 
       # add classes for creatures, monsters, people, items, weapons, and armor to game
       # also add them to the global GameAssets
-      init_creatures
-      init_monsters
-      init_people
-      init_items
-      init_weapons
-      init_armor
+      self.init_creatures
+      self.init_monsters
+      self.init_people
+      self.init_items
+      self.init_weapons
+      self.init_armor
 
       # create new world based on yaml/marshall data
-      self.world               = init_world
+      self.world                    = init_world
 
       # update some player aspects to make more dynamic
-      world.player.name        = world.player.generate_name
-      world.player.face        = world.player.generate_face
-      world.player.hands       = world.player.generate_hands
-      world.player.mood        = world.player.generate_mood
-      world.player.inventory   = GameOptions.data['debug_mode'] ? INVENTORY_DEBUG : INVENTORY_DEFAULT
-      world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
+      self.world.player.name        = world.player.generate_name
+      self.world.player.face        = world.player.generate_face
+      self.world.player.hands       = world.player.generate_hands
+      self.world.player.mood        = world.player.generate_mood
+      self.world.player.inventory   = GameOptions.data['debug_mode'] ? INVENTORY_DEBUG : INVENTORY_DEFAULT
+      self.world.player.rox         = GameOptions.data['debug_mode'] ? ROX_DEBUG : ROX_DEFAULT
 
       # set some global variables
-      world.duration           = { mins: 0, secs: 0, ms: 0 }
-      world.emerald_beaten     = false
-      world.shifty_to_jewel    = false
-      world.shifty_has_jeweled = false
+      self.world.duration           = { mins: 0, secs: 0, ms: 0 }
+      self.world.emerald_beaten     = false
+      self.world.shifty_to_jewel    = false
+      self.world.shifty_has_jeweled = false
 
-      # spawn bosses
+      # # spawn bosses
+      self.init_bosses
+
+      # mark home as visited
+      self.world.location_by_name('home').visited = true
+
+      # create options file if not existing
+      self.update_options_file
+
+      # create the console
+      self.evaluator                = Evaluator.new(world)
+      self.repl                     = Repl.new(self, world, evaluator)
+
+      # enter Jool!
+      self.repl.start('look', options.fetch(:extra_command), options.fetch(:new_skip), options.fetch(:resume_skip))
+    end
+
+    def update_options_file
+      File.open(GameOptions.data['options_file_path'], 'w') do |f|
+        f.puts "fight_completion:#{GameOptions.data['fight_completion']}"
+        f.puts "sound_enabled:#{GameOptions.data['sound_enabled']}"
+        f.puts "sound_system:#{GameOptions.data['sound_system']}"
+        f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
+        f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
+      end
+    end
+
+    private
+
+    # convert an entity filename to a class so it can be added to game asset singleton registry
+    def file_to_class(filename)
+      filename_to_string = Formatting.upstyle(filename.split('/').last.split('.')[0], no_space: true)
+      Gemwarrior.const_get(filename_to_string).new
+    end
+
+    def init_game_options(options)
+      GameOptions.add 'beast_mode',       options.fetch(:beast_mode)
+      GameOptions.add 'debug_mode',       options.fetch(:debug_mode)
+      GameOptions.add 'fight_completion', options.fetch(:fight_completion)
+      GameOptions.add 'god_mode',         options.fetch(:god_mode)
+      GameOptions.add 'sound_enabled',    options.fetch(:sound_enabled)
+      GameOptions.add 'sound_system',     options.fetch(:sound_system)
+      GameOptions.add 'sound_volume',     options.fetch(:sound_volume)
+      GameOptions.add 'use_wordnik',      options.fetch(:use_wordnik)
+
+      # require needed files for selected sound_system if sound_enabled
+      if GameOptions.data['sound_enabled']
+        Audio.init
+      end
+    end
+
+    def init_bosses
       ## Pain Quarry
       world.location_by_name('pain_quarry-southeast').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
       world.location_by_name('pain_quarry-east').bosses_abounding.push(Gemwarrior.const_get('Garynetty').new)
@@ -83,42 +127,6 @@ module Gemwarrior
       world.location_by_name('river_bridge').bosses_abounding.push(Gemwarrior.const_get('Jaspern').new)
       ## Throne Room
       world.location_by_name('sky_tower-throne_room').bosses_abounding.push(Gemwarrior.const_get('Emerald').new)
-
-      # mark home as visited
-      world.location_by_name('home').visited = true
-
-      # create options file if not existing
-      update_options_file
-
-      # require needed files for selected sound_system if sound_enabled
-      if GameOptions.data['sound_enabled']
-        Audio.init
-      end
-
-      # create the console
-      self.evaluator  = Evaluator.new(world)
-      self.repl       = Repl.new(self, world, evaluator)
-
-      # enter Jool!
-      repl.start('look', options.fetch(:extra_command), options.fetch(:new_skip), options.fetch(:resume_skip))
-    end
-
-    def update_options_file
-      File.open(GameOptions.data['options_file_path'], 'w') do |f|
-        f.puts "sound_enabled:#{GameOptions.data['sound_enabled']}"
-        f.puts "sound_system:#{GameOptions.data['sound_system']}"
-        f.puts "sound_volume:#{GameOptions.data['sound_volume']}"
-        f.puts "use_wordnik:#{GameOptions.data['use_wordnik']}"
-        f.puts "fight_completion:#{GameOptions.data['fight_completion']}"
-      end
-    end
-
-    private
-
-    # convert an entity filename to a class so it can be added to game asset singleton registry
-    def file_to_class(filename)
-      filename_to_string = Formatting.upstyle(filename.split('/').last.split('.')[0], no_space: true)
-      Gemwarrior.const_get(filename_to_string).new
     end
 
     def init_creatures
