@@ -120,7 +120,7 @@ module Gemwarrior
     def get_save_file_name
       if save_file_exist?
         File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-          return YAML.load(f)
+          return YAML.unsafe_load(f)
         end
       end
     end
@@ -551,7 +551,7 @@ module Gemwarrior
       if mode.eql? 'Y'
         if File.exist?(GameOptions.data['save_file_yaml_path'])
           File.open(GameOptions.data['save_file_yaml_path'], 'r') do |f|
-            return YAML.load(f)
+            return YAML.unsafe_load(f)
           end
         else
           puts 'No save file exists.'

@@ -7,6 +7,7 @@ require 'matrext'
 require_relative 'entities/armor/iron_helmet'
 require_relative 'entities/items/herb'
 require_relative 'entities/weapons/dagger'
+require_relative 'entities/player'
 require_relative 'misc/animation'
 require_relative 'misc/audio'
 require_relative 'misc/formatting'
@@ -52,7 +53,7 @@ module Gemwarrior
       init_weapons
       init_armor
 
-      # create new world based on default template
+      # create new world based on yaml/marshall data
       self.world               = init_world
 
       # update some player aspects to make more dynamic
@@ -170,20 +171,20 @@ module Gemwarrior
       mode = GameOptions.data['save_file_mode']
 
       if mode.eql?('Y')
-        if File.exist?(GameOptions.data['default_world_path_yaml'])
-          File.open(GameOptions.data['default_world_path_yaml'], 'r') do |f|
-            return YAML.load(f)
+        if File.exist?(GameOptions.data['world_yaml_path'])
+          File.open(GameOptions.data['world_yaml_path'], 'r') do |f|
+            return YAML.unsafe_load(f)
           end
         else
-          puts "Error: cannot load #{GameOptions.data['default_world_path_yaml']}."
+          puts "Error: cannot load #{GameOptions.data['world_yaml_path']}."
         end
       else
-        if File.exist?(GameOptions.data['default_world_path_bin'])
-          File.open(GameOptions.data['default_world_path_bin'], 'r') do |f|
+        if File.exist?(GameOptions.data['world_bin_path'])
+          File.open(GameOptions.data['world_bin_path'], 'r') do |f|
             return Marshal.load(f)
           end
         else
-          puts "Error: cannot load #{GameOptions.data['default_world_path_bin']}."
+          puts "Error: cannot load #{GameOptions.data['world_bin_path']}."
         end
       end
     end

@@ -9,21 +9,72 @@ require_relative '../lib/gemwarrior/version'
 
 include Gemwarrior
 
-GAME_NAME             = 'Gem Warrior'
-GW_HOME               = "#{Dir.home}/.gemwarrior"
-GW_SAVE_FILE_YAML     = "#{GW_HOME}/gw_sav.yaml"
-GW_SAVE_FILE_BIN      = "#{GW_HOME}/gw_sav.dat"
-GW_OPTS_FILE          = "#{GW_HOME}/gw_opts"
-GW_LOG_FILE           = "#{GW_HOME}/gw_log"
-GW_DEFAULT_WORLD_YAML = File.expand_path('../../data/default_world.yaml', __FILE__)
-GW_DEFAULT_WORLD_BIN  = File.expand_path('../../data/default_world.bin', __FILE__)
-GW_DEFAULT_WRAP_WIDTH = 80
+GW_NAME                   = 'Gem Warrior'
+GW_HOME_PATH              = "#{Dir.home}/.gemwarrior"
+GW_SAVE_FILE_YAML_PATH    = "#{GW_HOME_PATH}/gw_sav.yaml"
+GW_SAVE_FILE_BIN_PATH     = "#{GW_HOME_PATH}/gw_sav.dat"
+GW_SAVE_FILE_MODE_DEFAULT = 'Y' # YAML
+GW_OPTS_FILE_PATH         = "#{GW_HOME_PATH}/gw_opts"
+GW_LOG_FILE_PATH          = "#{GW_HOME_PATH}/gw_log"
+GW_WRAP_WIDTH_DEFAULT   = 80
+
+def print_error(error)
+  case error
+  when OptionParser::InvalidOption
+    puts "#{GW_NAME}: illegal option #{error.args.join(' ')}"
+  else
+    puts "An unexpected error occurred while running #{GW_NAME}:"
+    puts "  #{error}\n"
+  end
+end
+
+def init_config(world)
+  Dir.mkdir(GW_HOME_PATH) unless Dir.exist?(GW_HOME_PATH)
+
+  log_file_path = GW_LOG_FILE_PATH
+  options_file_path = GW_OPTS_FILE_PATH
+  save_file_mode_default = GW_SAVE_FILE_MODE_DEFAULT
+  save_file_bin_path = GW_SAVE_FILE_BIN_PATH
+  save_file_yaml_path = GW_SAVE_FILE_YAML_PATH
+  sound_system_default = OS.windows? ? 'win32-sound' : 'bloops'
+  world_yaml_path = File.expand_path("../../data/#{world}.yaml", __FILE__)
+  world_bin_path = File.expand_path("../../data/#{world}.bin", __FILE__)
+  wrap_width = GW_WRAP_WIDTH_DEFAULT
+
+  GameOptions.add 'log_file_path',       log_file_path
+  GameOptions.add 'options_file_path',   options_file_path
+  GameOptions.add 'save_file_bin_path',  save_file_bin_path
+  GameOptions.add 'save_file_mode',      save_file_mode_default
+  GameOptions.add 'save_file_yaml_path', save_file_yaml_path
+  GameOptions.add 'sound_system',        sound_system_default
+  GameOptions.add 'world_bin_path',      world_bin_path
+  GameOptions.add 'world_yaml_path',     world_yaml_path
+  GameOptions.add 'wrap_width',          wrap_width
+end
+
+def read_options_file
+  if !File.exist?(GW_OPTS_FILE_PATH)
+    File.write(GW_OPTS_FILE_PATH, "")
+  end
+
+  options = {}
+
+  File.open(GW_OPTS_FILE_PATH).readlines.each do |line|
+    kv = line.chomp.split(':')
+    options[kv[0].to_sym] = kv[1]
+  end
+
+  # check for null
+  return options[:sound_enabled] ? options : nil
+end
 
 def parse_options_cli
   # default options
   options = {
     beast_mode:       false,
     debug_mode:       false,
+    extra_command:    nil,
+    fight_completion: false,
     god_mode:         false,
     new_skip:         false,
     resume_skip:      false,
@@ -31,17 +82,22 @@ def parse_options_cli
     sound_system:     'bloops',
     sound_volume:     0.3,
     use_wordnik:      false,
-    fight_completion: false,
-    extra_command:    nil
+    world_name:       'default_world'
   }
 
   # options file has next precedence
   unless (opts_file = read_options_file).nil?
-    options[:sound_enabled]     = (opts_file[:sound_enabled].eql?('false') ? false : true) if opts_file[:sound_enabled]
-    options[:sound_system]      = (opts_file[:sound_system]) if opts_file[:sound_system]
-    options[:sound_volume]      = (opts_file[:sound_volume].to_f) if opts_file[:sound_volume]
-    options[:use_wordnik]       = (opts_file[:use_wordnik].eql?('false') ? false : true) if opts_file[:use_wordnik]
     options[:fight_completion]  = (opts_file[:fight_completion].eql?('false') ? false : true) if opts_file[:fight_completion]
+
+    options[:sound_enabled]     = (opts_file[:sound_enabled].eql?('false') ? false : true) if opts_file[:sound_enabled]
+
+    options[:sound_system]      = (opts_file[:sound_system]) if opts_file[:sound_system]
+
+    options[:sound_volume]      = (opts_file[:sound_volume].to_f) if opts_file[:sound_volume]
+
+    options[:use_wordnik]       = (opts_file[:use_wordnik].eql?('false') ? false : true) if opts_file[:use_wordnik]
+
+    opts_file[:world_name]      = (opts_file[:world_name]) if opts_file[:world_name]
   end
 
   # command line has next precedence
@@ -54,8 +110,16 @@ def parse_options_cli
       options[:debug_mode] = true
     end
 
+    opts.on('-f', '--fight-completion', 'Fighting without specifying an enemy will attack first one it finds') do
+      options[:fight_completion] = false
+    end
+
     opts.on('-g', '--god', 'Enable debug[godmode]') do
       options[:god_mode] = true
+    end
+
+    opts.on('-k', '--wordnik', 'Enable Wordnik to generate more diverse, dynamic descriptors of entities') do
+      options[:use_wordnik] = true
     end
 
     opts.on('-n', '--new', 'Immediately start a new game, skipping main menu') do
@@ -71,19 +135,15 @@ def parse_options_cli
     end
 
     opts.on('-v', '--version', 'Display version number and exit') do
-      puts "#{GAME_NAME} v#{Gemwarrior::VERSION}"
+      puts "#{GW_NAME} v#{Gemwarrior::VERSION}"
       exit
     end
 
-    opts.on('-w', '--wordnik', 'Enable Wordnik to generate more diverse, dynamic descriptors of entities') do
-      options[:use_wordnik] = true
+    opts.on('-w', '--world WORLD_NAME', String, 'Build Gemwarrior with alternate world data file') do |world_name|
+      options[:world_name] = world_name
     end
 
-    opts.on('-f', '--fight-completion', 'Fighting without specifying an enemy will attack first one it finds') do
-      options[:fight_completion] = false
-    end
-
-    opts.on('-x', '--extra COMMAND,PARAM1,PARAM2,PARAM3', String, 'Run a command, with optional params, immediately upon beginning the game') do |xc|
+    opts.on('-x', '--xtra COMMAND,PARAMS', String, 'Run a command, with optional params, immediately upon beginning the game') do |xc|
       options[:extra_command] = xc.gsub(',',' ')
     end
   end
@@ -93,54 +153,14 @@ def parse_options_cli
   return options
 end
 
-def print_error(error)
-  case error
-  when OptionParser::InvalidOption
-    puts "#{GAME_NAME}: illegal option #{error.args.join(' ')}"
-  else
-    puts "An unexpected error occurred while running #{GAME_NAME}:"
-    puts "  #{error}\n"
-  end
-end
-
-def read_options_file
-  if File.exist?(GameOptions.data['options_file_path'])
-    options = {}
-    File.open(GameOptions.data['options_file_path']).readlines.each do |line|
-      kv = line.chomp.split(':')
-      options[kv[0].to_sym] = kv[1]
-    end
-
-    # check for null
-    return options[:sound_enabled] ? options : nil
-  end
-  nil
-end
-
-def init_config
-  Dir.mkdir(GW_HOME) unless Dir.exist?(GW_HOME)
-
-  sound_system_default = OS.windows? ? 'win32-sound' : 'bloops'
-  save_file_mode_default = 'Y' # YAML
-
-  GameOptions.add 'sound_system',             sound_system_default
-  GameOptions.add 'save_file_mode',           save_file_mode_default
-  GameOptions.add 'default_world_path_yaml',  GW_DEFAULT_WORLD_YAML
-  GameOptions.add 'default_world_path_bin',   GW_DEFAULT_WORLD_BIN
-  GameOptions.add 'save_file_yaml_path',      GW_SAVE_FILE_YAML
-  GameOptions.add 'save_file_bin_path',       GW_SAVE_FILE_BIN
-  GameOptions.add 'log_file_path',            GW_LOG_FILE
-  GameOptions.add 'options_file_path',        GW_OPTS_FILE
-  GameOptions.add 'wrap_width',               GW_DEFAULT_WRAP_WIDTH
-end
-
 begin
-  init_config
-
   options = parse_options_cli
 
+  init_config(options[:world_name])
+
   Gemwarrior::Game.new(options)
-rescue => error
-  print_error(error)
+rescue => e
+  print_error(e)
+  puts ("#{self.class} - #{e.class}: #{e.message}" + e.backtrace).join("\n")
   exit(false)
 end
