@@ -49,7 +49,10 @@ module Gemwarrior
       # create new world based on yaml/marshall data
       self.world                    = init_world
 
-      # update some player aspects to make more dynamic
+      # spawn bosses inside world
+      self.init_bosses
+
+      # update some aspects of world's player to make more dynamic
       self.world.player.name        = world.player.generate_name
       self.world.player.face        = world.player.generate_face
       self.world.player.hands       = world.player.generate_hands
@@ -62,9 +65,6 @@ module Gemwarrior
       self.world.emerald_beaten     = false
       self.world.shifty_to_jewel    = false
       self.world.shifty_has_jeweled = false
-
-      # # spawn bosses
-      self.init_bosses
 
       # mark home as visited
       self.world.location_by_name('home').visited = true

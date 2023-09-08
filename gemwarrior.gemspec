@@ -34,13 +34,16 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'matrext', '~> 1.0'
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
   spec.add_runtime_dependency 'psych', '~> 5.1'
-    ## sound systems
-    #spec.add_runtime_dependency 'feep', '~> 0.1.3'
-    #spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
-    #spec.add_runtime_dependency 'bloopsaphone', '>= 0.4'
+
+  ## sound systems
+  # spec.add_runtime_dependency 'bloopsaphone', '>= 0.4'
+  # spec.add_runtime_dependency 'feep', '~> 0.1.3'
+  # spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
+
   # spec.platform             = Gem::Platform::RUBY
   spec.post_install_message   = "Type 'gemwarrior' to start adventuring!"
   # spec.require_paths        = ['lib']
+
   ## development deps
   spec.add_development_dependency 'awesome_print', '~> 1.9'
   spec.add_development_dependency 'bundler', '~> 2.4'

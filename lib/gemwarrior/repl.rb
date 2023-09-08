@@ -255,17 +255,21 @@ module Gemwarrior
         if OS.windows?
           puts answer
           GameOptions.add 'sound_system', 'win32-sound'
+          Audio.init
         else
-          puts
+          puts answer
+          puts "Sorry, but your system doesn't seem to be running Windows."
         end
         print_options_sound_sytem
       when '2'
         puts answer
         GameOptions.add 'sound_system', 'feep'
+        Audio.init
         print_options_sound_sytem
       when '3'
         puts answer
         GameOptions.add 'sound_system', 'bloops'
+        Audio.init
         print_options_sound_sytem
       when 't'
         puts answer
@@ -304,6 +308,9 @@ module Gemwarrior
       when '1'
         print answer
         GameOptions.data['sound_enabled'] = !GameOptions.data['sound_enabled']
+        if GameOptions.data['sound_enabled']
+          Audio.init
+        end
         print_options
       when '2'
         print answer
