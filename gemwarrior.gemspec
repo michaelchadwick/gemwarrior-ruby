@@ -4,28 +4,34 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'gemwarrior/version'
 
+source_uri = 'https://github.com/michaelchadwick/gemwarrior'
+rubygem_uri = 'http://rubygems.org/gems/gemwarrior'
+
 Gem::Specification.new do |spec|
-  # required
-  spec.name     = 'gemwarrior'
-  spec.summary  = 'RubyGem text adventure'
-  spec.version  = Gemwarrior::VERSION
-  spec.authors  = ['Michael Chadwick']
-  spec.files    = `git ls-files`.split("\n")
+  spec.name           = 'gemwarrior'
+  spec.summary        = 'RubyGem text adventure'
+  spec.version        = Gemwarrior::VERSION
+  spec.platform       = Gem::Platform::RUBY
+  spec.authors        = ['Michael Chadwick']
+  spec.email          = ['mike@neb.host']
+  spec.homepage       = rubygem_uri
+  spec.license        = 'MIT'
+  spec.description    = 'A fun text adventure in the form of a RubyGem!'
 
-  # recommended
-  spec.description            = 'A fun text adventure in the form of a RubyGem!'
-  spec.email                  = 'mike@neb.host'
-  spec.homepage               = 'https://github.com/michaelchadwick/gemwarrior'
-  spec.license                = 'MIT'
-  spec.metadata               = {
-                                  "documentation_uri" => "https://github.com/michaelchadwick/gemwarrior",
-                                  "homepage_uri" => "https://github.com/michaelchadwick/gemwarrior",
-                                  "source_code_uri" => "https://github.com/michaelchadwick/gemwarrior"
-                                }
+  spec.files          = `git ls-files`.split("\n")
+  spec.test_files     = `git ls-files -- {test,spec,features}/*`.split("\n")
+  spec.executables    = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
+  spec.require_paths  = ['lib']
+
+  spec.metadata       = {
+    "documentation_uri" => source_uri,
+    "homepage_uri" => source_uri,
+    "source_code_uri" => source_uri
+  }
   spec.required_ruby_version  = '~> 2.0'
+  spec.post_install_message   = "Type 'gemwarrior' to start adventuring!"
 
-  # additional
-  ## runtime deps
+  ## required deps
   spec.add_runtime_dependency 'clocker', '~> 0.1.6'
   spec.add_runtime_dependency 'colorize', '~> 1.0'
   spec.add_runtime_dependency 'gems', '~> 1.2'
@@ -34,15 +40,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'matrext', '~> 1.0'
   spec.add_runtime_dependency 'os', '~> 0.9', '>= 0.9.6'
   spec.add_runtime_dependency 'psych', '~> 5.1'
-
-  ## sound systems
-  # spec.add_runtime_dependency 'bloopsaphone', '>= 0.4'
-  # spec.add_runtime_dependency 'feep', '~> 0.1.3'
-  # spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
-
-  # spec.platform             = Gem::Platform::RUBY
-  spec.post_install_message   = "Type 'gemwarrior' to start adventuring!"
-  # spec.require_paths        = ['lib']
+    ## optional sound systems
+    # spec.add_runtime_dependency 'bloopsaphone', '>= 0.4'
+    # spec.add_runtime_dependency 'feep', '~> 0.1.3'
+    # spec.add_runtime_dependency 'win32-sound', '~> 0.6.0'
 
   ## development deps
   spec.add_development_dependency 'awesome_print', '~> 1.9'
