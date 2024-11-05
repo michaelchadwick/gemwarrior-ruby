@@ -2,6 +2,7 @@
 
 require 'optparse'
 require 'os'
+require 'fileutils'
 
 require_relative '../lib/gemwarrior/game'
 require_relative '../lib/gemwarrior/game_options'
@@ -54,6 +55,7 @@ end
 
 def read_options_file
   if !File.exist?(GW_OPTS_FILE_PATH)
+    FileUtils.mkdir(GW_HOME_PATH)
     File.write(GW_OPTS_FILE_PATH, "")
   end
 
