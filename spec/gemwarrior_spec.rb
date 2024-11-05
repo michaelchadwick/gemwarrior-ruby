@@ -5,7 +5,7 @@ describe Gemwarrior do
   let(:default_load_options) do
     GameOptions.add 'log_file_path', "#{Dir.home}/.gemwarrior_log"
     GameOptions.add 'options_file_path', "#{Dir.home}/.gemwarrior_options"
-  
+
     Game.new(
       beast_mode:     false,
       debug_mode:     false,
@@ -23,19 +23,22 @@ describe Gemwarrior do
       expect(VERSION).not_to be nil
     end
     it 'display help menu' do
-      pending
+      skip 'not implemented yet' do
+      end
     end
   end
-  
+
   describe 'game load' do
     context 'default options' do
       it 'displays the main menu' do
-        pending
+        skip 'not implemented yet' do
+        end
       end
     end
     context 'new game option enabled' do
       it 'displays the main game prompt and runs the look command' do
-        pending
+        skip 'not implemented yet' do
+        end
       end
     end
   end
