@@ -17,7 +17,7 @@ GW_SAVE_FILE_BIN_PATH     = "#{GW_HOME_PATH}/gw_sav.dat"
 GW_SAVE_FILE_MODE_DEFAULT = 'Y' # YAML
 GW_OPTS_FILE_PATH         = "#{GW_HOME_PATH}/gw_opts"
 GW_LOG_FILE_PATH          = "#{GW_HOME_PATH}/gw_log"
-GW_WRAP_WIDTH_DEFAULT   = 80
+GW_WRAP_WIDTH_DEFAULT     = 80
 
 def print_error(error)
   case error
