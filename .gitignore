@@ -2,13 +2,14 @@
 /.yardoc
 /Gemfile.lock
 /_yardoc/
+/assets/
 /coverage/
 /doc/
+/img/
 /pkg/
 /spec/reports/
 /tmp/
 *.gct
-/img/
-/assets/
+*.gem
 .gemwarrior
 !bin/gemwarrior
