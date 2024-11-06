@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
     "homepage_uri" => source_uri,
     "source_code_uri" => source_uri
   }
-  spec.required_ruby_version  = '~> 2.0'
+  spec.required_ruby_version  = '>= 2.0'
   spec.post_install_message   = "Type 'gemwarrior' to start adventuring!"
 
   ## required deps
