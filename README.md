@@ -52,23 +52,25 @@ that you will bring back to Queen Ruby (or will you...?).
 
 ### Main Commands
 
-`> character`             - character check for visual identity
-`> inventory [object]`    - check your inventory (or an individual item within)
-`> rest`                  - take a load off and replenish hp
-`> look      [object]`    - look at current location and its items and monsters
-`> take      [object]`    - take an item from a location
-`> use       [object]`    - use an item from your inventory or current location
-`> drop      [object]`    - drop an item from your inventory
-`> equip     [object]`    - designate an item in your inventory your weapon
-`> unequip   [object]`    - stop using an item in your inventory as your weapon
-`> go        [direction]` - go in a direction, if possible
+```
+> character             - character check for visual identity
+> inventory [object]    - check your inventory (or an individual item within)
+> rest                  - take a load off and replenish hp
+> look      [object]    - look at current location and its items and monsters
+> take      [object]    - take an item from a location
+> use       [object]    - use an item from your inventory or current location
+> drop      [object]    - drop an item from your inventory
+> equip     [object]    - designate an item in your inventory your weapon
+> unequip   [object]    - stop using an item in your inventory as your weapon
+> go        [direction] - go in a direction, if possible
                             (north|east|south|west work as shortcuts)
-`> attack    [monster]`   - attack a monster
-`> change    [attribute]` - change some things about yourself
-`> help`                  - display available commands
-`> version`               - display current game version
-`> quit`                  - quit this nonsense w/ prompt
-`> quit!`                 - quit this nonsense w/o prompt
+> attack    [monster]   - attack a monster
+> change    [attribute] - change some things about yourself
+> help                  - display available commands
+> version               - display current game version
+> quit                  - quit this nonsense w/ prompt
+> quit!                 - quit this nonsense w/o prompt
+```
 
 ## CONTRIBUTE
 
